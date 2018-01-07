@@ -11,6 +11,9 @@ the resource themselves, publicly or privately.
 
 Note: Akismet requires a dependency that is not installed automatically.
 
+The aim of this module is to provide the same type of features than the [Omeka Classic]
+[Commenting plugin]. It can be upgraded automatically via the plugin [Upgrade To Omeka S].
+
 
 Installation
 ------------
@@ -43,7 +46,7 @@ themes:
     echo $this->showComments($resource);
     echo $this->showCommentForm($resource);
 </div>
-```php
+```
 
 The structure of comments, the comment itself, and the comment form can be
 themed.
@@ -65,8 +68,7 @@ public.
 The comments can be moderated by the global admin, the site admin, the editor or
 the reviewer.
 
-### Open commenting, with registered users getting to submit comments without
-approval
+### Open commenting, with registered users getting to submit comments without approval
 
 Install and configure the [Guest User] module. Set commenting to Public so that
 anyone can comment.
@@ -138,6 +140,9 @@ Copyright
 
 [Comment]: https://github.com/Daniel-KM/Omeka-S-module-Comment
 [Omeka S]: https://omeka.org/s
+[Omeka Classic]: https://omeka.org/classic
+[Commenting plugin]: https://omeka.org/classic/plugins/Commenting
+[Upgrade To Omeka S]: https://github.com/Daniel-KM/UpgradeToOmekaS
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [Guest User]: https://github.com/Daniel-KM/Omeka-S-module-GuestUser
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Comment/issues
