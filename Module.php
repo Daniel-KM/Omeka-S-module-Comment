@@ -326,17 +326,18 @@ SQL;
                 [$this, 'searchQuery']
             );
 
-            // Cache some resources after a search.
-            $sharedEventManager->attach(
-                $adapter,
-                'api.search.post',
-                [$this, 'cacheData']
-            );
-            $sharedEventManager->attach(
-                $adapter,
-                'api.read.post',
-                [$this, 'cacheData']
-            );
+            // TODO Check if the cache may be really needed.
+            // // Cache some resources after a search.
+            // $sharedEventManager->attach(
+            //     $adapter,
+            //     'api.search.post',
+            //     [$this, 'cacheData']
+            // );
+            // $sharedEventManager->attach(
+            //     $adapter,
+            //     'api.read.post',
+            //     [$this, 'cacheData']
+            // );
         }
 
         // No issue for creation: it cannot be created before the resource.
@@ -566,7 +567,7 @@ SQL;
     /**
      * Cache comments for resource API search/read.
      *
-     * The cache avoids self::filterItemJsonLd() to make multiple queries to the
+     * The cache avoids self::filterJsonLd() to make multiple queries to the
      * database during one request.
      *
      * @param Event $event
