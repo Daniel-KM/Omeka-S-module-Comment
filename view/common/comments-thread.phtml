@@ -1,0 +1,11 @@
+<?php foreach ($comments as $comment) : ?>
+    <?php $parent = $comment->parent(); ?>
+    <?php if (($parent && $parent->id() == $parent_id) || (empty($parent) && empty($parent_id))): ?>
+    <div id="comment-<?php echo $comment->id(); ?>" class='comment'>
+        <?php echo $this->partial('common/comment', array('comment' => $comment)); ?>
+        <div class='comment-children'>
+            <?php echo $this->partial('common/comments-thread', array('comments' => $comments, 'parent_id' => $comment->id())); ?>
+        </div>
+    </div>
+    <?php endif; ?>
+<?php endforeach; ?>

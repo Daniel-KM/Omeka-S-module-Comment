@@ -1,0 +1,18 @@
+<?php
+$this->headLink()->appendStylesheet($this->assetUrl('css/comment.css', 'Comment'));
+$this->headScript()->appendFile($this->assetUrl('js/comment.js', 'Comment'));
+// Required to manage the base path.
+$addUrl = $this->url('site/comment', ['action' => 'add'], true);
+?>
+<div id="comments" class="comments" data-comment-url="<?php echo $addUrl; ?>">
+    <?php if ($label = $this->setting('comment_comments_label')): ?>
+    <h2><?php echo $this->translate($label); ?></h2>
+    <?php endif; ?>
+    <?php if (empty($comments)): ?>
+    <p><?php echo $this->translate('No comment yet! Be the first to add one!'); ?></p>
+    <?php elseif ($this->setting('comment_threaded')): ?>
+        <?php echo $this->partial('common/comments-thread', ['comments' => $comments, 'parent_id' => null]); ?>
+    <?php else: ?>
+        <?php echo $this->partial('common/comments-list', ['comments' => $comments]); ?>
+    <?php endif; ?>
+</div>

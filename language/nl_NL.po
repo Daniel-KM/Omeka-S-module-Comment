@@ -1,0 +1,235 @@
+# Translation for the Comment module for Omeka S.
+# Copyright (C) 2011 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# Brian Cho <briancho@ezuserguide.com>, 2015
+# Iwe Muiser <e.c.muiser@utwente.nl>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: https://github.com/Daniel-KM/Omeka-S-module-Comment/issues\n"
+"POT-Creation-Date: 2012-01-09 21:49-0500\n"
+"PO-Revision-Date: 2015-10-08 16:10+0000\n"
+"Last-Translator: Brian Cho <briancho@ezuserguide.com>\n"
+"Language-Team: Dutch (Netherlands) (http://www.transifex.com/omeka/omeka/language/nl_NL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: CommentForm.php:15
+msgid "Website"
+msgstr "Website"
+
+#: CommentForm.php:18
+msgid "Email (required)"
+msgstr "E-mail (verplicht)"
+
+#: CommentForm.php:25
+msgid "Your name"
+msgstr "Uw naam"
+
+#: CommentForm.php:36
+msgid "Allowed tags:"
+msgstr "Toegestane tags:"
+
+#: CommentForm.php:53
+msgid "Please verify you're a human"
+msgstr "Bevestig dat u een mens bent"
+
+#: CommentingPlugin.php:254 CommentingPlugin.php:262
+#: views/admin/comment/browse.php:4 views/public/comments.php:4
+msgid "Comments"
+msgstr "Opmerkingen"
+
+#: config_form.php:8
+msgid "Use Threaded Comments?"
+msgstr "Gegroepeerde reacties gebruiken?"
+
+#: config_form.php:11
+msgid "If checked, replies will be displayed indented below the comment."
+msgstr "Als dit is aangevinkt, zullen de reacties ingesprongen worden weergegeven onder de opmerking."
+
+#: config_form.php:24
+msgid "Text for comments label"
+msgstr "Tekst voor het label van reacties"
+
+#: config_form.php:27
+msgid "A label instead of 'Comments' to use. Leave empty to use 'Comments'."
+msgstr "Je kan een label in plaats van 'Reacties' gebruiken. Om 'Reacties' te gebruiken, laat u het leeg."
+
+#: config_form.php:36
+msgid "Allow public commenting?"
+msgstr "Publiekelijk commentaar toestaan?"
+
+#: config_form.php:39
+msgid ""
+"Allows everyone, including non-registered users to comment. Using this "
+"without Akismet is strongly discouraged."
+msgstr "Staat iedereen, inclusief niet-geregistreerde gebruikers toe om te reageren. Dit gebruiken zonder Akismet wordt sterk afgeraden."
+
+#: config_form.php:51
+msgid "Require moderation for all public comments?"
+msgstr "Vereis moderatie voor alle publieke reacties?"
+
+#: config_form.php:54
+msgid "If unchecked, comments will appear immediately."
+msgstr "Wanneer niet aangevinkt zullen opmerkingen direct verschijnen."
+
+#: config_form.php:65
+msgid "User roles that can moderate comments"
+msgstr "Gebruikersrollen die opmerkingen kunnen modereren"
+
+#: config_form.php:68
+msgid "The user roles that are allowed to moderate comments."
+msgstr "De gebruikersrollen die worden toegestaan om opmerkingen te modereren."
+
+#: config_form.php:94
+msgid "User roles that can comment"
+msgstr "Gebruikersrollen die opmerkingen mogen plaatsen"
+
+#: config_form.php:97
+msgid "Select the roles that can leave comments"
+msgstr "Selecteer de rollen die opmerkingen mogen plaatsen"
+
+#: config_form.php:121
+msgid "User roles that require moderation before publishing."
+msgstr "Gebruikersrollen die moderatie nodig hebben alvorens te publiceren."
+
+#: config_form.php:124
+msgid ""
+"If the role is allowed to moderate comments, that will override the setting "
+"here."
+msgstr "Als de rol is toegestaan om opmerkingen te modereren zal dat deze instelling overschrijven."
+
+#: config_form.php:146
+msgid "Allow public to view comments?"
+msgstr "Sta het publiek toe om opmerkingen te bekijken?"
+
+#: config_form.php:162
+msgid "User roles that can view comments"
+msgstr "Gebruikersrollen die opmerkingen mogen bekijken"
+
+#: config_form.php:187 views/admin/comment/browse.php:14
+msgid "security settings"
+msgstr "beveiligingsinstellingen"
+
+#: config_form.php:187 views/admin/comment/browse.php:14
+#, php-format
+msgid ""
+"You have not entered your %s API keys under %s. We recommend adding these "
+"keys, or the commenting form will be vulnerable to spam."
+msgstr "U hebt uw %s API-sleutels onder %s niet ingevoerd. Wij raden aan deze sleutels toe te voegen want anders zal het reactieformulier gevoelig zijn voor spam."
+
+#: config_form.php:193
+msgid "WordPress API key for Akismet"
+msgstr "WordPress API-sleutel (key) voor Akismet"
+
+#: controllers/CommentController.php:69
+msgid "Your comment is awaiting moderation"
+msgstr "Uw commentaar moet eerst worden goedgekeurd"
+
+#: controllers/CommentController.php:206
+#, php-format
+msgid "A comment on %s has been flagged as inappropriate"
+msgstr "Een commentaar op %s is gemarkeerd als ongepast"
+
+#: controllers/CommentController.php:207
+#, php-format
+msgid "The comment %s has been flagged as inappropriate."
+msgstr "De opmerking %s is gemarkeerd als ongepast."
+
+#: controllers/CommentController.php:208
+msgid "here"
+msgstr "hier"
+
+#: controllers/CommentController.php:208
+#, php-format
+msgid "You can manage the comment %s"
+msgstr "U kan de opmerking %s beheren"
+
+#: views/admin/comment.php:54 views/public/comment.php:10
+msgid "Anonymous"
+msgstr "Anoniem"
+
+#: views/admin/comment.php:59
+msgid "on"
+msgstr "op"
+
+#: views/admin/comment.php:62 views/admin/common/quick-filters.php:6
+msgid "Approved"
+msgstr "Goedgekeurd"
+
+#: views/admin/comment.php:62 views/admin/comment/browse.php:24
+msgid "Unapprove"
+msgstr "Afkeuren"
+
+#: views/admin/comment.php:63
+msgid "Not Approved"
+msgstr "Niet goedgekeurd"
+
+#: views/admin/comment.php:63 views/admin/comment/browse.php:23
+msgid "Approve"
+msgstr "Goedkeuren"
+
+#: views/admin/comment.php:65 views/admin/common/quick-filters.php:8
+msgid "Spam"
+msgstr "Spam"
+
+#: views/admin/comment.php:65 views/admin/comment/browse.php:27
+msgid "Report Not Spam"
+msgstr "Rapporteer als geen spam"
+
+#: views/admin/comment.php:66 views/admin/common/quick-filters.php:9
+msgid "Not Spam"
+msgstr "Geen spam"
+
+#: views/admin/comment.php:66 views/admin/comment/browse.php:26
+msgid "Report Spam"
+msgstr "Rapporteer spam"
+
+#: views/admin/comment.php:69
+msgid "Flagged Inappropriate"
+msgstr "Gemarkeerd als ongepast"
+
+#: views/admin/comment.php:69 views/admin/comment/browse.php:30
+msgid "Unflag"
+msgstr "Markering weghalen"
+
+#: views/admin/comment.php:70 views/admin/common/quick-filters.php:11
+msgid "Not Flagged"
+msgstr "Niet gemarkeerd"
+
+#: views/admin/comment.php:70
+msgid "Flag Inappropriate"
+msgstr "Markeer als ongepast"
+
+#: views/admin/comment/browse.php:29
+msgid "Flag"
+msgstr "Markeren"
+
+#: views/admin/comment/browse.php:35
+msgid "Select All"
+msgstr "Alles selecteren"
+
+#: views/admin/common/quick-filters.php:7
+msgid "Needs Approval"
+msgstr "Moet nog worden goedgekeurd"
+
+#: views/admin/common/quick-filters.php:10
+msgid "Flagged"
+msgstr "Gemarkeerd"
+
+#: views/public/comment.php:22
+msgid "Flag inappropriate"
+msgstr "Markeer als ongepast"
+
+#: views/public/comment.php:23
+msgid "Unflag inappropriate"
+msgstr "Verwijder markering als ongepast"
+
+#: views/public/comment.php:25
+msgid "Reply"
+msgstr "Reageer"

@@ -1,0 +1,19 @@
+<?php
+$this->headLink()->appendStylesheet($this->assetUrl('css/comment-admin.css', 'Comment'));
+$this->headLink()->appendStylesheet($this->assetUrl('css/comment.css', 'Comment'));
+$this->headScript()->appendFile($this->assetUrl('js/comment-admin.js', 'Comment'));
+$this->headScript()->appendFile($this->assetUrl('js/comment.js', 'Comment'));
+$addUrl = $this->url('admin/comment', ['action' => 'add'], true);
+?>
+<div id="comments" class="comments" data-comment-url="<?php echo $addUrl; ?>">
+    <?php if ($label = $this->setting('comment_comments_label')): ?>
+    <h2><?php echo $this->translate($label); ?></h2>
+    <?php endif; ?>
+    <?php if (empty($comments)): ?>
+    <p><?php echo $this->translate('No comment yet! Be the first to add one!'); ?></p>
+    <?php elseif (isset($commentThreaded) ? $commentThreaded : $this->setting('comment_threaded')): ?>
+        <?php echo $this->partial('common/admin/comments-thread', ['comments' => $comments, 'parent_id' => null]); ?>
+    <?php else: ?>
+        <?php echo $this->partial('common/admin/comments-list', ['comments' => $comments]); ?>
+    <?php endif; ?>
+</div>

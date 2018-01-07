@@ -1,0 +1,155 @@
+@media screen {
+    header nav .comment:before {
+        content:"";
+    }
+    .comment .no-resources:before {
+        content:"";
+    }
+    #comments .property {
+        display: inherit;
+    }
+    #resource-comments .actions {
+        float: right;
+    }
+    #resource-comments.empty,
+    #resource-comments+.no-resources {
+        display:none;
+    }
+    #resource-comments.empty+.no-resources {
+        display:block;
+        padding:0 24px;
+    }
+    #resource-comments.empty+.no-resources:before {
+        content:"";
+    }
+    #resource-comments tr.delete {
+        background-color:#fcc;
+    }
+    .comments .resource-details .comment-internal-id {
+        font-size: 0.7em;
+    }
+
+    .comment table .resource-name {
+        display: inline-block;
+        vertical-align: bottom;
+        margin-left: .5em;
+        opacity: .5;
+    }
+
+    .comments .comment-public {
+        font-style: italic;
+    }
+
+    .comment .single.actions {
+        float: right;
+    }
+    .comment .single.actions a::before {
+        text-align: inherit;
+    }
+    .comment .single.actions .o-icon-transmit::before {
+        background: url('../img/waiting-mini.gif') no-repeat scroll 3px 3px transparent !important;
+    }
+    .comment .o-icon-users,
+    .comment .no-action::before {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        vertical-align: top;
+        border: 0;
+        box-shadow: none;
+        opacity: .5;
+        text-align: inherit;
+    }
+    .comment.meta-group .single.actions,
+    .comment.meta-group .no-action::before {
+        float: right;
+    }
+
+    .comment.meta-group span,
+    .comment .meta-group span {
+        display: inline;
+        hyphens: auto;
+        word-wrap: break-word;
+    }
+
+    .comment.meta-group::before,
+    .comment .status-toggle::before,
+    .comment .resource-name::before {
+        display: inline-block;
+        font-family:"FontAwesome";
+        padding-left: 3px;
+        padding-right: 3px;
+        width: 24px;
+    }
+    .comment .resource-name.resource::before {
+        content: "";
+    }
+    .comment .resource-name.no-resource::before {
+        content: "❌";
+    }
+    .comment .resource-name.item-set::before {
+        content: "";
+    }
+    .comment .resource-name.item::before {
+        content: "";
+    }
+    .comment .resource-name.media::before {
+        content: "";
+    }
+    .comment .o-icon-proposed::before {
+        color: #FFA500;
+        content: "";
+    }
+    .comment .o-icon-allowed::before {
+        color: #FFA500;
+        content: "";
+    }
+    .comment .o-icon-approved::before {
+        color: #00FF00;
+        content: "";
+    }
+    .comment .o-icon-unapproved::before {
+        color: #FF0000;
+        content: "";
+    }
+    .comment .o-icon-flagged::before {
+        color: #FF0000;
+        content: "";
+    }
+    .comment .o-icon-unflagged::before {
+        color: #00FF00;
+    content: "";
+    }
+    .comment .o-icon-spam::before {
+        color: #FF0000;
+        content: "";
+    }
+    .comment .o-icon-not-spam::before {
+        color: #00FF00;
+        content: "";
+    }
+    .comment .o-icon-undefined::before {
+        color: #FF0000;
+        content: "";
+    }
+    .comment .o-icon-none::before {
+        color: #FFFFFF;
+        content: "";
+    }
+    .comment .o-icon-transmit::before {
+        background: url('../img/waiting-mini.gif') no-repeat scroll 12px 3px transparent !important;
+        color: #000000;
+        content: "";
+        cursor: progress;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    fieldset.section>#resource-comments.empty+.no-resources {
+        display:none;
+    }
+    fieldset.section.mobile-active>#resource-comments.empty+.no-resources {
+        display:block;
+        margin-top:48px;
+    }
+}

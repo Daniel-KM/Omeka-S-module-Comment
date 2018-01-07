@@ -1,0 +1,237 @@
+<?php
+use Comment\Api\Adapter\CommentAdapter;
+
+$escape = $this->plugin('escapeHtml');
+$this->headLink()->appendStylesheet($this->assetUrl('css/comment-admin.css', 'Comment'));
+$this->headScript()->appendFile($this->assetUrl('js/comment-admin.js', 'Comment'));
+$this->htmlElement('body')->appendAttribute('class', 'comment comments browse');
+$sortHeadings = [
+    // [
+    //     'label' => $this->translate('Resource'),
+    //     'value' => 'resource_title'
+    // ],
+    [
+        'label' => $this->translate('Commenter'),
+        'value' => 'name'
+    ],
+    [
+        'label' => $this->translate('Commenter email'),
+        'value' => 'email'
+    ],
+    [
+        'label' => $this->translate('Resource'),
+        'value' => 'resource_id'
+    ],
+    [
+        'label' => $this->translate('Date commented'),
+        'value' => 'created'
+    ],
+];
+
+$batchEditRight = $this->userIsAllowed(CommentAdapter::class, 'batch-update')
+    || $this->userIsAllowed(CommentAdapter::class, 'batch-delete');
+$editRight = $this->userIsAllowed(CommentAdapter::class, 'update')
+    || $this->userIsAllowed(CommentAdapter::class, 'delete');
+?>
+
+<?php echo $this->pageTitle($this->translate('Comments')); ?>
+
+<?php echo $this->searchFilters(); ?>
+
+ <div class="browse-controls">
+    <?php echo $this->pagination(); ?>
+    <?php // echo $this->hyperlink($this->translate('Advanced search'), $this->url(null, ['action' => 'search'], ['query' => $this->params()->fromQuery()], true), ['class' => 'advanced-search']); ?>
+    <?php echo $this->sortSelector($sortHeadings); ?>
+</div>
+
+<form method="post" id="batch-form" class="disable-unsaved-warning">
+
+<?php if ($comments): ?>
+<div id="page-actions">
+    <?php if ($this->userIsAllowed(CommentAdapter::class, 'batch-update')): ?>
+    <a href="#"
+        class="button batch-actions batch-property"
+        data-batch-property-url="<?php echo $escape($this->url(null, ['action' => 'batch-approve'], true)); ?>"
+        aria-label="<?php echo $escape($this->translate('Approve')); ?>"
+        data-status="approved"
+        title="<?php echo $escape($this->translate('Approve')); ?>"><?php echo $escape($this->translate('Approve')); ?></a>
+    <a href="#"
+        class="button batch-actions batch-property"
+        data-batch-property-url="<?php echo $escape($this->url(null, ['action' => 'batch-unapprove'], true)); ?>"
+        aria-label="<?php echo $escape($this->translate('Unapprove')); ?>"
+        data-status="unapproved"
+        title="<?php echo $escape($this->translate('Unapprove')); ?>"><?php echo $escape($this->translate('Unapprove')); ?></a>
+    <a href="#"
+        class="button batch-actions batch-property"
+        data-batch-property-url="<?php echo $escape($this->url(null, ['action' => 'batch-flag'], true)); ?>"
+        aria-label="<?php echo $escape($this->translate('Flag')); ?>"
+        data-status="flagged"
+        title="<?php echo $escape($this->translate('Flag')); ?>"><?php echo $escape($this->translate('Flag')); ?></a>
+    <a href="#"
+        class="button batch-actions batch-property"
+        data-batch-property-url="<?php echo $escape($this->url(null, ['action' => 'batch-unflag'], true)); ?>"
+        aria-label="<?php echo $escape($this->translate('Unflag')); ?>"
+        data-status="unflagged"
+        title="<?php echo $escape($this->translate('Unflag')); ?>"><?php echo $escape($this->translate('Unflag')); ?></a>
+    <a href="#"
+        class="button batch-actions batch-property"
+        data-batch-property-url="<?php echo $escape($this->url(null, ['action' => 'batch-set-spam'], true)); ?>"
+        aria-label="<?php echo $escape($this->translate('Set spam')); ?>"
+        data-status="spam"
+        title="<?php echo $escape($this->translate('Set spam')); ?>"><?php echo $escape($this->translate('Set spam')); ?></a>
+    <a href="#"
+        class="button batch-actions batch-property"
+        data-batch-property-url="<?php echo $escape($this->url(null, ['action' => 'batch-set-not-spam'], true)); ?>"
+        aria-label="<?php echo $escape($this->translate('Set not spam')); ?>"
+        data-status="not-spam"
+        title="<?php echo $escape($this->translate('Set not spam')); ?>"><?php echo $escape($this->translate('Set not spam')); ?></a>
+    <?php endif; ?>
+    <?php if ($this->userIsAllowed(CommentAdapter::class, 'batch-delete')): ?>
+    <a href="#"
+        class="button delete batch-actions sidebar-content"
+        data-sidebar-content-url="<?php echo $escape($this->url(null, ['action' => 'batch-delete-confirm'], true)); ?>"
+        aria-label="<?php echo $escape($this->translate('Delete')); ?>"
+        title="<?php echo $escape($this->translate('Delete')); ?>"><?php echo $escape($this->translate('Delete')); ?></a>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+
+<?php $this->trigger('view.browse.before'); ?>
+<?php if (empty($comments)): ?>
+<div class="no-resources">
+    <p><?php echo $this->translate('There are no comments.'); ?></p>
+</div>
+<?php $this->trigger('view.browse.after'); ?>
+
+<?php else: ?>
+<table class="tablesaw <?php if ($batchEditRight) echo 'batch-edit'; ?>" data-tablesaw-mode="stack">
+    <thead>
+        <tr>
+            <th class="column-tag">
+                <?php if ($editRight): ?>
+                <input type="checkbox" class="select-all">
+                <?php endif; ?>
+                <?php echo $this->translate('Comment'); ?>
+            </th>
+            <th><?php echo $this->translate('Resource'); ?></th>
+            <th><?php echo $this->translate('Commenter'); ?></th>
+            <th><?php echo $this->translate('Date commented'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($comments as $comment): ?>
+        <?php
+        $resource = $comment->resource();
+        $owner = $comment->owner();
+        ?>
+        <tr class="comment">
+            <td>
+                <?php if ($batchEditRight): ?>
+                    <input type="checkbox" name="resource_ids[]" value="<?php echo $comment->id(); ?>">
+                <?php endif; ?>
+                <?php echo substr($comment->body(), 0, 200); ?>
+                <span class="is-public-or-not<?php if (!$comment->isApproved()) echo ' o-icon-private'; ?>" aria-label="<?php echo $this->translate('Private'); ?>"></span>
+                <?php if (strlen($comment->body()) > 200) echo '…'; ?>
+                <ul class="actions">
+                <?php $editRightComment = $comment->userIsAllowed('update'); ?>
+                    <?php if ($editRightComment): ?>
+                    <li><a href="#"
+                        class="toggle-property approved unapproved o-icon-<?php echo $comment->isApproved() ? 'approved' : 'unapproved'; ?>"
+                        data-toggle-url="<?php echo $escape($comment->url('toggle-approved')); ?>"
+                        data-status="<?php echo $comment->isApproved() ? 'approved' : 'unapproved'; ?>"
+                        aria-label="<?php echo $escape($this->translate('Toggle approbation')); ?>"
+                        title="<?php echo $escape($this->translate('Toggle approbation')); ?>"></a></li>
+                    <li><a href="#"
+                        class="toggle-property flagged unflagged o-icon-<?php echo $comment->isFlagged() ? 'flagged' : 'unflagged'; ?>"
+                        data-toggle-url="<?php echo $escape($comment->url('toggle-flagged')); ?>"
+                        data-status="<?php echo $comment->isFlagged() ? 'flagged' : 'unflagged'; ?>"
+                        aria-label="<?php echo $escape($this->translate('Toggle flag')); ?>"
+                        title="<?php echo $escape($this->translate('Toggle flag')); ?>"></a></li>
+                    <li><a href="#"
+                        class="toggle-property spam not-spam o-icon-<?php echo $comment->isSpam() ? 'spam' : 'not-spam'; ?>"
+                        data-toggle-url="<?php echo $escape($comment->url('toggle-spam')); ?>"
+                        data-status="<?php echo $comment->isSpam() ? 'spam' : 'not-spam'; ?>"
+                        aria-label="<?php echo $escape($this->translate('Toggle spam')); ?>"
+                        title="<?php echo $escape($this->translate('Toggle spam')); ?>"></a></li>
+                    <?php endif; ?>
+                    <?php if ($comment->userIsAllowed('delete')): ?>
+                    <li><a href="#"
+                        class="o-icon-delete sidebar-content"
+                        data-sidebar-content-url="<?php echo $escape($comment->url('delete-confirm')); ?>"
+                        aria-label="<?php echo $escape($this->translate('Delete')); ?>"
+                        title="<?php echo $escape($this->translate('Delete')); ?>"></a></li>
+                    <?php endif; ?>
+                    <li><a href="#"
+                        data-sidebar-content-url="<?php echo $escape($comment->url('show-details')); ?>"
+                        class="o-icon-more sidebar-content"
+                        aria-label="<?php echo $escape($this->translate('Details')); ?>"
+                        title="<?php echo $escape($this->translate('Details')); ?>"></a></li>
+                </ul>
+            </td>
+            <td>
+                <?php if ($resource): ?>
+                    <?php
+                    $url = $this->url(
+                        'admin/id',
+                        ['controller' => $resource->getControllerName(), 'id' => $resource->id()],
+                        ['fragment' => 'comments']
+                    );
+                    echo $this->hyperlink($resource->displayTitle(), $url);
+                ?>
+                <span class="resource-name <?php echo $resource->getControllerName(); ?>" aria-label="<?php echo $this->translate($resource->getControllerName()); ?>"></span>
+                <?php else: ?>
+                    [<?php echo $this->translate('Removed'); ?>]
+                <span class="resource-name no-resource"></span>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php if ($owner): ?>
+                <span class="comment-email"><?php echo $this->hyperlink(
+                    $owner->email(),
+                    $this->url('admin/id', ['controller' => 'user', 'action' => 'show', 'id' => $owner->id()])
+                ); ?></span>
+                <span class="comment-name"><?php echo $owner->name(); ?></span>
+                <?php else: ?>
+                <span class="comment-email comment-public"><?php echo $this->hyperlink($comment->email(), 'mailto:' . $comment->email()); ?></span>
+                <span class="comment-name"><?php echo $comment->name(); ?></span>
+                <span class="o-icon-users" aria-label="<?php echo $this->translate('Public'); ?>"></span>
+                <?php endif; ?>
+                <?php if ($website = $comment->website()): ?>
+                <span class="comment-website"><?php echo $website; ?></span>
+                <?php endif; ?>
+            </td>
+            <td><?php echo $escape($this->i18n()->dateFormat($comment->created())); ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+</form>
+
+<?php $this->trigger('view.browse.after'); ?>
+<div class="browse-controls">
+    <?php echo $this->pagination(); ?>
+</div>
+
+<div class="sidebar">
+    <a href="#"
+        class="sidebar-close o-icon-close"
+        aria-label="<?php echo $escape($this->translate('Close')); ?>"
+        title="<?php echo $escape($this->translate('Close')); ?>"></a>
+    <div class="sidebar-content"></div>
+</div>
+
+<script>
+// Complete the batch delete form after confirmation.
+$('.sidebar').on('submit', '#batch-delete-confirm', function(e) {
+    var confirmForm = $(this);
+    if (confirmForm.hasClass('batch-delete-all')) {
+        confirmForm.append($('.batch-query').clone());
+    } else {
+        $('#batch-form').find('input:checked').each(function() {
+            confirmForm.append($(this).clone().attr('type', 'hidden'));
+        });
+    }
+});
+</script>
+<?php endif; ?>

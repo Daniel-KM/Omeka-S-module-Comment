@@ -1,0 +1,73 @@
+<?php $escape = $this->plugin('escapeHtml'); ?>
+<?php $comment = $resource; ?>
+<div class="resource-details" data-resource-values="<?php //echo $escape($values); ?>">
+    <h3 class="o-module-comment"><?php echo $comment->link(sprintf($this->translate('Comment #%d'), $comment->id())); ?></h3>
+    <div class="meta-group">
+        <?php $owner = $comment->owner(); ?>
+        <h4><?php echo $escape($this->translate('Commenter')); ?> <?php if (!$owner): ?><span class="comment-public"><?php echo $this->translate('(public)'); ?></span><?php endif; ?></h4>
+        <div class="value">
+            <?php if ($owner): ?>
+            <span class="comment-email"><?php echo $this->hyperlink(
+                $owner->email(),
+                $this->url('admin/id', ['controller' => 'user', 'action' => 'show', 'id' => $owner->id()])
+            ); ?></span>
+            <span class="comment-name"><?php echo $owner->name(); ?></span>
+            <?php else: ?>
+            <span class="comment-email comment-public"><?php echo $this->hyperlink($comment->email(), 'mailto:' . $comment->email()); ?></span>
+            <span class="comment-name"><?php echo $comment->name(); ?></span>
+            <?php endif; ?>
+            <?php if ($website = $comment->website()): ?>
+            <span class="comment-website"><?php echo $website; ?></span>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="meta-group">
+        <?php $resource = $comment->resource(); ?>
+        <?php $resourceName = $resource ? $resource->getControllerName() : null; ?>
+        <h4><?php echo $escape($this->translate($resourceName ? ucfirst($resourceName) : 'No resource')); ?> <span class="fa resource-name <?php echo $resourceName ?: 'no-resource'; ?>" aria-label="<?php echo $resourceName ?: $this->translate('No resource'); ?>"></span></h4>
+        <div class="value">
+        <?php if ($resource): ?>
+        <span class="resource-name">
+            <?php echo $resource->link($resource->displayTitle()); ?>
+        </span>
+            <?php if (!$resource->isPublic()): ?>
+        <span class="o-icon-private"></span>
+            <?php endif; ?>
+        <?php else: ?>
+        <span class="resource-name no-resource">
+            [<?php echo $this->translate('Removed'); ?>]
+        </span>
+        <?php endif; ?>
+        </div>
+    </div>
+    <div class="meta-group">
+        <?php $site = $comment->site(); ?>
+        <h4><?php echo $escape($this->translate('Site')); ?></h4>
+        <div class="value">
+        <?php if ($site): ?>
+        <span class="site-name">
+            <?php echo $site->link($site->title()); ?>
+        </span>
+            <?php if (!$site->isPublic()): ?>
+        <span class="o-icon-private"></span>
+            <?php endif; ?>
+        <?php else: ?>
+        <span class="resource-name no-resource">
+            [<?php echo $this->translate('No site'); ?>]
+        </span>
+        <?php endif; ?>
+        </div>
+    </div>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Date Created'); ?></h4>
+        <div class="value"><?php echo $escape($this->i18n()->dateFormat($comment->created())); ?></div>
+    </div>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Date Modified'); ?></h4>
+        <div class="value"><?php echo $escape($this->i18n()->dateFormat($comment->modified())); ?></div>
+    </div>
+    <div class="meta-group">
+        <h4><?php echo $this->translate('Body'); ?></h4>
+        <div class="value"><?php echo $escape($comment->body()); ?></div>
+    </div>
+</div>

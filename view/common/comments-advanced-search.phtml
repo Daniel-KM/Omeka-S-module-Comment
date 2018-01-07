@@ -1,0 +1,9 @@
+<?php
+$hasComments = !empty($query['has_comments']);
+$form = $this->searchCommentForm();
+$form->setData([
+    'has_comments' => $hasComments,
+]);
+
+$element = $form->get('has_comments');
+echo $this->formRow($element);

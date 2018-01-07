@@ -1,0 +1,71 @@
+<?php $escape = $this->plugin('escapeHtml'); ?>
+<div class='comment-author'>
+    <?php
+    if ($owner = $comment->owner()):
+        $authorText = $this->hyperlink($owner->email(), $this->url('admin/id', ['controller' => 'user', 'id' => $owner->id()]));
+        $authorText .= ' (' . $owner->name() . ')';
+    else:
+        $authorText = $this->hyperlink($comment->email(), 'mailto:' . $comment->email());
+        if ($comment->name()):
+            $authorText .= ' (' . $comment->name() . ')';
+        endif;
+    endif;
+    if ($website = $comment->website()):
+        $authorText .= sprintf($this->translate('Website: %s'), $this->hyperlink($website, $website));
+    endif;
+    ?>
+    <p class='comment-author-name'><?php echo $authorText; ?></p>
+    <?php
+        $hash = md5(strtolower(trim($comment->email())));
+        $url = "//www.gravatar.com/avatar/$hash";
+    ?>
+    <img class='gravatar' src="<?php echo $url; ?>" />
+</div>
+<div class="comment-actions">
+    <ul class="actions">
+        <?php if ($this->userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'approve')): ?>
+        <li><a href="#"
+            class="toggle-property approved unapproved o-icon-<?php echo $comment->isApproved() ? 'approved' : 'unapproved'; ?>"
+            data-toggle-url="<?php echo $escape($comment->url('toggle-approved')); ?>"
+            data-status="<?php echo $comment->isApproved() ? 'approved' : 'unapproved'; ?>"
+            aria-label="<?php echo $escape($this->translate('Toggle approbation')); ?>"
+            title="<?php echo $escape($this->translate('Toggle approbation')); ?>"></a></li>
+        <?php endif; ?>
+        <?php if ($this->userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'flag')
+            || ($comment->isFlagged() && $this->userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'unflag'))):
+        ?>
+        <li><a href="#"
+            class="toggle-property flagged unflagged o-icon-<?php echo $comment->isFlagged() ? 'flagged' : 'unflagged'; ?>"
+            data-toggle-url="<?php echo $escape($comment->url('toggle-flagged')); ?>"
+            data-status="<?php echo $comment->isFlagged() ? 'flagged' : 'unflagged'; ?>"
+            aria-label="<?php echo $escape($this->translate('Toggle flag')); ?>"
+            title="<?php echo $escape($this->translate('Toggle flag')); ?>"></a></li>
+        <?php endif; ?>
+        <?php if ($this->userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'set-spam')
+            || $this->userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'set-not-spam')):
+        ?>
+        <li><a href="#"
+            class="toggle-property spam not-spam o-icon-<?php echo $comment->isSpam() ? 'spam' : 'not-spam'; ?>"
+            data-toggle-url="<?php echo $escape($comment->url('toggle-spam')); ?>"
+            data-status="<?php echo $comment->isSpam() ? 'spam' : 'not-spam'; ?>"
+            aria-label="<?php echo $escape($this->translate('Toggle spam')); ?>"
+            title="<?php echo $escape($this->translate('Toggle spam')); ?>"></a></li>
+        <?php endif; ?>
+        <?php /* // TODO Delete comments from resources.
+        <?php if ($this->userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'delete')): ?>
+        <li><a href="<?php echo $escape($comment->url('delete')); ?>"
+            onclick="return confirm(<?php echo json_encode($this->translate('Are you sure to delete this comment?')); ?>;"
+            class="o-icon-delete sidebar-content"
+            data-sidebar-content-url="<?php echo $escape($comment->url('delete-confirm')); ?>"
+            aria-label="<?php echo $escape($this->translate('Delete')); ?>"
+            title="<?php echo $escape($this->translate('Delete')); ?>"></a></li>
+        <?php endif; ?>
+        */ ?>
+    </ul>
+</div>
+<div class="comment-body">
+    <?php echo $this->escapeHtml($comment->body()); ?>
+</div>
+<?php if ($comment->userIsAllowed('create')): ?>
+<p class='comment-reply'><?php echo $escape($this->translate('Reply')); ?></p>
+<?php endif; ?>
