@@ -91,7 +91,7 @@ CREATE TABLE comment (
     name VARCHAR(190) NOT NULL,
     website VARCHAR(760) NOT NULL,
     ip VARCHAR(45) NOT NULL,
-    user_agent VARCHAR(65535) NOT NULL,
+    user_agent TEXT NOT NULL,
     body LONGTEXT NOT NULL,
     approved TINYINT(1) NOT NULL,
     flagged TINYINT(1) NOT NULL,
@@ -138,6 +138,17 @@ SQL;
 
         $this->manageSettings($serviceLocator->get('Omeka\Settings'), 'uninstall');
         $this->manageSiteSettings($serviceLocator, 'uninstall');
+    }
+
+    public function upgrade($oldVersion, $newVersion, ServiceLocatorInterface $serviceLocator)
+    {
+        if (version_compare($oldVersion, '3.1.5', '<')) {
+            $connection = $serviceLocator->get('Omeka\Connection');
+            $sql = <<<'SQL'
+ALTER TABLE `comment` CHANGE `user_agent` `user_agent` text NOT NULL;
+SQL;
+            $connection->exec($sql);
+        }
     }
 
     protected function manageSettings($settings, $process, $key = 'config')

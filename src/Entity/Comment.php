@@ -97,7 +97,7 @@ class Comment extends AbstractEntity
 
     /**
      * @var string
-     * @Column(type="string", length=65535)
+     * @Column(type="text", length=65534)
      */
     protected $userAgent;
 

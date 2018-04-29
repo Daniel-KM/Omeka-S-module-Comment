@@ -135,7 +135,7 @@ Current maintainers:
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2017
+* Copyright Daniel Berthereau, 2017-2018
 
 
 [Comment]: https://github.com/Daniel-KM/Omeka-S-module-Comment
