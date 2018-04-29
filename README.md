@@ -21,7 +21,7 @@ Installation
 Uncompress files and rename plugin folder `Comment`.
 
 See general end user documentation for [Installing a module] and follow the
-config instructions
+config instructions.
 
 
 Requirements
@@ -142,7 +142,7 @@ Copyright
 [Omeka S]: https://omeka.org/s
 [Omeka Classic]: https://omeka.org/classic
 [Commenting plugin]: https://omeka.org/classic/plugins/Commenting
-[Upgrade To Omeka S]: https://github.com/Daniel-KM/UpgradeToOmekaS
+[Upgrade To Omeka S]: https://github.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [Guest User]: https://github.com/Daniel-KM/Omeka-S-module-GuestUser
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Comment/issues

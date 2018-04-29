@@ -65,7 +65,7 @@ class CommentForm extends Form
                     'label' => 'Name', // @translate
                 ],
                 'attributes' => [
-                    'placeholder' => 'My name...', // @translate
+                    'placeholder' => 'My name…', // @translate
                     'required' => false,
                     'value' => $isAnonymous ? '' : $user->getName(),
                 ],
@@ -78,7 +78,7 @@ class CommentForm extends Form
                     'label' => 'Email', // @translate
                 ],
                 'attributes' => [
-                    'placeholder' => 'My email (it won’t be displayed)...', // @translate
+                    'placeholder' => 'My email (it won’t be displayed)…', // @translate
                     'required' => true,
                     'value' => $isAnonymous ? '' : $user->getEmail(),
                 ],
@@ -91,7 +91,7 @@ class CommentForm extends Form
                     'label' => 'Website', // @translate
                 ],
                 'attributes' => [
-                    'placeholder' => 'My website...', // @translate
+                    'placeholder' => 'My website…', // @translate
                 ],
             ]);
         }
@@ -103,7 +103,7 @@ class CommentForm extends Form
                 'label' => 'Comment', // @translate
             ],
             'attributes' => [
-                'placeholder' => 'My comment...', // @translate
+                'placeholder' => 'My comment…', // @translate
                 'required' => true,
                 'rows' => 12,
             ],

@@ -168,7 +168,7 @@ SQL;
     }
 
     /**
-     * Add tag and tagging visibility filters to the entity manager.
+     * Add comment visibility filters to the entity manager.
      */
     protected function addEntityManagerFilters()
     {
@@ -550,7 +550,7 @@ SQL;
             'name' => 'comment_append_media_show',
             'type' => Checkbox::class,
             'options' => [
-                'label' => 'Append automatically to media page"', // @translate
+                'label' => 'Append automatically to media page', // @translate
                 'info' => 'If unchecked, the viewer can be added via the helper in the theme in any page.', // @translate
             ],
             'attributes' => [
