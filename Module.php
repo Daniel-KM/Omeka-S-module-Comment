@@ -531,8 +531,8 @@ SQL;
             'name' => 'comment_append_item_set_show',
             'type' => Checkbox::class,
             'options' => [
-                'label' => 'Append automatically to item set page"', // @translate
-                'info' => 'If unchecked, the viewer can be added via the helper in the theme in any page.', // @translate
+                'label' => 'Append automatically to item set page', // @translate
+                'info' => 'If unchecked, the comments can be added via the helper in the theme in any page.', // @translate
             ],
             'attributes' => [
                 'value' => $siteSettings->get(
@@ -547,7 +547,7 @@ SQL;
             'type' => Checkbox::class,
             'options' => [
                 'label' => 'Append automatically to item page', // @translate
-                'info' => 'If unchecked, the viewer can be added via the helper in the theme in any page.', // @translate
+                'info' => 'If unchecked, the comments can be added via the helper in the theme in any page.', // @translate
             ],
             'attributes' => [
                 'value' => $siteSettings->get(
@@ -562,7 +562,7 @@ SQL;
             'type' => Checkbox::class,
             'options' => [
                 'label' => 'Append automatically to media page', // @translate
-                'info' => 'If unchecked, the viewer can be added via the helper in the theme in any page.', // @translate
+                'info' => 'If unchecked, the comments can be added via the helper in the theme in any page.', // @translate
             ],
             'attributes' => [
                 'value' => $siteSettings->get(

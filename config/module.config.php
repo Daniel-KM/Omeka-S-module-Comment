@@ -128,7 +128,7 @@ return [
     'js_translate_strings' => [
         'You should accept the legal agreement.', // @translate
         'Comment was added to the resource.', // @translate
-        'It will be displayed definively when approved.', // @translate
+        'It will be displayed definitely when approved.', // @translate
         'Request too long to process.', // @translate
         'The resource doesn’t exist.', // @translate
         'Something went wrong', // @translate

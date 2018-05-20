@@ -40,7 +40,7 @@ class ConfigForm extends Form
             'type' => Checkbox::class,
             'options' => [
                 'label' => 'Allow public to comment', // @translate
-                'info' => 'Allows everyone, including non-registered users to comment.', // @translate
+                'info' => 'Allows everyone to comment, including non-registered users.', // @translate
             ],
         ]);
 
