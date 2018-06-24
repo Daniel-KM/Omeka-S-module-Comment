@@ -5,12 +5,12 @@ use Comment\Api\Representation\CommentRepresentation;
 use Comment\Entity\Comment;
 use Comment\Form\CommentForm;
 use Omeka\Api\Exception\NotFoundException;
+use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Stdlib\Message;
 use Zend\Http\PhpEnvironment\RemoteAddress;
 use Zend\Http\Response;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
-use Omeka\Entity\Resource;
 
 abstract class AbstractCommentController extends AbstractActionController
 {
@@ -163,7 +163,11 @@ abstract class AbstractCommentController extends AbstractActionController
         }
 
         if ($this->settings()->get('comment_public_notify_post')) {
-            $this->notifyEmail($resource, $comment);
+            // TODO Use adapter to get representation.
+            $representation = $this->api()
+                ->read('resources', $resourceId)
+                ->getContent();
+            $this->notifyEmail($representation, $comment);
         }
 
         return new JsonModel([
@@ -242,18 +246,16 @@ abstract class AbstractCommentController extends AbstractActionController
     /**
      * Notify by email for a comments on a resource.
      *
-     * @param Resource $resource
+     * @param AbstractResourceEntityRepresentation $resource
      * @param CommentRepresentation $comment
      */
-    protected function notifyEmail(Resource $resource, CommentRepresentation $comment)
+    protected function notifyEmail(AbstractResourceEntityRepresentation $resource, CommentRepresentation $comment)
     {
         $site = @$_SERVER['SERVER_NAME'] ?: sprintf('Server (%s)', @$_SERVER['SERVER_ADDR']); // @translate
         $subject = new Message('[%s] New public comment', $site); // @translate
 
-        $representation = $resource->getRepresentation();
-
         $body = new Message('A comment was added to resource #%d (%s) by %s <%s>.', // @translate
-            $resource->getId(), $representation->adminUrl(), $comment->name(), $comment->email());
+            $resource->id(), $resource->adminUrl(), $comment->name(), $comment->email());
         $body .= "\r\n";
         $body .= new Message('Comment: %s', "\n" . $comment->body()); // @translate
         $body .= "\r\n\r\n";
