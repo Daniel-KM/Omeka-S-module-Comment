@@ -76,7 +76,7 @@
     .comment .status-toggle::before,
     .comment .resource-name::before {
         display: inline-block;
-        font-family:"FontAwesome";
+        font-family: "Font Awesome 5 Free";
         padding-left: 3px;
         padding-right: 3px;
         width: 24px;
