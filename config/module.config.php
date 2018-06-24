@@ -65,7 +65,7 @@ return [
             'site' => [
                 'child_routes' => [
                     'comment' => [
-                        'type' => 'Segment',
+                        'type' => \Zend\Router\Http\Segment::class,
                         'options' => [
                             'route' => '/comment[/:action]',
                             'constraints' => [
@@ -83,7 +83,7 @@ return [
             'admin' => [
                 'child_routes' => [
                     'comment' => [
-                        'type' => 'Segment',
+                        'type' => \Zend\Router\Http\Segment::class,
                         'options' => [
                             'route' => '/comment[/:action]',
                             'constraints' => [
@@ -97,7 +97,7 @@ return [
                         ],
                     ],
                     'comment-id' => [
-                        'type' => 'Segment',
+                        'type' => \Zend\Router\Http\Segment::class,
                         'options' => [
                             'route' => '/comment/:id[/:action]',
                             'constraints' => [

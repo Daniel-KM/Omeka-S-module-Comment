@@ -35,9 +35,9 @@ abstract class AbstractCommentController extends AbstractActionController
             return $this->jsonError('Unauthorized access.', Response::STATUS_CODE_403); // @translate
         }
 
-        $a = (integer) @$data['address_a'];
-        $b = (integer) @$data['address_b'];
-        $c = (integer) @$data['address'];
+        $a = (int) @$data['address_a'];
+        $b = (int) @$data['address_b'];
+        $c = (int) @$data['address'];
         if ($a + $b !== $c) {
             return $this->jsonError('Are you really a robot?'); // @translate
         }

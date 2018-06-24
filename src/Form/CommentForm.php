@@ -45,7 +45,7 @@ class CommentForm extends Form
         $urlHelper = $this->getUrlHelper();
         $resourceId = $this->getOption('resource_id');
         $siteSlug = $this->getOption('site_slug');
-        $isPublic = (boolean) strlen($siteSlug);
+        $isPublic = (bool) strlen($siteSlug);
         $user = $this->getOption('user');
         $isAnonymous = empty($user);
         $action = $isPublic

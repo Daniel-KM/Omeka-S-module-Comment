@@ -456,7 +456,7 @@ SQL;
         $sharedEventManager->attach(
             \Omeka\Form\SiteSettingsForm::class,
             'form.add_elements',
-            [$this, 'addSiteSettingsFormElements']
+            [$this, 'addFormElementsSiteSettings']
         );
     }
 
@@ -465,7 +465,7 @@ SQL;
         $services = $this->getServiceLocator();
         $config = $services->get('Config');
         $settings = $services->get('Omeka\Settings');
-        $formElementManager = $services->get('FormElementManager');
+        $form = $services->get('FormElementManager')->get(ConfigForm::class);
 
         $data = [];
         $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
@@ -480,7 +480,6 @@ SQL;
 
         $renderer->ckEditor();
 
-        $form = $formElementManager->get(ConfigForm::class);
         $form->init();
         $form->setData($data);
         $html = $renderer->formCollection($form);
@@ -495,8 +494,7 @@ SQL;
 
         $params = $controller->getRequest()->getPost();
 
-        $form = $this->getServiceLocator()->get('FormElementManager')
-            ->get(ConfigForm::class);
+        $form = $services->get('FormElementManager')->get(ConfigForm::class);
         $form->init();
         $form->setData($params);
         if (!$form->isValid()) {
@@ -506,7 +504,7 @@ SQL;
 
         $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
         foreach ($params as $name => $value) {
-            if (isset($defaultSettings[$name])) {
+            if (array_key_exists($name, $defaultSettings)) {
                 if ($name === 'comment_public_notify_post') {
                     $value = array_filter(array_map('trim', explode(PHP_EOL, $value)));
                 }
@@ -515,7 +513,7 @@ SQL;
         }
     }
 
-    public function addSiteSettingsFormElements(Event $event)
+    public function addFormElementsSiteSettings(Event $event)
     {
         $services = $this->getServiceLocator();
         $siteSettings = $services->get('Omeka\Settings\Site');

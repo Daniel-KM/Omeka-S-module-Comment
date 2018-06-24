@@ -2,9 +2,7 @@
 namespace Comment\Form;
 
 use Omeka\Form\Element\CkeditorInline;
-use Zend\Form\Element\Checkbox;
-use Zend\Form\Element\MultiCheckbox;
-use Zend\Form\Element\Text;
+use Zend\Form\Element;
 use Zend\Form\Form;
 
 class ConfigForm extends Form
@@ -13,7 +11,7 @@ class ConfigForm extends Form
     {
         $this->add([
             'name' => 'comment_resources',
-            'type' => MultiCheckbox::class,
+            'type' => Element\MultiCheckbox::class,
             'options' => [
                 'label' => 'Resources to comment', // @translate
                 'info' => 'The type of resources for which comment is enabled.', // @translate
@@ -28,7 +26,7 @@ class ConfigForm extends Form
 
         $this->add([
             'name' => 'comment_public_allow_view',
-            'type' => Checkbox::class,
+            'type' => Element\Checkbox::class,
             'options' => [
                 'label' => 'Allow public to view comments', // @translate
                 'info' => 'If unchecked, comments will be displayed only in admin pages.', // @translate
@@ -37,7 +35,7 @@ class ConfigForm extends Form
 
         $this->add([
             'name' => 'comment_public_allow_comment',
-            'type' => Checkbox::class,
+            'type' => Element\Checkbox::class,
             'options' => [
                 'label' => 'Allow public to comment', // @translate
                 'info' => 'Allows everyone to comment, including non-registered users.', // @translate
@@ -46,7 +44,7 @@ class ConfigForm extends Form
 
         $this->add([
             'name' => 'comment_public_require_moderation',
-            'type' => Checkbox::class,
+            'type' => Element\Checkbox::class,
             'options' => [
                 'label' => 'Require moderation for public comments', // @translate
                 'info' => 'If unchecked, comments will appear immediately.', // @translate
@@ -56,7 +54,7 @@ class ConfigForm extends Form
         // TODO To be replaced by a select.
         $this->add([
             'name' => 'comment_public_notify_post',
-            'type' => 'Textarea',
+            'type' => Element\Textarea,
             'options' => [
                 'label' => 'Notify public comments by email', // @translate
                 'info' => 'The list of emails to notify when a comment is posted or flagged, one by row.', // @translate
@@ -68,7 +66,7 @@ class ConfigForm extends Form
 
         $this->add([
             'name' => 'comment_comments_label',
-            'type' => Text::class,
+            'type' => Element\Text::class,
             'options' => [
                 'label' => 'Label for comments', // @translate
                 'info' => 'A label to use, for example "Comments".', // @translate
@@ -77,7 +75,7 @@ class ConfigForm extends Form
 
         $this->add([
             'name' => 'comment_threaded',
-            'type' => Checkbox::class,
+            'type' => Element\Checkbox::class,
             'options' => [
                 'label' => 'Use threaded comments', // @translate
                 'info' => 'If checked, the replies will be displayed indented below the comment.', // @translate
@@ -98,7 +96,7 @@ class ConfigForm extends Form
 
         $this->add([
             'name' => 'comment_wpapi_key',
-            'type' => Text::class,
+            'type' => Element\Text::class,
             'options' => [
                 'label' => 'WordPress API key for Akismet if installed', // @translate
                 'info' => 'This feature requires the dependency package "zendframework/zendservice-akismet" that is not installed automatically.',
@@ -107,7 +105,7 @@ class ConfigForm extends Form
 
         $this->add([
             'name' => 'comment_antispam',
-            'type' => Checkbox::class,
+            'type' => Element\Checkbox::class,
             'options' => [
                 'label' => 'Simple antispam', // @translate
                 'info' => 'If checked, a simple antispam (an addition of two digits) will be added for anonymous people if ReCaptcha is not set.', // @translate
