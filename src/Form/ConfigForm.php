@@ -54,7 +54,7 @@ class ConfigForm extends Form
         // TODO To be replaced by a select.
         $this->add([
             'name' => 'comment_public_notify_post',
-            'type' => Element\Textarea,
+            'type' => Element\Textarea::class,
             'options' => [
                 'label' => 'Notify public comments by email', // @translate
                 'info' => 'The list of emails to notify when a comment is posted or flagged, one by row.', // @translate
