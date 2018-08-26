@@ -1,6 +1,6 @@
 <?php
+$translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
-$translate= $this->plugin('translate');
 $resourceName = $resource->getControllerName();
 $column = $resourceName === 'user' ? 'owner_id' : 'resource_id';
 // TODO Remove this hack to fix a css issue in user view.
@@ -10,7 +10,7 @@ $this->headStyle()->appendStyle('.show .property { justify-content: normal; }');
     <h4><?php echo $translate('Comments'); ?></h4>
     <ul class="comment-stats">
         <li>
-            <?php echo sprintf($this->translate('Total: %s'),
+            <?php echo sprintf($translate('Total: %s'),
                 $this->hyperlink($total_comments, $this->url('admin/comment', [], ['query' => [$column => $resource->id()]]))
             ); ?>
         </li>
