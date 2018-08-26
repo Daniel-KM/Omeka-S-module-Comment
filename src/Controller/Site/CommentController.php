@@ -32,8 +32,11 @@ class CommentController extends AbstractCommentController
             $this->logger()->warn('The comment id cannot be identified.'); // @translate
             return new JsonModel(['error' => 'Comment not found.']); // @translate
         }
+
+        // Just check if the comment exists.
+        $api = $this->api();
         try {
-            $resource = $this->api()
+            $api
                 ->read('comments', $commentId, [], ['responseContent' => 'resource'])
                 ->getContent();
         } catch (NotFoundException $e) {
@@ -44,7 +47,7 @@ class CommentController extends AbstractCommentController
             return new JsonModel(['error' => 'Unauthorized access.']); // @translate
         }
 
-        $response = $this->api()
+        $api
             ->update('comments', $commentId, ['o-module-comment:flagged' => $flagUnflag], [], ['isPartial' => true]);
 
         if ($flagUnflag) {

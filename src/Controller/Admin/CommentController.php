@@ -3,7 +3,7 @@ namespace Comment\Controller\Admin;
 
 use Comment\Api\Representation\CommentRepresentation;
 use Comment\Controller\AbstractCommentController;
-use Omeka\Entity\Resource;
+use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Form\ConfirmForm;
 use Zend\Http\Response;
 use Zend\View\Model\JsonModel;
@@ -256,8 +256,6 @@ class CommentController extends AbstractCommentController
      * {@inheritDoc}
      *
      * No spam for admin board.
-     *
-     * @see \Comment\Controller\AbstractCommentController::checkSpam()
      */
     protected function checkSpam(array $data)
     {
@@ -268,10 +266,8 @@ class CommentController extends AbstractCommentController
      * {@inheritDoc}
      *
      * No spam, so no notification for admin board.
-     *
-     * @see \Comment\Controller\AbstractCommentController::notifyEmail()
      */
-    protected function notifyEmail(Resource $resource, CommentRepresentation $comment)
+    protected function notifyEmail(AbstractResourceEntityRepresentation $resource, CommentRepresentation $comment)
     {
         // Nothing to do.
     }

@@ -206,7 +206,7 @@ abstract class AbstractCommentController extends AbstractActionController
             $akismet = new \ZendService\Akismet\Akismet($wordPressAPIKey, $serverUrl);
             $akismetData = $this->getAkismetData($data);
             try {
-                $isSpam = $askimet->isSpam($askimetData);
+                $isSpam = $akismet->isSpam($akismetData);
             } catch (\Exception $e) {
                 $isSpam = true;
             }
@@ -225,7 +225,7 @@ abstract class AbstractCommentController extends AbstractActionController
     {
         $serverUrl = $this->getPluginManager()->get('viewHelpers')->get('serverUrl');
         $path = $this->getRequest()->getRequestUri();
-        $permalink = $this->serverUrl() . $path;
+        $permalink = $serverUrl() . $path;
         $data = [
             'user_ip' => $this->getClientIp(),
             'user_agent' => $this->getUserAgent(),
