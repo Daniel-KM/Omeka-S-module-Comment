@@ -124,18 +124,10 @@ The fact that you are presently reading this means that you have had knowledge
 of the CeCILL license and that you accept its terms.
 
 
-Contact
--------
-
-Current maintainers:
-
-* Daniel Berthereau (see [Daniel-KM] on GitHub)
-
-
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2017-2018
+* Copyright Daniel Berthereau, 2017-2019 (see [Daniel-KM] on GitHub)
 
 
 [Comment]: https://github.com/Daniel-KM/Omeka-S-module-Comment

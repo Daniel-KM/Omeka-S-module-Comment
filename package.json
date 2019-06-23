@@ -1,6 +1,6 @@
 {
   "name": "omeka-s-module-comment",
-  "version": "3.1.4",
+  "version": "3.1.7",
   "license": "CECILL-2.1",
   "description": "Comment (module for Omeka S)",
   "repository": {
