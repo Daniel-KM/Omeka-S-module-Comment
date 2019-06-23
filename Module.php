@@ -506,7 +506,8 @@ SQL;
         foreach ($params as $name => $value) {
             if (array_key_exists($name, $defaultSettings)) {
                 if ($name === 'comment_public_notify_post') {
-                    $value = array_filter(array_map('trim', explode(PHP_EOL, $value)));
+                    // The str_replace() allows to fix Apple copy/paste.
+                    $value = array_filter(array_map('trim', explode(PHP_EOL, str_replace(["\r\n", "\n\r", "\r", "\n"], PHP_EOL, $value))));
                 }
                 $settings->set($name, $value);
             }

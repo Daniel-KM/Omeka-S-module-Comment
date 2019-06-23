@@ -173,7 +173,7 @@ abstract class AbstractCommentController extends AbstractActionController
         return new JsonModel([
             'content' => [
                 'resource_id' => $resourceId,
-                'moderation' => !$data['o-module-comment:approved']
+                'moderation' => !$data['o-module-comment:approved'],
             ],
         ]);
     }
@@ -184,7 +184,7 @@ abstract class AbstractCommentController extends AbstractActionController
      * If Akismet is not installed, return false.
      *
      * @param array $data
-     * @return boolean
+     * @return bool
      */
     protected function checkSpam(array $data)
     {
@@ -282,7 +282,7 @@ abstract class AbstractCommentController extends AbstractActionController
         $ip = (new RemoteAddress())->getIpAddress();
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)
             || filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)
-        ){
+        ) {
             return $ip;
         }
         return '::';
