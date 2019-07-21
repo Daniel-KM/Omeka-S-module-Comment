@@ -507,7 +507,7 @@ SQL;
             if (array_key_exists($name, $defaultSettings)) {
                 if ($name === 'comment_public_notify_post') {
                     // The str_replace() allows to fix Apple copy/paste.
-                    $value = array_filter(array_map('trim', explode(PHP_EOL, str_replace(["\r\n", "\n\r", "\r", "\n"], PHP_EOL, $value))));
+                    $value = array_filter(array_map('trim', explode("\n", str_replace(["\r\n", "\n\r", "\r"], ["\n", "\n", "\n"], $value))));
                 }
                 $settings->set($name, $value);
             }
