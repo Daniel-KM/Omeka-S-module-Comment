@@ -216,17 +216,19 @@ SQL;
                 $adapterRights = ['search', 'read', 'update'];
                 $controllerRights = ['show', 'flag'];
             }
-            $acl->allow(null, Comment::class, $entityRights);
-            $acl->allow(null, Api\Adapter\CommentAdapter::class, $adapterRights);
-            $acl->allow(null, Controller\Site\CommentController::class, $controllerRights);
+            $acl
+                ->allow(null, [Comment::class], $entityRights)
+                ->allow(null, [Api\Adapter\CommentAdapter::class], $adapterRights)
+                ->allow(null, [Controller\Site\CommentController::class], $controllerRights);
         }
 
         // Identified users can comment. Reviewer and above can approve.
         $roles = $acl->getRoles();
-        $acl->allow($roles, Comment::class, ['read', 'create', 'update']);
-        $acl->allow($roles, Api\Adapter\CommentAdapter::class, ['search', 'read', 'create', 'update']);
-        $acl->allow($roles, Controller\Site\CommentController::class, ['show', 'flag', 'add']);
-        $acl->allow($roles, Controller\Admin\CommentController::class, ['browse', 'flag', 'add', 'show-details']);
+        $acl
+            ->allow($roles, Comment::class, ['read', 'create', 'update'])
+            ->allow($roles, Api\Adapter\CommentAdapter::class, ['search', 'read', 'create', 'update'])
+            ->allow($roles, Controller\Site\CommentController::class, ['show', 'flag', 'add'])
+            ->allow($roles, Controller\Admin\CommentController::class, ['browse', 'flag', 'add', 'show-details']);
 
         $approbators = [
             \Omeka\Permissions\Acl::ROLE_GLOBAL_ADMIN,
@@ -234,45 +236,46 @@ SQL;
             \Omeka\Permissions\Acl::ROLE_EDITOR,
             \Omeka\Permissions\Acl::ROLE_REVIEWER,
         ];
-        $acl->allow(
-            $approbators,
-            Comment::class,
-            ['read', 'create', 'update', 'delete', 'view-all']
-        );
-        $acl->allow(
-            $approbators,
-            Api\Adapter\CommentAdapter::class,
-            ['search', 'read', 'create', 'update', 'delete', 'batch-create', 'batch-update', 'batch-delete']
-        );
-        $acl->allow(
-            $approbators,
-            Controller\Admin\CommentController::class,
-            [
-                'show',
-                'add',
-                'browse',
-                'batch-approve',
-                'batch-unapprove',
-                'batch-flag',
-                'batch-unflag',
-                'batch-set-spam',
-                'batch-set-not-spam',
-                'toggle-approved',
-                'toggle-flagged',
-                'toggle-spam',
-                'batch-delete',
-                'batch-delete-all',
-                'batch-update',
-                'approve',
-                'flag',
-                'unflag',
-                'set-spam',
-                'set-not-spam',
-                'delete',
-                'delete-confirm',
-                'show-details',
-            ]
-        );
+        $acl
+            ->allow(
+                $approbators,
+                [Comment::class],
+                ['read', 'create', 'update', 'delete', 'view-all']
+            )
+            ->allow(
+                $approbators,
+                [Api\Adapter\CommentAdapter::class],
+                ['search', 'read', 'create', 'update', 'delete', 'batch-create', 'batch-update', 'batch-delete']
+            )
+            ->allow(
+                $approbators,
+                [Controller\Admin\CommentController::class],
+                [
+                    'show',
+                    'add',
+                    'browse',
+                    'batch-approve',
+                    'batch-unapprove',
+                    'batch-flag',
+                    'batch-unflag',
+                    'batch-set-spam',
+                    'batch-set-not-spam',
+                    'toggle-approved',
+                    'toggle-flagged',
+                    'toggle-spam',
+                    'batch-delete',
+                    'batch-delete-all',
+                    'batch-update',
+                    'approve',
+                    'flag',
+                    'unflag',
+                    'set-spam',
+                    'set-not-spam',
+                    'delete',
+                    'delete-confirm',
+                    'show-details',
+                ]
+            );
     }
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
