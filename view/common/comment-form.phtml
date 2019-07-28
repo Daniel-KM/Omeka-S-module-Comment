@@ -9,6 +9,7 @@ $plugins = $this->getHelperPluginManager();
 $formElement = $plugins->get('formElement');
 $formLabel = $plugins->get('formLabel');
 $formText = $plugins->get('formText');
+$formHidden = $plugins->get('formHidden');
 
 $user = $this->identity();
 $isAnonymous = empty($user);
@@ -93,9 +94,9 @@ $commentForm->prepare();
         </div>
     </div>
     <?php $element = $commentForm->get('address_a'); ?>
-    <?= $this->formHidden($element) ?>
+    <?= $formHidden($element) ?>
     <?php $element = $commentForm->get('address_b'); ?>
-    <?= $this->formHidden($element) ?>
+    <?= $formHidden($element) ?>
     <?php endif; ?>
     <?php if ($commentForm->has('legal_agreement')): ?>
     <?php $element = $commentForm->get('legal_agreement'); ?>
@@ -111,17 +112,17 @@ $commentForm->prepare();
     <?php endif; ?>
 <?php endif; ?>
 
-    <?= $formElement($commentForm->get('resource_id')) ?>
-    <?= $formElement($commentForm->get('comment_parent_id')) ?>
-    <?= $formElement($commentForm->get('path')) ?>
-    <?= $formElement($commentForm->get('csrf_' . $resource->id())) ?>
-    <?= $formElement($commentForm->get('csrf')) ?>
+    <?= $formHidden($commentForm->get('resource_id')) ?>
+    <?= $formHidden($commentForm->get('comment_parent_id')) ?>
+    <?= $formHidden($commentForm->get('path')) ?>
+    <?= $formHidden($commentForm->get('csrf_' . $resource->id())) ?>
+    <?= $formHidden($commentForm->get('csrf')) ?>
     <?php $element = $commentForm->get('submit'); ?>
     <div class="field">
         <div class="field-meta">
         </div>
         <div class="inputs" required="required">
-            <?= $this->formButton($element) ?>
+            <?= $this->formInput($element) ?>
         </div>
     </div>
     <?php //echo $this->formButton()->openTag($element) ?>
