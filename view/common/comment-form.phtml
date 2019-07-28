@@ -1,60 +1,76 @@
 <?php
-$commentForm->prepare();
-$formElement = $this->plugin('formElement');
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Comment\Form\CommentForm $commentForm
+ * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource
+ */
+
+$plugins = $this->getHelperPluginManager();
+$formElement = $plugins->get('formElement');
+$formLabel = $plugins->get('formLabel');
+$formText = $plugins->get('formText');
+
 $user = $this->identity();
 $isAnonymous = empty($user);
+
+$commentForm->prepare();
 ?>
-<div id="comment-main-container" data-is-anonymous="<?php echo (int) $isAnonymous; ?>">
-    <?php // echo $this->form($commentForm); ?>
+
+<div id="comment-main-container" data-is-anonymous="<?= (int) $isAnonymous ?>">
+    <?php // echo $this->form($commentForm) ?>
     <?php // TODO Add messages only if not set by layout. Anyway, they are available via json. ?>
     <?php if (false && $messages = $this->messages()): ?>
-    <div id='comments-flash'><?php echo $messages; ?></div>
+    <div id="comments-flash"><?= $messages ?></div>
     <?php endif; ?>
-    <?php echo $this->form()->openTag($commentForm); ?>
+
+    <?= $this->form()->openTag($commentForm) ?>
+
 <?php if ($isAnonymous): ?>
     <?php $element = $commentForm->get('o:name'); ?>
     <div class="field">
         <div class="field-meta">
-            <?php echo $this->formLabel($element); ?>
+            <?= $formLabel($element) ?>
         </div>
         <div class="inputs">
-            <?php echo $this->formText($element); ?>
+            <?= $formText($element) ?>
         </div>
     </div>
     <?php $element = $commentForm->get('o:email'); ?>
     <div class="field">
         <div class="field-meta">
-            <?php echo $this->formLabel($element); ?>
+            <?= $formLabel($element) ?>
         </div>
         <div class="inputs" required="required">
-            <?php echo $this->formText($element); ?>
+            <?= $formText($element) ?>
         </div>
     </div>
     <?php $element = $commentForm->get('o-module-comment:website'); ?>
     <div class="field">
         <div class="field-meta">
-            <?php echo $this->formLabel($element); ?>
+            <?= $formLabel($element) ?>
         </div>
         <div class="inputs">
-            <?php echo $this->formText($element); ?>
+            <?= $formText($element) ?>
         </div>
     </div>
 <?php endif; ?>
+
     <?php $element = $commentForm->get('o-module-comment:body'); ?>
     <div class="field">
         <div class="field-meta">
-            <?php echo $this->formLabel($element); ?>
+            <?= $formLabel($element) ?>
         </div>
         <div class="inputs" required="required">
-            <?php echo $this->formTextArea($element); ?>
+            <?= $this->formTextArea($element) ?>
         </div>
     </div>
+
 <?php if ($isAnonymous): ?>
     <?php if ($commentForm->has('recaptcha')): ?>
     <?php $element = $commentForm->get('recaptcha'); ?>
     <div class="field">
         <div class="inputs" required="required">
-            <?php echo $this->formElement($element); ?>
+            <?= $formElement($element) ?>
         </div>
     </div>
     <?php endif; ?>
@@ -62,7 +78,7 @@ $isAnonymous = empty($user);
     <?php $element = $commentForm->get('o-module-comment:check'); ?>
     <div class="field">
         <div class="inputs" required="required">
-            <?php echo $this->formElement($element); ?>
+            <?= $formElement($element) ?>
         </div>
     </div>
     <?php endif; ?>
@@ -70,45 +86,46 @@ $isAnonymous = empty($user);
     <?php $element = $commentForm->get('address'); ?>
     <div class="field">
         <div class="field-meta">
-            <?php echo $this->formLabel($element); ?>
+            <?= $formLabel($element) ?>
         </div>
         <div class="inputs" required="required">
-            <?php echo $this->formElement($element); ?>
+            <?= $formElement($element) ?>
         </div>
     </div>
     <?php $element = $commentForm->get('address_a'); ?>
-    <?php echo $this->formHidden($element); ?>
+    <?= $this->formHidden($element) ?>
     <?php $element = $commentForm->get('address_b'); ?>
-    <?php echo $this->formHidden($element); ?>
+    <?= $this->formHidden($element) ?>
     <?php endif; ?>
     <?php if ($commentForm->has('legal_agreement')): ?>
     <?php $element = $commentForm->get('legal_agreement'); ?>
     <div class="field">
         <div class="field-meta">
-            <?php echo $this->formLabel($element); ?>
+            <?= $formLabel($element) ?>
         </div>
         <div class="inputs" required="required">
-            <?php echo $this->setting('comment_legal_text'); ?>
-            <?php echo $this->formCheckbox($element); ?>
+            <?= $this->setting('comment_legal_text') ?>
+            <?= $this->formCheckbox($element) ?>
         </div>
     </div>
     <?php endif; ?>
 <?php endif; ?>
-    <?php echo $formElement($commentForm->get('resource_id')); ?>
-    <?php echo $formElement($commentForm->get('comment_parent_id')); ?>
-    <?php echo $formElement($commentForm->get('path')); ?>
-    <?php echo $formElement($commentForm->get('csrf_' . $resource->id())); ?>
-    <?php echo $formElement($commentForm->get('csrf')); ?>
+
+    <?= $formElement($commentForm->get('resource_id')) ?>
+    <?= $formElement($commentForm->get('comment_parent_id')) ?>
+    <?= $formElement($commentForm->get('path')) ?>
+    <?= $formElement($commentForm->get('csrf_' . $resource->id())) ?>
+    <?= $formElement($commentForm->get('csrf')) ?>
     <?php $element = $commentForm->get('submit'); ?>
     <div class="field">
         <div class="field-meta">
         </div>
         <div class="inputs" required="required">
-            <?php echo $this->formButton($element); ?>
+            <?= $this->formButton($element) ?>
         </div>
     </div>
-    <?php //echo $this->formButton()->openTag($element); ?>
-    <?php //echo $this->formLabel($element); ?>
-    <?php //echo $this->formButton()->closeTag(); ?>
-    <?php echo $this->form()->closeTag(); ?>
+    <?php //echo $this->formButton()->openTag($element) ?>
+    <?php //echo $formLabel($element) ?>
+    <?php //echo $this->formButton()->closeTag() ?>
+    <?= $this->form()->closeTag() ?>
 </div>

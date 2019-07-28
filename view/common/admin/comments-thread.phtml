@@ -1,10 +1,20 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Comment\Api\Representation\CommentRepresentation[] $comments
+ * @var int $parent_id
+ */
+
+$partial = $this->plugin('partial');
+?>
+
 <?php foreach ($comments as $comment) : ?>
     <?php $parent = $comment->parent(); ?>
     <?php if (($parent && $parent->id() == $parent_id) || (empty($parent) && empty($parent_id))): ?>
-    <div id="comment-<?php echo $comment->id(); ?>" class='comment'>
-        <?php echo $this->partial('common/admin/comment', array('comment' => $comment)); ?>
-        <div class='comment-children'>
-            <?php echo $this->partial('common/admin/comments-thread', array('comments' => $comments, 'parent_id' => $comment->id())); ?>
+    <div id="comment-<?= $comment->id() ?>" class="comment">
+        <?= $partial('common/admin/comment', array('comment' => $comment)) ?>
+        <div class="comment-children">
+            <?= $partial('common/admin/comments-thread', array('comments' => $comments, 'parent_id' => $comment->id())) ?>
         </div>
     </div>
     <?php endif; ?>

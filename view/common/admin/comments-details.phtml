@@ -1,36 +1,50 @@
 <?php
-$translate = $this->plugin('translate');
-$escape = $this->plugin('escapeHtml');
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Comment\Api\Representation\CommentRepresentation $resource
+ * @var int $total_comments
+ * @var int $total_approved
+ * @var int $total_flagged
+ * @var int $total_spam
+ */
+
+$plugins = $this->getHelperPluginManager();
+$translate = $plugins->get('translate');
+$url = $plugins->get('url');
+$hyperlink = $plugins->get('hyperlink');
+
 $resourceName = $resource->getControllerName();
 $column = $resourceName === 'user' ? 'owner_id' : 'resource_id';
+
 // TODO Remove this hack to fix a css issue in user view.
 $this->headStyle()->appendStyle('.show .property { justify-content: normal; }');
 ?>
+
 <div class="property">
-    <h4><?php echo $translate('Comments'); ?></h4>
+    <h4><?= $translate('Comments') ?></h4>
     <ul class="comment-stats">
         <li>
-            <?php echo sprintf($translate('Total: %s'),
-                $this->hyperlink($total_comments, $this->url('admin/comment', [], ['query' => [$column => $resource->id()]]))
-            ); ?>
+            <?= sprintf($translate('Total: %s'),
+                $hyperlink($total_comments, $url('admin/comment', [], ['query' => [$column => $resource->id()]]))
+            ) ?>
         </li>
         <li>
-            <?php echo sprintf($translate('Approved: %s / Unapproved: %s'),
-                $this->hyperlink($total_approved, $this->url('admin/comment', [], ['query' => [$column => $resource->id(), 'approved' => true]])),
-                $this->hyperlink($total_comments - $total_approved, $this->url('admin/comment', [], ['query' => [$column => $resource->id(), 'approved' => false]]))
-            ); ?>
+            <?= sprintf($translate('Approved: %s / Unapproved: %s'),
+                $hyperlink($total_approved, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'approved' => true]])),
+                $hyperlink($total_comments - $total_approved, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'approved' => false]]))
+            ) ?>
         </li>
         <li>
-            <?php echo sprintf($translate('Flagged: %s / Unflagged: %s'),
-                $this->hyperlink($total_flagged, $this->url('admin/comment', [], ['query' => [$column => $resource->id(), 'flagged' => true]])),
-                $this->hyperlink($total_comments - $total_flagged, $this->url('admin/comment', [], ['query' => [$column => $resource->id(), 'flagged' => false]]))
-            ); ?>
+            <?= sprintf($translate('Flagged: %s / Unflagged: %s'),
+                $hyperlink($total_flagged, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'flagged' => true]])),
+                $hyperlink($total_comments - $total_flagged, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'flagged' => false]]))
+            ) ?>
         </li>
         <li>
-            <?php echo sprintf($translate('Spam: %s / Not spam: %s'),
-                $this->hyperlink($total_spam, $this->url('admin/comment', [], ['query' => [$column => $resource->id(), 'spam' => true]])),
-                $this->hyperlink($total_comments - $total_spam, $this->url('admin/comment', [], ['query' => [$column => $resource->id(), 'spam' => false]]))
-            ); ?>
+            <?= sprintf($translate('Spam: %s / Not spam: %s'),
+                $hyperlink($total_spam, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'spam' => true]])),
+                $hyperlink($total_comments - $total_spam, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'spam' => false]]))
+            ) ?>
         </li>
     </ul>
 </div>

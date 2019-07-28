@@ -1,5 +1,14 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Comment\Api\Representation\CommentRepresentation[] $comments
+ */
+
+$partial = $this->plugin('partial');
+?>
+
 <?php foreach ($comments as $comment): ?>
-<div id="comment-<?php echo $comment->id(); ?>" class='comment'>
-    <?php echo $this->partial('common/admin/comment', ['comment' => $comment]); ?>
+<div id="comment-<?= $comment->id() ?>" class="comment">
+    <?= $partial('common/admin/comment', ['comment' => $comment]) ?>
 </div>
 <?php endforeach; ?>

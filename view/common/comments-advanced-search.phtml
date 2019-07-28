@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Comment\Form\SearchForm $form
+ * @var array $query
+ */
+
 $hasComments = !empty($query['has_comments']);
 $form = $this->searchCommentForm();
 $form->setData([
