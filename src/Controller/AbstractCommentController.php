@@ -134,6 +134,7 @@ abstract class AbstractCommentController extends AbstractActionController
             'user' => $user,
             'path' => $path,
         ];
+        /** @var \Comment\Form\CommentForm $form */
         $form = $this->getForm(CommentForm::class, $options);
         $form->init();
         $form->setData($data);
@@ -152,7 +153,10 @@ abstract class AbstractCommentController extends AbstractActionController
 
         $response = $this->api($form)->create('comments', $data);
         if (!$response) {
-            return $this->jsonError('Internal error.', Response::STATUS_CODE_500); // @translate
+            $messages = $form->getMessages();
+            return $this->jsonError('There is issue in your comment.', // @translate
+                Response::STATUS_CODE_400,
+                $messages);
         }
         $comment = $response->getContent();
 
