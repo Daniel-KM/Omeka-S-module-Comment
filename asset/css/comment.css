@@ -84,6 +84,10 @@
     min-width: 140px;
 }
 
+.comment .comment-date {
+    opacity: 0.5;
+}
+
 .comment .comment-flag,
 .comment .comment-unflag {
     cursor: pointer;
