@@ -185,12 +185,12 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
             <td>
                 <?php if ($resource): ?>
                     <?php
-                    $url = $url(
+                    $urlResource = $url(
                         'admin/id',
                         ['controller' => $resource->getControllerName(), 'id' => $resource->id()],
                         ['fragment' => 'comments']
                     );
-                    echo $hyperlink($resource->displayTitle(), $url);
+                    echo $hyperlink($resource->displayTitle(), $urlResource);
                 ?>
                 <span class="resource-name <?= $resource->getControllerName() ?>" aria-label="<?= $translate($resource->getControllerName()) ?>"></span>
                 <?php else: ?>
