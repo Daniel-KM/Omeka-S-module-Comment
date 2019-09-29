@@ -55,6 +55,15 @@ class SettingsFieldset extends Fieldset
             ])
 
             ->add([
+                'name' => 'comment_user_require_moderation',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'label' => 'Require moderation for non-admin users', // @translate
+                    'info' => 'If unchecked, comments will appear immediately.', // @translate
+                ],
+            ])
+
+            ->add([
                 'name' => 'comment_public_notify_post',
                 'type' => Element\Textarea::class,
                 'options' => [

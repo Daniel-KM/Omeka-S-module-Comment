@@ -141,6 +141,7 @@ return [
             'comment_public_allow_comment' => true,
             'comment_public_require_moderation' => true,
             'comment_public_notify_post' => [],
+            'comment_user_require_moderation' => false,
             'comment_threaded' => true,
             'comment_max_length' => 2000,
             'comment_comments_label' => 'Comments', // @translate

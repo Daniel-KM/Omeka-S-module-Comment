@@ -98,7 +98,8 @@ abstract class AbstractCommentController extends AbstractActionController
             $data['o:email'] = $user->getEmail();
             $data['o:name'] = $user->getName();
             $role = $user->getRole();
-            $data['o-module-comment:approved'] = in_array($role, $this->approbators);
+            $data['o-module-comment:approved'] = in_array($role, $this->approbators)
+                || !$this->settings()->get('comment_user_require_moderation');
         } else {
             if (!$this->userIsAllowed(Comment::class, 'create')) {
                 return $this->jsonError('Unauthorized access.', Response::STATUS_CODE_403); // @translate
