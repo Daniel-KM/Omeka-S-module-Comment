@@ -51,7 +51,6 @@ class ConfigForm extends Form
             ],
         ]);
 
-        // TODO To be replaced by a select.
         $this->add([
             'name' => 'comment_public_notify_post',
             'type' => Element\Textarea::class,

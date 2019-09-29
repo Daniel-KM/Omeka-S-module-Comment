@@ -4,7 +4,7 @@
  *
  * Add public and private commenting on resources and manage them.
  *
- * @copyright Daniel Berthereau, 2017-2018
+ * @copyright Daniel Berthereau, 2017-2019
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -32,15 +32,21 @@
  */
 namespace Comment;
 
+if (!class_exists(\Generic\AbstractModule::class)) {
+    require file_exists(dirname(__DIR__) . '/Generic/AbstractModule.php')
+        ? dirname(__DIR__) . '/Generic/AbstractModule.php'
+        : __DIR__ . '/src/Generic/AbstractModule.php';
+}
+
 use Comment\Entity\Comment;
 use Comment\Form\ConfigForm;
+use Generic\AbstractModule;
 use Omeka\Api\Representation\AbstractEntityRepresentation;
 use Omeka\Api\Representation\ItemRepresentation;
 use Omeka\Api\Representation\ItemSetRepresentation;
 use Omeka\Api\Representation\MediaRepresentation;
 use Omeka\Api\Representation\UserRepresentation;
 use Omeka\Entity\AbstractEntity;
-use Omeka\Module\AbstractModule;
 // TODO Add IsSelfAssertion.
 // use Omeka\Permissions\Assertion\IsSelfAssertion;
 use Zend\EventManager\Event;
@@ -54,6 +60,8 @@ use Zend\View\Renderer\PhpRenderer;
 
 class Module extends AbstractModule
 {
+    const NAMESPACE = __NAMESPACE__;
+
     /**
      * @var array Cache of comments by resource.
      */
@@ -62,11 +70,6 @@ class Module extends AbstractModule
         'resources' => [],
         'sites' => [],
     ];
-
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
-    }
 
     public function onBootstrap(MvcEvent $event)
     {
@@ -77,105 +80,18 @@ class Module extends AbstractModule
 
     public function install(ServiceLocatorInterface $serviceLocator)
     {
-        $t = $serviceLocator->get('MvcTranslator');
-
-        $sql = <<<'SQL'
-CREATE TABLE comment (
-    id INT AUTO_INCREMENT NOT NULL,
-    owner_id INT DEFAULT NULL,
-    resource_id INT DEFAULT NULL,
-    site_id INT DEFAULT NULL,
-    parent_id INT DEFAULT NULL,
-    path VARCHAR(1024) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    name VARCHAR(190) NOT NULL,
-    website VARCHAR(760) NOT NULL,
-    ip VARCHAR(45) NOT NULL,
-    user_agent TEXT NOT NULL,
-    body LONGTEXT NOT NULL,
-    approved TINYINT(1) NOT NULL,
-    flagged TINYINT(1) NOT NULL,
-    spam TINYINT(1) NOT NULL,
-    created DATETIME NOT NULL,
-    modified DATETIME DEFAULT NULL,
-    INDEX IDX_9474526C7E3C61F9 (owner_id),
-    INDEX IDX_9474526C89329D25 (resource_id),
-    INDEX IDX_9474526CF6BD1646 (site_id),
-    INDEX IDX_9474526C727ACA70 (parent_id),
-    PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
-ALTER TABLE comment ADD CONSTRAINT FK_9474526C7E3C61F9 FOREIGN KEY (owner_id) REFERENCES user (id) ON DELETE SET NULL;
-ALTER TABLE comment ADD CONSTRAINT FK_9474526C89329D25 FOREIGN KEY (resource_id) REFERENCES resource (id) ON DELETE SET NULL;
-ALTER TABLE comment ADD CONSTRAINT FK_9474526CF6BD1646 FOREIGN KEY (site_id) REFERENCES site (id) ON DELETE SET NULL;
-ALTER TABLE comment ADD CONSTRAINT FK_9474526C727ACA70 FOREIGN KEY (parent_id) REFERENCES comment (id) ON DELETE SET NULL;
-SQL;
-        $connection = $serviceLocator->get('Omeka\Connection');
-        $sqls = array_filter(array_map('trim', explode(';', $sql)));
-        foreach ($sqls as $sql) {
-            $connection->exec($sql);
-        }
+        parent::install($serviceLocator);
 
         $settings = $serviceLocator->get('Omeka\Settings');
-        $this->manageSettings($settings, 'install');
+        $translator = $serviceLocator->get('MvcTranslator');
 
         $html = '<p>';
-        $html .= sprintf($t->translate('I agree with %sterms of use%s and I accept to free my contribution under the licence %sCC BY-SA%s.'), // @translate
+        $html .= sprintf($translator->translate('I agree with %sterms of use%s and I accept to free my contribution under the licence %sCC BY-SA%s.'), // @translate
             '<a rel="licence" href="#" target="_blank">', '</a>',
             '<a rel="licence" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">', '</a>'
         );
         $html .= '</p>';
         $settings->set('comment_legal_text', $html);
-        $this->manageSiteSettings($serviceLocator, 'install');
-    }
-
-    public function uninstall(ServiceLocatorInterface $serviceLocator)
-    {
-        $sql = <<<'SQL'
-DROP TABLE IF EXISTS comment;
-SQL;
-        $conn = $serviceLocator->get('Omeka\Connection');
-        $conn->exec($sql);
-
-        $this->manageSettings($serviceLocator->get('Omeka\Settings'), 'uninstall');
-        $this->manageSiteSettings($serviceLocator, 'uninstall');
-    }
-
-    public function upgrade($oldVersion, $newVersion, ServiceLocatorInterface $serviceLocator)
-    {
-        if (version_compare($oldVersion, '3.1.5', '<')) {
-            $connection = $serviceLocator->get('Omeka\Connection');
-            $sql = <<<'SQL'
-ALTER TABLE `comment` CHANGE `user_agent` `user_agent` text NOT NULL;
-SQL;
-            $connection->exec($sql);
-        }
-    }
-
-    protected function manageSettings($settings, $process, $key = 'config')
-    {
-        $config = require __DIR__ . '/config/module.config.php';
-        $defaultSettings = $config[strtolower(__NAMESPACE__)][$key];
-        foreach ($defaultSettings as $name => $value) {
-            switch ($process) {
-                case 'install':
-                    $settings->set($name, $value);
-                    break;
-                case 'uninstall':
-                    $settings->delete($name);
-                    break;
-            }
-        }
-    }
-
-    protected function manageSiteSettings(ServiceLocatorInterface $serviceLocator, $process)
-    {
-        $siteSettings = $serviceLocator->get('Omeka\Settings\Site');
-        $api = $serviceLocator->get('Omeka\ApiManager');
-        $sites = $api->search('sites')->getContent();
-        foreach ($sites as $site) {
-            $siteSettings->setTargetId($site->id());
-            $this->manageSettings($siteSettings, $process, 'site_settings');
-        }
     }
 
     /**
@@ -289,24 +205,14 @@ SQL;
         $sharedEventManager->attach(
             '*',
             'api.context',
-            function (Event $event) {
-                $context = $event->getParam('context');
-                $context['o-module-comment'] = 'http://omeka.org/s/vocabs/module/comment#';
-                $event->setParam('context', $context);
-            }
+            [$this, 'handleApiContext']
         );
 
         // Add the visibility filters.
         $sharedEventManager->attach(
             '*',
             'sql_filter.resource_visibility',
-            function (Event $event) {
-                // Users can view comments only if they have permission to view
-                // the attached resource.
-                $relatedEntities = $event->getParam('relatedEntities');
-                $relatedEntities[Comment::class] = 'resource_id';
-                $event->setParam('relatedEntities', $relatedEntities);
-            }
+            [$this, 'handleSqlResourceVisibility']
         );
 
         // Add the comment part to the representation.
@@ -459,8 +365,24 @@ SQL;
         $sharedEventManager->attach(
             \Omeka\Form\SiteSettingsForm::class,
             'form.add_elements',
-            [$this, 'addFormElementsSiteSettings']
+            [$this, 'handleSiteSettings']
         );
+    }
+
+    public function handleApiContext(Event $event)
+    {
+        $context = $event->getParam('context');
+        $context['o-module-comment'] = 'http://omeka.org/s/vocabs/module/comment#';
+        $event->setParam('context', $context);
+    }
+
+    public function handleSqlResourceVisibility(Event $event)
+    {
+        // Users can view comments only if they have permission to view
+        // the attached resource.
+        $relatedEntities = $event->getParam('relatedEntities');
+        $relatedEntities[Comment::class] = 'resource_id';
+        $event->setParam('relatedEntities', $relatedEntities);
     }
 
     public function getConfigForm(PhpRenderer $renderer)
@@ -474,7 +396,6 @@ SQL;
         $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
         foreach ($defaultSettings as $name => $value) {
             $value = $settings->get($name);
-            // TODO To be replaced by a select.
             if ($name === 'comment_public_notify_post') {
                 $value = $value ? implode(PHP_EOL, $value) : '';
             }
@@ -509,72 +430,11 @@ SQL;
         foreach ($params as $name => $value) {
             if (array_key_exists($name, $defaultSettings)) {
                 if ($name === 'comment_public_notify_post') {
-                    // The str_replace() allows to fix Apple copy/paste.
-                    $value = array_filter(array_map('trim', explode("\n", str_replace(["\r\n", "\n\r", "\r"], ["\n", "\n", "\n"], $value))));
+                    $value = stringToList($value);
                 }
                 $settings->set($name, $value);
             }
         }
-    }
-
-    public function addFormElementsSiteSettings(Event $event)
-    {
-        $services = $this->getServiceLocator();
-        $siteSettings = $services->get('Omeka\Settings\Site');
-        $config = $services->get('Config');
-        $form = $event->getTarget();
-
-        $defaultSiteSettings = $config[strtolower(__NAMESPACE__)]['site_settings'];
-
-        $fieldset = new Fieldset('comment');
-        $fieldset->setLabel('Comment'); // @translate
-
-        $fieldset->add([
-            'name' => 'comment_append_item_set_show',
-            'type' => Checkbox::class,
-            'options' => [
-                'label' => 'Append automatically to item set page', // @translate
-                'info' => 'If unchecked, the comments can be added via the helper in the theme in any page.', // @translate
-            ],
-            'attributes' => [
-                'value' => $siteSettings->get(
-                    'comment_append_item_set_show',
-                    $defaultSiteSettings['comment_append_item_set_show']
-                ),
-            ],
-        ]);
-
-        $fieldset->add([
-            'name' => 'comment_append_item_show',
-            'type' => Checkbox::class,
-            'options' => [
-                'label' => 'Append automatically to item page', // @translate
-                'info' => 'If unchecked, the comments can be added via the helper in the theme in any page.', // @translate
-            ],
-            'attributes' => [
-                'value' => $siteSettings->get(
-                    'comment_append_item_show',
-                    $defaultSiteSettings['comment_append_item_show']
-                ),
-            ],
-        ]);
-
-        $fieldset->add([
-            'name' => 'comment_append_media_show',
-            'type' => Checkbox::class,
-            'options' => [
-                'label' => 'Append automatically to media page', // @translate
-                'info' => 'If unchecked, the comments can be added via the helper in the theme in any page.', // @translate
-            ],
-            'attributes' => [
-                'value' => $siteSettings->get(
-                    'comment_append_media_show',
-                    $defaultSiteSettings['comment_append_media_show']
-                ),
-            ],
-        ]);
-
-        $form->add($fieldset);
     }
 
     /**
@@ -906,8 +766,7 @@ SQL;
             \Omeka\Entity\Media::class => 'media_id',
             \Omeka\Entity\User::class => 'owner_id',
         ];
-        $entityColumnName = $entityColumnNames[$resource->getResourceId()];
-        return $entityColumnName;
+        return $entityColumnNames[$resource->getResourceId()];
     }
 
     /**
@@ -927,7 +786,6 @@ SQL;
             'media' => 'media_id',
             'user' => 'owner_id',
         ];
-        $entityColumnName = $entityColumnNames[$representation->getControllerName()];
-        return $entityColumnName;
+        return $entityColumnNames[$representation->getControllerName()];
     }
 }
