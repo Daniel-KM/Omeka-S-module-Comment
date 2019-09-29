@@ -37,8 +37,8 @@ return [
     ],
     'form_elements' => [
         'invokables' => [
-            Form\ConfigForm::class => Form\ConfigForm::class,
             Form\SearchForm::class => Form\SearchForm::class,
+            Form\SettingsFieldset::class => Form\SettingsFieldset::class,
         ],
         'factories' => [
             Form\CommentForm::class => Service\Form\CommentFormFactory::class,
@@ -135,7 +135,7 @@ return [
         'The resource or the comment doesn’t exist.', // @translate
     ],
     'comment' => [
-        'config' => [
+        'settings' => [
             'comment_resources' => ['items'],
             'comment_public_allow_view' => true,
             'comment_public_allow_comment' => true,

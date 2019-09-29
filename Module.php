@@ -39,7 +39,6 @@ if (!class_exists(\Generic\AbstractModule::class)) {
 }
 
 use Comment\Entity\Comment;
-use Comment\Form\ConfigForm;
 use Generic\AbstractModule;
 use Omeka\Api\Representation\AbstractEntityRepresentation;
 use Omeka\Api\Representation\ItemRepresentation;
@@ -51,12 +50,8 @@ use Omeka\Entity\AbstractEntity;
 // use Omeka\Permissions\Assertion\IsSelfAssertion;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
-use Zend\Form\Element\Checkbox;
-use Zend\Form\Fieldset;
-use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\View\Renderer\PhpRenderer;
 
 class Module extends AbstractModule
 {
@@ -117,9 +112,6 @@ class Module extends AbstractModule
 
         $publicViewComment = $settings->get('comment_public_allow_view', false);
         $publicAllowComment = $settings->get('comment_public_allow_comment', false);
-
-        $services = $this->getServiceLocator();
-        $acl = $services->get('Omeka\Acl');
 
         // Check if public can comment and flag, and read comments and own ones.
         if ($publicViewComment) {
@@ -363,10 +355,68 @@ class Module extends AbstractModule
         }
 
         $sharedEventManager->attach(
+            \Omeka\Form\SettingForm::class,
+            'form.add_elements',
+            [$this, 'handleMainSettings']
+        );
+        $sharedEventManager->attach(
+            \Omeka\Form\SettingForm::class,
+            'form.add_input_filters',
+            [$this, 'handleMainSettingsFilters']
+        );
+
+        $sharedEventManager->attach(
             \Omeka\Form\SiteSettingsForm::class,
             'form.add_elements',
             [$this, 'handleSiteSettings']
         );
+    }
+
+    public function handleMainSettings(Event $event)
+    {
+        parent::handleMainSettings($event);
+
+        $services = $this->getServiceLocator();
+        $settings = $services->get('Omeka\Settings');
+
+        $space = strtolower(__NAMESPACE__);
+
+        $value = $settings->get('comment_public_notify_post') ?: [];
+
+        $event
+            ->getTarget()
+            ->get($space)
+            ->get('comment_public_notify_post')
+            ->setValue(implode("\n", $value));
+    }
+
+    public function handleMainSettingsFilters(Event $event)
+    {
+        $event->getParam('inputFilter')
+            ->get('comment')
+            ->add([
+                'name' => 'comment_public_notify_post',
+                'required' => false,
+                'filters' => [
+                    [
+                        'name' => \Zend\Filter\Callback::class,
+                        'options' => [
+                            'callback' => [$this, 'stringToList'],
+                        ],
+                    ],
+                ],
+            ]);
+    }
+
+    /**
+     * Temporary override as public for compatibility.
+     *
+     * {@inheritDoc}
+     * @see \Generic\AbstractModule::stringToList()
+     */
+    public function stringToList($string)
+    {
+        return parent::stringToList($string);
     }
 
     public function handleApiContext(Event $event)
@@ -383,58 +433,6 @@ class Module extends AbstractModule
         $relatedEntities = $event->getParam('relatedEntities');
         $relatedEntities[Comment::class] = 'resource_id';
         $event->setParam('relatedEntities', $relatedEntities);
-    }
-
-    public function getConfigForm(PhpRenderer $renderer)
-    {
-        $services = $this->getServiceLocator();
-        $config = $services->get('Config');
-        $settings = $services->get('Omeka\Settings');
-        $form = $services->get('FormElementManager')->get(ConfigForm::class);
-
-        $data = [];
-        $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
-        foreach ($defaultSettings as $name => $value) {
-            $value = $settings->get($name);
-            if ($name === 'comment_public_notify_post') {
-                $value = $value ? implode(PHP_EOL, $value) : '';
-            }
-            $data[$name] = $value;
-        }
-
-        $renderer->ckEditor();
-
-        $form->init();
-        $form->setData($data);
-        $html = $renderer->formCollection($form);
-        return $html;
-    }
-
-    public function handleConfigForm(AbstractController $controller)
-    {
-        $services = $this->getServiceLocator();
-        $config = $services->get('Config');
-        $settings = $services->get('Omeka\Settings');
-
-        $params = $controller->getRequest()->getPost();
-
-        $form = $services->get('FormElementManager')->get(ConfigForm::class);
-        $form->init();
-        $form->setData($params);
-        if (!$form->isValid()) {
-            $controller->messenger()->addErrors($form->getMessages());
-            return false;
-        }
-
-        $defaultSettings = $config[strtolower(__NAMESPACE__)]['config'];
-        foreach ($params as $name => $value) {
-            if (array_key_exists($name, $defaultSettings)) {
-                if ($name === 'comment_public_notify_post') {
-                    $value = stringToList($value);
-                }
-                $settings->set($name, $value);
-            }
-        }
     }
 
     /**

@@ -29,7 +29,7 @@ Requirements
 
 The comment module makes use of both ReCaptchas and the Akismet spam-detection
 service. You will want to get API keys to both of these services and add them to
-Omeka S main configuration for ReCaptchas key on inside the module config page.
+Omeka S main configuration for ReCaptchas key on inside the main settings page.
 
 If not enabled, a simple anti-spam is available too.
 
@@ -70,7 +70,7 @@ the reviewer.
 
 ### Open commenting, with registered users getting to submit comments without approval
 
-Install and configure the [Guest User] module. Set commenting to Public so that
+Install and configure the [Guest] module. Set commenting to Public so that
 anyone can comment.
 
 ### Closed commenting for resources management
@@ -136,7 +136,7 @@ Copyright
 [Commenting plugin]: https://omeka.org/classic/plugins/Commenting
 [Upgrade To Omeka S]: https://github.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
-[Guest User]: https://github.com/Daniel-KM/Omeka-S-module-GuestUser
+[Guest]: https://github.com/Daniel-KM/Omeka-S-module-Guest
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Comment/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
