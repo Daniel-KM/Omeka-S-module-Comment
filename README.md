@@ -18,6 +18,8 @@ The aim of this module is to provide the same type of features than the [Omeka C
 Installation
 ------------
 
+First, install the two optional modules [Generic] and [Blocks Disposition].
+
 Uncompress files and rename plugin folder `Comment`.
 
 See general end user documentation for [Installing a module] and follow the
@@ -37,16 +39,20 @@ If not enabled, a simple anti-spam is available too.
 Displaying Comments
 -------------------
 
-The module will automatically add commenting options to item sets, items and/or
-media pages, if enabled. Nevertheless, the helpers can be used for specific
-themes:
+To display automatically the comments and the comment form on item set, item or
+media pages, use the module [Blocks Disposition], or add the following code in
+your theme:
 
 ```php
+<!-- Via a standard partial. -->
+<?php echo $this->partial('common/comment', ['resource' => $resource]); ?>
+
+<!-- Or via the helpers. -->
 <div id="comments-container">
-    echo $this->showComments($resource);
-    echo $this->showCommentForm($resource);
+    <?php echo $this->showComments($resource); ?>
+    <?php echo $this->showCommentForm($resource); ?>
 </div>
-```
+``
 
 The structure of comments, the comment itself, and the comment form can be
 themed.
@@ -77,6 +83,14 @@ anyone can comment.
 
 It’s possible to comment resources internally, for example to improve the
 quality of metadata, or in a discussion between an author and a reviewer.
+
+
+TODO
+----
+
+- Move some parameters from main settings to site settings.
+- Convert comment into annotations (module Annotate).
+- Manage comments with module Guest.
 
 
 Warning
