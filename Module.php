@@ -723,10 +723,7 @@ class Module extends AbstractModule
             return;
         }
 
-        echo '<div id="comments-container">';
-        echo $view->showComments($resource);
-        echo $view->showCommentForm($resource);
-        echo '</div>';
+        echo $view->partial('common/comment', ['resource' => $resource]);
     }
 
     protected function userCanRead()

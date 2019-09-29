@@ -1,0 +1,40 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Comment\Api\Representation\CommentRepresentation $comment
+ */
+
+$plugins = $this->getHelperPluginManager();
+$translate = $plugins->get('translate');
+$escape = $plugins->get('escapeHtml');
+$hyperlink = $plugins->get('hyperlink');
+$userIsAllowed = $plugins->get('userIsAllowed');
+$i18n = $plugins->get('i18n');
+
+if ($name = $comment->name()):
+    $website = $comment->website();
+    $authorText = $website ? $hyperlink($name, $website) : $name;
+else:
+    $authorText = $escape($translate('Anonymous'));
+endif;
+
+$gravatarUrl = '//www.gravatar.com/avatar/' . md5(strtolower(trim($comment->email())));
+?>
+
+<div class="comment-author">
+    <p class="comment-author-name"><?= $authorText ?></p>
+    <img class="gravatar" src="<?= $gravatarUrl ?>" />
+</div>
+<div class="comment-body<?php if ($flagged = $comment->isFlagged()): ?> comment-flagged<?php endif; ?><?php if ($comment->isSpam()): ?> comment-spam<?php endif; ?>">
+    <?= $escape($comment->body()) ?>
+</div>
+<p class="comment-date"><?= $i18n->dateFormat($comment->created()) ?></p>
+<?php if ($userIsAllowed(\Comment\Controller\Site\CommentController::class, 'flag')): ?>
+<p class="comment-flag"<?php if ($flagged): ?> style="display:none;"<?php endif;?>><?= $escape($translate('Flag inappropriate')) ?></p>
+<?php endif; ?>
+<?php if ($userIsAllowed(\Comment\Controller\Site\CommentController::class, 'unflag')): ?>
+<p class="comment-unflag"<?php if (!$flagged): ?> style="display:none;"<?php endif;?>><?= $escape($translate('Unflag inappropriate')) ?></p>
+<?php endif; ?>
+<?php if ($comment->userIsAllowed('create')): ?>
+<p class="comment-reply"><?= $escape($translate('Reply')) ?></p>
+<?php endif; ?>
