@@ -38,12 +38,14 @@ trait QueryBuilderTrait
      */
     protected function buildQueryOneValue(QueryBuilder $qb, $value, $column)
     {
+        $expr = $qb->expr();
+
         if (is_null($value)) {
-            $qb->andWhere($qb->expr()->isNull(
+            $qb->andWhere($expr->isNull(
                 $this->getEntityClass() . '.' . $column
             ));
         } else {
-            $qb->andWhere($qb->expr()->eq(
+            $qb->andWhere($expr->eq(
                 $this->getEntityClass() . '.' . $column,
                 $this->createNamedParameter($qb, $value)
             ));
@@ -60,6 +62,8 @@ trait QueryBuilderTrait
      */
     protected function buildQueryMultipleValues(QueryBuilder $qb, array $values, $column, $target)
     {
+        $expr = $qb->expr();
+
         $hasNull = in_array(null, $values, true);
         $values = array_filter($values, function ($v) {
             return !is_null($v);
@@ -71,16 +75,16 @@ trait QueryBuilderTrait
                 $valueAlias,
                 'WITH',
                 $hasNull
-                    ? $qb->expr()->orX(
-                        $qb->expr()->in(
+                    ? $expr->orX(
+                        $expr->in(
                             $valueAlias . '.' . $target,
                             $this->createNamedParameter($qb, $values)
                         ),
-                        $qb->expr()->isNull(
+                        $expr->isNull(
                             $valueAlias . '.' . $target
                         )
                     )
-                    : $qb->expr()->in(
+                    : $expr->in(
                         $valueAlias . '.' . $target,
                         $this->createNamedParameter($qb, $values)
                     )
@@ -88,7 +92,7 @@ trait QueryBuilderTrait
         }
         // Check no value only.
         elseif ($hasNull) {
-            $qb->andWhere($qb->expr()->isNull(
+            $qb->andWhere($expr->isNull(
                 $this->getEntityClass() . '.' . $column
             ));
         }
@@ -181,6 +185,8 @@ trait QueryBuilderTrait
      */
     protected function buildQueryMultipleValuesItself(QueryBuilder $qb, array $values, $target)
     {
+        $expr = $qb->expr();
+
         $hasNull = in_array(null, $values, true);
         $values = array_filter($values, function ($v) {
             return !is_null($v);
@@ -192,23 +198,23 @@ trait QueryBuilderTrait
                     $this->getEntityClass(),
                     $valueAlias,
                     'WITH',
-                    $qb->expr()->eq(
+                    $expr->eq(
                         $this->getEntityClass() . '.id',
                         $valueAlias . '.id'
                     )
                 )
                 ->andWhere(
                     $hasNull
-                    ? $qb->expr()->orX(
-                        $qb->expr()->in(
+                    ? $expr->orX(
+                        $expr->in(
                             $valueAlias . '.' . $target,
                             $this->createNamedParameter($qb, $values)
                         ),
-                        $qb->expr()->isNull(
+                        $expr->isNull(
                             $valueAlias . '.' . $target
                         )
                     )
-                    : $qb->expr()->in(
+                    : $expr->in(
                         $valueAlias . '.' . $target,
                         $this->createNamedParameter($qb, $values)
                     )
@@ -216,7 +222,7 @@ trait QueryBuilderTrait
         }
         // Check no value only.
         elseif ($hasNull) {
-            $qb->andWhere($qb->expr()->isNull(
+            $qb->andWhere($expr->isNull(
                 $this->getEntityClass() . '.' . $target
             ));
         }

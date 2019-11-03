@@ -94,9 +94,9 @@ class Module extends AbstractModule
     {
         $services = $this->getServiceLocator();
         $acl = $services->get('Omeka\Acl');
-        $entityManagerFilters = $services->get('Omeka\EntityManager')->getFilters();
-        $entityManagerFilters->enable('comment_visibility');
-        $entityManagerFilters->getFilter('comment_visibility')->setAcl($acl);
+        $services->get('Omeka\EntityManager')->getFilters()
+            ->enable('comment_visibility')
+            ->setAcl($acl);
     }
 
     /**
@@ -131,10 +131,10 @@ class Module extends AbstractModule
         // Identified users can comment. Reviewer and above can approve.
         $roles = $acl->getRoles();
         $acl
-            ->allow($roles, Comment::class, ['read', 'create', 'update'])
-            ->allow($roles, Api\Adapter\CommentAdapter::class, ['search', 'read', 'create', 'update'])
-            ->allow($roles, Controller\Site\CommentController::class, ['show', 'flag', 'add'])
-            ->allow($roles, Controller\Admin\CommentController::class, ['browse', 'flag', 'add', 'show-details']);
+            ->allow($roles, [Comment::class], ['read', 'create', 'update'])
+            ->allow($roles, [Api\Adapter\CommentAdapter::class], ['search', 'read', 'create', 'update'])
+            ->allow($roles, [Controller\Site\CommentController::class], ['show', 'flag', 'add'])
+            ->allow($roles, [Controller\Admin\CommentController::class], ['browse', 'flag', 'add', 'show-details']);
 
         $approbators = [
             \Omeka\Permissions\Acl::ROLE_GLOBAL_ADMIN,
