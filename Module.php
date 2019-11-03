@@ -499,21 +499,27 @@ class Module extends AbstractModule
     {
         $query = $event->getParam('request')->getContent();
 
-        if (!empty($query['has_comments'])) {
-            $qb = $event->getParam('queryBuilder');
-            $adapter = $event->getTarget();
-            $commentAlias = $adapter->createAlias();
-            $entityAlias = $adapter->getEntityClass();
-            $resourceName = $adapter->getResourceName() === 'users'
-                ? 'owner'
-                : 'resource';
-            $qb->innerJoin(
+        if (empty($query['has_comments'])) {
+           return;
+        }
+
+        $qb = $event->getParam('queryBuilder');
+        $adapter = $event->getTarget();
+        $commentAlias = $adapter->createAlias();
+
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
+        $alias = $isOldOmeka ? $adapter->getEntityClass() : 'omeka_root';
+
+        $resourceName = $adapter->getResourceName() === 'users'
+            ? 'owner'
+            : 'resource';
+        $qb
+            ->innerJoin(
                 Comment::class,
                 $commentAlias,
                 'WITH',
-                $qb->expr()->eq($commentAlias . '.' . $resourceName, $entityAlias . '.id')
+                $qb->expr()->eq($commentAlias . '.' . $resourceName, $alias . '.id')
             );
-        }
     }
 
     /**

@@ -165,6 +165,8 @@ class CommentAdapter extends AbstractEntityAdapter
 
     public function buildQuery(QueryBuilder $qb, array $query)
     {
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
+        $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
         $expr = $qb->expr();
 
         // TODO Check resource and owner visibility for public view.
@@ -191,10 +193,10 @@ class CommentAdapter extends AbstractEntityAdapter
             // An empty string means true in order to manage get/post query.
             if (in_array($query['has_resource'], [false, 'false', 0, '0'], true)) {
                 $qb
-                    ->andWhere($expr->isNull($this->getEntityClass() . '.resource'));
+                    ->andWhere($expr->isNull($alias . '.resource'));
             } else {
                 $qb
-                    ->andWhere($expr->isNotNull($this->getEntityClass() . '.resource'));
+                    ->andWhere($expr->isNotNull($alias . '.resource'));
             }
         }
 
@@ -209,7 +211,7 @@ class CommentAdapter extends AbstractEntityAdapter
             ];
             if ($query['resource_type'] === 'resources') {
                 $qb
-                     ->andWhere($expr->isNotNull($this->getEntityClass() . '.resource'));
+                     ->andWhere($expr->isNotNull($alias . '.resource'));
             } elseif (isset($mapResourceTypes[$query['resource_type']])) {
                 $entityAlias = $this->createAlias();
                 $qb
@@ -218,7 +220,7 @@ class CommentAdapter extends AbstractEntityAdapter
                         $entityAlias,
                         'WITH',
                         $expr->eq(
-                            $this->getEntityClass() . '.resource',
+                            $alias . '.resource',
                             $entityAlias . '.id'
                         )
                     );
@@ -238,7 +240,7 @@ class CommentAdapter extends AbstractEntityAdapter
         ] as $queryKey => $column) {
             if (array_key_exists($queryKey, $query) && strlen($query[$queryKey])) {
                 $qb
-                    ->andWhere($expr->eq($this->getEntityClass() . '.' . $column, $query[$queryKey]));
+                    ->andWhere($expr->eq($alias . '.' . $column, $query[$queryKey]));
             }
         }
 
@@ -252,10 +254,10 @@ class CommentAdapter extends AbstractEntityAdapter
                 // An empty string means true in order to manage get/post query.
                 if (in_array($query[$queryKey], [false, 'false', 0, '0'], true)) {
                     $qb
-                        ->andWhere($expr->eq($this->getEntityClass() . '.' . $column, 0));
+                        ->andWhere($expr->eq($alias . '.' . $column, 0));
                 } else {
                     $qb
-                        ->andWhere($expr->eq($this->getEntityClass() . '.' . $column, 1));
+                        ->andWhere($expr->eq($alias . '.' . $column, 1));
                 }
             }
         }

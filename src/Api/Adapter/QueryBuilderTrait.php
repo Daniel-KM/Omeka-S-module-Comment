@@ -38,15 +38,17 @@ trait QueryBuilderTrait
      */
     protected function buildQueryOneValue(QueryBuilder $qb, $value, $column)
     {
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
+        $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
         $expr = $qb->expr();
 
         if (is_null($value)) {
             $qb->andWhere($expr->isNull(
-                $this->getEntityClass() . '.' . $column
+                $alias . '.' . $column
             ));
         } else {
             $qb->andWhere($expr->eq(
-                $this->getEntityClass() . '.' . $column,
+                $alias . '.' . $column,
                 $this->createNamedParameter($qb, $value)
             ));
         }
@@ -62,6 +64,8 @@ trait QueryBuilderTrait
      */
     protected function buildQueryMultipleValues(QueryBuilder $qb, array $values, $column, $target)
     {
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
+        $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
         $expr = $qb->expr();
 
         $hasNull = in_array(null, $values, true);
@@ -71,7 +75,7 @@ trait QueryBuilderTrait
         if ($values) {
             $valueAlias = $this->createAlias();
             $qb->innerJoin(
-                $this->getEntityClass() . '.' . $column,
+                $alias . '.' . $column,
                 $valueAlias,
                 'WITH',
                 $hasNull
@@ -93,7 +97,7 @@ trait QueryBuilderTrait
         // Check no value only.
         elseif ($hasNull) {
             $qb->andWhere($expr->isNull(
-                $this->getEntityClass() . '.' . $column
+                $alias . '.' . $column
             ));
         }
     }
@@ -185,6 +189,8 @@ trait QueryBuilderTrait
      */
     protected function buildQueryMultipleValuesItself(QueryBuilder $qb, array $values, $target)
     {
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
+        $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
         $expr = $qb->expr();
 
         $hasNull = in_array(null, $values, true);
@@ -195,11 +201,11 @@ trait QueryBuilderTrait
             $valueAlias = $this->createAlias();
             $qb
                 ->innerJoin(
-                    $this->getEntityClass(),
+                    $alias,
                     $valueAlias,
                     'WITH',
                     $expr->eq(
-                        $this->getEntityClass() . '.id',
+                        $alias . '.id',
                         $valueAlias . '.id'
                     )
                 )
@@ -223,7 +229,7 @@ trait QueryBuilderTrait
         // Check no value only.
         elseif ($hasNull) {
             $qb->andWhere($expr->isNull(
-                $this->getEntityClass() . '.' . $target
+                $alias . '.' . $target
             ));
         }
     }
