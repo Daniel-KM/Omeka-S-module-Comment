@@ -51,7 +51,6 @@ use Omeka\Entity\AbstractEntity;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class Module extends AbstractModule
 {
@@ -73,12 +72,11 @@ class Module extends AbstractModule
         $this->addAclRules();
     }
 
-    public function install(ServiceLocatorInterface $serviceLocator)
+    protected function postInstall()
     {
-        parent::install($serviceLocator);
-
-        $settings = $serviceLocator->get('Omeka\Settings');
-        $translator = $serviceLocator->get('MvcTranslator');
+        $services = $this->getServiceLocator();
+        $settings = $services->get('Omeka\Settings');
+        $translator = $services->get('MvcTranslator');
 
         $html = '<p>';
         $html .= sprintf($translator->translate('I agree with %sterms of use%s and I accept to free my contribution under the licence %sCC BY-SA%s.'), // @translate
