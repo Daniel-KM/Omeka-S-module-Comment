@@ -362,12 +362,6 @@ class Module extends AbstractModule
             'form.add_input_filters',
             [$this, 'handleMainSettingsFilters']
         );
-
-        $sharedEventManager->attach(
-            \Omeka\Form\SiteSettingsForm::class,
-            'form.add_elements',
-            [$this, 'handleSiteSettings']
-        );
     }
 
     public function handleMainSettings(Event $event)
@@ -404,17 +398,6 @@ class Module extends AbstractModule
                     ],
                 ],
             ]);
-    }
-
-    /**
-     * Temporary override as public for compatibility.
-     *
-     * {@inheritDoc}
-     * @see \Generic\AbstractModule::stringToList()
-     */
-    public function stringToList($string)
-    {
-        return parent::stringToList($string);
     }
 
     public function handleApiContext(Event $event)
@@ -707,20 +690,8 @@ class Module extends AbstractModule
             return;
         }
 
-        $serviceLocator = $this->getServiceLocator();
-        $siteSettings = $serviceLocator->get('Omeka\Settings\Site');
         $view = $event->getTarget();
         $resource = $view->resource;
-        $resourceName = $resource->resourceName();
-        $appendMap = [
-            'item_sets' => 'comment_append_item_set_show',
-            'items' => 'comment_append_item_show',
-            'media' => 'comment_append_media_show',
-        ];
-        if (!$siteSettings->get($appendMap[$resourceName])) {
-            return;
-        }
-
         echo $view->partial('common/comment', ['resource' => $resource]);
     }
 

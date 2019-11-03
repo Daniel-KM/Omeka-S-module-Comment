@@ -149,10 +149,5 @@ return [
             'comment_wpapi_key' => '',
             'comment_antispam' => true,
         ],
-        'site_settings' => [
-            'comment_append_item_set_show' => true,
-            'comment_append_item_show' => true,
-            'comment_append_media_show' => true,
-        ],
     ],
 ];

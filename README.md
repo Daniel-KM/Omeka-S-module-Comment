@@ -39,9 +39,9 @@ If not enabled, a simple anti-spam is available too.
 Displaying Comments
 -------------------
 
-To display automatically the comments and the comment form on item set, item or
-media pages, use the module [Blocks Disposition], or add the following code in
-your theme:
+The comments are displayed automatically on item set, item or media pages. To
+manage the display more precisely, use the module [Blocks Disposition], or add
+the following code in your theme:
 
 ```php
 <!-- Via a standard partial. -->
