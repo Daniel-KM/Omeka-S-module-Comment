@@ -52,7 +52,7 @@ the following code in your theme:
     <?php echo $this->showComments($resource); ?>
     <?php echo $this->showCommentForm($resource); ?>
 </div>
-``
+```
 
 The structure of comments, the comment itself, and the comment form can be
 themed.
@@ -149,6 +149,8 @@ Copyright
 [Omeka Classic]: https://omeka.org/classic
 [Commenting plugin]: https://omeka.org/classic/plugins/Commenting
 [Upgrade To Omeka S]: https://github.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
+[Generic]: https://github.com/Daniel-KM/Omeka-S-module-Generic
+[BlocksDisposition]: https://github.com/Daniel-KM/Omeka-S-module-BlocksDisposition
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [Guest]: https://github.com/Daniel-KM/Omeka-S-module-Guest
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Comment/issues
