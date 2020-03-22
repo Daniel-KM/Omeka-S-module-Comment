@@ -500,7 +500,7 @@ class Module extends AbstractModule
         $query = $event->getParam('request')->getContent();
 
         if (empty($query['has_comments'])) {
-           return;
+            return;
         }
 
         $qb = $event->getParam('queryBuilder');
