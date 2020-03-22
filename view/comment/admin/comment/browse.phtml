@@ -143,9 +143,9 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
                 <?php if ($batchEditRight): ?>
                     <input type="checkbox" name="resource_ids[]" value="<?= $comment->id() ?>">
                 <?php endif; ?>
-                <?= $escape(substr($comment->body(), 0, 200)) ?>
+                <?= $escape(mb_substr($comment->body(), 0, 200)) ?>
                 <span class="is-public-or-not<?php if (!$comment->isApproved()): echo ' o-icon-private'; endif; ?>" aria-label="<?= $translate('Private') ?>"></span>
-                <?php if (strlen($comment->body()) > 200): echo '…'; endif; ?>
+                <?php if (mb_strlen($comment->body()) > 200): echo '…'; endif; ?>
                 <ul class="actions">
                 <?php $editRightComment = $comment->userIsAllowed('update'); ?>
                     <?php if ($editRightComment): ?>
