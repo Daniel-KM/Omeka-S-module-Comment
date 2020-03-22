@@ -16,7 +16,7 @@ $userIsAllowed = $plugins->get('userIsAllowed');
 $i18n = $plugins->get('i18n');
 
 $this->headLink()->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'));
-$this->headScript()->appendFile($assetUrl('js/comment-admin.js', 'Comment'));
+$this->headScript()->appendFile($assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 $this->htmlElement('body')->appendAttribute('class', 'comment comments browse');
 
 $sortHeadings = [

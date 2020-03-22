@@ -16,8 +16,8 @@ $this->headLink()
     ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'))
     ->appendStylesheet($assetUrl('css/comment.css', 'Comment'));
 $this->headScript()
-    ->appendFile($assetUrl('js/comment-admin.js', 'Comment'))
-    ->appendFile($assetUrl('js/comment.js', 'Comment'));
+    ->appendFile($assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer'])
+    ->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 
 // Required to manage the base path.
 $addUrl = $url('admin/comment', ['action' => 'add'], true);

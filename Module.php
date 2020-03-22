@@ -531,7 +531,7 @@ class Module extends AbstractModule
     {
         $view = $event->getTarget();
         $view->headLink()->appendStylesheet($view->assetUrl('css/comment-admin.css', 'Comment'));
-        $view->headScript()->appendFile($view->assetUrl('js/comment-admin.js', 'Comment'));
+        $view->headScript()->appendFile($view->assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
     }
 
     /**
