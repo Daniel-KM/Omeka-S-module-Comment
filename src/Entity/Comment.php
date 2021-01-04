@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Comment\Entity;
 
 use DateTime;
@@ -175,167 +176,183 @@ class Comment extends AbstractEntity
         return $this->id;
     }
 
-    public function setOwner(User $owner = null): void
+    public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+        return $this;
     }
 
-    public function getOwner()
+    public function getOwner(): ?User
     {
         return $this->owner;
     }
 
-    public function setResource(Resource $resource = null): void
+    public function setResource(?Resource $resource): self
     {
         $this->resource = $resource;
+        return $this;
     }
 
-    public function getResource()
+    public function getResource(): ?Resource
     {
         return $this->resource;
     }
 
-    public function setSite(Site $site = null): void
+    public function setSite(?Site $site): self
     {
         $this->site = $site;
+        return $this;
     }
 
-    public function getSite()
+    public function getSite(): ?Site
     {
         return $this->site;
     }
 
-    public function setPath($path): void
+    public function setPath(string $path): self
     {
         $this->path = $path;
+        return $this;
     }
 
-    public function getPath()
+    public function getPath(): ?string
     {
         return $this->path;
     }
 
-    public function setEmail($email): void
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
+        return $this;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setName($name): void
+    public function setName(?string $name): self
     {
         $this->name = $name;
+        return $this;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setWebsite($website): void
+    public function setWebsite(?string $website): self
     {
         $this->website = $website;
+        return $this;
     }
 
-    public function getWebsite()
+    public function getWebsite(): ?string
     {
         return $this->website;
     }
 
-    public function setIp($ip): void
+    public function setIp(string $ip): self
     {
         $this->ip = $ip;
+        return $this;
     }
 
-    public function getIp()
+    public function getIp(): ?string
     {
         return $this->ip;
     }
 
-    public function setUserAgent($userAgent): void
+    public function setUserAgent(?string $userAgent): self
     {
         $this->userAgent = $userAgent;
+        return $this;
     }
 
-    public function getUserAgent()
+    public function getUserAgent(): ?string
     {
         return $this->userAgent;
     }
 
-    public function setBody($body): void
+    public function setBody(string $body): self
     {
         $this->body = $body;
+        return $this;
     }
 
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }
 
-    public function setParent(self $parent): void
+    public function setParent(Comment $parent): self
     {
         $this->parent = $parent;
+        return $this;
     }
 
-    public function getParent()
+    public function getParent(): Comment
     {
         return $this->parent;
     }
 
-    public function getChildren()
+    public function getChildren(): ArrayCollection
     {
         return $this->children;
     }
 
-    public function setApproved($approved): void
+    public function setApproved($approved): self
     {
         $this->approved = $approved;
+        return $this;
     }
 
-    public function isApproved()
+    public function isApproved(): ?bool
     {
         return $this->approved;
     }
 
-    public function setFlagged($flagged): void
+    public function setFlagged($flagged): self
     {
         $this->flagged = $flagged;
+        return $this;
     }
 
-    public function isFlagged()
+    public function isFlagged(): ?bool
     {
         return $this->flagged;
     }
 
-    public function setSpam($spam): void
+    public function setSpam($spam): self
     {
         $this->spam = $spam;
+        return $this;
     }
 
-    public function isSpam()
+    public function isSpam(): ?bool
     {
         return $this->spam;
     }
 
-    public function setCreated(DateTime $created): void
+    public function setCreated(DateTime $created): self
     {
         $this->created = $created;
+        return $this;
     }
 
-    public function getCreated()
+    public function getCreated(): DateTime
     {
         return $this->created;
     }
 
-    public function setModified(DateTime $modified): void
+    public function setModified(DateTime $modified): self
     {
         $this->modified = $modified;
+        return $this;
     }
 
-    public function getModified()
+    public function getModified(): ?DateTime
     {
         return $this->modified;
     }

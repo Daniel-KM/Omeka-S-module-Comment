@@ -12,14 +12,14 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
      *      three parameters, being respectively the proxy object to be initialized, the method that triggered the
      *      initialization process and an array of ordered parameters that were passed to that method.
      *
-     * @see \Doctrine\Common\Persistence\Proxy::__setInitializer
+     * @see \Doctrine\Common\Proxy\Proxy::__setInitializer
      */
     public $__initializer__;
 
     /**
      * @var \Closure the callback responsible of loading properties that need to be copied in the cloned object
      *
-     * @see \Doctrine\Common\Persistence\Proxy::__setCloner
+     * @see \Doctrine\Common\Proxy\Proxy::__setCloner
      */
     public $__cloner__;
 
@@ -31,20 +31,22 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     public $__isInitialized__ = false;
 
     /**
-     * @var array properties to be lazy loaded, with keys being the property
-     *            names and values being their default values
-     *
-     * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
+     * @var array<string, null> properties to be lazy loaded, indexed by property name
      */
-    public static $lazyPropertiesDefaults = [];
-
-
+    public static $lazyPropertiesNames = array (
+);
 
     /**
-     * @param \Closure $initializer
-     * @param \Closure $cloner
+     * @var array<string, mixed> default values of properties to be lazy loaded, with keys being the property names
+     *
+     * @see \Doctrine\Common\Proxy\Proxy::__getLazyProperties
      */
-    public function __construct($initializer = null, $cloner = null)
+    public static $lazyPropertiesDefaults = array (
+);
+
+
+
+    public function __construct(?\Closure $initializer = null, ?\Closure $cloner = null)
     {
 
         $this->__initializer__ = $initializer;
@@ -82,7 +84,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
 
                 $existingProperties = get_object_vars($proxy);
 
-                foreach ($proxy->__getLazyProperties() as $property => $defaultValue) {
+                foreach ($proxy::$lazyPropertiesDefaults as $property => $defaultValue) {
                     if ( ! array_key_exists($property, $existingProperties)) {
                         $proxy->$property = $defaultValue;
                     }
@@ -165,6 +167,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      * @internal generated method: use only when explicitly handling proxy specific loading logic
+     * @deprecated no longer in use - generated code now relies on internal components rather than generated public API
      * @static
      */
     public function __getLazyProperties()
@@ -191,7 +194,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setOwner(\Omeka\Entity\User $owner = NULL)
+    public function setOwner(?\Omeka\Entity\User $owner): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setOwner', [$owner]);
@@ -202,7 +205,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getOwner()
+    public function getOwner(): ?\Omeka\Entity\User
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOwner', []);
@@ -213,7 +216,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setResource(\Omeka\Entity\Resource $resource = NULL)
+    public function setResource(?\Omeka\Entity\Resource $resource): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setResource', [$resource]);
@@ -224,7 +227,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getResource()
+    public function getResource(): ?\Omeka\Entity\Resource
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getResource', []);
@@ -235,7 +238,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setSite(\Omeka\Entity\Site $site = NULL)
+    public function setSite(?\Omeka\Entity\Site $site): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSite', [$site]);
@@ -246,7 +249,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getSite()
+    public function getSite(): ?\Omeka\Entity\Site
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSite', []);
@@ -257,7 +260,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setPath($path)
+    public function setPath(string $path): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPath', [$path]);
@@ -268,7 +271,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getPath()
+    public function getPath(): ?string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPath', []);
@@ -279,7 +282,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setEmail($email)
+    public function setEmail(?string $email): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEmail', [$email]);
@@ -290,7 +293,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEmail', []);
@@ -301,7 +304,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setName($name)
+    public function setName(?string $name): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
@@ -312,7 +315,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getName()
+    public function getName(): ?string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
@@ -323,7 +326,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setWebsite($website)
+    public function setWebsite(?string $website): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setWebsite', [$website]);
@@ -334,7 +337,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getWebsite()
+    public function getWebsite(): ?string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getWebsite', []);
@@ -345,7 +348,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setIp($ip)
+    public function setIp(string $ip): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIp', [$ip]);
@@ -356,7 +359,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getIp()
+    public function getIp(): ?string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIp', []);
@@ -367,7 +370,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setUserAgent($userAgent)
+    public function setUserAgent(?string $userAgent): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUserAgent', [$userAgent]);
@@ -378,7 +381,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getUserAgent()
+    public function getUserAgent(): ?string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUserAgent', []);
@@ -389,7 +392,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setBody($body)
+    public function setBody(string $body): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setBody', [$body]);
@@ -400,7 +403,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getBody()
+    public function getBody(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBody', []);
@@ -411,7 +414,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setParent(\Comment\Entity\Comment $parent)
+    public function setParent(\Comment\Entity\Comment $parent): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParent', [$parent]);
@@ -422,7 +425,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getParent()
+    public function getParent(): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParent', []);
@@ -433,7 +436,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getChildren()
+    public function getChildren(): \Doctrine\Common\Collections\ArrayCollection
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getChildren', []);
@@ -444,7 +447,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setApproved($approved)
+    public function setApproved($approved): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApproved', [$approved]);
@@ -455,7 +458,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function isApproved()
+    public function isApproved(): ?bool
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'isApproved', []);
@@ -466,7 +469,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setFlagged($flagged)
+    public function setFlagged($flagged): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFlagged', [$flagged]);
@@ -477,7 +480,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function isFlagged()
+    public function isFlagged(): ?bool
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'isFlagged', []);
@@ -488,7 +491,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setSpam($spam)
+    public function setSpam($spam): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSpam', [$spam]);
@@ -499,7 +502,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function isSpam()
+    public function isSpam(): ?bool
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'isSpam', []);
@@ -510,7 +513,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setCreated(\DateTime $created)
+    public function setCreated(\DateTime $created): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCreated', [$created]);
@@ -521,7 +524,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getCreated()
+    public function getCreated(): \DateTime
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreated', []);
@@ -532,7 +535,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setModified(\DateTime $modified)
+    public function setModified(\DateTime $modified): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setModified', [$modified]);
@@ -543,7 +546,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getModified()
+    public function getModified(): ?\DateTime
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getModified', []);
@@ -554,23 +557,23 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function prePersist(\Doctrine\ORM\Event\LifecycleEventArgs $eventArgs)
+    public function prePersist(\Doctrine\ORM\Event\LifecycleEventArgs $eventArgs): void
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'prePersist', [$eventArgs]);
 
-        return parent::prePersist($eventArgs);
+        parent::prePersist($eventArgs);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function preUpdate(\Doctrine\ORM\Event\PreUpdateEventArgs $eventArgs)
+    public function preUpdate(\Doctrine\ORM\Event\PreUpdateEventArgs $eventArgs): void
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'preUpdate', [$eventArgs]);
 
-        return parent::preUpdate($eventArgs);
+        parent::preUpdate($eventArgs);
     }
 
     /**
