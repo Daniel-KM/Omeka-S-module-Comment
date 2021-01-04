@@ -5,7 +5,6 @@ Comment (module for Omeka S)
 > are available on [GitLab], which seems to respect users and privacy better
 > than the previous repository.__
 
-
 [Comment] is a module for [Omeka S] that allows users and/or public to comment
 resources. It includes both ReCaptchas and Akismet spam detection if needed.
 Comments can be flagged and moderated.
@@ -92,9 +91,9 @@ quality of metadata, or in a discussion between an author and a reviewer.
 TODO
 ----
 
-- Move some parameters from main settings to site settings.
-- Convert comment into annotations (module Annotate).
-- Manage comments with module Guest.
+- [ ] Move some parameters from main settings to site settings.
+- [ ] Convert comment into annotations (module Annotate).
+- [ ] Manage comments with module Guest.
 
 
 Warning
@@ -145,7 +144,7 @@ of the CeCILL license and that you accept its terms.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2017-2019 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2017-2021 (see [Daniel-KM] on GitLab)
 
 
 [Comment]: https://gitlab.com/Daniel-KM/Omeka-S-module-Comment
@@ -154,7 +153,7 @@ Copyright
 [Commenting plugin]: https://omeka.org/classic/plugins/Commenting
 [Upgrade To Omeka S]: https://gitlab.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
 [Generic]: https://gitlab.com/Daniel-KM/Omeka-S-module-Generic
-[BlocksDisposition]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlocksDisposition
+[Blocks Disposition]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlocksDisposition
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [Guest]: https://gitlab.com/Daniel-KM/Omeka-S-module-Guest
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Comment/-/issues
