@@ -5,6 +5,6 @@
   "description": "Comment (module for Omeka S)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Daniel-KM/Omeka-S-module-Comment.git"
+    "url": "https://gitlab.com/Daniel-KM/Omeka-S-module-Comment.git"
   }
 }

@@ -109,7 +109,7 @@ your archives regularly so you can roll back if needed.
 Troubleshooting
 ---------------
 
-See online issues on the [module issues] page on GitHub.
+See online issues on the [module issues] page on GitLab.
 
 
 License
@@ -145,22 +145,22 @@ of the CeCILL license and that you accept its terms.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2017-2019 (see [Daniel-KM] on GitHub)
+* Copyright Daniel Berthereau, 2017-2019 (see [Daniel-KM] on GitLab)
 
 
-[Comment]: https://github.com/Daniel-KM/Omeka-S-module-Comment
+[Comment]: https://gitlab.com/Daniel-KM/Omeka-S-module-Comment
 [Omeka S]: https://omeka.org/s
 [Omeka Classic]: https://omeka.org/classic
 [Commenting plugin]: https://omeka.org/classic/plugins/Commenting
-[Upgrade To Omeka S]: https://github.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
-[Generic]: https://github.com/Daniel-KM/Omeka-S-module-Generic
-[BlocksDisposition]: https://github.com/Daniel-KM/Omeka-S-module-BlocksDisposition
+[Upgrade To Omeka S]: https://gitlab.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
+[Generic]: https://gitlab.com/Daniel-KM/Omeka-S-module-Generic
+[BlocksDisposition]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlocksDisposition
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
-[Guest]: https://github.com/Daniel-KM/Omeka-S-module-Guest
-[module issues]: https://github.com/Daniel-KM/Omeka-S-module-Comment/issues
+[Guest]: https://gitlab.com/Daniel-KM/Omeka-S-module-Guest
+[module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Comment/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [FSF]: https://www.fsf.org
 [OSI]: http://opensource.org
 [GitLab]: https://gitlab.com/Daniel-KM
-[Daniel-KM]: https://github.com/Daniel-KM "Daniel Berthereau"
+[Daniel-KM]: https://gitlab.com/Daniel-KM "Daniel Berthereau"
