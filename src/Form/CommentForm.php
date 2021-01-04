@@ -1,14 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\Form;
 
-use Omeka\Stdlib\Message;
-use Omeka\View\Helper\Setting;
 use Laminas\Form\Element;
 use Laminas\Form\Form;
 use Laminas\Http\PhpEnvironment\RemoteAddress;
 use Laminas\ServiceManager\ServiceLocatorInterface as FormElementManager;
 use Laminas\Validator\StringLength;
 use Laminas\View\Helper\Url;
+use Omeka\Stdlib\Message;
+use Omeka\View\Helper\Setting;
 
 class CommentForm extends Form
 {
@@ -34,7 +34,7 @@ class CommentForm extends Form
         'path' => null,
     ];
 
-    public function init()
+    public function init(): void
     {
         $settingHelper = $this->getSettingHelper();
         $urlHelper = $this->getUrlHelper();
@@ -164,8 +164,8 @@ class CommentForm extends Form
 
                 if ($settingHelper('comment_antispam')) {
                     // Return only one digit.
-                    $a = mt_rand(0, 6);
-                    $b = mt_rand(1, 3);
+                    $a = random_int(0, 6);
+                    $b = random_int(1, 3);
 
                     $result = (string) ($a + $b);
 
@@ -270,7 +270,7 @@ class CommentForm extends Form
     /**
      * @param Setting $setting
      */
-    public function setSettingHelper(Setting $settingHelper)
+    public function setSettingHelper(Setting $settingHelper): void
     {
         $this->settingHelper = $settingHelper;
     }
@@ -286,7 +286,7 @@ class CommentForm extends Form
     /**
      * @param Url $urlHelper
      */
-    public function setUrlHelper(Url $urlHelper)
+    public function setUrlHelper(Url $urlHelper): void
     {
         $this->urlHelper = $urlHelper;
     }
@@ -302,7 +302,7 @@ class CommentForm extends Form
     /**
      * @param FormElementManager $formElementManager
      */
-    public function setFormElementManager($formElementManager)
+    public function setFormElementManager($formElementManager): void
     {
         $this->formElementManager = $formElementManager;
     }

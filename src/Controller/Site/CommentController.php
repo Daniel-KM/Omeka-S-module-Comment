@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\Controller\Site;
 
 use Comment\Controller\AbstractCommentController;
+use Laminas\View\Model\JsonModel;
 use Omeka\Api\Exception\NotFoundException;
 use Omeka\Stdlib\Message;
-use Laminas\View\Model\JsonModel;
 
 class CommentController extends AbstractCommentController
 {

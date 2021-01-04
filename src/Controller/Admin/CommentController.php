@@ -1,13 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\Controller\Admin;
 
 use Comment\Api\Representation\CommentRepresentation;
 use Comment\Controller\AbstractCommentController;
-use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
-use Omeka\Form\ConfirmForm;
 use Laminas\Http\Response;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
+use Omeka\Form\ConfirmForm;
 
 class CommentController extends AbstractCommentController
 {
@@ -123,7 +123,7 @@ class CommentController extends AbstractCommentController
         return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
     }
 
-    public function batchDeleteAllAction()
+    public function batchDeleteAllAction(): void
     {
         $this->messenger()->addError('Delete of all comments is not supported currently.'); // @translate
     }
@@ -267,7 +267,7 @@ class CommentController extends AbstractCommentController
      *
      * No spam, so no notification for admin board.
      */
-    protected function notifyEmail(AbstractResourceEntityRepresentation $resource, CommentRepresentation $comment)
+    protected function notifyEmail(AbstractResourceEntityRepresentation $resource, CommentRepresentation $comment): void
     {
         // Nothing to do.
     }

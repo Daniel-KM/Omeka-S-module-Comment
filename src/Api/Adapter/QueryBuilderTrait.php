@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\Api\Adapter;
 
 use Doctrine\ORM\QueryBuilder;
@@ -16,7 +16,7 @@ trait QueryBuilderTrait
      * @param string $column
      * @param string $target
      */
-    protected function buildQueryValues(QueryBuilder $qb, $values, $column, $target)
+    protected function buildQueryValues(QueryBuilder $qb, $values, $column, $target): void
     {
         if (is_array($values)) {
             if (count($values) == 1) {
@@ -36,7 +36,7 @@ trait QueryBuilderTrait
      * @param mixed $value
      * @param string $column
      */
-    protected function buildQueryOneValue(QueryBuilder $qb, $value, $column)
+    protected function buildQueryOneValue(QueryBuilder $qb, $value, $column): void
     {
         $isOldOmeka = \Omeka\Module::VERSION < 2;
         $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
@@ -62,7 +62,7 @@ trait QueryBuilderTrait
      * @param string $column
      * @param string $target
      */
-    protected function buildQueryMultipleValues(QueryBuilder $qb, array $values, $column, $target)
+    protected function buildQueryMultipleValues(QueryBuilder $qb, array $values, $column, $target): void
     {
         $isOldOmeka = \Omeka\Module::VERSION < 2;
         $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
@@ -112,7 +112,7 @@ trait QueryBuilderTrait
      * @param string $column
      * @param string $target
      */
-    protected function buildQueryIds(QueryBuilder $qb, $values, $column, $target = 'id')
+    protected function buildQueryIds(QueryBuilder $qb, $values, $column, $target = 'id'): void
     {
         if (is_array($values)) {
             if (count($values) == 1) {
@@ -134,7 +134,7 @@ trait QueryBuilderTrait
      * @param mixed $value
      * @param string $column
      */
-    protected function buildQueryOneId(QueryBuilder $qb, $value, $column)
+    protected function buildQueryOneId(QueryBuilder $qb, $value, $column): void
     {
         $value = ($value && is_numeric($value)) ? $value : null;
         $this->buildQueryOneValue($qb, $value, $column);
@@ -150,7 +150,7 @@ trait QueryBuilderTrait
      * @param string $column
      * @param string $target
      */
-    protected function buildQueryMultipleIds(QueryBuilder $qb, $values, $column, $target = 'id')
+    protected function buildQueryMultipleIds(QueryBuilder $qb, $values, $column, $target = 'id'): void
     {
         $hasEmpty = in_array(null, $values);
         $values = array_filter($values, 'is_numeric');
@@ -167,7 +167,7 @@ trait QueryBuilderTrait
      * @param mixed $values One or multiple values.
      * @param string $target
      */
-    protected function buildQueryValuesItself(QueryBuilder $qb, $values, $target)
+    protected function buildQueryValuesItself(QueryBuilder $qb, $values, $target): void
     {
         if (is_array($values)) {
             if (count($values) == 1) {
@@ -187,7 +187,7 @@ trait QueryBuilderTrait
      * @param array $values
      * @param string $target
      */
-    protected function buildQueryMultipleValuesItself(QueryBuilder $qb, array $values, $target)
+    protected function buildQueryMultipleValuesItself(QueryBuilder $qb, array $values, $target): void
     {
         $isOldOmeka = \Omeka\Module::VERSION < 2;
         $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
@@ -243,7 +243,7 @@ trait QueryBuilderTrait
      * @param mixed $values One or multiple ids.
      * @param string $target
      */
-    protected function buildQueryIdsItself(QueryBuilder $qb, $values, $target = 'id')
+    protected function buildQueryIdsItself(QueryBuilder $qb, $values, $target = 'id'): void
     {
         if (is_array($values)) {
             if (count($values) == 1) {
@@ -265,7 +265,7 @@ trait QueryBuilderTrait
      * @param array $values Multiple ids.
      * @param string $target
      */
-    protected function buildQueryMultipleIdsItself(QueryBuilder $qb, $values, $target = 'id')
+    protected function buildQueryMultipleIdsItself(QueryBuilder $qb, $values, $target = 'id'): void
     {
         $hasEmpty = in_array(null, $values);
         $values = array_filter($values, 'is_numeric');

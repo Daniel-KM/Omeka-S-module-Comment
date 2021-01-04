@@ -12,9 +12,9 @@ $partial = $this->plugin('partial');
     <?php $parent = $comment->parent(); ?>
     <?php if (($parent && $parent->id() == $parent_id) || (empty($parent) && empty($parent_id))): ?>
     <div id="comment-<?= $comment->id() ?>" class="comment">
-        <?= $partial('common/admin/comment', array('comment' => $comment)) ?>
+        <?= $partial('common/admin/comment', ['comment' => $comment]) ?>
         <div class="comment-children">
-            <?= $partial('common/admin/comments-thread', array('comments' => $comments, 'parent_id' => $comment->id())) ?>
+            <?= $partial('common/admin/comments-thread', ['comments' => $comments, 'parent_id' => $comment->id()]) ?>
         </div>
     </div>
     <?php endif; ?>

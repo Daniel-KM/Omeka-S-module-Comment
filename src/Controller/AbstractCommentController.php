@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\Controller;
 
 use Comment\Api\Representation\CommentRepresentation;
 use Comment\Entity\Comment;
 use Comment\Form\CommentForm;
-use Omeka\Api\Exception\NotFoundException;
-use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
-use Omeka\Stdlib\Message;
 use Laminas\Http\PhpEnvironment\RemoteAddress;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\JsonModel;
+use Omeka\Api\Exception\NotFoundException;
+use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
+use Omeka\Stdlib\Message;
 
 abstract class AbstractCommentController extends AbstractActionController
 {
@@ -254,7 +254,7 @@ abstract class AbstractCommentController extends AbstractActionController
      * @param AbstractResourceEntityRepresentation $resource
      * @param CommentRepresentation $comment
      */
-    protected function notifyEmail(AbstractResourceEntityRepresentation $resource, CommentRepresentation $comment)
+    protected function notifyEmail(AbstractResourceEntityRepresentation $resource, CommentRepresentation $comment): void
     {
         $site = @$_SERVER['SERVER_NAME'] ?: sprintf('Server (%s)', @$_SERVER['SERVER_ADDR']); // @translate
         $subject = new Message('[%s] New public comment', $site); // @translate

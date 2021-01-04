@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Comment
  *
@@ -40,17 +40,17 @@ if (!class_exists(\Generic\AbstractModule::class)) {
 
 use Comment\Entity\Comment;
 use Generic\AbstractModule;
-use Omeka\Api\Representation\AbstractEntityRepresentation;
-use Omeka\Api\Representation\ItemRepresentation;
-use Omeka\Api\Representation\ItemSetRepresentation;
-use Omeka\Api\Representation\MediaRepresentation;
-use Omeka\Api\Representation\UserRepresentation;
-use Omeka\Entity\AbstractEntity;
-// TODO Add IsSelfAssertion.
-// use Omeka\Permissions\Assertion\IsSelfAssertion;
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Mvc\MvcEvent;
+use Omeka\Api\Representation\AbstractEntityRepresentation;
+use Omeka\Api\Representation\ItemRepresentation;
+use Omeka\Api\Representation\ItemSetRepresentation;
+// TODO Add IsSelfAssertion.
+// use Omeka\Permissions\Assertion\IsSelfAssertion;
+use Omeka\Api\Representation\MediaRepresentation;
+use Omeka\Api\Representation\UserRepresentation;
+use Omeka\Entity\AbstractEntity;
 
 class Module extends AbstractModule
 {
@@ -65,21 +65,21 @@ class Module extends AbstractModule
         'sites' => [],
     ];
 
-    public function onBootstrap(MvcEvent $event)
+    public function onBootstrap(MvcEvent $event): void
     {
         parent::onBootstrap($event);
         $this->addEntityManagerFilters();
         $this->addAclRules();
     }
 
-    protected function postInstall()
+    protected function postInstall(): void
     {
         $services = $this->getServiceLocator();
         $settings = $services->get('Omeka\Settings');
         $translator = $services->get('MvcTranslator');
 
         $html = '<p>';
-        $html .= sprintf($translator->translate('I agree with %sterms of use%s and I accept to free my contribution under the licence %sCC BY-SA%s.'), // @translate
+        $html .= sprintf($translator->translate("I agree with %sterms of use%s and I accept to free my contribution under the licence %sCC\u{a0}BY-SA%s."), // @translate
             '<a rel="licence" href="#" target="_blank">', '</a>',
             '<a rel="licence" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">', '</a>'
         );
@@ -90,7 +90,7 @@ class Module extends AbstractModule
     /**
      * Add comment visibility filters to the entity manager.
      */
-    protected function addEntityManagerFilters()
+    protected function addEntityManagerFilters(): void
     {
         $services = $this->getServiceLocator();
         $acl = $services->get('Omeka\Acl');
@@ -102,7 +102,7 @@ class Module extends AbstractModule
     /**
      * Add ACL rules for this module.
      */
-    protected function addAclRules()
+    protected function addAclRules(): void
     {
         $services = $this->getServiceLocator();
         $acl = $services->get('Omeka\Acl');
@@ -184,7 +184,7 @@ class Module extends AbstractModule
             );
     }
 
-    public function attachListeners(SharedEventManagerInterface $sharedEventManager)
+    public function attachListeners(SharedEventManagerInterface $sharedEventManager): void
     {
         $settings = $this->getServiceLocator()->get('Omeka\Settings');
         $commentResources = $settings->get('comment_resources');
@@ -364,7 +364,7 @@ class Module extends AbstractModule
         );
     }
 
-    public function handleMainSettings(Event $event)
+    public function handleMainSettings(Event $event): void
     {
         parent::handleMainSettings($event);
 
@@ -382,7 +382,7 @@ class Module extends AbstractModule
             ->setValue(implode("\n", $value));
     }
 
-    public function handleMainSettingsFilters(Event $event)
+    public function handleMainSettingsFilters(Event $event): void
     {
         $event->getParam('inputFilter')
             ->get('comment')
@@ -400,14 +400,14 @@ class Module extends AbstractModule
             ]);
     }
 
-    public function handleApiContext(Event $event)
+    public function handleApiContext(Event $event): void
     {
         $context = $event->getParam('context');
         $context['o-module-comment'] = 'http://omeka.org/s/vocabs/module/comment#';
         $event->setParam('context', $context);
     }
 
-    public function handleSqlResourceVisibility(Event $event)
+    public function handleSqlResourceVisibility(Event $event): void
     {
         // Users can view comments only if they have permission to view
         // the attached resource.
@@ -424,7 +424,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function cacheData(Event $event)
+    public function cacheData(Event $event): void
     {
         if (!$this->userCanRead()) {
             return;
@@ -473,7 +473,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function filterJsonLd(Event $event)
+    public function filterJsonLd(Event $event): void
     {
         if (!$this->userCanRead()) {
             return;
@@ -495,7 +495,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function searchQuery(Event $event)
+    public function searchQuery(Event $event): void
     {
         $query = $event->getParam('request')->getContent();
 
@@ -527,7 +527,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function addHeadersAdmin(Event $event)
+    public function addHeadersAdmin(Event $event): void
     {
         $view = $event->getTarget();
         $view->headLink()->appendStylesheet($view->assetUrl('css/comment-admin.css', 'Comment'));
@@ -539,7 +539,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function addTab(Event $event)
+    public function addTab(Event $event): void
     {
         $sectionNav = $event->getParam('section_nav');
         $sectionNav['comments'] = 'Comments'; // @translate
@@ -551,7 +551,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function viewShowAfterUser(Event $event)
+    public function viewShowAfterUser(Event $event): void
     {
         $owner = $event->getTarget()->vars()->user;
         $this->viewDetails($event, $owner);
@@ -562,7 +562,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function viewShowAfterResource(Event $event)
+    public function viewShowAfterResource(Event $event): void
     {
         $view = $event->getTarget();
         $api = $this->getServiceLocator()->get('Omeka\ApiManager');
@@ -587,7 +587,7 @@ class Module extends AbstractModule
      * @param Event $event
      * @param UserRepresentation $owner
      */
-    public function viewDetails(Event $event, $owner = null)
+    public function viewDetails(Event $event, $owner = null): void
     {
         $representation = $owner ?: $event->getParam('entity');
         $columnName = $this->columnNameOfRepresentation($representation);
@@ -625,7 +625,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function displayAdvancedSearch(Event $event)
+    public function displayAdvancedSearch(Event $event): void
     {
         $query = $event->getParam('query', []);
         $query['has_comments'] = !empty($query['has_comments']);
@@ -641,7 +641,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function filterSearchFilters(Event $event)
+    public function filterSearchFilters(Event $event): void
     {
         $translate = $event->getTarget()->plugin('translate');
         $filters = $event->getParam('filters');
@@ -659,7 +659,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function filterSearchFiltersComment(Event $event)
+    public function filterSearchFiltersComment(Event $event): void
     {
         $translate = $event->getTarget()->plugin('translate');
         $filters = $event->getParam('filters');
@@ -690,7 +690,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function viewShowAfterPublic(Event $event)
+    public function viewShowAfterPublic(Event $event): void
     {
         if (!$this->userCanRead()) {
             return;

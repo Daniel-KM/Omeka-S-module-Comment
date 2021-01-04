@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\Api\Representation;
 
 use DateTime;
 use Omeka\Api\Representation\AbstractEntityRepresentation;
 use Omeka\Api\Representation\AbstractResourceRepresentation;
-use Omeka\Api\Representation\UserRepresentation;
 use Omeka\Api\Representation\SiteRepresentation;
+use Omeka\Api\Representation\UserRepresentation;
 
 class CommentRepresentation extends AbstractEntityRepresentation
 {

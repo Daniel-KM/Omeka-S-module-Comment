@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\View\Helper;
 
 use Comment\Form\SearchForm;
@@ -21,7 +21,7 @@ class SearchCommentForm extends AbstractHelper
         return $this->searchForm;
     }
 
-    public function setSearchForm(SearchForm $searchForm)
+    public function setSearchForm(SearchForm $searchForm): void
     {
         $this->searchForm = $searchForm;
     }

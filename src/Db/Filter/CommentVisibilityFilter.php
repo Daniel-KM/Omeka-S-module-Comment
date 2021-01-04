@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\Db\Filter;
 
+use Comment\Entity\Comment;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetaData;
 use Doctrine\ORM\Query\Filter\SQLFilter;
-use Comment\Entity\Comment;
 use Omeka\Permissions\Acl;
 
 /**
@@ -59,7 +59,7 @@ class CommentVisibilityFilter extends SQLFilter
         return implode(' ', $constraints);
     }
 
-    public function setAcl(Acl $acl)
+    public function setAcl(Acl $acl): void
     {
         $this->acl = $acl;
     }

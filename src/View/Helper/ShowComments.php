@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\View\Helper;
 
-use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Laminas\View\Helper\AbstractHelper;
+use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 
 class ShowComments extends AbstractHelper
 {

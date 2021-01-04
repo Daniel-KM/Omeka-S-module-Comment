@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\Api\Adapter;
 
-use Doctrine\ORM\QueryBuilder;
 use Comment\Api\Representation\CommentRepresentation;
 use Comment\Entity\Comment;
+use Doctrine\ORM\QueryBuilder;
+use Laminas\Validator\EmailAddress;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
 use Omeka\Api\Request;
 use Omeka\Entity\EntityInterface;
@@ -12,7 +13,6 @@ use Omeka\Entity\ItemSet;
 use Omeka\Entity\Media;
 use Omeka\Entity\Resource;
 use Omeka\Stdlib\ErrorStore;
-use Laminas\Validator\EmailAddress;
 
 class CommentAdapter extends AbstractEntityAdapter
 {
@@ -53,7 +53,7 @@ class CommentAdapter extends AbstractEntityAdapter
 
     public function hydrate(Request $request, EntityInterface $entity,
         ErrorStore $errorStore
-    ) {
+    ): void {
         $data = $request->getContent();
 
         // The owner, site and resource can be null.
@@ -134,7 +134,7 @@ class CommentAdapter extends AbstractEntityAdapter
         $this->updateTimestamps($request, $entity);
     }
 
-    public function validateEntity(EntityInterface $entity, ErrorStore $errorStore)
+    public function validateEntity(EntityInterface $entity, ErrorStore $errorStore): void
     {
         // When the user, the resource or the site are deleted, there is no
         // validation here, so it can be checked when created or updated?
@@ -163,7 +163,7 @@ class CommentAdapter extends AbstractEntityAdapter
         }
     }
 
-    public function buildQuery(QueryBuilder $qb, array $query)
+    public function buildQuery(QueryBuilder $qb, array $query): void
     {
         $isOldOmeka = \Omeka\Module::VERSION < 2;
         $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';

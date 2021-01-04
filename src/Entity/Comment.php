@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\Entity;
 
 use DateTime;
@@ -173,7 +173,7 @@ class Comment extends AbstractEntity
         return $this->id;
     }
 
-    public function setOwner(User $owner = null)
+    public function setOwner(User $owner = null): void
     {
         $this->owner = $owner;
     }
@@ -183,7 +183,7 @@ class Comment extends AbstractEntity
         return $this->owner;
     }
 
-    public function setResource(Resource $resource = null)
+    public function setResource(Resource $resource = null): void
     {
         $this->resource = $resource;
     }
@@ -193,7 +193,7 @@ class Comment extends AbstractEntity
         return $this->resource;
     }
 
-    public function setSite(Site $site = null)
+    public function setSite(Site $site = null): void
     {
         $this->site = $site;
     }
@@ -203,7 +203,7 @@ class Comment extends AbstractEntity
         return $this->site;
     }
 
-    public function setPath($path)
+    public function setPath($path): void
     {
         $this->path = $path;
     }
@@ -213,7 +213,7 @@ class Comment extends AbstractEntity
         return $this->path;
     }
 
-    public function setEmail($email)
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
@@ -223,7 +223,7 @@ class Comment extends AbstractEntity
         return $this->email;
     }
 
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -233,7 +233,7 @@ class Comment extends AbstractEntity
         return $this->name;
     }
 
-    public function setWebsite($website)
+    public function setWebsite($website): void
     {
         $this->website = $website;
     }
@@ -243,7 +243,7 @@ class Comment extends AbstractEntity
         return $this->website;
     }
 
-    public function setIp($ip)
+    public function setIp($ip): void
     {
         $this->ip = $ip;
     }
@@ -253,7 +253,7 @@ class Comment extends AbstractEntity
         return $this->ip;
     }
 
-    public function setUserAgent($userAgent)
+    public function setUserAgent($userAgent): void
     {
         $this->userAgent = $userAgent;
     }
@@ -263,7 +263,7 @@ class Comment extends AbstractEntity
         return $this->userAgent;
     }
 
-    public function setBody($body)
+    public function setBody($body): void
     {
         $this->body = $body;
     }
@@ -273,7 +273,7 @@ class Comment extends AbstractEntity
         return $this->body;
     }
 
-    public function setParent(self $parent)
+    public function setParent(self $parent): void
     {
         $this->parent = $parent;
     }
@@ -288,7 +288,7 @@ class Comment extends AbstractEntity
         return $this->children;
     }
 
-    public function setApproved($approved)
+    public function setApproved($approved): void
     {
         $this->approved = $approved;
     }
@@ -298,7 +298,7 @@ class Comment extends AbstractEntity
         return $this->approved;
     }
 
-    public function setFlagged($flagged)
+    public function setFlagged($flagged): void
     {
         $this->flagged = $flagged;
     }
@@ -308,7 +308,7 @@ class Comment extends AbstractEntity
         return $this->flagged;
     }
 
-    public function setSpam($spam)
+    public function setSpam($spam): void
     {
         $this->spam = $spam;
     }
@@ -318,7 +318,7 @@ class Comment extends AbstractEntity
         return $this->spam;
     }
 
-    public function setCreated(DateTime $created)
+    public function setCreated(DateTime $created): void
     {
         $this->created = $created;
     }
@@ -328,7 +328,7 @@ class Comment extends AbstractEntity
         return $this->created;
     }
 
-    public function setModified(DateTime $modified)
+    public function setModified(DateTime $modified): void
     {
         $this->modified = $modified;
     }
@@ -341,7 +341,7 @@ class Comment extends AbstractEntity
     /**
      * @PrePersist
      */
-    public function prePersist(LifecycleEventArgs $eventArgs)
+    public function prePersist(LifecycleEventArgs $eventArgs): void
     {
         $this->created = new DateTime('now');
     }
@@ -349,7 +349,7 @@ class Comment extends AbstractEntity
     /**
      * @PreUpdate
      */
-    public function preUpdate(PreUpdateEventArgs $eventArgs)
+    public function preUpdate(PreUpdateEventArgs $eventArgs): void
     {
         $this->modified = new DateTime('now');
     }

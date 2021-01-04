@@ -1,4 +1,5 @@
 <?php
+
 namespace Comment;
 
 return [
@@ -145,7 +146,7 @@ return [
             'comment_threaded' => true,
             'comment_max_length' => 2000,
             'comment_comments_label' => 'Comments', // @translate
-            'comment_legal_text' => '<p>I agree with <a rel="licence" href="#" target="_blank">terms of use</a> and I accept to free my contribution under the licence <a rel="licence" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA</a>.</p>',
+            'comment_legal_text' => '<p>I agree with <a rel="license" href="#" target="_blank">terms of use</a> and I accept to free my contribution under the license <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA</a>.</p>',
             'comment_wpapi_key' => '',
             'comment_antispam' => true,
         ],

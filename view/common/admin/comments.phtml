@@ -29,7 +29,7 @@ $addUrl = $url('admin/comment', ['action' => 'add'], true);
     <?php endif; ?>
     <?php if (empty($comments)): ?>
     <p><?= $translate('No comment yet! Be the first to add one!'); ?></p>
-    <?php elseif (isset($commentThreaded) ? $commentThreaded : $setting('comment_threaded')): ?>
+    <?php elseif ($commentThreaded ?? $setting('comment_threaded')): ?>
         <?= $partial('common/admin/comments-thread', ['comments' => $comments, 'parent_id' => null]) ?>
     <?php else: ?>
         <?= $partial('common/admin/comments-list', ['comments' => $comments]) ?>

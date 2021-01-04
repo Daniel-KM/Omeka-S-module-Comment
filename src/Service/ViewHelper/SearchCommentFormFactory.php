@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Comment\Service\ViewHelper;
 
 use Comment\Form\SearchForm;
