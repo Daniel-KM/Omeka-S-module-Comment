@@ -4,7 +4,7 @@ namespace Comment\Service\ViewHelper;
 use Comment\Form\SearchForm;
 use Comment\View\Helper\SearchCommentForm;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class SearchCommentFormFactory implements FactoryInterface
 {

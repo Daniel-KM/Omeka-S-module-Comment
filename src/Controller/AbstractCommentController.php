@@ -7,10 +7,10 @@ use Comment\Form\CommentForm;
 use Omeka\Api\Exception\NotFoundException;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Stdlib\Message;
-use Zend\Http\PhpEnvironment\RemoteAddress;
-use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\JsonModel;
+use Laminas\Http\PhpEnvironment\RemoteAddress;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\JsonModel;
 
 abstract class AbstractCommentController extends AbstractActionController
 {
@@ -276,7 +276,7 @@ abstract class AbstractCommentController extends AbstractActionController
             ->setBody($body);
         try {
             $mailer->send($message);
-        } catch (\Zend\Mail\Transport\Exception\RuntimeException $e) {
+        } catch (\Laminas\Mail\Transport\Exception\RuntimeException $e) {
             $this->logger()->err('Unable to send an email after commenting.'); // @translate
         }
     }
@@ -313,7 +313,7 @@ abstract class AbstractCommentController extends AbstractActionController
      * @param string $message
      * @param int $statusCode
      * @param array $messages
-     * @return \Zend\View\Model\JsonModel
+     * @return \Laminas\View\Model\JsonModel
      */
     protected function jsonError($message, $statusCode = Response::STATUS_CODE_400, array $messages = [])
     {

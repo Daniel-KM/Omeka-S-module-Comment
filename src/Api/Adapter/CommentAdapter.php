@@ -12,7 +12,7 @@ use Omeka\Entity\ItemSet;
 use Omeka\Entity\Media;
 use Omeka\Entity\Resource;
 use Omeka\Stdlib\ErrorStore;
-use Zend\Validator\EmailAddress;
+use Laminas\Validator\EmailAddress;
 
 class CommentAdapter extends AbstractEntityAdapter
 {

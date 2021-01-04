@@ -48,9 +48,9 @@ use Omeka\Api\Representation\UserRepresentation;
 use Omeka\Entity\AbstractEntity;
 // TODO Add IsSelfAssertion.
 // use Omeka\Permissions\Assertion\IsSelfAssertion;
-use Zend\EventManager\Event;
-use Zend\EventManager\SharedEventManagerInterface;
-use Zend\Mvc\MvcEvent;
+use Laminas\EventManager\Event;
+use Laminas\EventManager\SharedEventManagerInterface;
+use Laminas\Mvc\MvcEvent;
 
 class Module extends AbstractModule
 {
@@ -391,7 +391,7 @@ class Module extends AbstractModule
                 'required' => false,
                 'filters' => [
                     [
-                        'name' => \Zend\Filter\Callback::class,
+                        'name' => \Laminas\Filter\Callback::class,
                         'options' => [
                             'callback' => [$this, 'stringToList'],
                         ],

@@ -2,7 +2,7 @@
 namespace Comment\View\Helper;
 
 use Comment\Form\SearchForm;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class SearchCommentForm extends AbstractHelper
 {

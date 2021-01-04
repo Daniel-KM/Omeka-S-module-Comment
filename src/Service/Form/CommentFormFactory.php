@@ -3,7 +3,7 @@ namespace Comment\Service\Form;
 
 use Comment\Form\CommentForm;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class CommentFormFactory implements FactoryInterface
 {

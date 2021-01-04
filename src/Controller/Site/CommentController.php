@@ -4,7 +4,7 @@ namespace Comment\Controller\Site;
 use Comment\Controller\AbstractCommentController;
 use Omeka\Api\Exception\NotFoundException;
 use Omeka\Stdlib\Message;
-use Zend\View\Model\JsonModel;
+use Laminas\View\Model\JsonModel;
 
 class CommentController extends AbstractCommentController
 {
@@ -22,7 +22,7 @@ class CommentController extends AbstractCommentController
      * Flag or unflag a resource.
      *
      * @param bool $flagUnflag
-     * @return \Zend\View\Model\JsonModel
+     * @return \Laminas\View\Model\JsonModel
      */
     protected function flagUnflag($flagUnflag)
     {

@@ -3,7 +3,7 @@ namespace Comment\Service\ViewHelper;
 
 use Comment\View\Helper\ShowCommentForm;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ShowCommentFormFactory implements FactoryInterface
 {

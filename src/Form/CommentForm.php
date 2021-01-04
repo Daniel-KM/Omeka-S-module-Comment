@@ -3,12 +3,12 @@ namespace Comment\Form;
 
 use Omeka\Stdlib\Message;
 use Omeka\View\Helper\Setting;
-use Zend\Form\Element;
-use Zend\Form\Form;
-use Zend\Http\PhpEnvironment\RemoteAddress;
-use Zend\ServiceManager\ServiceLocatorInterface as FormElementManager;
-use Zend\Validator\StringLength;
-use Zend\View\Helper\Url;
+use Laminas\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Http\PhpEnvironment\RemoteAddress;
+use Laminas\ServiceManager\ServiceLocatorInterface as FormElementManager;
+use Laminas\Validator\StringLength;
+use Laminas\View\Helper\Url;
 
 class CommentForm extends Form
 {

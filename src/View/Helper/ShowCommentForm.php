@@ -4,7 +4,7 @@ namespace Comment\View\Helper;
 use Comment\Entity\Comment;
 use Comment\Form\CommentForm;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class ShowCommentForm extends AbstractHelper
 {
