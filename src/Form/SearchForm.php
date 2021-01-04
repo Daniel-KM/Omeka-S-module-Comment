@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Comment\Form;
 
 use Laminas\Form\Element\Checkbox;
@@ -13,6 +14,9 @@ class SearchForm extends Form
             'type' => Checkbox::class,
             'options' => [
                 'label' => 'Has comments', // @translate
+            ],
+            'attributes' => [
+                'id' => 'has_comments',
             ],
         ]);
     }

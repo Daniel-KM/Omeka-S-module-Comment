@@ -39,7 +39,7 @@ class CommentForm extends Form
         $settingHelper = $this->getSettingHelper();
         $urlHelper = $this->getUrlHelper();
         $resourceId = $this->getOption('resource_id');
-        $siteSlug = $this->getOption('site_slug');
+        $siteSlug = (string) $this->getOption('site_slug', '');
         $isPublic = (bool) strlen($siteSlug);
         $user = $this->getOption('user');
         $isAnonymous = empty($user);
@@ -120,7 +120,7 @@ class CommentForm extends Form
 
         if ($isAnonymous) {
             // The legal agreement is checked by default for logged users.
-            $legalText = $settingHelper('comment_legal_text');
+            $legalText = $settingHelper('comment_legal_text', '');
             if ($legalText) {
                 // TODO Allow html legal agreement in the comment form help from here.
                 $legalText = str_replace('&nbsp;', ' ', strip_tags($legalText));
@@ -270,9 +270,10 @@ class CommentForm extends Form
     /**
      * @param Setting $setting
      */
-    public function setSettingHelper(Setting $settingHelper): void
+    public function setSettingHelper(Setting $settingHelper): self
     {
         $this->settingHelper = $settingHelper;
+        return $this;
     }
 
     /**
@@ -286,9 +287,10 @@ class CommentForm extends Form
     /**
      * @param Url $urlHelper
      */
-    public function setUrlHelper(Url $urlHelper): void
+    public function setUrlHelper(Url $urlHelper): self
     {
         $this->urlHelper = $urlHelper;
+        return $this;
     }
 
     /**
@@ -302,9 +304,10 @@ class CommentForm extends Form
     /**
      * @param FormElementManager $formElementManager
      */
-    public function setFormElementManager($formElementManager): void
+    public function setFormElementManager($formElementManager): self
     {
         $this->formElementManager = $formElementManager;
+        return $this;
     }
 
     /**
