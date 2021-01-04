@@ -189,8 +189,6 @@ trait QueryBuilderTrait
      */
     protected function buildQueryMultipleValuesItself(QueryBuilder $qb, array $values, $target): void
     {
-        $isOldOmeka = \Omeka\Module::VERSION < 2;
-        $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
         $expr = $qb->expr();
 
         $hasNull = in_array(null, $values, true);
@@ -201,11 +199,11 @@ trait QueryBuilderTrait
             $valueAlias = $this->createAlias();
             $qb
                 ->innerJoin(
-                    $alias,
+                    'omeka_root',
                     $valueAlias,
                     'WITH',
                     $expr->eq(
-                        $alias . '.id',
+                        'omeka_root.id',
                         $valueAlias . '.id'
                     )
                 )
@@ -229,7 +227,7 @@ trait QueryBuilderTrait
         // Check no value only.
         elseif ($hasNull) {
             $qb->andWhere($expr->isNull(
-                $alias . '.' . $target
+                'omeka_root.' . $target
             ));
         }
     }

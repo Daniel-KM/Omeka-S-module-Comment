@@ -4,7 +4,7 @@
  *
  * Add public and private commenting on resources and manage them.
  *
- * @copyright Daniel Berthereau, 2017-2019
+ * @copyright Daniel Berthereau, 2017-2020
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -357,11 +357,6 @@ class Module extends AbstractModule
             'form.add_elements',
             [$this, 'handleMainSettings']
         );
-        $sharedEventManager->attach(
-            \Omeka\Form\SettingForm::class,
-            'form.add_input_filters',
-            [$this, 'handleMainSettingsFilters']
-        );
     }
 
     public function handleMainSettings(Event $event): void
@@ -380,24 +375,6 @@ class Module extends AbstractModule
             ->get($space)
             ->get('comment_public_notify_post')
             ->setValue(implode("\n", $value));
-    }
-
-    public function handleMainSettingsFilters(Event $event): void
-    {
-        $event->getParam('inputFilter')
-            ->get('comment')
-            ->add([
-                'name' => 'comment_public_notify_post',
-                'required' => false,
-                'filters' => [
-                    [
-                        'name' => \Laminas\Filter\Callback::class,
-                        'options' => [
-                            'callback' => [$this, 'stringToList'],
-                        ],
-                    ],
-                ],
-            ]);
     }
 
     public function handleApiContext(Event $event): void
@@ -507,9 +484,6 @@ class Module extends AbstractModule
         $adapter = $event->getTarget();
         $commentAlias = $adapter->createAlias();
 
-        $isOldOmeka = \Omeka\Module::VERSION < 2;
-        $alias = $isOldOmeka ? $adapter->getEntityClass() : 'omeka_root';
-
         $resourceName = $adapter->getResourceName() === 'users'
             ? 'owner'
             : 'resource';
@@ -518,7 +492,7 @@ class Module extends AbstractModule
                 Comment::class,
                 $commentAlias,
                 'WITH',
-                $qb->expr()->eq($commentAlias . '.' . $resourceName, $alias . '.id')
+                $qb->expr()->eq($commentAlias . '.' . $resourceName, 'omeka_root.id')
             );
     }
 

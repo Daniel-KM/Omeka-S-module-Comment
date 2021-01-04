@@ -3,6 +3,7 @@ namespace Comment\Form;
 
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
+use Omeka\Form\Element\ArrayTextarea;
 use Omeka\Form\Element\CkeditorInline;
 
 class SettingsFieldset extends Fieldset
@@ -65,7 +66,7 @@ class SettingsFieldset extends Fieldset
 
             ->add([
                 'name' => 'comment_public_notify_post',
-                'type' => Element\Textarea::class,
+                'type' => ArrayTextarea::class,
                 'options' => [
                     'label' => 'Notify public comments by email', // @translate
                     'info' => 'The list of emails to notify when a comment is posted or flagged, one by row.', // @translate

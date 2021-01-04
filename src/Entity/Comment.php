@@ -15,6 +15,8 @@ use Omeka\Entity\User;
  * @todo For pages, create a resource class "Page"!
  * @todo Check if columns for author can be merged into an array.
  *
+ * @todo See ContactUs
+ *
  * @Entity
  * @HasLifecycleCallbacks
  */

@@ -182,7 +182,7 @@ class CommentAdapter extends AbstractEntityAdapter
             'item_id' => 'resource',
             'media_id' => 'resource',
             'owner_id' => 'owner',
-            'site_id' => 'tag',
+            'site_id' => 'site',
         ] as $queryKey => $column) {
             if (array_key_exists($queryKey, $query)) {
                 $this->buildQueryIds($qb, $query[$queryKey], $column, 'id');

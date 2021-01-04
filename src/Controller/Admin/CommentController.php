@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Comment\Controller\Admin;
 
 use Comment\Api\Representation\CommentRepresentation;
@@ -15,7 +16,7 @@ class CommentController extends AbstractCommentController
     {
         $this->setBrowseDefaults('created');
         $response = $this->api()->search('comments', $this->params()->fromQuery());
-        $this->paginator($response->getTotalResults(), $this->params()->fromQuery('page'));
+        $this->paginator($response->getTotalResults());
 
         $formDeleteSelected = $this->getForm(ConfirmForm::class);
         $formDeleteSelected->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'batch-delete'], true));
@@ -55,7 +56,7 @@ class CommentController extends AbstractCommentController
         $view = new ViewModel;
         $view->setTerminal(true);
         $view->setTemplate('common/delete-confirm-details');
-        $view->setVariable('tagging', $comment);
+        $view->setVariable('comment', $comment);
         $view->setVariable('resource', $comment);
         $view->setVariable('resourceLabel', 'comment');
         $view->setVariable('partialPath', 'comment/admin/comment/show-details');
