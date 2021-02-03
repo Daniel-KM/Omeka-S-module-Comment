@@ -67,8 +67,8 @@ $commentForm->prepare();
     </div>
 
 <?php if ($isAnonymous): ?>
-    <?php if ($commentForm->has('recaptcha')): ?>
-    <?php $element = $commentForm->get('recaptcha'); ?>
+    <?php if ($commentForm->has('g-recaptcha-response')): ?>
+    <?php $element = $commentForm->get('g-recaptcha-response'); ?>
     <div class="field">
         <div class="inputs" required="required">
             <?= $formElement($element) ?>
