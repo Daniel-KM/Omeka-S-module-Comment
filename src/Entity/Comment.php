@@ -4,6 +4,7 @@ namespace Comment\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Omeka\Entity\AbstractEntity;
@@ -286,18 +287,18 @@ class Comment extends AbstractEntity
         return $this->body;
     }
 
-    public function setParent(Comment $parent): self
+    public function setParent(?Comment $parent): self
     {
         $this->parent = $parent;
         return $this;
     }
 
-    public function getParent(): Comment
+    public function getParent(): ?Comment
     {
         return $this->parent;
     }
 
-    public function getChildren(): ArrayCollection
+    public function getChildren(): Collection
     {
         return $this->children;
     }

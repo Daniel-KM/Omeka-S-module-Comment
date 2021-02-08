@@ -414,7 +414,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setParent(\Comment\Entity\Comment $parent): \Comment\Entity\Comment
+    public function setParent(?\Comment\Entity\Comment $parent): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParent', [$parent]);
@@ -425,7 +425,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getParent(): \Comment\Entity\Comment
+    public function getParent(): ?\Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParent', []);
@@ -436,7 +436,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function getChildren(): \Doctrine\Common\Collections\ArrayCollection
+    public function getChildren(): \Doctrine\Common\Collections\Collection
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getChildren', []);
