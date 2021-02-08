@@ -159,7 +159,7 @@ class CommentForm extends Form
                             'secret_key' => $secretKey,
                             'remote_ip' => (new RemoteAddress)->getIpAddress(),
                         ]);
-                    $this->add($element);
+                    $this->add($element->setName('g-recaptcha-response'));
                 }
 
                 if ($settingHelper('comment_antispam')) {
