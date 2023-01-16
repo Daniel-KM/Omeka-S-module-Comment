@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Comment\Service\ViewHelper;
 
 use Comment\Form\SearchForm;
@@ -12,7 +13,7 @@ class SearchCommentFormFactory implements FactoryInterface
     {
         $formElementManager = $services->get('FormElementManager');
         $searchForm = $formElementManager->get(SearchForm::class);
-        $form = new SearchCommentForm();
+        $form = new SearchCommentForm(null, $options ?? []);
         $form->setSearchForm($searchForm);
         return $form;
     }
