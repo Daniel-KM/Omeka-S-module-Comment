@@ -4,7 +4,7 @@
  *
  * Add public and private commenting on resources and manage them.
  *
- * @copyright Daniel Berthereau, 2017-2020
+ * @copyright Daniel Berthereau, 2017-2023
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  *
  * This software is governed by the CeCILL license under French law and abiding

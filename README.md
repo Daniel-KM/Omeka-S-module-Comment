@@ -144,7 +144,7 @@ of the CeCILL license and that you accept its terms.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2017-2021 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2017-2023 (see [Daniel-KM] on GitLab)
 
 
 [Comment]: https://gitlab.com/Daniel-KM/Omeka-S-module-Comment
@@ -154,7 +154,7 @@ Copyright
 [Upgrade To Omeka S]: https://gitlab.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
 [Generic]: https://gitlab.com/Daniel-KM/Omeka-S-module-Generic
 [Blocks Disposition]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlocksDisposition
-[Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
+[Installing a module]: https://omeka.org/s/docs/user-manual/modules/#installing-modules
 [Guest]: https://gitlab.com/Daniel-KM/Omeka-S-module-Guest
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Comment/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
