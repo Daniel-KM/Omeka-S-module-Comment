@@ -32,8 +32,35 @@ class CommentAdapter extends AbstractEntityAdapter
         'name' => 'name',
         'ip' => 'ip',
         'user_agent' => 'user_agent',
+        'approved' => 'approved',
+        'flagged' => 'flagged',
+        'spam' => 'spam',
         // For info.
         // // 'resource_title' => 'resource',
+    ];
+
+    protected $scalarFields = [
+        'id' => 'id',
+        'owner' => 'owner',
+        'resource' => 'resource',
+        'item_set' => 'resource',
+        'item' => 'resource',
+        'media' => 'resource',
+        'site' => 'site',
+        'path' => 'path',
+        'email' => 'email',
+        'website' => 'website',
+        'name' => 'name',
+        'ip' => 'ip',
+        'user_agent' => 'user_agent',
+        'body' => 'body',
+        'parent' => 'parent',
+        'children' => 'children',
+        'approved' => 'approved',
+        'flagged' => 'flagged',
+        'spam' => 'spam',
+        'created' => 'created',
+        'modified' => 'modified',
     ];
 
     public function getResourceName()
