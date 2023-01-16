@@ -13,6 +13,7 @@ class SettingsFieldset extends Fieldset
     public function init(): void
     {
         $this
+            ->setAttribute('id', 'comment')
             ->add([
                 'name' => 'comment_resources',
                 'type' => Element\MultiCheckbox::class,
