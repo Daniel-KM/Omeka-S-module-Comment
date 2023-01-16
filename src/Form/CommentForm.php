@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Comment\Form;
 
 use Laminas\Form\Element;
@@ -13,12 +14,12 @@ use Omeka\View\Helper\Setting;
 class CommentForm extends Form
 {
     /**
-     * @var Setting
+     * @var \Omeka\View\Helper\Setting
      */
     protected $settingHelper;
 
     /**
-     * @var Url
+     * @var \Laminas\View\Helper\Url
      */
     protected $urlHelper;
 
@@ -267,53 +268,35 @@ class CommentForm extends Form
             ]);
     }
 
-    /**
-     * @param Setting $setting
-     */
     public function setSettingHelper(Setting $settingHelper): self
     {
         $this->settingHelper = $settingHelper;
         return $this;
     }
 
-    /**
-     * @return Setting
-     */
-    public function getSettingHelper()
+    public function getSettingHelper(): Setting
     {
         return $this->settingHelper;
     }
 
-    /**
-     * @param Url $urlHelper
-     */
     public function setUrlHelper(Url $urlHelper): self
     {
         $this->urlHelper = $urlHelper;
         return $this;
     }
 
-    /**
-     * @return Url
-     */
-    public function getUrlHelper()
+    public function getUrlHelper(): Url
     {
         return $this->urlHelper;
     }
 
-    /**
-     * @param FormElementManager $formElementManager
-     */
-    public function setFormElementManager($formElementManager): self
+    public function setFormElementManager(FormElementManager $formElementManager): self
     {
         $this->formElementManager = $formElementManager;
         return $this;
     }
 
-    /**
-     * @return FormElementManager
-     */
-    public function getFormElementManager()
+    public function getFormElementManager(): FormElementManager
     {
         return $this->formElementManager;
     }

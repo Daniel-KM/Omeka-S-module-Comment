@@ -366,13 +366,11 @@ class Module extends AbstractModule
         $services = $this->getServiceLocator();
         $settings = $services->get('Omeka\Settings');
 
-        $space = strtolower(__NAMESPACE__);
-
         $value = $settings->get('comment_public_notify_post') ?: [];
 
         $event
             ->getTarget()
-            ->get($space)
+            ->get('comment')
             ->get('comment_public_notify_post')
             ->setValue(implode("\n", $value));
     }
@@ -563,6 +561,8 @@ class Module extends AbstractModule
      */
     public function viewDetails(Event $event, $owner = null): void
     {
+        // TODO Api limit 0?
+
         $representation = $owner ?: $event->getParam('entity');
         $columnName = $this->columnNameOfRepresentation($representation);
         $api = $this->getServiceLocator()->get('Omeka\ApiManager');
