@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-21 00:00+0200\n"
-"PO-Revision-Date: 2018-05-21 00:00+0200\n"
-"Last-Translator: Daniel Berthereau <Daniel.github@Berthereau.net>\n"
+"POT-Creation-Date: 2023-11-20 00:00+0000\n"
+"PO-Revision-Date: 2023-11-20 00:00+0000\n"
+"Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: Module.php:122
 #, php-format
@@ -23,8 +23,8 @@ msgid ""
 "I agree with %sterms of use%s and I accept to free my contribution under the "
 "licence %sCC BY-SA%s."
 msgstr ""
-"J’accepte les %sconditions d’utilisation %s et j’accepte de libérer ma"
-" contribution sous licence %sCC BY-SA%s."
+"J’accepte les %sconditions d’utilisation %s et j’accepte de libérer ma "
+"contribution sous licence %sCC BY-SA%s."
 
 #: Module.php:803 Module.php:821
 msgid "Has comments"
@@ -110,7 +110,7 @@ msgstr "Marquer non-spam"
 
 #: view/comment/admin/comment/browse.phtml:102
 msgid "There are no comments."
-msgstr "Il n’y a pas de commentaires"
+msgstr "Il n’y a pas de commentaires."
 
 #: view/comment/admin/comment/browse.phtml:142
 #: view/comment/admin/comment/browse.phtml:143
@@ -210,8 +210,8 @@ msgid ""
 "If unchecked, the comments can be added via the helper in the theme in any "
 "page."
 msgstr ""
-"Si décoché, les commentaires peuvent être ajoutés via un \"helper\" dans le"
-" thème sur n’importe quelle page."
+"Si décoché, les commentaires peuvent être ajoutés via un \"helper\" dans le "
+"thème sur n’importe quelle page."
 
 #: Module.php:549
 msgid "Append automatically to item page"
@@ -243,14 +243,14 @@ msgstr "Accès interdit : pas d'agent utilisateur."
 #: src/Controller/AbstractCommentController.php:59
 msgid "The url to add comment was accessed without managed resource."
 msgstr ""
-"L’url pour ajouter un commentaire a été appelée sans indication de la"
-" ressource."
+"L’url pour ajouter un commentaire a été appelée sans indication de la "
+"ressource."
 
 #: src/Controller/AbstractCommentController.php:69
 msgid "The url to add comment was accessed without resource id."
 msgstr ""
-"L’url pour ajouter un commentaire a été appelée sans l’identifiant de la"
-" ressource."
+"L’url pour ajouter un commentaire a été appelée sans l’identifiant de la "
+"ressource."
 
 #: src/Controller/AbstractCommentController.php:72
 msgid "The url to add comment was accessed without resource."
@@ -443,7 +443,7 @@ msgstr ""
 
 #: src/Form/ConfigForm.php:42
 msgid "Allow public to comment"
-msgstr "Autoriser le public à commenter."
+msgstr "Autoriser le public à commenter"
 
 #: src/Form/ConfigForm.php:43
 msgid "Allows everyone to comment, including non-registered users."
@@ -465,8 +465,8 @@ msgstr "Notifier les commentaires publics par mail"
 msgid ""
 "The list of emails to notify when a comment is posted or flagged, one by row."
 msgstr ""
-"La liste des mails à notifier lorsqu’un commentaire est posté ou marqué, un"
-" par ligne."
+"La liste des mails à notifier lorsqu’un commentaire est posté ou marqué, un "
+"par ligne."
 
 #: src/Form/ConfigForm.php:73
 msgid "Label for comments"
@@ -483,8 +483,8 @@ msgstr "Afficher les commentaires en fil"
 #: src/Form/ConfigForm.php:83
 msgid "If checked, the replies will be displayed indented below the comment."
 msgstr ""
-"Si coché, les réponses seront affichées sous le commentaire parent avec une"
-" indentation."
+"Si coché, les réponses seront affichées sous le commentaire parent avec une "
+"indentation."
 
 #: src/Form/ConfigForm.php:91
 msgid "Legal agreement"
@@ -495,9 +495,9 @@ msgid ""
 "This text will be shown beside the legal checkbox. Let empty if you don’t "
 "want to use a legal agreement."
 msgstr ""
-"Ce texte sera affiché à côté de la case à cocher pour l’acceptation des"
-" conditions. Laisser vide si vous ne voulez pas imposer des conditions"
-" d’utilisation."
+"Ce texte sera affiché à côté de la case à cocher pour l’acceptation des "
+"conditions. Laisser vide si vous ne voulez pas imposer des conditions "
+"d’utilisation."
 
 #: src/Form/ConfigForm.php:103
 msgid "WordPress API key for Akismet if installed"
@@ -512,8 +512,8 @@ msgid ""
 "If checked, a simple antispam (an addition of two digits) will be added for "
 "anonymous people if ReCaptcha is not set."
 msgstr ""
-"Si coché, un antispam simple (l’addition de deux chiffres) sera ajouté pour"
-" les visiteurs anonymes, si ReCaptcha n’est pas paramétré."
+"Si coché, un antispam simple (l’addition de deux chiffres) sera ajouté pour "
+"les visiteurs anonymes, si ReCaptcha n’est pas paramétré."
 
 #: src/Api/Adapter/CommentAdapter.php:153
 msgid "The ip cannot be empty."
@@ -546,5 +546,3 @@ msgstr "La ressource n’existe pas."
 #: config/module.config.php:135
 msgid "The resource or the comment doesn’t exist."
 msgstr "La ressource ou le commentaire n’existe pas."
-
-

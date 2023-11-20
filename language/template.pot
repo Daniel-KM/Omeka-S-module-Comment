@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-04 00:00+0100\n"
+"POT-Creation-Date: 2023-11-20 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,44 +21,65 @@ msgstr ""
 #, php-format
 msgid ""
 "I agree with %sterms of use%s and I accept to free my contribution under the "
-"licence %sCC BY-SA%s."
+"licence %sCC\\u{a0}BY-SA%s."
 msgstr ""
 
-#: Module.php:650 Module.php:668
+#: Module.php:626 Module.php:644
 msgid "Has comments"
 msgstr ""
 
-#: Module.php:651 Module.php:669 Module.php:681
+#: Module.php:627 Module.php:645 Module.php:657
 msgid "true"
 msgstr ""
 
-#: Module.php:673
+#: Module.php:649
 msgid "Approved"
 msgstr ""
 
-#: Module.php:674
+#: Module.php:650
 msgid "Flagged"
 msgstr ""
 
-#: Module.php:675
+#: Module.php:651
 msgid "Is spam"
 msgstr ""
 
-#: Module.php:680
+#: Module.php:656
 msgid "false"
 msgstr ""
 
-#: src/Generic/AbstractModule.php:518
+#: src/Generic/AbstractModule.php:80 src/Generic/AbstractModule.php:88
+#: src/Generic/AbstractModule.php:890
 #, php-format
 msgid "This module requires the module \"%s\"."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:538
+#: src/Generic/AbstractModule.php:93
 #, php-format
 msgid "This module requires modules \"%s\"."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:606
+#: src/Generic/AbstractModule.php:101
+msgid "This module has resources that cannot be installed."
+msgstr ""
+
+#: src/Generic/AbstractModule.php:108
+msgid ""
+"This module cannot install its tables, because they exist already. Try to "
+"remove them first."
+msgstr ""
+
+#: src/Generic/AbstractModule.php:398
+#, php-format
+msgid "The module removed tables \"%s\" from a previous broken install."
+msgstr ""
+
+#: src/Generic/AbstractModule.php:885
+#, php-format
+msgid "This module requires the module \"%1$s\", version %2$s or above."
+msgstr ""
+
+#: src/Generic/AbstractModule.php:982
 #, php-format
 msgid ""
 "The module \"%s\" was automatically deactivated because the dependencies are "
@@ -167,10 +188,6 @@ msgstr ""
 msgid "No site"
 msgstr ""
 
-#: view/comment/admin/comment/show-details.phtml:80
-msgid "Body"
-msgstr ""
-
 #: view/common/admin/comment.phtml:27
 #, php-format
 msgid "Website: %s"
@@ -216,152 +233,196 @@ msgstr ""
 msgid "Unflag inappropriate"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:19
+#: Module.php:82
+#, php-format
+msgid ""
+"I agree with %sterms of use%s and I accept to free my contribution under the "
+"licence %sCC BY-SA%s."
+msgstr ""
+
+#: src/Form/CommentForm.php:65
+msgid "My name…"
+msgstr ""
+
+#: src/Form/CommentForm.php:78
+msgid "My email (it won’t be displayed)…"
+msgstr ""
+
+#: src/Form/CommentForm.php:91
+msgid "My website…"
+msgstr ""
+
+#: src/Form/CommentForm.php:103
+msgid "My comment…"
+msgstr ""
+
+#: src/Form/CommentForm.php:113
+msgid "Proposed comment cannot be empty."
+msgstr ""
+
+#: src/Form/CommentForm.php:115
+#, php-format
+msgid "Comment cannot be longer than %d characters."
+msgstr ""
+
+#: src/Form/CommentForm.php:132
+msgid "Terms of service"
+msgstr ""
+
+#: src/Form/CommentForm.php:146
+msgid "You must agree to the terms and conditions."
+msgstr ""
+
+#: src/Form/CommentForm.php:173
+#, php-format
+msgid "How much is %d plus %d?"
+msgstr ""
+
+#: src/Form/CommentForm.php:182
+#, php-format
+msgid "To prove you are not a robot, answer this question: %s"
+msgstr ""
+
+#: src/Form/CommentForm.php:188
+msgid "You must answer the antispam question."
+msgstr ""
+
+#: src/Form/CommentForm.php:194
+msgid "Check your anwser to the antispam question."
+msgstr ""
+
+#: src/Form/CommentForm.php:206
+msgid "String to check"
+msgstr ""
+
+#: src/Form/CommentForm.php:209
+msgid "Set the string to check"
+msgstr ""
+
+#: src/Form/CommentForm.php:260
+msgid "Comment it!"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:31
 msgid "Resources to comment"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:20
+#: src/Form/SettingsFieldset.php:32
 msgid "The type of resources for which comment is enabled."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:34
+#: src/Form/SettingsFieldset.php:47
 msgid "Allow public to view comments"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:35
+#: src/Form/SettingsFieldset.php:48
 msgid "If unchecked, comments will be displayed only in admin pages."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:43
+#: src/Form/SettingsFieldset.php:57
 msgid "Allow public to comment"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:44
+#: src/Form/SettingsFieldset.php:58
 msgid "Allows everyone to comment, including non-registered users."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:52
+#: src/Form/SettingsFieldset.php:67
 msgid "Require moderation for public comments"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:53 src/Form/SettingsFieldset.php:62
+#: src/Form/SettingsFieldset.php:68 src/Form/SettingsFieldset.php:78
 msgid "If unchecked, comments will appear immediately."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:61
+#: src/Form/SettingsFieldset.php:77
 msgid "Require moderation for non-admin users"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:70
+#: src/Form/SettingsFieldset.php:87
 msgid "Notify public comments by email"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:71
+#: src/Form/SettingsFieldset.php:88
 msgid ""
 "The list of emails to notify when a comment is posted or flagged, one by row."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:85
+#: src/Form/SettingsFieldset.php:103
 msgid "Label for comments"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:86
+#: src/Form/SettingsFieldset.php:104
 msgid "A label to use, for example \"Comments\"."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:94
+#: src/Form/SettingsFieldset.php:113
 msgid "Use threaded comments"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:95
+#: src/Form/SettingsFieldset.php:114
 msgid "If checked, the replies will be displayed indented below the comment."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:103
+#: src/Form/SettingsFieldset.php:123
 msgid "Legal agreement"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:104
+#: src/Form/SettingsFieldset.php:124
 msgid ""
 "This text will be shown beside the legal checkbox. Let empty if you don’t "
 "want to use a legal agreement."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:115
+#: src/Form/SettingsFieldset.php:136
 msgid "WordPress API key for Akismet if installed"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:124
+#: src/Form/SettingsFieldset.php:146
 msgid "Simple antispam"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:125
+#: src/Form/SettingsFieldset.php:147
 msgid ""
 "If checked, a simple antispam (an addition of two digits) will be added for "
 "anonymous people if ReCaptcha is not set."
 msgstr ""
 
-#: src/Form/CommentForm.php:64
-msgid "My name…"
+#: src/Api/Adapter/CommentAdapter.php:180
+msgid "The ip cannot be empty."
 msgstr ""
 
-#: src/Form/CommentForm.php:77
-msgid "My email (it won’t be displayed)…"
+#: src/Api/Adapter/CommentAdapter.php:184
+msgid "The user agent cannot be empty."
 msgstr ""
 
-#: src/Form/CommentForm.php:90
-msgid "My website…"
+#: src/Api/Adapter/CommentAdapter.php:189
+msgid "The body cannot be empty."
 msgstr ""
 
-#: src/Form/CommentForm.php:102
-msgid "My comment…"
+#: src/Controller/Admin/CommentController.php:74
+msgid "Comment successfully deleted."
 msgstr ""
 
-#: src/Form/CommentForm.php:112
-msgid "Proposed comment cannot be empty."
+#: src/Controller/Admin/CommentController.php:110
+msgid "You must select at least one comment to batch delete."
 msgstr ""
 
-#: src/Form/CommentForm.php:114
-#, php-format
-msgid "Comment cannot be longer than %d characters."
+#: src/Controller/Admin/CommentController.php:119
+msgid "Comments successfully deleted."
 msgstr ""
 
-#: src/Form/CommentForm.php:131
-msgid "Terms of service"
+#: src/Controller/Admin/CommentController.php:129
+msgid "Delete of all comments is not supported currently."
 msgstr ""
 
-#: src/Form/CommentForm.php:145
-msgid "You must agree to the terms and conditions."
+#: src/Controller/Admin/CommentController.php:172
+msgid "No comments submitted."
 msgstr ""
 
-#: src/Form/CommentForm.php:172
-#, php-format
-msgid "How much is %d plus %d?"
-msgstr ""
-
-#: src/Form/CommentForm.php:181
-#, php-format
-msgid "To prove you are not a robot, answer this question: %s"
-msgstr ""
-
-#: src/Form/CommentForm.php:187
-msgid "You must answer the antispam question."
-msgstr ""
-
-#: src/Form/CommentForm.php:193
-msgid "Check your anwser to the antispam question."
-msgstr ""
-
-#: src/Form/CommentForm.php:205
-msgid "String to check"
-msgstr ""
-
-#: src/Form/CommentForm.php:208
-msgid "Set the string to check"
-msgstr ""
-
-#: src/Form/CommentForm.php:259
-msgid "Comment it!"
+#: src/Controller/Admin/CommentController.php:178
+#: src/Controller/Admin/CommentController.php:237
+msgid "An internal error occurred."
 msgstr ""
 
 #: src/Controller/AbstractCommentController.php:29
@@ -404,7 +465,7 @@ msgid "The parent comment doesn’t exist."
 msgstr ""
 
 #: src/Controller/AbstractCommentController.php:110
-#: config/module.config.php:129
+#: config/module.config.php:130
 msgid "You should accept the legal agreement."
 msgstr ""
 
@@ -470,59 +531,22 @@ msgstr ""
 msgid "The comment #%s cannot be accessed."
 msgstr ""
 
-#: src/Controller/Admin/CommentController.php:73
-msgid "Comment successfully deleted."
-msgstr ""
-
-#: src/Controller/Admin/CommentController.php:109
-msgid "You must select at least one comment to batch delete."
-msgstr ""
-
-#: src/Controller/Admin/CommentController.php:118
-msgid "Comments successfully deleted."
-msgstr ""
-
-#: src/Controller/Admin/CommentController.php:128
-msgid "Delete of all comments is not supported currently."
-msgstr ""
-
-#: src/Controller/Admin/CommentController.php:171
-msgid "No comments submitted."
-msgstr ""
-
-#: src/Controller/Admin/CommentController.php:177
-#: src/Controller/Admin/CommentController.php:236
-msgid "An internal error occurred."
-msgstr ""
-
-#: src/Api/Adapter/CommentAdapter.php:153
-msgid "The ip cannot be empty."
-msgstr ""
-
-#: src/Api/Adapter/CommentAdapter.php:157
-msgid "The user agent cannot be empty."
-msgstr ""
-
-#: src/Api/Adapter/CommentAdapter.php:162
-msgid "The body cannot be empty."
-msgstr ""
-
-#: config/module.config.php:130
+#: config/module.config.php:131
 msgid "Comment was added to the resource."
 msgstr ""
 
-#: config/module.config.php:131
+#: config/module.config.php:132
 msgid "It will be displayed definitely when approved."
 msgstr ""
 
-#: config/module.config.php:132
+#: config/module.config.php:133
 msgid "Request too long to process."
 msgstr ""
 
-#: config/module.config.php:133
+#: config/module.config.php:134
 msgid "The resource doesn’t exist."
 msgstr ""
 
-#: config/module.config.php:135
+#: config/module.config.php:136
 msgid "The resource or the comment doesn’t exist."
 msgstr ""
