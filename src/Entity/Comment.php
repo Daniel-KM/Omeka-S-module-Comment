@@ -5,8 +5,6 @@ namespace Comment\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Omeka\Entity\AbstractEntity;
 use Omeka\Entity\Resource;
 use Omeka\Entity\Site;
@@ -20,7 +18,6 @@ use Omeka\Entity\User;
  * @todo See ContactUs
  *
  * @Entity
- * @HasLifecycleCallbacks
  */
 class Comment extends AbstractEntity
 {
@@ -157,13 +154,24 @@ class Comment extends AbstractEntity
 
     /**
      * @var DateTime
-     * @Column(type="datetime")
+     *
+     * @Column(
+     *     type="datetime",
+     *     nullable=false,
+     *     options={
+     *         "default": "CURRENT_TIMESTAMP"
+     *     }
+     * )
      */
     protected $created;
 
     /**
      * @var DateTime
-     * @Column(type="datetime", nullable=true)
+     *
+     * @Column(
+     *     type="datetime",
+     *     nullable=true
+     * )
      */
     protected $modified;
 
@@ -356,21 +364,5 @@ class Comment extends AbstractEntity
     public function getModified(): ?DateTime
     {
         return $this->modified;
-    }
-
-    /**
-     * @PrePersist
-     */
-    public function prePersist(LifecycleEventArgs $eventArgs): void
-    {
-        $this->created = new DateTime('now');
-    }
-
-    /**
-     * @PreUpdate
-     */
-    public function preUpdate(PreUpdateEventArgs $eventArgs): void
-    {
-        $this->modified = new DateTime('now');
     }
 }
