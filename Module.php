@@ -368,9 +368,11 @@ class Module extends AbstractModule
 
         $value = $settings->get('comment_public_notify_post') ?: [];
 
-        $event
-            ->getTarget()
-            ->get('comment')
+        $isOldOmeka = version_compare(\Omeka\Module::VERSION, '4', '<');
+        $fieldset = $isOldOmeka
+            ? $event->getTarget()->get('comment')
+            : $event->getTarget();
+        $fieldset
             ->get('comment_public_notify_post')
             ->setValue(implode("\n", $value));
     }
