@@ -12,21 +12,37 @@ Comments can be flagged and moderated.
 Comment can be displayed in public view or not, allowing librarian to comment
 the resource themselves, publicly or privately.
 
-Note: Akismet requires a dependency that is not installed automatically.
-
-The aim of this module is to provide the same type of features than the [Omeka Classic]
-[Commenting plugin]. It can be upgraded automatically via the plugin [Upgrade To Omeka S].
+With the module [Guest], the user can see its own comments and subscribe to
+resources to be notified when a comment is added.
 
 
 Installation
 ------------
 
-First, install the two optional modules [Generic] and [Blocks Disposition].
+### Module
 
-Uncompress files and rename plugin folder `Comment`.
+See general end user documentation for [installing a module].
 
-See general end user documentation for [Installing a module] and follow the
-config instructions.
+This module requires the module [Common], that should be installed first.
+The optional module [Blocks Disposition] may be installed too for old themes.
+
+The optional module [Guest] can be used to manage own comments.
+
+* From the zip
+
+Download the last release [Comment.zip] from the list of releases, and
+uncompress it in the `modules` directory.
+
+* From the source and for development
+
+If the module was installed from the source, rename the name of the folder of
+the module to `Comment`.
+
+Then install it like any other Omeka module and follow the config instructions.
+
+* Askimet
+
+Note: Akismet requires a dependency that is not installed automatically.
 
 
 Requirements
@@ -42,19 +58,21 @@ If not enabled, a simple anti-spam is available too.
 Displaying Comments
 -------------------
 
-The comments are displayed automatically on item set, item or media pages. To
-manage the display more precisely, use the module [Blocks Disposition], or add
-the following code in your theme:
+The comments are displayed automatically on item set, item or media pages
+according to options set in site settings. They can be added to resource pages
+via the resource blocks too.
+
+To manage the display more precisely, use resource blocks or the module [Blocks Disposition], or add the following code in your theme:
 
 ```php
-<!-- Via a standard partial. -->
-<?php echo $this->partial('common/comment', ['resource' => $resource]); ?>
-
-<!-- Or via the helpers. -->
-<div id="comments-container">
-    <?php echo $this->showComments($resource); ?>
-    <?php echo $this->showCommentForm($resource); ?>
+<?php // Or via the helpers. -->
+<div id="comments-container" class="block block-comments-container">
+    <?= $this->comments($resource) ?>
+    <?= $this->commentForm($resource) ?>
 </div>
+
+<?php // Via a standard partial. ?>
+<?= $this->partial('common/comment', ['resource' => $resource]) ?>
 ```
 
 The structure of comments, the comment itself, and the comment form can be
@@ -87,11 +105,16 @@ anyone can comment.
 It’s possible to comment resources internally, for example to improve the
 quality of metadata, or in a discussion between an author and a reviewer.
 
+### Groups
+
+To manage comments, you may add groups with item sets in settings.
+For better urls, you may add a redirection with module [Redirector].
+
 
 TODO
 ----
 
-- [ ] Move some parameters from main settings to site settings.
+- [x] Move some parameters from main settings to site settings.
 - [ ] Convert comment into annotations (module Annotate).
 - [ ] Manage comments with module Guest.
 
@@ -108,7 +131,7 @@ your archives regularly so you can roll back if needed.
 Troubleshooting
 ---------------
 
-See online issues on the [module issues] page on GitLab.
+See online issues on the [module issues] page.
 
 
 License
@@ -144,22 +167,27 @@ of the CeCILL license and that you accept its terms.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2017-2023 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2018-2025 (see [Daniel-KM])
+
+First version was a full rewrite from the RRCHNM Omeka Classic [Commenting plugin].
+Next improvements were implemented for the [Musée de Bretagne], currently under
+the proprietary software Flora.
 
 
 [Comment]: https://gitlab.com/Daniel-KM/Omeka-S-module-Comment
 [Omeka S]: https://omeka.org/s
 [Omeka Classic]: https://omeka.org/classic
 [Commenting plugin]: https://omeka.org/classic/plugins/Commenting
-[Upgrade To Omeka S]: https://gitlab.com/Daniel-KM/Omeka-S-module-UpgradeToOmekaS
-[Generic]: https://gitlab.com/Daniel-KM/Omeka-S-module-Generic
-[Blocks Disposition]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlocksDisposition
-[Installing a module]: https://omeka.org/s/docs/user-manual/modules/#installing-modules
+[Common]: https://gitlab.com/Daniel-KM/Omeka-S-module-Common
 [Guest]: https://gitlab.com/Daniel-KM/Omeka-S-module-Guest
+[Blocks Disposition]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlocksDisposition
+[installing a module]: https://omeka.org/s/docs/user-manual/modules/#installing-modules
+[Redirector]: https://gitlab.com/Daniel-KM/Omeka-S-module-Redirector
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Comment/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [FSF]: https://www.fsf.org
 [OSI]: http://opensource.org
+[Musée de Bretagne]: http://collections.musee-bretagne.fr
 [GitLab]: https://gitlab.com/Daniel-KM
 [Daniel-KM]: https://gitlab.com/Daniel-KM "Daniel Berthereau"
