@@ -22,14 +22,19 @@ use Omeka\Entity\User;
 class Comment extends AbstractEntity
 {
     /**
+     * @var int
+     *
      * @Id
-     * @Column(type="integer")
+     * @Column(
+     *     type="integer"
+     * )
      * @GeneratedValue
      */
     protected $id;
 
     /**
      * @var User
+     *
      * @ManyToOne(
      *     targetEntity="Omeka\Entity\User",
      *     fetch="LAZY"
@@ -43,6 +48,7 @@ class Comment extends AbstractEntity
 
     /**
      * @var Resource
+     *
      * @ManyToOne(
      *     targetEntity="Omeka\Entity\Resource",
      *     fetch="LAZY",
@@ -57,6 +63,7 @@ class Comment extends AbstractEntity
 
     /**
      * @var Site
+     *
      * @ManyToOne(
      *     targetEntity="Omeka\Entity\Site"
      * )
@@ -68,49 +75,121 @@ class Comment extends AbstractEntity
     protected $site;
 
     /**
-     * @Column(type="string", length=1024)
+     * @var bool
+     *
+     * @Column(
+     *     type="boolean",
+     *     nullable=false,
+     *     options={
+     *         "default":0
+     *     }
+     * )
+     */
+    protected $approved = false;
+
+    /**
+     * @var bool
+     *
+     * @Column(
+     *     type="boolean",
+     *     nullable=false,
+     *     options={
+     *         "default":0
+     *     }
+     * )
+     */
+    protected $flagged = false;
+
+    /**
+     * @var bool
+     *
+     * @Column(
+     *     type="boolean",
+     *     nullable=false,
+     *     options={
+     *         "default":0
+     *     }
+     * )
+     */
+    protected $spam = false;
+
+    /**
+     * @var string
+     *
+     * @Column(
+     *     type="string",
+     *     length=1024
+     * )
      */
     protected $path;
 
     /**
      * @var string
-     * @Column(type="string", length=255)
+     *
+     * @Column(
+     *     type="string",
+     *     length=190
+     * )
      */
     protected $email;
 
     /**
      * @var string
-     * @Column(type="string", length=190)
+     *
+     * @Column(
+     *     type="string",
+     *     length=190
+     * )
      */
     protected $name;
 
     /**
      * @var string
-     * @Column(type="string", length=760)
+     *
+     * @Column(
+     *     type="string",
+     *     length=760
+     * )
      */
     protected $website;
 
     /**
      * @var string
-     * @Column(type="string", length=45)
+     *
+     * @Column(
+     *     type="string",
+     *     length=45,
+     *     options={
+     *        "collation": "latin1_bin"
+     *     }
+     * )
      */
     protected $ip;
 
     /**
      * @var string
-     * @Column(type="text", length=65534)
+     *
+     * @Column(
+     *     type="string",
+     *     length=1024
+     * )
      */
     protected $userAgent;
 
     /**
      * @var string
-     * @Column(type="text")
+     *
+     * @Column(
+     *     type="text"
+     * )
      */
     protected $body;
 
     /**
      * @var Comment
+     *
      * Many Comments repliy to one Comment.
+     *
      * @ManyToOne(
      *     targetEntity="Comment\Entity\Comment",
      *     inversedBy="children"
@@ -126,7 +205,9 @@ class Comment extends AbstractEntity
 
     /**
      * @var Comment[]
+     *
      * One Comment has Many replied Comments.
+     *
      * @OneToMany(
      *     targetEntity="Comment\Entity\Comment",
      *     mappedBy="parent"
@@ -135,38 +216,17 @@ class Comment extends AbstractEntity
     protected $children;
 
     /**
-     * @var bool
-     * @Column(type="boolean", nullable=false)
-     */
-    protected $approved = false;
-
-    /**
-     * @var bool
-     * @Column(type="boolean", nullable=false)
-     */
-    protected $flagged = false;
-
-    /**
-     * @var bool
-     * @Column(type="boolean", nullable=false)
-     */
-    protected $spam = false;
-
-    /**
      * @var DateTime
      *
      * @Column(
      *     type="datetime",
-     *     nullable=false,
-     *     options={
-     *         "default": "CURRENT_TIMESTAMP"
-     *     }
+     *     nullable=false
      * )
      */
     protected $created;
 
     /**
-     * @var DateTime
+     * @var DateTime|null
      *
      * @Column(
      *     type="datetime",
@@ -216,6 +276,39 @@ class Comment extends AbstractEntity
     public function getSite(): ?Site
     {
         return $this->site;
+    }
+
+    public function setApproved($approved): self
+    {
+        $this->approved = (bool) $approved;
+        return $this;
+    }
+
+    public function isApproved(): ?bool
+    {
+        return $this->approved;
+    }
+
+    public function setFlagged($flagged): self
+    {
+        $this->flagged = (bool) $flagged;
+        return $this;
+    }
+
+    public function isFlagged(): ?bool
+    {
+        return $this->flagged;
+    }
+
+    public function setSpam($spam): self
+    {
+        $this->spam = (bool) $spam;
+        return $this;
+    }
+
+    public function isSpam(): ?bool
+    {
+        return $this->spam;
     }
 
     public function setPath(string $path): self
@@ -309,39 +402,6 @@ class Comment extends AbstractEntity
     public function getChildren(): Collection
     {
         return $this->children;
-    }
-
-    public function setApproved($approved): self
-    {
-        $this->approved = $approved;
-        return $this;
-    }
-
-    public function isApproved(): ?bool
-    {
-        return $this->approved;
-    }
-
-    public function setFlagged($flagged): self
-    {
-        $this->flagged = $flagged;
-        return $this;
-    }
-
-    public function isFlagged(): ?bool
-    {
-        return $this->flagged;
-    }
-
-    public function setSpam($spam): self
-    {
-        $this->spam = $spam;
-        return $this;
-    }
-
-    public function isSpam(): ?bool
-    {
-        return $this->spam;
     }
 
     public function setCreated(DateTime $created): self

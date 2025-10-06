@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Comment\Api\Representation;
 
 use DateTime;
@@ -51,6 +52,9 @@ class CommentRepresentation extends AbstractEntityRepresentation
             'o:owner' => $owner ? $owner->getReference()->jsonSerialize() : null,
             'o:resource' => $resource ? $resource->getReference()->jsonSerialize() : null,
             'o:site' => $site ? $site->getReference()->jsonSerialize() : null,
+            'o:approved' => $this->isApproved(),
+            'o:flagged' => $this->isFlagged(),
+            'o:spam' => $this->isSpam(),
             'o:path' => $this->path(),
             // 'o:email' => $this->email(),
             'o:name' => $this->name(),
@@ -60,116 +64,106 @@ class CommentRepresentation extends AbstractEntityRepresentation
             'o:body' => $this->body(),
             'o:parent' => $parent ? $parent->getReference()->jsonSerialize() : null,
             'o:children' => $children,
-            'o:approved' => $this->isApproved(),
-            'o:flagged' => $this->isFlagged(),
-            'o:spam' => $this->isSpam(),
             'o:created' => $getDateTimeJsonLd($this->resource->getCreated()),
             'o:modified' => $getDateTimeJsonLd($this->resource->getModified()),
         ];
     }
 
     /**
-     * Get the owner representation of this resource.
-     *
-     * @return UserRepresentation
+     * Get the owner representation of this comment.
      */
-    public function owner()
+    public function owner(): ?UserRepresentation
     {
-        return $this->getAdapter('users')
-            ->getRepresentation($this->resource->getOwner());
+        $owner = $this->resource->getOwner();
+        return $owner
+            ? $this->getAdapter('users')->getRepresentation($owner)
+            : null;
     }
 
     /**
-     * Get the resource representation of this resource.
-     *
-     * @return AbstractResourceRepresentation
+     * Get the resource representation where the comment was published.
      */
-    public function resource()
+    public function resource(): ?AbstractResourceRepresentation
     {
-        return $this->getAdapter('resources')
-            ->getRepresentation($this->resource->getResource());
+        $resource = $this->resource->getResource();
+        return $resource
+            ? $this->getAdapter('resources')->getRepresentation($resource)
+            : null;
     }
 
     /**
-     * Get the site representation of this resource.
-     *
-     * @return SiteRepresentation
+     * Get the site where the comment was published.
      */
-    public function site()
+    public function site(): ?SiteRepresentation
     {
-        return $this->getAdapter('sites')
-            ->getRepresentation($this->resource->getSite());
+        $site = $this->resource->getSite();
+        return $site
+            ? $this->getAdapter('sites')->getRepresentation($site)
+            : null;
     }
 
-    /**
-     * @return string
-     */
-    public function path()
+    public function isApproved(): bool
+    {
+        return $this->resource->isApproved();
+    }
+
+    public function isFlagged(): bool
+    {
+        return $this->resource->isFlagged();
+    }
+
+    public function isSpam(): bool
+    {
+        return $this->resource->isSpam();
+    }
+
+    public function path(): string
     {
         return $this->resource->getPath();
     }
 
-    /**
-     * @return string
-     */
-    public function body()
+    public function body(): string
     {
         return $this->resource->getBody();
     }
 
-    /**
-     * @return string
-     */
-    public function email()
+    public function email(): string
     {
         return $this->resource->getEmail();
     }
 
-    /**
-     * @return string
-     */
-    public function name()
+    public function name(): string
     {
         return $this->resource->getName();
     }
 
-    /**
-     * @return string
-     */
-    public function website()
+    public function website(): string
     {
         return $this->resource->getWebsite();
     }
 
-    /**
-     * @return string
-     */
-    public function ip()
+    public function ip(): string
     {
         return $this->resource->getIp();
     }
 
-    /**
-     * @return string
-     */
-    public function userAgent()
+    public function userAgent(): string
     {
         return $this->resource->getUserAgent();
     }
 
-    /**
-     * @return CommentRepresentation
-     */
-    public function parent()
+    public function parent(): ?CommentRepresentation
     {
-        return $this->adapter
-            ->getRepresentation($this->resource->getParent());
+        $parent = $this->resource->getParent();
+        return $parent
+            ? $this->adapter->getRepresentation($parent)
+            : null;
     }
 
     /**
      * @return \Comment\Api\Representation\CommentRepresentation[]
      */
-    public function children()
+    public function children(): array
     {
         $children = [];
         $adapter = $this->adapter;
@@ -180,42 +174,12 @@ class CommentRepresentation extends AbstractEntityRepresentation
         return $children;
     }
 
-    /**
-     * @return bool
-     */
-    public function isApproved()
-    {
-        return $this->resource->isApproved();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isFlagged()
-    {
-        return $this->resource->isFlagged();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSpam()
-    {
-        return $this->resource->isSpam();
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function created()
+    public function created(): DateTime
     {
         return $this->resource->getCreated();
     }
 
-    /**
-     * @return DateTime|null
-     */
-    public function modified()
+    public function modified(): ?DateTime
     {
         return $this->resource->getModified();
     }

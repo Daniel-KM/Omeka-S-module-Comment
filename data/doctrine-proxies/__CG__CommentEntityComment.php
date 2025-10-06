@@ -67,10 +67,10 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'approved', 'flagged', 'spam', 'created', 'modified'];
+            return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'approved', 'flagged', 'spam', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'created', 'modified'];
         }
 
-        return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'approved', 'flagged', 'spam', 'created', 'modified'];
+        return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'approved', 'flagged', 'spam', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'created', 'modified'];
     }
 
     /**
@@ -256,6 +256,72 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSite', []);
 
         return parent::getSite();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setApproved($approved): \Comment\Entity\Comment
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApproved', [$approved]);
+
+        return parent::setApproved($approved);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isApproved(): ?bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isApproved', []);
+
+        return parent::isApproved();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setFlagged($flagged): \Comment\Entity\Comment
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFlagged', [$flagged]);
+
+        return parent::setFlagged($flagged);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isFlagged(): ?bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isFlagged', []);
+
+        return parent::isFlagged();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setSpam($spam): \Comment\Entity\Comment
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSpam', [$spam]);
+
+        return parent::setSpam($spam);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isSpam(): ?bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isSpam', []);
+
+        return parent::isSpam();
     }
 
     /**
@@ -448,72 +514,6 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setApproved($approved): \Comment\Entity\Comment
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setApproved', [$approved]);
-
-        return parent::setApproved($approved);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isApproved(): ?bool
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isApproved', []);
-
-        return parent::isApproved();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setFlagged($flagged): \Comment\Entity\Comment
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFlagged', [$flagged]);
-
-        return parent::setFlagged($flagged);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isFlagged(): ?bool
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isFlagged', []);
-
-        return parent::isFlagged();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setSpam($spam): \Comment\Entity\Comment
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSpam', [$spam]);
-
-        return parent::setSpam($spam);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isSpam(): ?bool
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isSpam', []);
-
-        return parent::isSpam();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function setCreated(\DateTime $created): \Comment\Entity\Comment
     {
 
@@ -553,28 +553,6 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getModified', []);
 
         return parent::getModified();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function prePersist(\Doctrine\ORM\Event\LifecycleEventArgs $eventArgs): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'prePersist', [$eventArgs]);
-
-        parent::prePersist($eventArgs);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function preUpdate(\Doctrine\ORM\Event\PreUpdateEventArgs $eventArgs): void
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'preUpdate', [$eventArgs]);
-
-        parent::preUpdate($eventArgs);
     }
 
     /**

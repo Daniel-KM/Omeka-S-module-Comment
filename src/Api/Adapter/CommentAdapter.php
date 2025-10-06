@@ -26,15 +26,18 @@ class CommentAdapter extends AbstractEntityAdapter
         'item_id' => 'resource',
         'media_id' => 'resource',
         'site_id' => 'site',
+        'approved' => 'approved',
+        'flagged' => 'flagged',
+        'spam' => 'spam',
         'path' => 'path',
         'email' => 'email',
         'website' => 'website',
         'name' => 'name',
         'ip' => 'ip',
         'user_agent' => 'user_agent',
-        'approved' => 'approved',
-        'flagged' => 'flagged',
-        'spam' => 'spam',
+        'parent_id' => 'parent',
+        'created' => 'created',
+        'modified' => 'modified',
         // For info.
         // // 'resource_title' => 'resource',
     ];
@@ -47,6 +50,9 @@ class CommentAdapter extends AbstractEntityAdapter
         'item' => 'resource',
         'media' => 'resource',
         'site' => 'site',
+        'approved' => 'approved',
+        'flagged' => 'flagged',
+        'spam' => 'spam',
         'path' => 'path',
         'email' => 'email',
         'website' => 'website',
@@ -56,9 +62,6 @@ class CommentAdapter extends AbstractEntityAdapter
         'body' => 'body',
         'parent' => 'parent',
         'children' => 'children',
-        'approved' => 'approved',
-        'flagged' => 'flagged',
-        'spam' => 'spam',
         'created' => 'created',
         'modified' => 'modified',
     ];
@@ -76,118 +79,6 @@ class CommentAdapter extends AbstractEntityAdapter
     public function getEntityClass()
     {
         return Comment::class;
-    }
-
-    public function hydrate(Request $request, EntityInterface $entity,
-        ErrorStore $errorStore
-    ): void {
-        $data = $request->getContent();
-
-        // The owner, site and resource can be null.
-        switch ($request->getOperation()) {
-            case Request::CREATE:
-                $this->hydrateOwner($request, $entity);
-
-                if (isset($data['o:resource'])) {
-                    if (is_object($data['o:resource'])) {
-                        $resource = $data['o:resource'] instanceof Resource
-                            ? $data['o:resource']
-                            : null;
-                    } elseif (is_numeric($data['o:resource']['o:id'])) {
-                        $resource = $this->getAdapter('resources')
-                            ->findEntity(['id' => $data['o:resource']['o:id']]);
-                    } else {
-                        $resource = null;
-                    }
-                    $entity->setResource($resource);
-                }
-
-                if (isset($data['o:site'])) {
-                    if (is_object($data['o:site'])) {
-                        $site = $data['o:site'];
-                    } elseif (is_numeric($data['o:site']['o:id'])) {
-                        $site = $this->getAdapter('sites')
-                            ->findEntity(['id' => $data['o:site']['o:id']]);
-                    } else {
-                        $site = null;
-                    }
-                    $entity->setSite($site);
-                }
-
-                if (isset($data['o:parent'])) {
-                    if (is_object($data['o:parent'])) {
-                        $parent = $data['o:parent'];
-                    } elseif (is_numeric($data['o:parent']['o:id'])) {
-                        $parent = $this
-                            ->findEntity(['id' => $data['o:parent']['o:id']]);
-                    } else {
-                        $parent = null;
-                    }
-                    $entity->setParent($parent);
-                }
-
-                $entity->setPath($request->getValue('o:path', ''));
-                $entity->setBody($request->getValue('o:body', ''));
-
-                $owner = $entity->getOwner();
-                if ($owner) {
-                    $entity->setEmail($owner->getEmail());
-                    $entity->setName($owner->getName());
-                } else {
-                    $entity->setEmail($request->getValue('o:email'));
-                    $entity->setName($request->getValue('o:name'));
-                }
-
-                $entity->setWebsite($request->getValue('o:website', ''));
-                $entity->setIp($this->getClientIp());
-                $entity->setUserAgent($this->getUserAgent());
-                break;
-
-            case Request::UPDATE:
-                // Nothing can be changed, except flags below.
-                break;
-        }
-
-        if ($this->shouldHydrate($request, 'o:approved')) {
-            $entity->setApproved($request->getValue('o:approved', false));
-        }
-        if ($this->shouldHydrate($request, 'o:flagged')) {
-            $entity->setFlagged($request->getValue('o:flagged', false));
-        }
-        if ($this->shouldHydrate($request, 'o:spam')) {
-            $entity->setSpam($request->getValue('o:spam', false));
-        }
-
-        $this->updateTimestamps($request, $entity);
-    }
-
-    public function validateEntity(EntityInterface $entity, ErrorStore $errorStore): void
-    {
-        // When the user, the resource or the site are deleted, there is no
-        // validation here, so it can be checked when created or updated?
-        // No, because there may be multiple updates.
-        // So the name and email are prefilled with current values if exist.
-        $owner = $entity->getOwner();
-        if (empty($owner)) {
-            $email = $entity->getEmail();
-            $validator = new EmailAddress();
-            if (!$validator->isValid($email)) {
-                $errorStore->addValidatorMessages('o:email', $validator->getMessages());
-            }
-        }
-
-        if ($entity->getIp() == '::') {
-            $errorStore->addError('o:ip', 'The ip cannot be empty.'); // @translate
-        }
-
-        if ($entity->getUserAgent() == false) {
-            $errorStore->addError('o:user_agent', 'The user agent cannot be empty.'); // @translate
-        }
-
-        $body = $entity->getBody();
-        if (!is_string($body) || $body === '') {
-            $errorStore->addError('o:body', 'The body cannot be empty.'); // @translate
-        }
     }
 
     public function buildQuery(QueryBuilder $qb, array $query): void
@@ -300,6 +191,120 @@ class CommentAdapter extends AbstractEntityAdapter
     //         }
     //     }
     // }
+
+    public function hydrate(Request $request, EntityInterface $entity,
+        ErrorStore $errorStore
+    ): void {
+        /** @var \Comment\Entity\Comment $entity */
+
+        $data = $request->getContent();
+
+        // The owner, site and resource can be null.
+        switch ($request->getOperation()) {
+            case Request::CREATE:
+                $this->hydrateOwner($request, $entity);
+
+                if (isset($data['o:resource'])) {
+                    if (is_object($data['o:resource'])) {
+                        $resource = $data['o:resource'] instanceof Resource
+                            ? $data['o:resource']
+                            : null;
+                    } elseif (is_array($data['o:resource'])) {
+                        $resource = $this->getAdapter('resources')
+                            ->findEntity(['id' => $data['o:resource']['o:id']]);
+                    } else {
+                        $resource = null;
+                    }
+                    $entity->setResource($resource);
+                }
+
+                if (isset($data['o:site'])) {
+                    if (is_object($data['o:site'])) {
+                        $site = $data['o:site'];
+                    } elseif (is_array($data['o:site'])) {
+                        $site = $this->getAdapter('sites')
+                            ->findEntity(['id' => $data['o:site']['o:id']]);
+                    } else {
+                        $site = null;
+                    }
+                    $entity->setSite($site);
+                }
+
+                if (isset($data['o:parent'])) {
+                    if (is_object($data['o:parent'])) {
+                        $parent = $data['o:parent'];
+                    } elseif (is_array($data['o:parent'])) {
+                        $parent = $this
+                            ->findEntity(['id' => $data['o:parent']['o:id']]);
+                    } else {
+                        $parent = null;
+                    }
+                    $entity->setParent($parent);
+                }
+
+                $entity->setPath($request->getValue('o:path', ''));
+                $entity->setBody($request->getValue('o:body', ''));
+
+                $owner = $entity->getOwner();
+                if ($owner) {
+                    $entity->setEmail($owner->getEmail());
+                    $entity->setName($owner->getName());
+                } else {
+                    $entity->setEmail($request->getValue('o:email'));
+                    $entity->setName($request->getValue('o:name'));
+                }
+
+                $entity->setWebsite($request->getValue('o:website', ''));
+                $entity->setIp($this->getClientIp());
+                $entity->setUserAgent($this->getUserAgent());
+                break;
+
+            case Request::UPDATE:
+                // Nothing can be changed, except flags below.
+                break;
+        }
+
+        if ($this->shouldHydrate($request, 'o:approved')) {
+            $entity->setApproved($request->getValue('o:approved', false));
+        }
+        if ($this->shouldHydrate($request, 'o:flagged')) {
+            $entity->setFlagged($request->getValue('o:flagged', false));
+        }
+        if ($this->shouldHydrate($request, 'o:spam')) {
+            $entity->setSpam($request->getValue('o:spam', false));
+        }
+
+        $this->updateTimestamps($request, $entity);
+    }
+
+    public function validateEntity(EntityInterface $entity, ErrorStore $errorStore): void
+    {
+        // When the user, the resource or the site are deleted, there is no
+        // validation here, so it can be checked when created or updated?
+        // No, because there may be multiple updates.
+        // So the name and email are prefilled with current values if exist.
+        $owner = $entity->getOwner();
+        if (empty($owner)) {
+            $email = $entity->getEmail();
+            $validator = new EmailAddress();
+            if (!$validator->isValid($email)) {
+                $errorStore->addValidatorMessages('o:email', $validator->getMessages());
+            }
+        }
+
+        if ($entity->getIp() == '::') {
+            $errorStore->addError('o:ip', 'The ip cannot be empty.'); // @translate
+        }
+
+        if ($entity->getUserAgent() == false) {
+            $errorStore->addError('o:user_agent', 'The user agent cannot be empty.'); // @translate
+        }
+
+        $body = $entity->getBody();
+        if (!is_string($body) || $body === '') {
+            $errorStore->addError('o:body', 'The body cannot be empty.'); // @translate
+        }
+    }
 
     public function preprocessBatchUpdate(array $data, Request $request)
     {
