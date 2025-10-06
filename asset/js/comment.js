@@ -117,23 +117,30 @@ var Comment = {
             comment.find('.comment-flag').first().show();
             comment.find('.comment-unflag').first().hide();
         } else if (response.data.status === 'subscribed') {
-            const button = $('.comment-subscribe[data-id="' + response.data['o:resource']['o:id'] + '"]');
-            if (button.length) {
-                button.removeClass('unsubscribed').addClass('subscribed');
-                button[0].setAttribute('title', button[0].dataset.titleSubscribed);
-                // Keep span with class for the icon.
-                // button.find('.comment-subscription-icon').next().remove();
-                // button.append(document.createTextNode(button[0].dataset.titleSubscribed));
-            }
+            $('.comment-subscribe[data-id="' + response.data['o:resource']['o:id'] + '"]').each(function() {
+                $(this)
+                    .removeClass('unsubscribed')
+                    .addClass('subscribed');
+                this.setAttribute('title', this.dataset.titleSubscribed);
+                const textSpan = $(this).find('.comment-subscription-text');
+                if (textSpan.length) {
+                    textSpan.text(this.dataset.titleSubscribed);
+                }
+            });
         } else if (response.data.status === 'unsubscribed') {
-            const button = $('.comment-subscribe[data-id="' + response.data['o:resource']['o:id'] + '"]');
-            if (button.length) {
-                button.removeClass('subscribed').addClass('unsubscribed');
-                button[0].setAttribute('title', button[0].dataset.titleUnsubscribed);
-                // button.find('.comment-subscription-icon').next().remove();
-                // button.append(document.createTextNode(button[0].dataset.titleUnsubscribed));
-            }
-        }
+            $('.comment-subscribe[data-id="' + response.data['o:resource']['o:id'] + '"]').each(function() {
+                  $(this)
+                      .removeClass('subscribed')
+                      .addClass('unsubscribed');
+                  this.setAttribute('title', this.dataset.titleUnsubscribed);
+                  const textSpan = $(this).find('.comment-subscription-text');
+                  if (textSpan.length) {
+                      textSpan.text(this.dataset.titleUnsubscribed);
+                  }
+              });
+              // Remove the resource from the list if on subscriptions page.
+              $('.subscription-removable[data-id="' + response.data['o:resource']['o:id'] + '"]').remove();
+          }
     },
 
     getCommentId: function(el) {

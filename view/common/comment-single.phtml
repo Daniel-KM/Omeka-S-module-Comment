@@ -21,6 +21,7 @@ $escape = $plugins->get('escapeHtml');
 $translate = $plugins->get('translate');
 $hyperlink = $plugins->get('hyperlink');
 $siteSetting = $plugins->get('siteSetting');
+$escapeAttr = $plugins->get('escapeHtmlAttr');
 $userIsAllowed = $plugins->get('userIsAllowed');
 
 if ($name = $comment->name()) {
@@ -61,16 +62,35 @@ $userCanUnflag = $userIsAllowed(\Comment\Controller\Site\CommentController::clas
     <?php if (!$publicRequireModeration || !$userrRequireModeration): ?>
     <div class="comment-actions">
         <?php if ($userCanFlag): ?>
-        <button type="button" class="comment-action comment-flag"<?php if ($flagged): ?> style="display:none;"<?php endif;?>><?= $escape($translate('Flag inappropriate')) ?></button>
+        <button type="button" class="comment-action comment-flag"
+            <?= $flagged ? ' style="display:none;"' : '' ?>
+            aria-label="<?= $v = $escapeAttr($translate('Flag inappropriate')) ?>"
+            title="<?= $v ?>">
+                <span class="comment-flag-icon"></span>
+                <span class="comment-flag-text"><?= $escape($translate('Flag inappropriate')) ?></span>
+            </button>
         <?php endif; ?>
         <?php if ($userCanUnflag): ?>
-        <button type="button" class="comment-action comment-unflag"<?php if (!$flagged): ?> style="display:none;"<?php endif;?>><?= $escape($translate('Unflag inappropriate')) ?></button>
+        <button type="button"
+            class="comment-action comment-unflag"
+            <?= $flagged ? '' : ' style="display:none;"' ?>
+            aria-label="<?= $v = $escapeAttr($translate('Unflag inappropriate')) ?>"
+            title="<?= $v ?>">
+                <span class="comment-flag-icon"></span>
+                <span class="comment-flag-text"><?= $escape($translate('Unflag inappropriate')) ?></span>
+            </button>
         <?php endif; ?>
     </div>
     <?php endif; ?>
     <?php if ($userCanComment): ?>
     <div class="comment-reply">
-        <button type="button" class="comment-action comment-reply"><?= $escape($translate('Reply')) ?></button>
+        <button type="button"
+            class="comment-action comment-reply"
+            aria-label="<?= $v = $escapeAttr($translate('Reply')) ?>"
+            title="<?= $v ?>">
+                <span class="comment-reply-icon"></span>
+                <span class="comment-reply-text"><?= $escape($translate('Reply')) ?></span>
+            </button>
     </div>
     <?php endif; ?>
 </div>

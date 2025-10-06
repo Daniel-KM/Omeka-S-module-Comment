@@ -9,28 +9,35 @@
  * @var bool $subscribed
  * @var string $action "toggle" (default), "add", or "delete"
  * @var string $urlButton
+ * @var string|null $labelSubscribe
+ * @var string|null $labelUnsubscribe
+ * @var bool $showLabel Whether to show text or not (default).
  *
  * and options passed from the caller.
  */
 
 $plugins = $this->getHelperPluginManager();
+$escape = $plugins->get('escapeHtml');
 $translate = $plugins->get('translate');
 $escapeAttr = $plugins->get('escapeHtmlAttr');
 
-$textSelect['subscribed'] = $translate('Unsubscribe to comments');
-$textSelect['unsubscribed'] = $translate('Subscribe to comments');
+$textSelect['subscribed'] = $labelUnsubscribe ?? $translate('Unsubscribe to comments');
+$textSelect['unsubscribed'] = $labelSubscribe ?? $translate('Subscribe to comments');
 $textSelect['add'] = $textSelect['subscribed'];
 $textSelect['delete'] = $textSelect['unsubscribed'];
 $class = $subscribed ? 'subscribed' : 'unsubscribed';
-$text = in_array($action, ['add', 'delete']) ? $textSelect[$action] : $textSelect[$class];
+$text = $showLabel ? $textSelect[in_array($action, ['add', 'delete']) ? $action : $class] : null;
 
 $disabled = !$user && !$isAllowedAnonymous;
 if ($disabled) {
     $textSelect['unsubscribed'] = $translate('Log in to subscribe to comments');
-    $text = $textSelect['unsubscribed'];
+    $text = $showLabel ? $textSelect['unsubscribed'] : null;
 }
 ?>
 
 <button type="button"<?= $disabled ? 'disabled="disabled"' : '' ?> class="button comment-subscribe <?= $class ?> comment-subscription-<?= $escapeAttr($action) ?>" data-id="<?= $resource->id() ?>" title="<?= $text ?>" data-subscription-action="<?= $escapeAttr($action) ?>" data-title-subscribed="<?= $textSelect['subscribed'] ?>" data-title-unsubscribed="<?= $textSelect['unsubscribed'] ?>" data-url="<?= $urlButton ?>">
     <span class="comment-subscription-icon"></span>
+    <?php if ($text): ?>
+    <span class="comment-subscription-text"><?= $escape($text) ?></span>
+    <?php endif; ?>
 </button>

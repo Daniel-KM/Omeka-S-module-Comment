@@ -16,8 +16,10 @@ class CommentSubscriptionButton extends AbstractHelper
      * Create a button to add or remove a resource to/from the selection.
      *
      * @param array $options Options for the partial. Managed keys:
-     * - resourceId (int)
      * - action: "add" or "delete". If not specified, the action is "toggle".
+     * - labelSubscribe/label_subscribe (string)
+     * - labelUnsubscribe/abel_unsubscribe (string)
+     * - showLabel/show_label(bool) Display the text on the button or not (default false).
      * - template (string)
      */
     public function __invoke(AbstractResourceEntityRepresentation $resource, array $options = []): string
@@ -77,6 +79,9 @@ class CommentSubscriptionButton extends AbstractHelper
             'subscribed' => $subscribed,
             'action' => $action,
             'urlButton' => $urlButton,
+            'labelSubscribe' => $options['labelSubscribe'] ?? $options['label_subscribe'] ?? null,
+            'labelUnsubscribe' => $options['labelUnsubscribe'] ?? $options['label_unsubscribe'] ?? null,
+            'showLabel' => $options['showLabel'] ?? $options['show_label'] ?? null,
         ] + $options;
 
         return $partial($template, $args);
