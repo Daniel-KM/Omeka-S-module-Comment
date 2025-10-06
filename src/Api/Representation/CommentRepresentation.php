@@ -66,6 +66,7 @@ class CommentRepresentation extends AbstractEntityRepresentation
             'o:children' => $children,
             'o:created' => $getDateTimeJsonLd($this->resource->getCreated()),
             'o:modified' => $getDateTimeJsonLd($this->resource->getModified()),
+            'o:edited' => $getDateTimeJsonLd($this->resource->getEdited()),
         ];
     }
 
@@ -182,5 +183,10 @@ class CommentRepresentation extends AbstractEntityRepresentation
     public function modified(): ?DateTime
     {
         return $this->resource->getModified();
+    }
+
+    public function edited(): ?DateTime
+    {
+        return $this->resource->getEdited();
     }
 }

@@ -3,6 +3,7 @@ namespace Comment\Api\Adapter;
 
 use Comment\Api\Representation\CommentRepresentation;
 use Comment\Entity\Comment;
+use DateTime;
 use Doctrine\ORM\QueryBuilder;
 use Laminas\Validator\EmailAddress;
 use Omeka\Api\Adapter\AbstractEntityAdapter;
@@ -38,6 +39,7 @@ class CommentAdapter extends AbstractEntityAdapter
         'parent_id' => 'parent',
         'created' => 'created',
         'modified' => 'modified',
+        'edited' => 'edited',
         // For info.
         // // 'resource_title' => 'resource',
     ];
@@ -64,6 +66,7 @@ class CommentAdapter extends AbstractEntityAdapter
         'children' => 'children',
         'created' => 'created',
         'modified' => 'modified',
+        'edited' => 'edited',
     ];
 
     public function getResourceName()
@@ -83,6 +86,8 @@ class CommentAdapter extends AbstractEntityAdapter
 
     public function buildQuery(QueryBuilder $qb, array $query): void
     {
+        // TODO Use CommonAdapterTrait.
+
         $isOldOmeka = \Omeka\Module::VERSION < 2;
         $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
         $expr = $qb->expr();
@@ -179,6 +184,40 @@ class CommentAdapter extends AbstractEntityAdapter
                 }
             }
         }
+
+        /** @see \Omeka\Api\Adapter\AbstractResourceEntityAdapter::buildQuery() */
+        $dateSearches = [
+            'created_before' => ['lt', 'created'],
+            'created_after' => ['gt', 'created'],
+            'modified_before' => ['lt', 'modified'],
+            'modified_after' => ['gt', 'modified'],
+            'edited_before' => ['lt', 'edited'],
+            'edited_after' => ['gt', 'edited'],
+        ];
+        $dateGranularities = [
+            DateTime::ISO8601,
+            '!Y-m-d\TH:i:s',
+            '!Y-m-d\TH:i',
+            '!Y-m-d\TH',
+            '!Y-m-d',
+            '!Y-m',
+            '!Y',
+        ];
+        foreach ($dateSearches as $dateSearchKey => $dateSearch) {
+            if (isset($query[$dateSearchKey])) {
+                foreach ($dateGranularities as $dateGranularity) {
+                    $date = DateTime::createFromFormat($dateGranularity, $query[$dateSearchKey]);
+                    if (false !== $date) {
+                        break;
+                    }
+                }
+                $qb->andWhere($expr->{$dateSearch[0]} (
+                    sprintf('omeka_root.%s', $dateSearch[1]),
+                    // If the date is invalid, pass null to ensure no results.
+                    $this->createNamedParameter($qb, $date ?: null)
+                ));
+            }
+        }
     }
 
     // public function sortQuery(QueryBuilder $qb, array $query)
@@ -243,6 +282,7 @@ class CommentAdapter extends AbstractEntityAdapter
                 }
 
                 $entity->setPath($request->getValue('o:path', ''));
+
                 $entity->setBody($request->getValue('o:body', ''));
 
                 $owner = $entity->getOwner();
@@ -260,7 +300,17 @@ class CommentAdapter extends AbstractEntityAdapter
                 break;
 
             case Request::UPDATE:
-                // Nothing can be changed, except flags below.
+                if ($this->shouldHydrate($request, 'o:body')) {
+                    $entity->setBody($request->getValue('o:body', ''));
+                }
+
+                if ($this->shouldHydrate($request, 'o:edited')) {
+                    $edited = $request->getValue('o:edited') ?: null;
+                    if ($edited && is_string($edited)) {
+                        $edited = new DateTime($edited);
+                    }
+                    $entity->setEdited($edited);
+                }
                 break;
         }
 

@@ -17,9 +17,11 @@ $userIsAllowed = $plugins->get('userIsAllowed');
 
 $this->headLink()
     ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
+    ->appendStylesheet($assetUrl('css/comment.css', 'Comment'))
     ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'));
 $this->headScript()
     ->appendFile($assetUrl('js/common-dialog.js', 'Common'), 'text/javascript', ['defer' => 'defer'])
+    ->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer'])
     ->appendFile($assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 
 $this->htmlElement('body')->appendAttribute('class', 'comment comments browse');
@@ -123,7 +125,7 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
 <?php $this->trigger('view.browse.after'); ?>
 
 <?php else: ?>
-<table class="tablesaw <?php if ($batchEditRight): echo 'batch-edit'; endif ?>" data-tablesaw-mode="stack">
+<table data-comment-url="<?= $url('admin/comment') ?>" class="tablesaw <?php if ($batchEditRight): echo 'batch-edit'; endif ?>" data-tablesaw-mode="stack">
     <thead>
         <tr>
             <th class="column-tag">
@@ -143,12 +145,14 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
         $resource = $comment->resource();
         $owner = $comment->owner();
         ?>
-        <tr class="comment">
+        <tr class="comment" data-id="<?= $comment->id() ?>">
             <td>
                 <?php if ($batchEditRight): ?>
                     <input type="checkbox" name="resource_ids[]" value="<?= $comment->id() ?>">
                 <?php endif; ?>
-                <?= $escape(mb_substr($comment->body(), 0, 200)) ?>
+                <div class="comment-body">
+                    <?= $escape(mb_substr($comment->body(), 0, 200)) ?>
+                </div>
                 <span class="is-public-or-not<?php if (!$comment->isApproved()): echo ' o-icon-private'; endif; ?>" aria-label="<?= $translate('Private') ?>"></span>
                 <?php if (mb_strlen($comment->body()) > 200): echo '…'; endif; ?>
                 <ul class="actions icons-only">
@@ -173,6 +177,12 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
                         data-status="<?= $comment->isSpam() ? 'spam' : 'not-spam' ?>"
                         aria-label="<?= $escape($translate('Toggle spam')) ?>"
                         title="<?= $escape($translate('Toggle spam')) ?>"></a></li>
+                    <?php endif; ?>
+                    <?php if ($comment->userIsAllowed('edit')): ?>
+                    <li><a href="#"
+                        class="comment-edit o-icon-edit"
+                        aria-label="<?= $v = $escape($translate('Edit')) ?>"
+                        title="<?= $v ?>"></a></li>
                     <?php endif; ?>
                     <?php if ($comment->userIsAllowed('delete')): ?>
                     <li><a href="#"
@@ -217,7 +227,17 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
                 <span class="comment-website"><?= $website ?></span>
                 <?php endif; ?>
             </td>
-            <td><?= $escape($i18n->dateFormat($comment->created())) ?></td>
+            <td>
+                <?= $escape(sprintf($translate('Created: %s'), $i18n->dateFormat($comment->created()))) ?>
+                <?php if ($v = $comment->modified()): ?>
+                <br/>
+                <?= $escape(sprintf($translate('Modified: %s'), $i18n->dateFormat($v))) ?>
+                <?php endif; ?>
+                <?php if ($v = $comment->edited()): ?>
+                <br/>
+                <?= $escape(sprintf($translate('Edited: %s'), $i18n->dateFormat($v))) ?>
+                <?php endif; ?>
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>

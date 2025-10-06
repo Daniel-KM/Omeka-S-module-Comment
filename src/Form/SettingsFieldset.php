@@ -83,6 +83,15 @@ class SettingsFieldset extends Fieldset
             ])
 
             ->add([
+                'name' => 'comment_user_allow_edit',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Allow non-admin users to edit their own comment', // @translate
+                ],
+            ])
+
+            ->add([
                 'name' => 'comment_wpapi_key',
                 'type' => Element\Text::class,
                 'options' => [

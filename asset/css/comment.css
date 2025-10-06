@@ -75,6 +75,7 @@
         opacity: 0.5;
     }
 
+    .comment .comment-edit,
     .comment .comment-flag,
     .comment .comment-unflag {
         cursor: pointer;

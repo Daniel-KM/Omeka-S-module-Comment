@@ -16,6 +16,7 @@ CREATE TABLE `comment` (
     `body` LONGTEXT NOT NULL,
     `created` DATETIME NOT NULL,
     `modified` DATETIME DEFAULT NULL,
+    `edited` DATETIME DEFAULT NULL,
     INDEX `IDX_9474526C7E3C61F9` (`owner_id`),
     INDEX `IDX_9474526C89329D25` (`resource_id`),
     INDEX `IDX_9474526CF6BD1646` (`site_id`),

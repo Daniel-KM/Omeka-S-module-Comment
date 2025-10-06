@@ -73,6 +73,26 @@ var Comment = {
         $('#comment_parent_id').val(commentId);
     },
 
+    edit: function(event) {
+        const button = event.currentTarget;
+        const commentId = Comment.getCommentId(button);
+        const commentBody = $(button).closest('.comment').find('.comment-body').text().trim();
+        CommonDialog.dialogPrompt({
+            message: Omeka.jsTranslate('Edit your comment'),
+            textarea: true,
+            defaultValue: commentBody,
+            nl2br: false,
+        }).then(function(updatedText) {
+            if (updatedText === null || updatedText === commentBody) {
+                return;
+            }
+            button.dataset.action = Comment.getBasePath() + '/' + commentId  +'/edit';
+            button.dataset.payload = JSON.stringify({ 'o:body': updatedText });
+            event.target = button;
+            CommonDialog.jSend(event);
+        });
+    },
+
     flag: function(event) {
         const button = event.currentTarget;
         const commentId = Comment.getCommentId(button);
@@ -144,7 +164,8 @@ var Comment = {
     },
 
     getCommentId: function(el) {
-        return $(el).parents('.comment').first().attr('id').substring(8);
+        const id = $(el).parents('.comment').first().attr('data-id');
+        return id ? id : $(el).parents('.comment').first().attr('id').substring(8);
     },
 
     getBasePath: function() {
@@ -158,6 +179,7 @@ var Comment = {
     $(document).ready(function() {
 
         $('.comment-reply').click(Comment.handleReply);
+        $('.comment-edit').click(Comment.edit);
         $('.comment-flag').click(Comment.flag);
         $('.comment-unflag').click(Comment.unflag);
         $('.comment-subscribe').click(Comment.subscribeResource);

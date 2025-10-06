@@ -192,7 +192,11 @@ abstract class AbstractCommentController extends AbstractActionController
         }
 
         // Remove non allowed data.
-        $response = $this->api($form)->create('comments', $data);
+        try {
+            $response = $this->api($form)->create('comments', $data);
+        } catch (\Exception $e) {
+            $response = null;
+        }
         if (!$response) {
             $message = (new PsrMessage(
                 'There is issue in your comment.' // @translate
@@ -230,6 +234,116 @@ abstract class AbstractCommentController extends AbstractActionController
                 'status' => 'commented',
             ], $this->translate(
                 'Comment was added to the resource. It will be displayed definitely when approved.' // @translate
+            ));
+        } else {
+            return $this->jSend(JSend::SUCCESS, [
+                'o:resource' => ['o:id' => $resourceId],
+                'moderation' => false,
+                'status' => 'commented',
+            ]);
+        }
+    }
+
+    public function editAction()
+    {
+        /** @var \Omeka\Entity\User $user */
+        $user = $this->identity();
+        if (!$user) {
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Unauthorized access.' // @translate
+            ))->setTranslator($this->translator()), Response::STATUS_CODE_403);
+        }
+
+        try {
+            $response = $this->api()->read('comments', $this->params('id'));
+        } catch (\Exception $e) {
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Unauthorized access or not found.' // @translate
+            ))->setTranslator($this->translator()), Response::STATUS_CODE_403);
+        }
+
+        /** @var \Comment\Api\Representation\CommentRepresentation $comment */
+        $comment = $response->getContent();
+
+        if (!$comment->userIsAllowed('edit')) {
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'The user has no right to edit this resource.' // @translate
+            ))->setTranslator($this->translator()), Response::STATUS_CODE_403);
+        }
+
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            $this->logger()->warn('The url to edit comment was accessed without post data.');
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Unauthorized access.' // @translate
+            ))->setTranslator($this->translator()), Response::STATUS_CODE_403);
+        }
+
+        $newBody = trim($this->params()->fromPost('o:body', ''));
+        if (!strlen($newBody)) {
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'No text submitted.' // @translate
+            ))->setTranslator($this->translator()));
+        }
+
+        if ($newBody === $comment->body()) {
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Text submitted is the same than the existing one.' // @translate
+            ))->setTranslator($this->translator()));
+        }
+
+        $resourceId = $comment->id();
+
+        // TODO Add more check: right to edit after approbation, etc.
+        $data = [
+            'o:body' => $newBody,
+        ];
+
+        $isSpam = $this->checkSpam(['o:check' => false] + $data);
+        if ($isSpam) {
+            $data['o:spam'] = true;
+        }
+
+        // In any case, an edited comment should be reapproved.
+        $role = $user->getRole();
+        $data['o:approved'] = in_array($role, $this->approbators)
+            || !$this->settings()->get('comment_user_require_moderation');
+        $data['o:edited'] = new \DateTime('now');
+
+        // Save the new body.
+        try {
+            $response = $this->api()->update('comments', $resourceId, $data, [], ['isPartial' => true]);
+        } catch (\Exception $e) {
+            $response = null;
+        }
+        // Normally not possible because checked above.
+        if (!$response) {
+            $message = (new PsrMessage(
+                'An error occurred.' // @translate
+            ))->setTranslator($this->translator());
+            return $this->jSend(JSend::ERROR, null, $message);
+        }
+
+        $comment = $response->getContent();
+
+        if ($this->settings()->get('comment_public_notify_post')) {
+            // TODO Use adapter to get representation.
+            $representation = $this->api()
+                ->read('resources', $resourceId)
+                ->getContent();
+            $this->notifyEmail($representation, $comment);
+        }
+
+        // $parent = $comment->parent();
+        // TODO Check parent for moderation?
+        $toModerate = !$comment->isApproved() || $comment->isSpam();
+        if ($toModerate) {
+            return $this->jSend(JSend::SUCCESS, [
+                'o:resource' => ['o:id' => $resourceId],
+                'moderation' => true,
+                'status' => 'commented',
+            ], $this->translate(
+                'Comment was updated. It will be displayed definitely when approved.' // @translate
             ));
         } else {
             return $this->jSend(JSend::SUCCESS, [

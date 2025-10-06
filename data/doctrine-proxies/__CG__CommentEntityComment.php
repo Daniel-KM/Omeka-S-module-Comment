@@ -67,10 +67,10 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'approved', 'flagged', 'spam', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'created', 'modified'];
+            return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'approved', 'flagged', 'spam', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'created', 'modified', 'edited'];
         }
 
-        return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'approved', 'flagged', 'spam', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'created', 'modified'];
+        return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'approved', 'flagged', 'spam', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'created', 'modified', 'edited'];
     }
 
     /**
@@ -536,7 +536,7 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
-    public function setModified(\DateTime $modified): \Comment\Entity\Comment
+    public function setModified(?\DateTime $modified): \Comment\Entity\Comment
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setModified', [$modified]);
@@ -553,6 +553,28 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getModified', []);
 
         return parent::getModified();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setEdited(?\DateTime $edited): \Comment\Entity\Comment
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setEdited', [$edited]);
+
+        return parent::setEdited($edited);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getEdited(): ?\DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEdited', []);
+
+        return parent::getEdited();
     }
 
     /**

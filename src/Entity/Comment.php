@@ -11,6 +11,8 @@ use Omeka\Entity\Site;
 use Omeka\Entity\User;
 
 /**
+ * @todo Add a json "history" with date and action (creation, is flag, previous comments, edit, etc.).
+ *
  * @todo In the case of new objects to comment, use resource by id + type.
  * @todo For pages, create a resource class "Page"!
  * @todo Check if columns for author can be merged into an array.
@@ -235,6 +237,16 @@ class Comment extends AbstractEntity
      */
     protected $modified;
 
+    /**
+     * @var DateTime|null
+     *
+     * @Column(
+     *     type="datetime",
+     *     nullable=true
+     * )
+     */
+    protected $edited;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -415,7 +427,7 @@ class Comment extends AbstractEntity
         return $this->created;
     }
 
-    public function setModified(DateTime $modified): self
+    public function setModified(?DateTime $modified): self
     {
         $this->modified = $modified;
         return $this;
@@ -424,5 +436,16 @@ class Comment extends AbstractEntity
     public function getModified(): ?DateTime
     {
         return $this->modified;
+    }
+
+    public function setEdited(?DateTime $edited): self
+    {
+        $this->edited = $edited;
+        return $this;
+    }
+
+    public function getEdited(): ?DateTime
+    {
+        return $this->edited;
     }
 }

@@ -36,6 +36,7 @@ $skipGravatar = (bool) $siteSetting('comment_skip_gravatar');
 $publicRequireModeration = $setting('comment_public_require_moderation');
 $userrRequireModeration = $setting('comment_user_require_moderation');
 $userCanComment = $comment->userIsAllowed('create');
+$userCanEdit = $comment->userIsAllowed('edit');
 $userCanFlag = $userIsAllowed(\Comment\Controller\Site\CommentController::class, 'flag');
 $userCanUnflag = $userIsAllowed(\Comment\Controller\Site\CommentController::class, 'unflag');
 ?>
@@ -78,6 +79,15 @@ $userCanUnflag = $userIsAllowed(\Comment\Controller\Site\CommentController::clas
             title="<?= $v ?>">
                 <span class="comment-flag-icon"></span>
                 <span class="comment-flag-text"><?= $escape($translate('Unflag inappropriate')) ?></span>
+            </button>
+        <?php endif; ?>
+        <?php if ($userCanEdit): ?>
+        <button type="button"
+            class="comment-action comment-edit"
+            aria-label="<?= $v = $escapeAttr($translate('Edit')) ?>"
+            title="<?= $v ?>">
+                <span class="comment-edit-icon"></span>
+                <span class="comment-edit-text"><?= $escape($translate('Edit')) ?></span>
             </button>
         <?php endif; ?>
     </div>

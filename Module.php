@@ -48,6 +48,7 @@ use Omeka\Api\Representation\MediaRepresentation;
 use Omeka\Api\Representation\UserRepresentation;
 use Omeka\Entity\AbstractEntity;
 use Omeka\Module\AbstractModule;
+use Omeka\Permissions\Assertion\OwnsEntityAssertion;
 
 /**
  * Comment.
@@ -169,15 +170,26 @@ class Module extends AbstractModule
             }
         }
 
-        $publicViewComment = $settings->get('comment_public_allow_view', false);
-        $publicAllowComment = $settings->get('comment_public_allow_comment', false);
+        $roles = $acl->getRoles();
+        $approbators = [
+            \Omeka\Permissions\Acl::ROLE_GLOBAL_ADMIN,
+            \Omeka\Permissions\Acl::ROLE_SITE_ADMIN,
+            \Omeka\Permissions\Acl::ROLE_EDITOR,
+            \Omeka\Permissions\Acl::ROLE_REVIEWER,
+        ];
+        $nonApprobators = array_diff($roles, $approbators);
+
+        $anonymousViewComment = (bool) $settings->get('comment_public_allow_view', false);
+        $anonymousAllowComment = (bool) $settings->get('comment_public_allow_comment', false);
+        $userAllowEdit = (bool) $settings->get('comment_user_allow_edit', false);
 
         // Check if public can comment and flag, and read comments and own ones.
-        if ($publicViewComment) {
-            if ($publicAllowComment) {
+        if ($anonymousViewComment) {
+            if ($anonymousAllowComment) {
                 $entityRights = ['read', 'create', 'update'];
                 $adapterRights = ['search', 'read', 'create', 'update'];
                 $controllerRights = ['show', 'flag', 'add'];
+                // Anonymous can never edit, it is a non-sense.
             } else {
                 $entityRights = ['read', 'update'];
                 $adapterRights = ['search', 'read', 'update'];
@@ -189,7 +201,6 @@ class Module extends AbstractModule
                 ->allow(null, [Controller\Site\CommentController::class], $controllerRights);
         }
 
-        $roles = $acl->getRoles();
         $acl
             // Identified users can comment. Reviewer and above can approve.
             ->allow($roles, [Comment::class], ['read', 'create', 'update'])
@@ -202,23 +213,24 @@ class Module extends AbstractModule
             ->allow($roles, [CommentSubscription::class], ['read', 'create', 'delete'])
             ->allow($roles, [Api\Adapter\CommentSubscriptionAdapter::class], ['search', 'read', 'create', 'delete'])
         ;
+        if ($userAllowEdit) {
+            $acl
+                ->allow($nonApprobators, [Comment::class], ['edit'], new OwnsEntityAssertion())
+                ->allow($nonApprobators, [Api\Adapter\CommentAdapter::class], ['edit'])
+                ->allow($nonApprobators, [Controller\Site\CommentController::class], ['edit'])
+                ->allow($nonApprobators, [Controller\Admin\CommentController::class], ['edit']);
+        }
 
-        $approbators = [
-            \Omeka\Permissions\Acl::ROLE_GLOBAL_ADMIN,
-            \Omeka\Permissions\Acl::ROLE_SITE_ADMIN,
-            \Omeka\Permissions\Acl::ROLE_EDITOR,
-            \Omeka\Permissions\Acl::ROLE_REVIEWER,
-        ];
         $acl
             ->allow(
                 $approbators,
                 [Comment::class],
-                ['read', 'create', 'update', 'delete', 'view-all']
+                ['read', 'create', 'update', 'delete', 'edit', 'view-all']
             )
             ->allow(
                 $approbators,
                 [Api\Adapter\CommentAdapter::class],
-                ['search', 'read', 'create', 'update', 'delete', 'batch-create', 'batch-update', 'batch-delete']
+                ['search', 'read', 'create', 'update', 'delete', 'edit', 'batch-create', 'batch-update', 'batch-delete']
             )
             ->allow(
                 $approbators,
@@ -226,6 +238,7 @@ class Module extends AbstractModule
                 [
                     'show',
                     'add',
+                    'edit',
                     'browse',
                     'batch-approve',
                     'batch-unapprove',
@@ -902,11 +915,13 @@ class Module extends AbstractModule
         $translate = $event->getTarget()->plugin('translate');
         $filters = $event->getParam('filters');
         $query = $event->getParam('query', []);
+
         if (!empty($query['has_comments'])) {
             $filterLabel = $translate('Has comments'); // @translate
             $filterValue = $translate('true');
             $filters[$filterLabel][] = $filterValue;
         }
+
         foreach ([
             'approved' => $translate('Approved'), // @translate
             'flagged' => $translate('Flagged'), // @translate
@@ -920,6 +935,7 @@ class Module extends AbstractModule
                 $filters[$filterLabel][] = $filterValue;
             }
         }
+
         $event->setParam('filters', $filters);
     }
 

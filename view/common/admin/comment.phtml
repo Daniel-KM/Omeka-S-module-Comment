@@ -76,6 +76,13 @@ if ($website = $comment->website()) {
             aria-label="<?= $escape($translate('Toggle spam')) ?>"
             title="<?= $escape($translate('Toggle spam')) ?>"></a></li>
         <?php endif; ?>
+        <?php if ($comment->userIsAllowed('edit')): ?>
+        <li><a href="#"
+            class="o-icon-edit' ?>"
+            data-url="<?= $escape($comment->url('edit')) ?>"
+            aria-label="<?= $v = $escape($translate('Edit')) ?>"
+            title="<?= $v ?>"></a></li>
+        <?php endif; ?>
         <?php /* // TODO Delete comments from resources.
         <?php if ($userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'delete')): ?>
         <li><a href="<?= $escape($comment->url('delete')) ?>"

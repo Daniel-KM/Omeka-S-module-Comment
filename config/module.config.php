@@ -96,6 +96,21 @@ return [
                             ],
                         ],
                     ],
+                    'comment-id' => [
+                        'type' => \Laminas\Router\Http\Segment::class,
+                        'options' => [
+                            'route' => '/comment/:id[/:action]',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '\d+',
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'Comment\Controller\Site',
+                                'controller' => Controller\Site\CommentController::class,
+                                'action' => 'show',
+                            ],
+                        ],
+                    ],
                     'guest' => [
                         // The default values for the guest user route are kept
                         // to avoid issues for visitors when an upgrade of
@@ -188,6 +203,7 @@ return [
             'comment_public_require_moderation' => true,
             'comment_public_notify_post' => [],
             'comment_user_require_moderation' => false,
+            'comment_user_allow_edit' => false,
             'comment_wpapi_key' => '',
             'comment_antispam' => true,
             'comment_label' => 'Comments', // @translate
