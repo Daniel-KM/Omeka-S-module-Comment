@@ -102,9 +102,10 @@ class Module extends AbstractModule
         $translator = $services->get('MvcTranslator');
 
         $html = '<p>';
-        $html .= sprintf($translator->translate("I agree with %sterms of use%s and I accept to free my contribution under the licence %sCC\u{a0}BY-SA%s."), // @translate
-            '<a rel="licence" href="#" target="_blank">', '</a>',
-            '<a rel="licence" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">', '</a>'
+        $html .= sprintf($translator->translate('I agree with %1$sterms of use%2$s and I accept to free my contribution under the license %3$sCC BY-SA%2$s.'), // @translate
+            '<a rel="license" href="#" target="_blank">',
+            '</a>',
+            '<a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">',
         );
         $html .= '</p>';
         $settings->set('comment_legal_text', $html);

@@ -27,6 +27,8 @@ $this->headScript()
     ->appendFile($assetUrl('js/common-dialog.js', 'Common'), 'text/javascript', ['defer' => 'defer'])
     ->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 
+$user = $this->identity();
+
 // Required to manage the base path.
 $baseUrl = $site ? $url('site/comment', ['site-slug' => $site->slug()]) : $url('admin/comment');
 ?>
@@ -36,8 +38,10 @@ $baseUrl = $site ? $url('site/comment', ['site-slug' => $site->slug()]) : $url('
         <?= $label ?: $translate('Comments') ?>
     </summary>
     <div id="comments" class="comments-resource" data-comment-url="<?= $escapeAttr($baseUrl) ?>">
-        <?php if (empty($comments)): ?>
+        <?php if (empty($comments) && $user): ?>
             <p><?= $translate('No comment yet! Be the first to add one!') ?></p>
+        <?php elseif (empty($comments)): ?>
+            <p><?= $translate('No comment yet! Log in and be the first to add one!') ?></p>
         <?php elseif (($structure ?? null) === 'threaded'): ?>
             <?= $partial('common/comments-thread') ?>
         <?php else: ?>

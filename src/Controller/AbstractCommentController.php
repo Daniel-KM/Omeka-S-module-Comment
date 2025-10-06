@@ -12,7 +12,6 @@ use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Omeka\Api\Exception\NotFoundException;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
-use Omeka\Stdlib\Message;
 
 abstract class AbstractCommentController extends AbstractActionController
 {
@@ -566,12 +565,20 @@ abstract class AbstractCommentController extends AbstractActionController
     protected function notifyEmail(AbstractResourceEntityRepresentation $resource, CommentRepresentation $comment): void
     {
         $site = @$_SERVER['SERVER_NAME'] ?: sprintf('Server (%s)', @$_SERVER['SERVER_ADDR']); // @translate
-        $subject = new Message('[%s] New public comment', $site); // @translate
+        $subject = new PsrMessage(
+            '[{site}] New public comment', // @translate
+            ['site' => $site]
+        );
 
-        $body = new Message('A comment was added to resource #%d (%s) by %s <%s>.', // @translate
-            $resource->id(), $resource->adminUrl(), $comment->name(), $comment->email());
+        $body = (new PsrMessage(
+            'A comment was added to resource #{resource_id} ({resource_url}) by {name} <{email}}>.', // @translate
+            ['resource_id' => $resource->id(), 'resource_url' => $resource->adminUrl(), 'name' => $comment->name(), 'email' => $comment->email()]
+        ))->setTranslator($this->translator());
         $body .= "\r\n";
-        $body .= new Message('Comment: %s', "\n" . $comment->body()); // @translate
+        $body .= (new PsrMessage(
+            'Comment: {msg}',  // @translate
+            ['msg' => $comment->body()]
+        ))->setTranslator($this->translator());
         $body .= "\r\n\r\n";
 
         $mailer = $this->mailer();
