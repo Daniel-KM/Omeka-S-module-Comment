@@ -2,10 +2,10 @@
 
 namespace Comment\Form;
 
+use Common\Form\Element as CommonElement;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
-use Omeka\Form\Element\ArrayTextarea;
-use Omeka\Form\Element\CkeditorInline;
+use Omeka\Form\Element as OmekaElement;
 
 class SettingsFieldset extends Fieldset
 {
@@ -23,9 +23,10 @@ class SettingsFieldset extends Fieldset
         $this
             ->setAttribute('id', 'comment')
             ->setOption('element_groups', $this->elementGroups)
+
             ->add([
                 'name' => 'comment_resources',
-                'type' => Element\MultiCheckbox::class,
+                'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
                     'element_group' => 'comment',
                     'label' => 'Resources to comment', // @translate
@@ -81,7 +82,7 @@ class SettingsFieldset extends Fieldset
 
             ->add([
                 'name' => 'comment_public_notify_post',
-                'type' => ArrayTextarea::class,
+                'type' => OmekaElement\ArrayTextarea::class,
                 'options' => [
                     'element_group' => 'comment',
                     'label' => 'Notify public comments by email', // @translate
@@ -89,8 +90,10 @@ class SettingsFieldset extends Fieldset
                 ],
                 'attributes' => [
                     'required' => false,
-                    'placeholder' => 'contact@example.org
-info@example2.org',
+                    'placeholder' => <<<'TXT'
+                        contact@example.org
+                        info@example2.org
+                        TXT,
                     'rows' => 5,
                 ],
             ])
@@ -117,7 +120,7 @@ info@example2.org',
 
             ->add([
                 'name' => 'comment_legal_text',
-                'type' => CkeditorInline::class,
+                'type' => OmekaElement\CkeditorInline::class,
                 'options' => [
                     'element_group' => 'comment',
                     'label' => 'Legal agreement', // @translate

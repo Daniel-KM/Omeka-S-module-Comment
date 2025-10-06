@@ -1,10 +1,6 @@
 <?php declare(strict_types=1);
-/**
- * Comment
- *
- * Add public and private commenting on resources and manage them.
- *
- * @copyright Daniel Berthereau, 2017-2023
+/*
+ * @copyright Daniel Berthereau, 2017-2025
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  *
  * This software is governed by the CeCILL license under French law and abiding
@@ -32,14 +28,12 @@
  */
 namespace Comment;
 
-if (!class_exists(\Generic\AbstractModule::class)) {
-    require file_exists(dirname(__DIR__) . '/Generic/AbstractModule.php')
-        ? dirname(__DIR__) . '/Generic/AbstractModule.php'
-        : __DIR__ . '/src/Generic/AbstractModule.php';
+if (!class_exists('Common\TraitModule', false)) {
+    require_once dirname(__DIR__) . '/Common/TraitModule.php';
 }
 
 use Comment\Entity\Comment;
-use Generic\AbstractModule;
+use Common\TraitModule;
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Mvc\MvcEvent;
@@ -51,9 +45,20 @@ use Omeka\Api\Representation\ItemSetRepresentation;
 use Omeka\Api\Representation\MediaRepresentation;
 use Omeka\Api\Representation\UserRepresentation;
 use Omeka\Entity\AbstractEntity;
+use Omeka\Module\AbstractModule;
 
+/**
+ * Comment.
+ *
+ * Add public and private commenting on resources and manage them.
+ *
+ * @copyright Daniel Berthereau, 2017-2025
+ * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
+ */
 class Module extends AbstractModule
 {
+    use TraitModule;
+
     const NAMESPACE = __NAMESPACE__;
 
     /**
@@ -68,8 +73,23 @@ class Module extends AbstractModule
     public function onBootstrap(MvcEvent $event): void
     {
         parent::onBootstrap($event);
+
         $this->addEntityManagerFilters();
         $this->addAclRules();
+    }
+
+    protected function preInstall(): void
+    {
+        $services = $this->getServiceLocator();
+        $translate = $services->get('ControllerPluginManager')->get('translate');
+
+        if (!method_exists($this, 'checkModuleActiveVersion') || !$this->checkModuleActiveVersion('Common', '3.4.73')) {
+            $message = new \Omeka\Stdlib\Message(
+                $translate('The module %1$s should be upgraded to version %2$s or later.'), // @translate
+                'Common', '3.4.73'
+            );
+            throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);
+        }
     }
 
     protected function postInstall(): void
@@ -85,6 +105,18 @@ class Module extends AbstractModule
         );
         $html .= '</p>';
         $settings->set('comment_legal_text', $html);
+    }
+
+    protected function isSettingTranslatable(string $settingsType, string $name): bool
+    {
+        $translatables = [
+            'settings' => [
+                'comment_comments_label',
+                'comment_legal_text',
+            ],
+        ];
+        return isset($translatables[$settingsType])
+            && in_array($name, $translatables[$settingsType]);
     }
 
     /**
@@ -361,17 +393,17 @@ class Module extends AbstractModule
 
     public function handleMainSettings(Event $event): void
     {
-        parent::handleMainSettings($event);
+        $this->handleAnySettings($event, 'settings');
 
+        /**
+         * @var \Omeka\Settings\Settings $settings
+         */
         $services = $this->getServiceLocator();
         $settings = $services->get('Omeka\Settings');
 
         $value = $settings->get('comment_public_notify_post') ?: [];
 
-        $isOldOmeka = version_compare(\Omeka\Module::VERSION, '4', '<');
-        $fieldset = $isOldOmeka
-            ? $event->getTarget()->get('comment')
-            : $event->getTarget();
+        $fieldset = $event->getTarget();
         $fieldset
             ->get('comment_public_notify_post')
             ->setValue(implode("\n", $value));
