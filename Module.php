@@ -1012,6 +1012,10 @@ class Module extends AbstractModule
         $siteSettings = $services->get('Omeka\Settings\Site');
 
         $widget = [];
+        $widget['label'] = $siteSettings->get('comment_comments_label', $translate('My comments')); // @translate
+        $widget['content'] = $partial('guest/site/guest/widget/comment-browse');
+
+        $widget = [];
         $widget['label'] = $siteSettings->get('comment_subscription_label', $translate('Subscription')); // @translate
         $widget['content'] = $partial('guest/site/guest/widget/comment-subscription');
 

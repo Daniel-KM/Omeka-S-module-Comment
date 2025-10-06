@@ -1,0 +1,110 @@
+<?php
+/**
+ * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\SiteRepresentation $site
+ * @var \Omeka\Entity\User $user
+ * @var \Comment\Api\Representation\CommentRepresentation[] $comments
+ * @var \Comment\Api\Representation\CommentSubscriptionRepresentation[] $resources
+ */
+
+// Browse the commnts of the current user only.
+
+$plugins = $this->getHelperPluginManager();
+$url = $plugins->get('url');
+$partial = $plugins->get('partial');
+$escape = $plugins->get('escapeHtml');
+$assetUrl = $plugins->get('assetUrl');
+$translate = $plugins->get('translate');
+$thumbnail = $plugins->get('thumbnail');
+$siteSetting = $plugins->get('siteSetting');
+$escapeAttr = $plugins->get('escapeHtmlAttr');
+$guestNavigation = $user && $plugins->has('guestNavigation') ? $plugins->get('guestNavigation')() : null;
+$breadcrumbs = $plugins->has('breadcrumbs') ? $plugins->get('breadcrumbs') : null;
+
+$vars = $this->vars();
+
+$filterLocale = (bool) $this->siteSetting('filter_locale_values');
+$lang = $this->lang();
+$langValue = $filterLocale ? [$lang, ''] : null;
+
+$hasGuestNav = $guestNavigation && $guestNavigation->getContainer()->count();
+
+// May be already included in main layout or via a helper.
+$this->headLink()
+    ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
+    ->appendStylesheet($assetUrl('css/comment.css', 'Comment'));
+$this->headScript()
+    ->appendFile($assetUrl('js/common-dialog.js', 'Common'), 'text/javascript', ['defer' => 'defer'])
+    ->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
+
+$this->htmlElement('body')->appendAttribute('class', 'comment resource browse');
+
+// Required to manage the base path.
+$baseUrl = strtr($url('site/comment', ['action' => 'browse'], true), ['/browse' => '']);
+?>
+
+<?php if ($breadcrumbs && !$hasGuestNav): ?>
+<?= $breadcrumbs() ?>
+<?php endif; ?>
+
+<?php if ($hasGuestNav): ?>
+<nav class="navigation-guest">
+    <?= $guestNavigation->menu()->renderMenu() ?>
+</nav>
+<?php endif; ?>
+
+<?= $this->pageTitle($translate('My comments'), 2) ?>
+
+<?php //= $this->searchFilters() ?>
+
+<div class="browse-controls">
+    <?= $pg = $this->pagination() ?>
+    <?php //= $hyperlink($translate('Advanced search'), $url(null, ['action' => 'search'], true), ['class' => 'advanced-search']) ?>
+</div>
+
+<div class="comment-my-list" data-comment-url="<?= $escapeAttr($baseUrl) ?>">
+
+    <?php $this->trigger('view.browse.before'); ?>
+
+    <?php if (count($comments)): ?>
+
+    <ul class="resource-list">
+        <?php
+        $headingTerm = $siteSetting('browse_heading_property_term');
+        $bodyTerm = $siteSetting('browse_body_property_term');
+        foreach ($comments as $comment):
+            $resource = $comment->resource();
+            $resourceType = $resource->getControllerName();
+            $heading = $headingTerm ? $resource->value($headingTerm, ['default' => $translate('[Untitled]'), 'lang' => $langValue]) : $resource->displayTitle(null, $langValue);
+            $body = $bodyTerm ? $resource->value($bodyTerm, ['lang' => $langValue]) : $resource->displayDescription(null, $langValue);
+            $linkContent = sprintf('%s<span class="resource-name">%s</span>',
+                $thumbnail($resource, 'medium'),
+                $escape($heading));
+            $vars->offsetSet('resource', $resource);
+            $vars->offsetSet('comment', $comment);
+            ?>
+        <li class="comment resource <?= $resourceType ?>" data-id="<?= $resource->id() ?>">
+            <?= $resource->linkRaw($linkContent, null, ['class' => 'resource-link']) ?>
+            <?php if (false && $body): ?>
+            <div class="description"><?= $escape($body) ?></div>
+            <?php endif; ?>
+            <div id="comment-<?= $comment->id() ?>" class="comment" data-comment-id="<?= $comment->id() ?>">
+                <?= $partial('common/comment-single') ?>
+            </div>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+
+    <?php $this->trigger('view.browse.after'); ?>
+
+    <?= $pg ?>
+
+    <?php else: ?>
+
+    <div class="no-resources">
+        <p><?= $translate('You have no comments yet.') ?></p>
+    </div>
+
+    <?php endif; ?>
+
+</div>
