@@ -133,7 +133,7 @@ abstract class AbstractCommentController extends AbstractActionController
                     'Unauthorized access.' // @translate
                 ))->setTranslator($this->translator()), Response::STATUS_CODE_403);
             }
-            $legalText = $this->settings()->get('comment_legal_text');
+            $legalText = $this->fallbackSettings()->get('comment_legal_text', ['site', 'global']);
             if ($legalText) {
                 if (empty($data['legal_agreement'])) {
                     return $this->jSend(JSend::FAIL, null, (new PsrMessage(
@@ -227,6 +227,7 @@ abstract class AbstractCommentController extends AbstractActionController
             return $this->jSend(JSend::SUCCESS, [
                 'o:resource' => ['o:id' => $resourceId],
                 'moderation' => true,
+                'status' => 'commented',
             ], $this->translate(
                 'Comment was added to the resource. It will be displayed definitely when approved.' // @translate
             ));
@@ -234,8 +235,70 @@ abstract class AbstractCommentController extends AbstractActionController
             return $this->jSend(JSend::SUCCESS, [
                 'o:resource' => ['o:id' => $resourceId],
                 'moderation' => false,
+                'status' => 'commented',
             ]);
         }
+    }
+
+    public function flagAction()
+    {
+        return $this->flagUnflag(true);
+    }
+
+    public function unflagAction()
+    {
+        return $this->flagUnflag(false);
+    }
+
+    /**
+     * Flag or unflag a resource.
+     *
+     * @param bool $flagUnflag
+     * @return \Laminas\View\Model\JsonModel
+     */
+    protected function flagUnflag($flagUnflag)
+    {
+        $data = $this->params()->fromPost();
+        $commentId = $data['id'] ?? null;
+        if (!$commentId) {
+            $this->logger()->warn('The comment id cannot be identified.'); // @translate
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Comment not found.' // @translate
+            ))->setTranslator($this->translator()));
+        }
+
+        // Just check if the comment exists.
+        $api = $this->api();
+        try {
+            $api
+                ->read('comments', $commentId, [], ['responseContent' => 'resource'])
+                ->getContent();
+        } catch (NotFoundException $e) {
+            $this->logger()->warn(
+                'The comment #{comment_id} cannot be identified.', // @translate
+                ['comment_id' => $commentId]
+            );
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Comment not found.' // @translate
+            ))->setTranslator($this->translator()));
+        } catch (\Exception $e) {
+            $this->logger()->warn(
+                'The comment #{comment_id} cannot be accessed.', // @translate
+                ['comment_id' => $commentId]
+            );
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Unauthorized access.' // @translate
+            ))->setTranslator($this->translator()));
+        }
+
+        $api
+            ->update('comments', $commentId, ['o:flagged' => $flagUnflag], [], ['isPartial' => true]);
+
+        return $this->jSend(JSend::SUCCESS, [
+            'o:id' => $commentId,
+            'o:flagged' => $flagUnflag,
+            'status' => $flagUnflag ? 'flagged' : 'unflagged',
+        ]);
     }
 
     /**

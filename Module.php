@@ -111,7 +111,11 @@ class Module extends AbstractModule
     {
         $translatables = [
             'settings' => [
-                'comment_comments_label',
+                'comment_label',
+                'comment_legal_text',
+            ],
+            'site_settings' => [
+                'comment_label',
                 'comment_legal_text',
             ],
         ];
@@ -647,16 +651,9 @@ class Module extends AbstractModule
         $view = $event->getTarget();
 
         $resource = $view->vars()->resource;
-        $comments = $api->search('comments', [
-            'resource_id' => $resource->id()
-        ])->getContent();
-
         if ($this->isCommentEnabledForResource($resource, true)) {
             echo '<div id="comments" class="section">';
-            echo $view->partial('common/admin/comments', [
-                'resource' => $resource,
-                'comments' => $comments,
-            ]);
+            echo $view->comments($resource, ['template' => 'common/admin/comments']);
             echo $view->commentForm($resource);
             echo '</div>';
         }
@@ -709,13 +706,11 @@ class Module extends AbstractModule
             $showCommentForm = in_array($key, $siteSettings->get('comment_placement_form', []));
             $showCommentList = in_array($key, $siteSettings->get('comment_placement_list', []));
             if ($showCommentForm || $showCommentList) {
-                $listOpen = (bool) $siteSettings->get('comment_list_open');
                 echo $view->partial('common/comments-container', [
                     'resource' => $resource,
                     'comments' => $comments,
                     'showForm' => $showCommentForm,
                     'showList' => $showCommentList,
-                    'listOpen' => $listOpen,
                 ]);
             }
         }

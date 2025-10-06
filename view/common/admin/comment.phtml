@@ -1,7 +1,17 @@
 <?php
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\SiteRepresentation $site
  * @var \Comment\Api\Representation\CommentRepresentation $comment
+ * @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource
+ * @var \Comment\Api\Representation\CommentRepresentation[] $comments
+ * @var string $label
+ * @var string $structure "flat" (default) or "threaded"
+ * @var bool $closedOnLoad
+ * @var int $maxDepth
+ * @var bool $skipGravatar
+ * @var string $legalText
+ * @var null $parentId For threaded structure only. Null here.
  */
 
 $plugins = $this->getHelperPluginManager();
@@ -9,29 +19,29 @@ $url = $plugins->get('url');
 $escape = $plugins->get('escapeHtml');
 $translate = $plugins->get('translate');
 $hyperlink = $plugins->get('hyperlink');
-$siteSetting = $plugins->get('siteSetting');
 $userIsAllowed = $plugins->get('userIsAllowed');
 
-$skipGravatar = (bool) $siteSetting('comment_skip_gravatar');
+if ($owner = $comment->owner()) {
+    $authorText = $hyperlink($owner->email(), $url('admin/id', ['controller' => 'user', 'id' => $owner->id()]));
+    $authorText .= ' (' . $owner->name() . ')';
+} else {
+    $authorText = $hyperlink($comment->email(), 'mailto:' . $comment->email());
+    if ($comment->name()) {
+        $authorText .= ' (' . $comment->name() . ')';
+    }
+}
+if ($website = $comment->website()) {
+    $authorText .= sprintf($translate('Website: %s'), $hyperlink($website, $website));
+}
 ?>
 
+<?php /*// The comment id is in comment-list or comments-thread. Comment-thread includes comment children.
+<div id="comment-<?= $comment->id() ?>" class="comment" data-comment-id="<?= $comment->id() ?>">
+*/ ?>
+
 <div class="comment-author">
-    <?php
-    if ($owner = $comment->owner()):
-        $authorText = $hyperlink($owner->email(), $url('admin/id', ['controller' => 'user', 'id' => $owner->id()]));
-        $authorText .= ' (' . $owner->name() . ')';
-    else:
-        $authorText = $hyperlink($comment->email(), 'mailto:' . $comment->email());
-        if ($comment->name()):
-            $authorText .= ' (' . $comment->name() . ')';
-        endif;
-    endif;
-    if ($website = $comment->website()):
-        $authorText .= sprintf($translate('Website: %s'), $hyperlink($website, $website));
-    endif;
-    ?>
     <p class="comment-author-name"><?= $authorText ?></p>
-    <?php if (!$skipGravatar): ?>
+    <?php if (empty($skipGravatar)): ?>
     <img loading="lazy" class="gravatar" src="'//www.gravatar.com/avatar/<?= hash('sha256', trim($comment->email())) ?>"/>
     <?php endif; ?>
 </div>

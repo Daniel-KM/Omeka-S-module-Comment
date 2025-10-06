@@ -1,16 +1,30 @@
 <?php
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\SiteRepresentation $site
+ * @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource
  * @var \Comment\Api\Representation\CommentRepresentation[] $comments
+ * @var string $label
+ * @var string $structure "flat" (default) or "threaded" "flat" here.
+ * @var bool $closedOnLoad
+ * @var int $maxDepth
+ * @var bool $skipGravatar
+ * @var string $legalText
+ * @var null $parentId For threaded structure only. Useless here.
  */
 
-$partial = $this->plugin('partial');
+$plugins = $this->getHelperPluginManager();
+$partial = $plugins->get('partial');
+
+$vars = $this->vars();
 ?>
 
 <div class="comments-list">
-    <?php foreach ($comments as $comment): ?>
+    <?php foreach ($comments as $comment):
+        $vars->offsetSet('comment', $comment);
+        ?>
     <div id="comment-<?= $comment->id() ?>" class="comment" data-comment-id="<?= $comment->id() ?>">
-        <?= $partial('common/comment-single', ['comment' => $comment]) ?>
+        <?= $partial('common/comment-single') ?>
     </div>
     <?php endforeach; ?>
 </div>

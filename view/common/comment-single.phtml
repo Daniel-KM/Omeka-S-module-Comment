@@ -1,7 +1,17 @@
 <?php
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\SiteRepresentation $site
  * @var \Comment\Api\Representation\CommentRepresentation $comment
+ * @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource
+ * @var \Comment\Api\Representation\CommentRepresentation[] $comments
+ * @var string $label
+ * @var string $structure "flat" (default) or "threaded".
+ * @var bool $closedOnLoad
+ * @var int $maxDepth
+ * @var bool $skipGravatar
+ * @var string $legalText
+ * @var int|null $parentId
  */
 
 $plugins = $this->getHelperPluginManager();
@@ -35,7 +45,7 @@ $userCanUnflag = $userIsAllowed(\Comment\Controller\Site\CommentController::clas
 <div class="comment-header">
     <div class="comment-author">
         <p class="comment-author-name"><?= $authorText ?></p>
-        <?php if (!$skipGravatar): ?>
+        <?php if (empty($skipGravatar)): ?>
         <img loading="lazy" class="gravatar" src="//www.gravatar.com/avatar/<?= hash('sha256', trim($comment->email())) ?>"/>
         <?php endif; ?>
     </div>

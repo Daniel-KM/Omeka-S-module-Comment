@@ -4,7 +4,14 @@
  * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource
  * @var bool $showForm
  * @var bool $showList
- * @var bool $listOpen
+ * @var string $label
+ * @var string $structure "flat" (default) or "threaded"
+ * @var bool $closedOnLoad
+ * @var int $maxDepth
+ * @var bool $skipGravatar
+ * @var string $legalText
+ * @var null $parentId For threaded structure only. Null here.
+ * @var array $options Options above as an array.
  */
 
 if (empty($showForm) && empty($showList)) {
@@ -12,11 +19,11 @@ if (empty($showForm) && empty($showList)) {
 }
 ?>
 
-<div id="comments-container" class="block block-comments-container">
+<div id="comments-container" class="comments-container">
     <?php if ($showList): ?>
-    <?= $this->comments($resource, ['list_open' => isset($listOpen) ? !empty($listOpen) : null]) ?>
+    <?= $this->comments($resource, $options ?? []) ?>
     <?php endif; ?>
-	<?php if ($showForm): ?>
-    <?= $this->commentForm($resource) ?>
+    <?php if ($showForm): ?>
+    <?= $this->commentForm($resource, $options ?? []) ?>
     <?php endif; ?>
 </div>

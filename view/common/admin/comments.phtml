@@ -1,16 +1,24 @@
 <?php
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\SiteRepresentation $site
+ * @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource
  * @var \Comment\Api\Representation\CommentRepresentation[] $comments
- * @var bool $commentThreaded
+ * @var string $label
+ * @var string $structure "flat" (default) or "threaded"
+ * @var bool $closedOnLoad
+ * @var int $maxDepth
+ * @var bool $skipGravatar
+ * @var string $legalText
+ * @var null $parentId For threaded structure only. Null here.
  */
 
 $plugins = $this->getHelperPluginManager();
 $url = $plugins->get('url');
-$setting = $plugins->get('setting');
 $partial = $plugins->get('partial');
 $assetUrl = $plugins->get('assetUrl');
 $translate = $plugins->get('translate');
+$escapeAttr = $plugins->get('escapeHtmlAttr');
 
 $this->headLink()
     ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
@@ -22,18 +30,17 @@ $this->headScript()
     ->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 
 // Required to manage the base path.
-$addUrl = $url('admin/comment', ['action' => 'add'], true);
+$baseUrl = $url('admin/comment');
+
+// In admin, the label is in the tab.
 ?>
 
-<div id="comments" class="comments" data-comment-url="<?= $addUrl ?>">
-    <?php if ($label = $setting('comment_comments_label')): ?>
-    <h2><?= $translate($label) ?></h2>
-    <?php endif; ?>
+<div id="comments" class="comments" data-comment-url="<?= $escapeAttr($baseUrl) ?>">
     <?php if (empty($comments)): ?>
-    <p><?= $translate('No comment yet! Be the first to add one!'); ?></p>
-    <?php elseif ($commentThreaded ?? $setting('comment_threaded')): ?>
-        <?= $partial('common/admin/comments-thread', ['comments' => $comments, 'parentId' => null]) ?>
+        <p><?= $translate('No comment yet! Be the first to add one!') ?></p>
+    <?php elseif (($structure ?? null) === 'threaded'): ?>
+        <?= $partial('common/comments-thread') ?>
     <?php else: ?>
-        <?= $partial('common/admin/comments-list', ['comments' => $comments]) ?>
+        <?= $partial('common/comments-list') ?>
     <?php endif; ?>
 </div>

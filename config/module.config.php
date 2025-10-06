@@ -157,18 +157,26 @@ return [
             'comment_public_require_moderation' => true,
             'comment_public_notify_post' => [],
             'comment_user_require_moderation' => false,
-            'comment_threaded' => true,
-            'comment_max_length' => 2000,
-            'comment_comments_label' => 'Comments', // @translate
-            'comment_legal_text' => '<p>I agree with <a rel="license" href="#" target="_blank">terms of use</a> and I accept to free my contribution under the license <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA</a>.</p>',
             'comment_wpapi_key' => '',
             'comment_antispam' => true,
+            'comment_label' => 'Comments', // @translate
+            'comment_structure' => 'flat',
+            'comment_closed_on_load' => '0',
+            'comment_max_length' => 2000,
+            'comment_skip_gravatar' => false,
+            'comment_legal_text' => <<<'HTML'
+                <p>I agree with <a rel="license" href="#" target="_blank">terms of use</a> and I accept to free my contribution under the license <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA</a>.</p>
+                HTML, // @translate
         ],
         'site_settings' => [
             'comment_placement_form' => [],
             'comment_placement_list' => [],
-            'comment_list_open' => true,
-            'comment_skip_gravatar' => false,
+            'comment_label' => '',
+            'comment_structure' => '',
+            'comment_closed_on_load' => '',
+            'comment_max_length' => '',
+            'comment_skip_gravatar' => '',
+            'comment_legal_text' => '',
         ],
     ],
 ];

@@ -4,36 +4,44 @@
  * @var \Omeka\Api\Representation\SiteRepresentation $site
  * @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource
  * @var \Comment\Api\Representation\CommentRepresentation[] $comments
- * @var bool $threaded
+ * @var string $label
+ * @var string $structure "flat" (default) or "threaded"
+ * @var bool $closedOnLoad
+ * @var int $maxDepth
+ * @var bool $skipGravatar
+ * @var string $legalText
+ * @var null $parentId For threaded structure only. Null here.
  */
 
 $plugins = $this->getHelperPluginManager();
 $url = $plugins->get('url');
 $partial = $plugins->get('partial');
-$setting = $plugins->get('setting');
 $assetUrl = $plugins->get('assetUrl');
 $translate = $plugins->get('translate');
-
-$threaded ??= (bool) $setting('comment_threaded');
+$escapeAttr = $plugins->get('escapeHtmlAttr');
 
 $this->headLink()
+    ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
     ->appendStylesheet($assetUrl('css/comment.css', 'Comment'));
 $this->headScript()
+    ->appendFile($assetUrl('js/common-dialog.js', 'Common'), 'text/javascript', ['defer' => 'defer'])
     ->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 
 // Required to manage the base path.
-$addUrl = $url('site/comment', ['action' => 'add'], true);
+$baseUrl = strtr($url('site/comment', ['action' => 'browse'], true), ['/browse' => '']);
 ?>
 
-<div id="comments" class="comments" data-comment-url="<?= $addUrl ?>">
-    <?php if ($label = $setting('comment_comments_label')): ?>
-    <h2><?= $translate($label) ?></h2>
-    <?php endif; ?>
-    <?php if (empty($comments)): ?>
-    <p><?= $translate('No comment yet! Be the first to add one!') ?></p>
-    <?php elseif ($threaded): ?>
-        <?= $partial('common/comments-thread', ['comments' => $comments, 'parentId' => null]) ?>
-    <?php else: ?>
-        <?= $partial('common/comments-list', ['comments' => $comments]) ?>
-    <?php endif; ?>
-</div>
+<details class="comments comments-details" <?= empty($closedOnLoad) ? 'open="open"' : '' ?>>
+    <summary class="selection-summary" aria-expanded="<?= empty($closedOnLoad) ? 'true' : 'false' ?>">
+        <?= $label ?: $translate('Comments') ?>
+    </summary>
+    <div id="comments" class="comments" data-comment-url="<?= $escapeAttr($baseUrl) ?>">
+        <?php if (empty($comments)): ?>
+            <p><?= $translate('No comment yet! Be the first to add one!') ?></p>
+        <?php elseif (($structure ?? null) === 'threaded'): ?>
+            <?= $partial('common/comments-thread') ?>
+        <?php else: ?>
+            <?= $partial('common/comments-list') ?>
+        <?php endif; ?>
+    </div>
+</details>

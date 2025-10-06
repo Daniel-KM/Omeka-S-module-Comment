@@ -82,38 +82,6 @@ class SettingsFieldset extends Fieldset
                 ],
             ])
 
-            ->add([
-                'name' => 'comment_comments_label',
-                'type' => Element\Text::class,
-                'options' => [
-                    'element_group' => 'comment',
-                    'label' => 'Label for comments', // @translate
-                    'info' => 'A label to use, for example "Comments".', // @translate
-                ],
-            ])
-
-            ->add([
-                'name' => 'comment_threaded',
-                'type' => Element\Checkbox::class,
-                'options' => [
-                    'element_group' => 'comment',
-                    'label' => 'Use threaded comments', // @translate
-                    'info' => 'If checked, the replies will be displayed indented below the comment.', // @translate
-                ],
-            ])
-
-            ->add([
-                'name' => 'comment_legal_text',
-                'type' => OmekaElement\CkeditorInline::class,
-                'options' => [
-                    'element_group' => 'comment',
-                    'label' => 'Legal agreement', // @translate
-                    'info' => 'This text will be shown beside the legal checkbox. Let empty if you don’t want to use a legal agreement.', // @translate
-                ],
-                'attributes' => [
-                    'id' => 'comment-legal-text',
-                ],
-            ])
 
             ->add([
                 'name' => 'comment_wpapi_key',
@@ -133,6 +101,66 @@ class SettingsFieldset extends Fieldset
                     'label' => 'Simple antispam', // @translate
                     'info' => 'If checked, a simple antispam (an addition of two digits) will be added for anonymous people if ReCaptcha is not set.', // @translate
                 ],
-            ]);
+            ])
+
+            ->add([
+                'name' => 'comment_label',
+                'type' => Element\Text::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Main label', // @translate
+                ],
+            ])
+            ->add([
+                'name' => 'comment_structure',
+                'type' => CommonElement\OptionalRadio::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Structure', // @translate
+                    'value_options' => [
+                        'flat' => 'Flat (by date)', // @translate
+                        'threaded' => 'Threaded (by conversation)' // @translate
+                    ],
+                ],
+            ])
+            ->add([
+                'name' => 'comment_closed_on_load',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Closed on load', // @translate
+                ],
+            ])
+            ->add([
+                'name' => 'comment_max_length',
+                'type' => CommonElement\OptionalNumber::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Max length', // @translate
+                ],
+            ])
+            ->add([
+                'name' => 'comment_skip_gravatar',
+                'type' => CommonElement\OptionalRadio::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Display gravatar', // @translate
+                    'value_options' => [
+                        // Warning, the option is the inverse of the label.
+                        '1' => 'No', // @translate
+                        '0' => 'Yes', // @translate
+                    ],
+                ],
+            ])
+            ->add([
+                'name' => 'comment_legal_text',
+                'type' => OmekaElement\CkeditorInline::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Legal agreement', // @translate
+                    'info' => 'This text will be shown beside the legal checkbox. Let empty if you don’t want to use a legal agreement.', // @translate
+                ],
+            ])
+        ;
     }
 }

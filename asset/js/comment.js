@@ -93,7 +93,9 @@ var Comment = {
             return;
         }
         var comment = $('#comment-' + response.data['o:id']);
-        if (response.data.status === 'flagged') {
+        if (response.data.status === 'commented') {
+            location.reload();
+        } else if (response.data.status === 'flagged') {
             comment.find('.comment-body').first().addClass('comment-flagged');
             comment.find('.comment-flag').first().hide();
             comment.find('.comment-unflag').first().show();
@@ -111,7 +113,7 @@ var Comment = {
     getBasePath: function() {
         // Warning, the url may be any page and may be a clean url.
         // Default in public side is "/s/my-site/comment".
-        return $('#comments').data('comment-url');
+        return $('[data-comment-url]').data('comment-url');
     }
 };
 

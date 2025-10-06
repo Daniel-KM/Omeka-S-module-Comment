@@ -3,6 +3,13 @@
  * @var \Laminas\View\Renderer\PhpRenderer $this
  * @var \Comment\Form\CommentForm $commentForm
  * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource
+ * @var string $label
+ * @var string $structure "flat" (default) or "threaded"
+ * @var bool $closedOnLoad
+ * @var int $maxDepth
+ * @var bool $skipGravatar
+ * @var string $legalText
+ * @var null $parentId For threaded structure only.
  */
 
 $plugins = $this->getHelperPluginManager();

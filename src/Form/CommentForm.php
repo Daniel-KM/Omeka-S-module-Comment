@@ -8,25 +8,31 @@ use Laminas\Http\PhpEnvironment\RemoteAddress;
 use Laminas\ServiceManager\ServiceLocatorInterface as FormElementManager;
 use Laminas\Validator\StringLength;
 use Laminas\View\Helper\Url;
+use Omeka\Settings\FallbackSettings;
+use Omeka\Settings\Settings;
 use Omeka\Stdlib\Message;
-use Omeka\View\Helper\Setting;
 
 class CommentForm extends Form
 {
     /**
-     * @var \Omeka\View\Helper\Setting
+     * @var \Omeka\Settings\FallbackSettings
      */
-    protected $settingHelper;
-
-    /**
-     * @var \Laminas\View\Helper\Url
-     */
-    protected $urlHelper;
+    protected $fallbackSettings;
 
     /**
      * @var FormElementManager
      */
     protected $formElementManager;
+
+    /**
+     * @var \Omeka\\Settings\Settings
+     */
+    protected $settings;
+
+/**
+     * @var \Laminas\View\Helper\Url
+     */
+    protected $urlHelper;
 
     protected $options = [
         'site_slug' => null,
@@ -37,16 +43,14 @@ class CommentForm extends Form
 
     public function init(): void
     {
-        $settingHelper = $this->getSettingHelper();
-        $urlHelper = $this->getUrlHelper();
         $resourceId = $this->getOption('resource_id');
         $siteSlug = (string) $this->getOption('site_slug', '');
         $isPublic = (bool) strlen($siteSlug);
         $user = $this->getOption('user');
         $isAnonymous = empty($user);
         $action = $isPublic
-            ? $urlHelper('site/comment', ['action' => 'add', 'site-slug' => $siteSlug])
-            : $urlHelper('admin/comment', ['action' => 'add']);
+            ? $this->urlHelper->__invoke('site/comment', ['action' => 'add', 'site-slug' => $siteSlug])
+            : $this->urlHelper->__invoke('admin/comment', ['action' => 'add']);
 
         $this
             ->setAttribute('id', 'comment-form')
@@ -107,13 +111,13 @@ class CommentForm extends Form
             'validators' => [
                 ['validator' => 'StringLength', 'options' => [
                     'min' => 1,
-                    'max' => $settingHelper('comment_max_length'),
+                    'max' => $this->fallbackSettings->get('comment_max_length', ['site', 'global']),
                     'messages' => [
                         StringLength::TOO_SHORT =>
-                        'Proposed comment cannot be empty.', // @translate
+                            'Proposed comment cannot be empty.', // @translate
                         StringLength::TOO_LONG =>
-                        new Message('Comment cannot be longer than %d characters.', // @translate
-                            $settingHelper('comment_max_length')),
+                            new Message('Comment cannot be longer than %d characters.', // @translate
+                                $this->fallbackSettings->get('comment_max_length', ['site', 'global'])),
                     ],
                 ]],
             ],
@@ -121,7 +125,7 @@ class CommentForm extends Form
 
         if ($isAnonymous) {
             // The legal agreement is checked by default for logged users.
-            $legalText = $settingHelper('comment_legal_text', '');
+            $legalText = $this->fallbackSettings->get('comment_legal_text', ['site', 'global']);
             if ($legalText) {
                 // TODO Allow html legal agreement in the comment form help from here.
                 $legalText = strtr(strip_tags($legalText), ['&nbsp;' => ' ']);
@@ -151,10 +155,10 @@ class CommentForm extends Form
 
                 // Assume registered users are trusted and don't make them play
                 // recaptcha.
-                $siteKey = $settingHelper('recaptcha_site_key');
-                $secretKey = $settingHelper('recaptcha_secret_key');
+                $siteKey = $this->settings->get('recaptcha_site_key');
+                $secretKey = $this->settings->get('recaptcha_secret_key');
                 if ($siteKey && $secretKey) {
-                    $element = $this->getFormElementManager()
+                    $element = $this->formElementManager
                         ->get(\Omeka\Form\Element\Recaptcha::class, [
                             'site_key' => $siteKey,
                             'secret_key' => $secretKey,
@@ -163,7 +167,7 @@ class CommentForm extends Form
                     $this->add($element->setName('g-recaptcha-response'));
                 }
 
-                if ($settingHelper('comment_antispam')) {
+                if ($this->settings->get('comment_antispam')) {
                     // Return only one digit.
                     $a = random_int(0, 6);
                     $b = random_int(1, 3);
@@ -275,26 +279,10 @@ class CommentForm extends Form
             ]);
     }
 
-    public function setSettingHelper(Setting $settingHelper): self
+    public function setFallbackSettings(FallbackSettings $fallbackSettings): self
     {
-        $this->settingHelper = $settingHelper;
+        $this->fallbackSettings = $fallbackSettings;
         return $this;
-    }
-
-    protected function getSettingHelper(): Setting
-    {
-        return $this->settingHelper;
-    }
-
-    public function setUrlHelper(Url $urlHelper): self
-    {
-        $this->urlHelper = $urlHelper;
-        return $this;
-    }
-
-    protected function getUrlHelper(): Url
-    {
-        return $this->urlHelper;
     }
 
     public function setFormElementManager(FormElementManager $formElementManager): self
@@ -303,8 +291,15 @@ class CommentForm extends Form
         return $this;
     }
 
-    protected function getFormElementManager(): FormElementManager
+    public function setSettings(Settings $settings): self
     {
-        return $this->formElementManager;
+        $this->settings = $settings;
+        return $this;
+    }
+
+    public function setUrlHelper(Url $urlHelper): self
+    {
+        $this->urlHelper = $urlHelper;
+        return $this;
     }
 }

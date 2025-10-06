@@ -5,6 +5,7 @@ namespace Comment\Form;
 use Common\Form\Element as CommonElement;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
+use Omeka\Form\Element as OmekaElement;
 
 class SiteSettingsFieldset extends Fieldset
 {
@@ -69,26 +70,69 @@ class SiteSettingsFieldset extends Fieldset
                     'required' => false,
                 ],
             ])
+
             ->add([
-                'name' => 'comment_list_open',
-                'type' => Element\Checkbox::class,
+                'name' => 'comment_label',
+                'type' => Element\Text::class,
                 'options' => [
                     'element_group' => 'comment',
-                    'label' => 'Open the comments by default', // @translate
+                    'label' => 'Main label', // @translate
                 ],
-                'attributes' => [
-                    'id' => 'comment_list_open',
+            ])
+            ->add([
+                'name' => 'comment_structure',
+                'type' => CommonElement\OptionalRadio::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Structure', // @translate
+                    'value_options' => [
+                        '' => 'Use default', // @translate
+                        'flat' => 'Flat (by date)', // @translate
+                        'threaded' => 'Threaded (by conversation)' // @translate
+                    ],
+                ],
+            ])
+            ->add([
+                'name' => 'comment_closed_on_load',
+                'type' => CommonElement\OptionalRadio::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Closed on load', // @translate
+                    'value_options' => [
+                        '' => 'Use default', // @translate
+                        '0' => 'No', // @translate
+                        '1' => 'Yes', // @translate
+                    ],
+                ],
+            ])
+            ->add([
+                'name' => 'comment_max_length',
+                'type' => CommonElement\OptionalNumber::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Max length', // @translate
                 ],
             ])
             ->add([
                 'name' => 'comment_skip_gravatar',
-                'type' => Element\Checkbox::class,
+                'type' => CommonElement\OptionalRadio::class,
                 'options' => [
                     'element_group' => 'comment',
-                    'label' => 'Skip display of gravatar', // @translate
+                    'label' => 'Display gravatar', // @translate
+                    'value_options' => [
+                        // Warning, the option is the inverse of the label.
+                        '' => 'Use default', // @translate
+                        '1' => 'No', // @translate
+                        '0' => 'Yes', // @translate
+                    ],
                 ],
-                'attributes' => [
-                    'id' => 'comment_skip_gravatar',
+            ])
+            ->add([
+                'name' => 'comment_legal_text',
+                'type' => OmekaElement\CkeditorInline::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Legal agreement', // @translate
                 ],
             ])
         ;

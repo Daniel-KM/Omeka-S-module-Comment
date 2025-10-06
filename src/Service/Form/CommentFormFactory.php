@@ -14,8 +14,10 @@ class CommentFormFactory implements FactoryInterface
 
         $form = new CommentForm(null, $options ?? []);
         return $form
-            ->setSettingHelper($viewHelpers->get('setting'))
+            ->setFallbackSettings($services->get('Omeka\Settings\Fallback'))
+            ->setFormElementManager($services->get('FormElementManager'))
+            ->setSettings($services->get('Omeka\Settings'))
             ->setUrlHelper($viewHelpers->get('Url'))
-            ->setFormElementManager($services->get('FormElementManager'));
+        ;
     }
 }
