@@ -245,19 +245,26 @@ class CommentForm extends Form
                     'required' => true,
                 ],
             ])
+            // TODO Clarify the use of this second csrf. Only the timeout?
             ->add([
                 'type' => Element\Csrf::class,
                 'name' => sprintf('csrf_%s', $resourceId),
                 'options' => [
-                    'csrf_options' => ['timeout' => 3600],
-                ],
+                    'csrf_options' => [
+                        'timeout' => 3600
+                    ]
+                ]
             ])
             ->add([
-                'type' => Element\Submit::class,
+                'type' => Element\Button::class,
                 'name' => 'submit',
+                'options' => [
+                    'label' => 'Comment it!', // @translate
+                ],
                 'attributes' => [
-                    'class' => 'fas fa-comment',
-                    'value' => 'Comment it!', // @translate
+                    'id' => 'comment-submit',
+                    'type' => 'submit',
+                    'class' => 'comment-submit',
                 ],
             ]);
 
@@ -274,7 +281,7 @@ class CommentForm extends Form
         return $this;
     }
 
-    public function getSettingHelper(): Setting
+    protected function getSettingHelper(): Setting
     {
         return $this->settingHelper;
     }
@@ -285,7 +292,7 @@ class CommentForm extends Form
         return $this;
     }
 
-    public function getUrlHelper(): Url
+    protected function getUrlHelper(): Url
     {
         return $this->urlHelper;
     }
@@ -296,7 +303,7 @@ class CommentForm extends Form
         return $this;
     }
 
-    public function getFormElementManager(): FormElementManager
+    protected function getFormElementManager(): FormElementManager
     {
         return $this->formElementManager;
     }

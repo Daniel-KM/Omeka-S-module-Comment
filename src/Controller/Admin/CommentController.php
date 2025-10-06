@@ -4,8 +4,8 @@ namespace Comment\Controller\Admin;
 
 use Comment\Api\Representation\CommentRepresentation;
 use Comment\Controller\AbstractCommentController;
-use Laminas\Http\Response;
-use Laminas\View\Model\JsonModel;
+use Common\Mvc\Controller\Plugin\JSend;
+use Common\Stdlib\PsrMessage;
 use Laminas\View\Model\ViewModel;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Form\ConfirmForm;
@@ -161,21 +161,34 @@ class CommentController extends AbstractCommentController
 
     protected function batchUpdateProperty(array $data)
     {
-        if (!$this->getRequest()->isPost()) {
+        if (!$this->getRequest()->isPost()
+            && !$this->getRequest()->isXmlHttpRequest()
+        ) {
             return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
         }
 
-        $resourceIds = $this->params()->fromPost('resource_ids', []);
+        $resourceIds = $this->params()->fromPost('resource_ids', [])
+            ?: $this->params()->fromQuery('resource_ids', []);
+
         // Secure the input.
-        $resourceIds = array_filter(array_map('intval', $resourceIds));
+        $resourceIds = array_values(array_unique(array_filter(array_map('intval', $resourceIds))));
         if (empty($resourceIds)) {
-            return $this->jsonError('No comments submitted.', Response::STATUS_CODE_400); // @translate
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'No comments submitted.' // @translate
+            ))->setTranslator($this->translator()));
         }
 
-        $response = $this->api()
-            ->batchUpdate('comments', $resourceIds, $data, ['continueOnError' => true]);
-        if (!$response) {
-            return $this->jsonError('An internal error occurred.', Response::STATUS_CODE_500); // @translate
+        try {
+            $this->api()
+                ->batchUpdate('comments', $resourceIds, $data, ['continueOnError' => true]);
+        } catch (\Exception $e) {
+            $this->logger()->err(
+                '[Comment]: {msg}', // @translate
+                ['msg' => $e->getMessage()]
+            );
+            return $this->jSend(JSend::ERROR, null, (new PsrMessage(
+                'An internal error occurred.' // @translate
+            ))->setTranslator($this->translator()));
         }
 
         $value = reset($data);
@@ -187,13 +200,14 @@ class CommentController extends AbstractCommentController
             'o:spam' => ['not-spam', 'spam'],
         ];
 
-        return new JsonModel([
-            'content' => [
-                'property' => $property,
-                'value' => $value,
-                'status' => $statuses[$property][(int) $value],
-                'is_public' => $property === 'o:approved' ? $value : null,
-            ],
+        // TODO According to jsend, output the list of comments and the propety for each? Probably useless.
+        return $this->jSend(JSend::SUCCESS, [
+            'ids' => $resourceIds,
+            'property' => $property,
+            'value' => $value,
+            'status' => $statuses[$property][(int) $value],
+            'is_public' => $property === 'o:approved' ? $value : null,
+            $property => $value,
         ]);
     }
 
@@ -231,10 +245,17 @@ class CommentController extends AbstractCommentController
 
         $data = [];
         $data[$property] = $value;
-        $response = $this->api()
-            ->update('comments', $id, $data, [], ['isPartial' => true]);
-        if (!$response) {
-            return $this->jsonError('An internal error occurred.', Response::STATUS_CODE_500); // @translate
+        try {
+            $this->api()
+                ->update('comments', ['id' => $id], $data, [], ['isPartial' => true]);
+        } catch (\Exception $e) {
+            $this->logger()->err(
+                '[Comment]: {msg}', // @translate
+                ['msg' => $e->getMessage()]
+            );
+            return $this->jSend(JSend::ERROR, null, $this->translate(
+                'An internal error occurred.' // @translate
+            ));
         }
 
         $statuses = [
@@ -243,13 +264,12 @@ class CommentController extends AbstractCommentController
             'o:spam' => ['not-spam', 'spam'],
         ];
 
-        return new JsonModel([
-            'content' => [
-                'property' => $property,
-                'value' => $value,
-                'status' => $statuses[$property][(int) $value],
-                'is_public' => $property === 'o:approved' ? $value : null,
-            ],
+        return $this->jSend(JSend::SUCCESS, [
+            'property' => $property,
+            'value' => $value,
+            'status' => $statuses[$property][(int) $value],
+            'is_public' => $property === 'o:approved' ? $value : null,
+            $property => $value,
         ]);
     }
 

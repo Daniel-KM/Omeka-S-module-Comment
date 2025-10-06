@@ -2,9 +2,9 @@
 namespace Comment\Controller\Site;
 
 use Comment\Controller\AbstractCommentController;
-use Laminas\View\Model\JsonModel;
+use Common\Mvc\Controller\Plugin\JSend;
+use Common\Stdlib\PsrMessage;
 use Omeka\Api\Exception\NotFoundException;
-use Omeka\Stdlib\Message;
 
 class CommentController extends AbstractCommentController
 {
@@ -27,10 +27,12 @@ class CommentController extends AbstractCommentController
     protected function flagUnflag($flagUnflag)
     {
         $data = $this->params()->fromPost();
-        $commentId = @$data['id'];
-        if (empty($commentId)) {
+        $commentId = $data['id'] ?? null;
+        if (!$commentId) {
             $this->logger()->warn('The comment id cannot be identified.'); // @translate
-            return new JsonModel(['error' => 'Comment not found.']); // @translate
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Comment not found.' // @translate
+            ))->setTranslator($this->translator()));
         }
 
         // Just check if the comment exists.
@@ -40,20 +42,30 @@ class CommentController extends AbstractCommentController
                 ->read('comments', $commentId, [], ['responseContent' => 'resource'])
                 ->getContent();
         } catch (NotFoundException $e) {
-            $this->logger()->warn(new Message('The comment #%s cannot be identified.', $commentId)); // @translate
-            return new JsonModel(['error' => 'Comment not found.']); // @translate
+            $this->logger()->warn(
+                'The comment #{comment_id} cannot be identified.', // @translate
+                ['comment_id' => $commentId]
+            );
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Comment not found.' // @translate
+            ))->setTranslator($this->translator()));
         } catch (\Exception $e) {
-            $this->logger()->warn(new Message('The comment #%s cannot be accessed.', $commentId)); // @translate
-            return new JsonModel(['error' => 'Unauthorized access.']); // @translate
+            $this->logger()->warn(
+                'The comment #{comment_id} cannot be accessed.', // @translate
+                ['comment_id' => $commentId]
+            );
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Unauthorized access.' // @translate
+            ))->setTranslator($this->translator()));
         }
 
         $api
             ->update('comments', $commentId, ['o:flagged' => $flagUnflag], [], ['isPartial' => true]);
 
-        if ($flagUnflag) {
-            return new JsonModel(['status' => 'ok', 'id' => $commentId, 'action' => 'flagged']);
-        } else {
-            return new JsonModel(['status' => 'ok', 'id' => $commentId, 'action' => 'unflagged']);
-        }
+        return $this->jSend(JSend::SUCCESS, [
+            'o:id' => $commentId,
+            'o:flagged' => $flagUnflag,
+            'status' => $flagUnflag ? 'flagged' : 'unflagged',
+        ]);
     }
 }

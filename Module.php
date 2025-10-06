@@ -594,8 +594,15 @@ class Module extends AbstractModule
     public function addHeadersAdmin(Event $event): void
     {
         $view = $event->getTarget();
-        $view->headLink()->appendStylesheet($view->assetUrl('css/comment-admin.css', 'Comment'));
-        $view->headScript()->appendFile($view->assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
+        $plugins = $view->getHelperPluginManager();
+        $assetUrl = $plugins->get('assetUrl');
+
+        $view->headLink()
+            ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
+            ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'));
+        $view->headScript()
+            ->appendFile($assetUrl('js/common-dialog.js', 'Common'), 'text/javascript', ['defer' => 'defer'])
+            ->appendFile($assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
     }
 
     /**

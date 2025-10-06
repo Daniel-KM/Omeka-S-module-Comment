@@ -167,7 +167,7 @@ class CommentRepresentation extends AbstractEntityRepresentation
     }
 
     /**
-     * @return CommentRepresentation[]
+     * @return \Comment\Api\Representation\CommentRepresentation[]
      */
     public function children()
     {

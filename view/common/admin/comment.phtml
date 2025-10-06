@@ -37,10 +37,11 @@ $skipGravatar = (bool) $siteSetting('comment_skip_gravatar');
 </div>
 <div class="comment-actions">
     <ul class="actions">
+        <?php // TODO Use buttons instead of a. ?>
         <?php if ($userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'approve')): ?>
         <li><a href="#"
             class="toggle-property approved unapproved o-icon-<?= $comment->isApproved() ? 'approved' : 'unapproved' ?>"
-            data-toggle-url="<?= $escape($comment->url('toggle-approved')) ?>"
+            data-url="<?= $escape($comment->url('toggle-approved')) ?>"
             data-status="<?= $comment->isApproved() ? 'approved' : 'unapproved' ?>"
             aria-label="<?= $escape($translate('Toggle approbation')) ?>"
             title="<?= $escape($translate('Toggle approbation')) ?>"></a></li>
@@ -50,7 +51,7 @@ $skipGravatar = (bool) $siteSetting('comment_skip_gravatar');
         ?>
         <li><a href="#"
             class="toggle-property flagged unflagged o-icon-<?= $comment->isFlagged() ? 'flagged' : 'unflagged' ?>"
-            data-toggle-url="<?= $escape($comment->url('toggle-flagged')) ?>"
+            data-url="<?= $escape($comment->url('toggle-flagged')) ?>"
             data-status="<?= $comment->isFlagged() ? 'flagged' : 'unflagged' ?>"
             aria-label="<?= $escape($translate('Toggle flag')) ?>"
             title="<?= $escape($translate('Toggle flag')) ?>"></a></li>
@@ -60,7 +61,7 @@ $skipGravatar = (bool) $siteSetting('comment_skip_gravatar');
         ?>
         <li><a href="#"
             class="toggle-property spam not-spam o-icon-<?= $comment->isSpam() ? 'spam' : 'not-spam' ?>"
-            data-toggle-url="<?= $escape($comment->url('toggle-spam')) ?>"
+            data-url="<?= $escape($comment->url('toggle-spam')) ?>"
             data-status="<?= $comment->isSpam() ? 'spam' : 'not-spam' ?>"
             aria-label="<?= $escape($translate('Toggle spam')) ?>"
             title="<?= $escape($translate('Toggle spam')) ?>"></a></li>

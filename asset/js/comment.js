@@ -1,3 +1,11 @@
+'use strict';
+
+/**
+ * Requires common-dialog.js.
+ *
+ * @see Comment, ContactUs, Contribute, Generate, Guest, Resa, SearchHistory, Selection, TwoFactorAuth.
+ */
+
 var Comment = {
     validate: function(form) {
         var button = form.find('button');
@@ -29,68 +37,19 @@ var Comment = {
         }
 
         if (isAnonymous) {
-            var isOmeka = typeof Omeka !== 'undefined' && typeof Omeka.jsTranslate !== 'undefined';
             var legalAgreement = form.find('[name="legal_agreement"]');
             if (legalAgreement.length > 0 && !legalAgreement.prop('checked')) {
                 var msg = 'You should accept the legal agreement.';
-                alert(isOmeka ? Omeka.jsTranslate(msg): msg)
+                CommonDialog.dialogAlert(Omeka.jsTranslate(msg));
                 return;
             }
         }
 
-        var url = form.attr('action');
-        $.post({
-            url: url,
-            data: form.serialize(),
-            timeout: 30000,
-            beforeSend: function() {
-                button.removeClass('fa-comment').addClass('o-icon-transmit');
-            }
-        })
-        .done(function(data) {
-            var msg;
-            if (!data.content) {
-                msg = 'Something went wrong';
-                if (isOmeka) msg = Omeka.jsTranslate(msg);
-                alert(msg);
-            } else {
-                if (data.content.moderation) {
-                    msg = 'Comment was added to the resource.';
-                    if (isOmeka) msg = Omeka.jsTranslate(msg);
-                    var msgTmp = 'It will be displayed definively when approved.';
-                    msg += ' ' + (isOmeka ? Omeka.jsTranslate(msgTmp): msgTmp);
-                    alert(msg);
-                }
-                location.reload(true);
-            }
-        })
-        .fail(function(jqXHR, textStatus) {
-            if (textStatus == 'timeout') {
-                var msg = 'Request too long to process.';
-                alert(isOmeka ? Omeka.jsTranslate(msg): msg)
-            } else if (jqXHR.status == 404) {
-                var msg = 'The resource doesn’t exist.';
-                alert(isOmeka ? Omeka.jsTranslate(msg): msg);
-            } else {
-                var hasMsg = jqXHR.hasOwnProperty('responseJSON') && typeof jqXHR.responseJSON.error !== 'undefined';
-                var msg;
-                if (hasMsg) {
-                    msg = jqXHR.responseJSON.error;
-                    var messages = jqXHR.responseJSON.messages
-                    if (messages) {
-                        for (var inputField in messages) {
-                            msg += ' ' + messages[inputField][Object.keys(messages[inputField])[0]];
-                            break;
-                        }
-                    }
-                } else {
-                    msg = isOmeka ? Omeka .jsTranslate('Something went wrong'): 'Something went wrong';
-                }
-                alert(msg);
-            }
-        })
-        .always(function() {
-            button.removeClass('o-icon-transmit').addClass('fa-comment');
+        // Use CommonDialog.jSend for AJAX submission.
+        CommonDialog.jSend({
+            preventDefault: function() {},
+            target: form[0],
+            submitter: button[0]
         });
     },
 
@@ -109,35 +68,36 @@ var Comment = {
 
     moveForm: function(event) {
         $('#comment-form').insertAfter(event.target);
-        commentId = Comment.getCommentId(event.target);
+        const commentId = Comment.getCommentId(event.target);
         $('#comment_parent_id').val(commentId);
     },
 
     flag: function(event) {
         var commentId = Comment.getCommentId(event.target);
-        var json = {
-            'id': commentId
-        };
-        $.post(Comment.getBasePath() + '/flag', json, Comment.flagResponseHandler);
+        const button = event.target;
+        button.dataset.action = Comment.getBasePath() + '/flag';
+        button.dataset.payload = JSON.stringify({ id: commentId });
+        CommonDialog.jSend(event);
     },
 
     unflag: function(event) {
         var commentId = Comment.getCommentId(event.target);
-        var json = {
-            'id': commentId
-        };
-        $.post(Comment.getBasePath() + '/unflag', json, Comment.flagResponseHandler);
+        const button = event.target;
+        button.dataset.action = Comment.getBasePath() + '/unflag';
+        button.dataset.payload = JSON.stringify({ id: commentId });
+        CommonDialog.jSend(event);
     },
 
     flagResponseHandler: function(response, status, jqxhr) {
-        var comment = $('#comment-' + response.id);
-        if (response.action == 'flagged') {
+        if (!response || !response.status || !response.data) {
+            return;
+        }
+        var comment = $('#comment-' + response.data['o:id']);
+        if (response.data.status === 'flagged') {
             comment.find('.comment-body').first().addClass('comment-flagged');
             comment.find('.comment-flag').first().hide();
             comment.find('.comment-unflag').first().show();
-        }
-
-        if (response.action == 'unflagged') {
+        } else if (response.data.status == 'unflagged') {
             comment.find('.comment-body').first().removeClass('comment-flagged');
             comment.find('.comment-flag').first().show();
             comment.find('.comment-unflag').first().hide();
@@ -149,22 +109,32 @@ var Comment = {
     },
 
     getBasePath: function() {
+        // Warning, the url may be any page and may be a clean url.
+        // Default in public side is "/s/my-site/comment".
         return $('#comments').data('comment-url');
     }
 };
 
-$(document).ready(function() {
-    $('.comment-reply').click(Comment.handleReply);
-    $('.comment-flag').click(Comment.flag);
-    $('.comment-unflag').click(Comment.unflag);
+(function() {
+    $(document).ready(function() {
 
-    $('.comment-form button').on('click', function(e) {
-        e.preventDefault();
-        Comment.validate($(this).closest('form'));
-    });
+        $('.comment-reply').click(Comment.handleReply);
+        $('.comment-flag').click(Comment.flag);
+        $('.comment-unflag').click(Comment.unflag);
 
-    $('.comment-form').submit(function(e) {
-        e.preventDefault();
-        Comment.validate($(this));
+        $('.comment-form button').on('click', function(e) {
+            e.preventDefault();
+            Comment.validate($(this).closest('form'));
+        });
+
+        $('.comment-form').submit(function(e) {
+            e.preventDefault();
+            Comment.validate($(this));
+        });
+
+        document.addEventListener('o:jsend-success', function(event) {
+            Comment.flagResponseHandler(event.detail);
+        });
+
     });
-});
+})();

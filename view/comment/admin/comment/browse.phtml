@@ -16,8 +16,10 @@ $hyperlink = $plugins->get('hyperlink');
 $userIsAllowed = $plugins->get('userIsAllowed');
 
 $this->headLink()
+    ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
     ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'));
 $this->headScript()
+    ->appendFile($assetUrl('js/common-dialog.js', 'Common'), 'text/javascript', ['defer' => 'defer'])
     ->appendFile($assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 
 $this->htmlElement('body')->appendAttribute('class', 'comment comments browse');
@@ -150,23 +152,24 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
                 <span class="is-public-or-not<?php if (!$comment->isApproved()): echo ' o-icon-private'; endif; ?>" aria-label="<?= $translate('Private') ?>"></span>
                 <?php if (mb_strlen($comment->body()) > 200): echo '…'; endif; ?>
                 <ul class="actions">
+                <?php // TODO Use buttons instead of a. ?>
                 <?php $editRightComment = $comment->userIsAllowed('update'); ?>
                     <?php if ($editRightComment): ?>
                     <li><a href="#"
                         class="toggle-property approved unapproved o-icon-<?= $comment->isApproved() ? 'approved' : 'unapproved' ?>"
-                        data-toggle-url="<?= $escape($comment->url('toggle-approved')) ?>"
+                        data-url="<?= $escape($comment->url('toggle-approved')) ?>"
                         data-status="<?= $comment->isApproved() ? 'approved' : 'unapproved' ?>"
                         aria-label="<?= $escape($translate('Toggle approbation')) ?>"
                         title="<?= $escape($translate('Toggle approbation')) ?>"></a></li>
                     <li><a href="#"
                         class="toggle-property flagged unflagged o-icon-<?= $comment->isFlagged() ? 'flagged' : 'unflagged' ?>"
-                        data-toggle-url="<?= $escape($comment->url('toggle-flagged')) ?>"
+                        data-url="<?= $escape($comment->url('toggle-flagged')) ?>"
                         data-status="<?= $comment->isFlagged() ? 'flagged' : 'unflagged' ?>"
                         aria-label="<?= $escape($translate('Toggle flag')) ?>"
                         title="<?= $escape($translate('Toggle flag')) ?>"></a></li>
                     <li><a href="#"
                         class="toggle-property spam not-spam o-icon-<?= $comment->isSpam() ? 'spam' : 'not-spam' ?>"
-                        data-toggle-url="<?= $escape($comment->url('toggle-spam')) ?>"
+                        data-url="<?= $escape($comment->url('toggle-spam')) ?>"
                         data-status="<?= $comment->isSpam() ? 'spam' : 'not-spam' ?>"
                         aria-label="<?= $escape($translate('Toggle spam')) ?>"
                         title="<?= $escape($translate('Toggle spam')) ?>"></a></li>

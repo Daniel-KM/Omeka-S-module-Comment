@@ -13,9 +13,11 @@ $assetUrl = $plugins->get('assetUrl');
 $translate = $plugins->get('translate');
 
 $this->headLink()
+    ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
     ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'))
     ->appendStylesheet($assetUrl('css/comment.css', 'Comment'));
 $this->headScript()
+    ->appendFile($assetUrl('js/common-dialog.js', 'Common'), 'text/javascript', ['defer' => 'defer'])
     ->appendFile($assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer'])
     ->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 
