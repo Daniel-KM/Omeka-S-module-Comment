@@ -1,19 +1,25 @@
 <?php
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\SiteRepresentation $site
+ * @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource
  * @var \Comment\Api\Representation\CommentRepresentation[] $comments
- * @var bool $commentThreaded
+ * @var bool $threaded
  */
 
 $plugins = $this->getHelperPluginManager();
-$translate = $plugins->get('translate');
 $url = $plugins->get('url');
+$partial = $plugins->get('partial');
 $setting = $plugins->get('setting');
 $assetUrl = $plugins->get('assetUrl');
-$partial = $plugins->get('partial');
+$translate = $plugins->get('translate');
 
-$this->headLink()->appendStylesheet($assetUrl('css/comment.css', 'Comment'));
-$this->headScript()->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
+$threaded ??= (bool) $setting('comment_threaded');
+
+$this->headLink()
+    ->appendStylesheet($assetUrl('css/comment.css', 'Comment'));
+$this->headScript()
+    ->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 
 // Required to manage the base path.
 $addUrl = $url('site/comment', ['action' => 'add'], true);
@@ -25,8 +31,8 @@ $addUrl = $url('site/comment', ['action' => 'add'], true);
     <?php endif; ?>
     <?php if (empty($comments)): ?>
     <p><?= $translate('No comment yet! Be the first to add one!') ?></p>
-    <?php elseif ($setting('comment_threaded')): ?>
-        <?= $partial('common/comments-thread', ['comments' => $comments, 'parent_id' => null]) ?>
+    <?php elseif ($threaded): ?>
+        <?= $partial('common/comments-thread', ['comments' => $comments, 'parentId' => null]) ?>
     <?php else: ?>
         <?= $partial('common/comments-list', ['comments' => $comments]) ?>
     <?php endif; ?>

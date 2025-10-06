@@ -29,16 +29,16 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'showComments' => View\Helper\ShowComments::class,
+            'comments' => View\Helper\Comments::class,
         ],
         'factories' => [
-            'searchCommentForm' => Service\ViewHelper\SearchCommentFormFactory::class,
-            'showCommentForm' => Service\ViewHelper\ShowCommentFormFactory::class,
+            'commentForm' => Service\ViewHelper\CommentFormFactory::class,
+            'commentsSearchForm' => Service\ViewHelper\CommentsSearchFormFactory::class,
         ],
     ],
     'form_elements' => [
         'invokables' => [
-            Form\SearchForm::class => Form\SearchForm::class,
+            Form\CommentsSearchForm::class => Form\CommentsSearchForm::class,
             Form\SettingsFieldset::class => Form\SettingsFieldset::class,
             Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],

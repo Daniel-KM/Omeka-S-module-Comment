@@ -6,11 +6,11 @@
  */
 
 $plugins = $this->getHelperPluginManager();
-$translate = $plugins->get('translate');
 $url = $plugins->get('url');
 $setting = $plugins->get('setting');
-$assetUrl = $plugins->get('assetUrl');
 $partial = $plugins->get('partial');
+$assetUrl = $plugins->get('assetUrl');
+$translate = $plugins->get('translate');
 
 $this->headLink()
     ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'))
@@ -30,7 +30,7 @@ $addUrl = $url('admin/comment', ['action' => 'add'], true);
     <?php if (empty($comments)): ?>
     <p><?= $translate('No comment yet! Be the first to add one!'); ?></p>
     <?php elseif ($commentThreaded ?? $setting('comment_threaded')): ?>
-        <?= $partial('common/admin/comments-thread', ['comments' => $comments, 'parent_id' => null]) ?>
+        <?= $partial('common/admin/comments-thread', ['comments' => $comments, 'parentId' => null]) ?>
     <?php else: ?>
         <?= $partial('common/admin/comments-list', ['comments' => $comments]) ?>
     <?php endif; ?>

@@ -2,19 +2,18 @@
 
 namespace Comment\Service\ViewHelper;
 
-use Comment\Form\SearchForm;
-use Comment\View\Helper\SearchCommentForm;
+use Comment\View\Helper\CommentsSearchForm;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
-class SearchCommentFormFactory implements FactoryInterface
+class CommentsSearchFormFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $services, $requestedName, array $options = null)
     {
         $formElementManager = $services->get('FormElementManager');
-        $searchForm = $formElementManager->get(SearchForm::class);
-        $form = new SearchCommentForm(null, $options ?? []);
-        $form->setSearchForm($searchForm);
-        return $form;
+
+        return new CommentsSearchForm(
+            $formElementManager->get(\Comment\Form\CommentsSearchForm::class)
+        );
     }
 }

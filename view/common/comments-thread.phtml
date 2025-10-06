@@ -2,7 +2,7 @@
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
  * @var \Comment\Api\Representation\CommentRepresentation[] $comments
- * @var int $parent_id
+ * @var int|null $parentId
  */
 
 $partial = $this->plugin('partial');
@@ -11,11 +11,11 @@ $partial = $this->plugin('partial');
 <div class="comments-thread">
 <?php foreach ($comments as $comment) : ?>
     <?php $parent = $comment->parent(); ?>
-    <?php if (($parent && $parent->id() == $parent_id) || (empty($parent) && empty($parent_id))): ?>
-    <div id="comment-<?= $comment->id() ?>" class="comment">
+    <?php if (($parent && $parent->id() === $parentId) || (empty($parent) && empty($parentId))): ?>
+    <div id="comment-<?= $comment->id() ?>" class="comment" data-comment-id="<?= $comment->id() ?>">
         <?= $partial('common/comment-single', ['comment' => $comment]) ?>
         <div class="comment-children">
-            <?= $partial('common/comments-thread', ['comments' => $comments, 'parent_id' => $comment->id()]) ?>
+            <?= $partial('common/comments-thread', ['comments' => $comments, 'parentId' => $comment->id()]) ?>
         </div>
     </div>
     <?php endif; ?>

@@ -650,7 +650,7 @@ class Module extends AbstractModule
                 'resource' => $resource,
                 'comments' => $comments,
             ]);
-            echo $view->showCommentForm($resource);
+            echo $view->commentForm($resource);
             echo '</div>';
         }
     }
@@ -692,7 +692,7 @@ class Module extends AbstractModule
         $resource = $view->vars()->resource;
         $comments = $api->search('comments', [
             'resource_id' => $resource->id()
-            ])->getContent();
+        ])->getContent();
 
         // TODO Check module BlocksDisposition.
         if ($this->isCommentEnabledForResource($resource, false)) {
@@ -702,11 +702,13 @@ class Module extends AbstractModule
             $showCommentForm = in_array($key, $siteSettings->get('comment_placement_form', []));
             $showCommentList = in_array($key, $siteSettings->get('comment_placement_list', []));
             if ($showCommentForm || $showCommentList) {
+                $listOpen = (bool) $siteSettings->get('comment_list_open');
                 echo $view->partial('common/comments-container', [
                     'resource' => $resource,
                     'comments' => $comments,
                     'showForm' => $showCommentForm,
                     'showList' => $showCommentList,
+                    'listOpen' => $listOpen,
                 ]);
             }
         }

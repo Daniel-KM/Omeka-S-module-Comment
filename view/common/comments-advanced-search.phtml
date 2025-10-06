@@ -1,15 +1,17 @@
 <?php
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
- * @var \Comment\Form\SearchForm $form
+ * @var \Comment\Form\CommentsSearchForm $form
  * @var array $query
  */
 
 $hasComments = !empty($query['has_comments']);
-$form = $this->searchCommentForm();
-$form->setData([
-    'has_comments' => $hasComments,
-]);
+
+$form = $this->commentsSearchForm();
+$form
+    ->setData([
+        'has_comments' => $hasComments,
+    ]);
 
 $element = $form->get('has_comments');
 echo $this->formRow($element);

@@ -10,11 +10,12 @@ class CommentFormFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $services, $requestedName, array $options = null)
     {
-        $viewHelperManager = $services->get('ViewHelperManager');
+        $viewHelpers = $services->get('ViewHelperManager');
+
         $form = new CommentForm(null, $options ?? []);
         return $form
-            ->setSettingHelper($viewHelperManager->get('setting'))
-            ->setUrlHelper($viewHelperManager->get('Url'))
+            ->setSettingHelper($viewHelpers->get('setting'))
+            ->setUrlHelper($viewHelpers->get('Url'))
             ->setFormElementManager($services->get('FormElementManager'));
     }
 }

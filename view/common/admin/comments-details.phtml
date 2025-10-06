@@ -2,15 +2,15 @@
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
  * @var \Comment\Api\Representation\CommentRepresentation $resource
- * @var int $total_comments
- * @var int $total_approved
- * @var int $total_flagged
- * @var int $total_spam
+ * @var int $totalComments
+ * @var int $totalApproved
+ * @var int $totalFlagged
+ * @var int $totalSpam
  */
 
 $plugins = $this->getHelperPluginManager();
-$translate = $plugins->get('translate');
 $url = $plugins->get('url');
+$translate = $plugins->get('translate');
 $hyperlink = $plugins->get('hyperlink');
 
 $resourceName = $resource->getControllerName();
@@ -25,25 +25,25 @@ $this->headStyle()->appendStyle('.show .property { justify-content: normal; }');
     <ul class="comment-stats">
         <li>
             <?= sprintf($translate('Total: %s'),
-                $hyperlink($total_comments, $url('admin/comment', [], ['query' => [$column => $resource->id()]]))
+                $hyperlink($totalComments, $url('admin/comment', [], ['query' => [$column => $resource->id()]]))
             ) ?>
         </li>
         <li>
             <?= sprintf($translate('Approved: %s / Unapproved: %s'),
-                $hyperlink($total_approved, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'approved' => true]])),
-                $hyperlink($total_comments - $total_approved, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'approved' => false]]))
+                $hyperlink($totalApproved, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'approved' => true]])),
+                $hyperlink($totalComments - $totalApproved, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'approved' => false]]))
             ) ?>
         </li>
         <li>
             <?= sprintf($translate('Flagged: %s / Unflagged: %s'),
-                $hyperlink($total_flagged, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'flagged' => true]])),
-                $hyperlink($total_comments - $total_flagged, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'flagged' => false]]))
+                $hyperlink($totalFlagged, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'flagged' => true]])),
+                $hyperlink($totalComments - $totalFlagged, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'flagged' => false]]))
             ) ?>
         </li>
         <li>
             <?= sprintf($translate('Spam: %s / Not spam: %s'),
-                $hyperlink($total_spam, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'spam' => true]])),
-                $hyperlink($total_comments - $total_spam, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'spam' => false]]))
+                $hyperlink($totalSpam, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'spam' => true]])),
+                $hyperlink($totalComments - $totalSpam, $url('admin/comment', [], ['query' => [$column => $resource->id(), 'spam' => false]]))
             ) ?>
         </li>
     </ul>

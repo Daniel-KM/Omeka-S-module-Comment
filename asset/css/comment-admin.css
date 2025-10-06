@@ -1,9 +1,11 @@
-@media screen {
-    header nav .comment:before {
-        content:"";
-    }
-    .comment .no-resources:before {
-        content:"";
+@media all {
+    header nav .comment::before,
+    header nav .comments::before,
+    .comment .subhead::before,
+    .comments .subhead::before,
+    .comment .no-resources::before,
+    .comments .no-resources::before {
+        content: ""; /* fas fa-comment-alt */
     }
     #comments .property {
         display: inherit;
@@ -20,7 +22,7 @@
         padding:0 24px;
     }
     #resource-comments.empty+.no-resources:before {
-        content:"";
+        content: "";
     }
     #resource-comments tr.delete {
         background-color:#fcc;

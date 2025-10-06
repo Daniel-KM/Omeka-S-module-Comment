@@ -12,10 +12,10 @@ class SettingsFieldset extends Fieldset
     /**
      * @var string
      */
-    protected $label = 'Comment'; // @translate
+    protected $label = 'Comments'; // @translate
 
     protected $elementGroups = [
-        'comment' => 'Comment', // @translate
+        'comment' => 'Comments', // @translate
     ];
 
     public function init(): void

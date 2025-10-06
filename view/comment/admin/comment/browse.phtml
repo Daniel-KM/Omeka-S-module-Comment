@@ -7,16 +7,19 @@
 use Comment\Api\Adapter\CommentAdapter;
 
 $plugins = $this->getHelperPluginManager();
-$translate = $plugins->get('translate');
-$escape = $plugins->get('escapeHtml');
 $url = $plugins->get('url');
-$hyperlink = $plugins->get('hyperlink');
-$assetUrl = $plugins->get('assetUrl');
-$userIsAllowed = $plugins->get('userIsAllowed');
 $i18n = $plugins->get('i18n');
+$escape = $plugins->get('escapeHtml');
+$assetUrl = $plugins->get('assetUrl');
+$translate = $plugins->get('translate');
+$hyperlink = $plugins->get('hyperlink');
+$userIsAllowed = $plugins->get('userIsAllowed');
 
-$this->headLink()->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'));
-$this->headScript()->appendFile($assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
+$this->headLink()
+    ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'));
+$this->headScript()
+    ->appendFile($assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
+
 $this->htmlElement('body')->appendAttribute('class', 'comment comments browse');
 
 $sortHeadings = [
@@ -48,7 +51,7 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
     || $userIsAllowed(CommentAdapter::class, 'delete');
 ?>
 
-<?= $this->pageTitle($translate('Comments')) ?>
+<?= $this->pageTitle('', 1, $translate('Comments')) ?>
 
 <?= $this->searchFilters() ?>
 

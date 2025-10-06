@@ -5,7 +5,7 @@ namespace Comment\Form;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Form;
 
-class SearchForm extends Form
+class CommentsSearchForm extends Form
 {
     public function init(): void
     {

@@ -5,47 +5,66 @@
  */
 
 $plugins = $this->getHelperPluginManager();
-$translate = $plugins->get('translate');
+$i18n = $plugins->get('i18n');
+$setting = $plugins->get('setting');
 $escape = $plugins->get('escapeHtml');
+$translate = $plugins->get('translate');
 $hyperlink = $plugins->get('hyperlink');
 $siteSetting = $plugins->get('siteSetting');
 $userIsAllowed = $plugins->get('userIsAllowed');
-$i18n = $plugins->get('i18n');
-$setting = $plugins->get('setting');
 
-if ($name = $comment->name()):
+if ($name = $comment->name()) {
     $website = $comment->website();
     $authorText = $website ? $hyperlink($name, $website) : $name;
-else:
+} else {
     $authorText = $escape($translate('Anonymous'));
-endif;
+}
 
 $skipGravatar = (bool) $siteSetting('comment_skip_gravatar');
-?>
 
-<div class="comment-author">
-    <p class="comment-author-name"><?= $authorText ?></p>
-    <?php if (!$skipGravatar): ?>
-    <img loading="lazy" class="gravatar" src="//www.gravatar.com/avatar/<?= hash('sha256', trim($comment->email())) ?>"/>
-    <?php endif; ?>
+$publicRequireModeration = $setting('comment_public_require_moderation');
+$userrRequireModeration = $setting('comment_user_require_moderation');
+$userCanComment = $comment->userIsAllowed('create');
+$userCanFlag = $userIsAllowed(\Comment\Controller\Site\CommentController::class, 'flag');
+$userCanUnflag = $userIsAllowed(\Comment\Controller\Site\CommentController::class, 'unflag');
+?>
+<?php /*// The comment id is in comment-list or comments-thread. Comment-thread includes comment children.
+<div id="comment-<?= $comment->id() ?>" class="comment" data-comment-id="<?= $comment->id() ?>">
+*/ ?>
+
+<div class="comment-header">
+    <div class="comment-author">
+        <p class="comment-author-name"><?= $authorText ?></p>
+        <?php if (!$skipGravatar): ?>
+        <img loading="lazy" class="gravatar" src="//www.gravatar.com/avatar/<?= hash('sha256', trim($comment->email())) ?>"/>
+        <?php endif; ?>
+    </div>
+    <p class="comment-date"><?= $i18n->dateFormat($comment->created()) ?></p>
 </div>
+
 <div class="comment-body<?php if ($flagged = $comment->isFlagged()): ?> comment-flagged<?php endif; ?><?php if ($comment->isSpam()): ?> comment-spam<?php endif; ?>">
     <?= $escape($comment->body()) ?>
 </div>
-<p class="comment-date"><?= $i18n->dateFormat($comment->created()) ?></p>
 
-<?php // Don't display the flag when the comments are moderated a priori. ?>
-<?php if (!$setting('comment_public_require_moderation') || !$setting('comment_user_require_moderation')): ?>
+<div class="comment-footer">
+    <?php // Don't display the flag when the comments are moderated a priori. ?>
+    <?php if (!$publicRequireModeration || !$userrRequireModeration): ?>
+    <div class="comment-actions">
+        <?php if ($userCanFlag): ?>
+        <button type="button" class="comment-action comment-flag"<?php if ($flagged): ?> style="display:none;"<?php endif;?>><?= $escape($translate('Flag inappropriate')) ?></button>
+        <?php endif; ?>
+        <?php if ($userCanUnflag): ?>
+        <button type="button" class="comment-action comment-unflag"<?php if (!$flagged): ?> style="display:none;"<?php endif;?>><?= $escape($translate('Unflag inappropriate')) ?></button>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
+    <?php if ($userCanComment): ?>
+    <div class="comment-reply">
+        <button type="button" class="comment-action comment-reply"><?= $escape($translate('Reply')) ?></button>
+    </div>
+    <?php endif; ?>
+</div>
 
-<?php if ($userIsAllowed(\Comment\Controller\Site\CommentController::class, 'flag')): ?>
-<p class="comment-flag"<?php if ($flagged): ?> style="display:none;"<?php endif;?>><?= $escape($translate('Flag inappropriate')) ?></p>
-<?php endif; ?>
-<?php if ($userIsAllowed(\Comment\Controller\Site\CommentController::class, 'unflag')): ?>
-<p class="comment-unflag"<?php if (!$flagged): ?> style="display:none;"<?php endif;?>><?= $escape($translate('Unflag inappropriate')) ?></p>
-<?php endif; ?>
-
-<?php endif; ?>
-
-<?php if ($comment->userIsAllowed('create')): ?>
-<p class="comment-reply"><?= $escape($translate('Reply')) ?></p>
-<?php endif; ?>
+<?php /*
+</div>
+*/ ?>

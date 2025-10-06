@@ -6,10 +6,10 @@
  */
 
 $plugins = $this->getHelperPluginManager();
-$formElement = $plugins->get('formElement');
-$formLabel = $plugins->get('formLabel');
 $formText = $plugins->get('formText');
+$formLabel = $plugins->get('formLabel');
 $formHidden = $plugins->get('formHidden');
+$formElement = $plugins->get('formElement');
 
 $user = $this->identity();
 $isAnonymous = empty($user);
@@ -41,7 +41,7 @@ $commentForm->prepare();
         <div class="field-meta">
             <?= $formLabel($element) ?>
         </div>
-        <div class="inputs" required="required">
+        <div class="inputs required">
             <?= $formText($element) ?>
         </div>
     </div>
@@ -61,7 +61,7 @@ $commentForm->prepare();
         <div class="field-meta">
             <?= $formLabel($element) ?>
         </div>
-        <div class="inputs" required="required">
+        <div class="inputs required">
             <?= $this->formTextArea($element) ?>
         </div>
     </div>
@@ -70,7 +70,7 @@ $commentForm->prepare();
     <?php if ($commentForm->has('g-recaptcha-response')): ?>
     <?php $element = $commentForm->get('g-recaptcha-response'); ?>
     <div class="field">
-        <div class="inputs" required="required">
+        <div class="inputs required">
             <?= $formElement($element) ?>
         </div>
     </div>
@@ -78,7 +78,7 @@ $commentForm->prepare();
     <?php if ($commentForm->has('o:check')): /* honeyspot */ ?>
     <?php $element = $commentForm->get('o:check'); ?>
     <div class="field">
-        <div class="inputs" required="required">
+        <div class="inputs required">
             <?= $formElement($element) ?>
         </div>
     </div>
@@ -89,7 +89,7 @@ $commentForm->prepare();
         <div class="field-meta">
             <?= $formLabel($element) ?>
         </div>
-        <div class="inputs" required="required">
+        <div class="inputs required">
             <?= $formElement($element) ?>
         </div>
     </div>
@@ -104,7 +104,7 @@ $commentForm->prepare();
         <div class="field-meta">
             <?= $formLabel($element) ?>
         </div>
-        <div class="inputs" required="required">
+        <div class="inputs required">
             <?= $this->setting('comment_legal_text') ?>
             <?= $this->formCheckbox($element) ?>
         </div>
@@ -121,7 +121,7 @@ $commentForm->prepare();
     <div class="field">
         <div class="field-meta">
         </div>
-        <div class="inputs" required="required">
+        <div class="inputs required">
             <?= $this->formInput($element) ?>
         </div>
     </div>
