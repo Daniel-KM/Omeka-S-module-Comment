@@ -42,7 +42,7 @@ trait QueryBuilderTrait
         $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
         $expr = $qb->expr();
 
-        if (is_null($value)) {
+        if ($value === null) {
             $qb->andWhere($expr->isNull(
                 $alias . '.' . $column
             ));
@@ -70,7 +70,7 @@ trait QueryBuilderTrait
 
         $hasNull = in_array(null, $values, true);
         $values = array_filter($values, function ($v) {
-            return !is_null($v);
+            return $v !== null;
         });
         if ($values) {
             $valueAlias = $this->createAlias();
@@ -193,7 +193,7 @@ trait QueryBuilderTrait
 
         $hasNull = in_array(null, $values, true);
         $values = array_filter($values, function ($v) {
-            return !is_null($v);
+            return $v !== null;
         });
         if ($values) {
             $valueAlias = $this->createAlias();
