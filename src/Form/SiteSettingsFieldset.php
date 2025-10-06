@@ -80,6 +80,17 @@ class SiteSettingsFieldset extends Fieldset
                     'id' => 'comment_list_open',
                 ],
             ])
+            ->add([
+                'name' => 'comment_skip_gravatar',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Skip display of gravatar', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'comment_skip_gravatar',
+                ],
+            ])
         ;
     }
 }

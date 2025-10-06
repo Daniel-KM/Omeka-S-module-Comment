@@ -9,7 +9,10 @@ $translate = $plugins->get('translate');
 $escape = $plugins->get('escapeHtml');
 $url = $plugins->get('url');
 $hyperlink = $plugins->get('hyperlink');
+$siteSetting = $plugins->get('siteSetting');
 $userIsAllowed = $plugins->get('userIsAllowed');
+
+$skipGravatar = (bool) $siteSetting('comment_skip_gravatar');
 ?>
 
 <div class="comment-author">
@@ -28,10 +31,9 @@ $userIsAllowed = $plugins->get('userIsAllowed');
     endif;
     ?>
     <p class="comment-author-name"><?= $authorText ?></p>
-    <?php
-    $gravatarUrl = '//www.gravatar.com/avatar/' . hash('sha256', trim($comment->email()));
-    ?>
-    <img loading="lazy" class="gravatar" src="<?= $gravatarUrl ?>" />
+    <?php if (!$skipGravatar): ?>
+    <img loading="lazy" class="gravatar" src="'//www.gravatar.com/avatar/<?= hash('sha256', trim($comment->email())) ?>"/>
+    <?php endif; ?>
 </div>
 <div class="comment-actions">
     <ul class="actions">

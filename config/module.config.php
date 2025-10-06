@@ -168,6 +168,7 @@ return [
             'comment_placement_form' => [],
             'comment_placement_list' => [],
             'comment_list_open' => true,
+            'comment_skip_gravatar' => false,
         ],
     ],
 ];
