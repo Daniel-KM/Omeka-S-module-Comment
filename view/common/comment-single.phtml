@@ -19,7 +19,7 @@ else:
     $authorText = $escape($translate('Anonymous'));
 endif;
 
-$gravatarUrl = '//www.gravatar.com/avatar/' . md5(strtolower(trim($comment->email())));
+$gravatarUrl = '//www.gravatar.com/avatar/' . hash('sha256', trim($comment->email()));
 ?>
 
 <div class="comment-author">

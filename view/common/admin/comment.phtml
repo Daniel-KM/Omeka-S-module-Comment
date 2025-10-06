@@ -29,7 +29,7 @@ $userIsAllowed = $plugins->get('userIsAllowed');
     ?>
     <p class="comment-author-name"><?= $authorText ?></p>
     <?php
-    $gravatarUrl = '//www.gravatar.com/avatar/' . md5(strtolower(trim($comment->email())));
+    $gravatarUrl = '//www.gravatar.com/avatar/' . hash('sha256', trim($comment->email()));
     ?>
     <img class="gravatar" src="<?= $gravatarUrl ?>" />
 </div>
