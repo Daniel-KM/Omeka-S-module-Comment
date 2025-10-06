@@ -38,7 +38,7 @@ $this->headScript()
 $this->htmlElement('body')->appendAttribute('class', 'comment-subscription resource browse');
 
 // Required to manage the base path.
-$baseUrl = strtr($url('site/comment', ['action' => 'browse'], true), ['/browse' => '']);
+$baseUrl = $site ? $url('site/comment', ['site-slug' => $site->slug()]) : $url('admin/comment');
 ?>
 
 <?php if ($breadcrumbs && !$hasGuestNav): ?>

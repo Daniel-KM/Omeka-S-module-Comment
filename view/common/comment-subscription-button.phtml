@@ -9,6 +9,7 @@
  * @var bool $subscribed
  * @var string $action "toggle" (default), "add", or "delete"
  * @var string $urlButton
+ * @var string $urlBaseComment
  * @var string|null $labelSubscribe
  * @var string|null $labelUnsubscribe
  * @var bool $showLabel Whether to show text or not (default).
@@ -35,7 +36,7 @@ if ($disabled) {
 }
 ?>
 
-<button type="button"<?= $disabled ? 'disabled="disabled"' : '' ?> class="button comment-subscribe <?= $class ?> comment-subscription-<?= $escapeAttr($action) ?>" data-id="<?= $resource->id() ?>" title="<?= $text ?>" data-subscription-action="<?= $escapeAttr($action) ?>" data-title-subscribed="<?= $textSelect['subscribed'] ?>" data-title-unsubscribed="<?= $textSelect['unsubscribed'] ?>" data-url="<?= $urlButton ?>">
+<button type="button"<?= $disabled ? 'disabled="disabled"' : '' ?> class="button comment-subscribe <?= $class ?> comment-subscription-<?= $escapeAttr($action) ?>" data-id="<?= $resource->id() ?>" title="<?= $text ?>" data-subscription-action="<?= $escapeAttr($action) ?>" data-title-subscribed="<?= $textSelect['subscribed'] ?>" data-title-unsubscribed="<?= $textSelect['unsubscribed'] ?>" data-url="<?= $urlButton ?>" data-comment-url="<?= $urlBaseComment ?>">
     <span class="comment-subscription-icon"></span>
     <?php if ($text): ?>
     <span class="comment-subscription-text"><?= $escape($text) ?></span>

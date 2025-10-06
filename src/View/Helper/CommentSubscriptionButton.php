@@ -64,6 +64,7 @@ class CommentSubscriptionButton extends AbstractHelper
         $action = $options['action'] ?? 'toggle';
 
         $url = $plugins->get('url');
+        $urlBaseComment = $isSite ? $url('site/comment', ['site-slug' => $site->slug()]) : $url('admin/comment');
         $urlButton =  $view->status()->isAdminRequest()
             ? $url('admin/comment', ['action' => 'subscribe-resource'], ['query' => ['action' => $action, 'resource_id' => $resource->id()]])
             : $url("site/comment", ['site-slug' => $site->slug(), 'action' => 'subscribe-resource'], ['query' => ['action' => $action, 'resource_id' => $resource->id()]]);
@@ -79,6 +80,7 @@ class CommentSubscriptionButton extends AbstractHelper
             'subscribed' => $subscribed,
             'action' => $action,
             'urlButton' => $urlButton,
+            'urlBaseComment' => $urlBaseComment,
             'labelSubscribe' => $options['labelSubscribe'] ?? $options['label_subscribe'] ?? null,
             'labelUnsubscribe' => $options['labelUnsubscribe'] ?? $options['label_unsubscribe'] ?? null,
             'showLabel' => $options['showLabel'] ?? $options['show_label'] ?? null,
