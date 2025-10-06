@@ -221,7 +221,7 @@ class Module extends AbstractModule
         $settings = $this->getServiceLocator()->get('Omeka\Settings');
         $commentResources = $settings->get('comment_resources');
         $commentResources[] = 'user';
-        $hasComments = array_flip($commentResources);
+        $commentsForResources = array_flip($commentResources);
 
         // Add the Comment term definition.
         $sharedEventManager->attach(
@@ -244,7 +244,7 @@ class Module extends AbstractModule
             'items' => ItemRepresentation::class,
             'media' => MediaRepresentation::class,
         ];
-        $representations = array_intersect_key($representations, $hasComments);
+        $representations = array_intersect_key($representations, $commentsForResources);
         foreach ($representations as $representation) {
             $sharedEventManager->attach(
                 $representation,
@@ -259,7 +259,7 @@ class Module extends AbstractModule
             'items' => \Omeka\Api\Adapter\ItemAdapter::class,
             'media' => \Omeka\Api\Adapter\MediaAdapter::class,
         ];
-        $adapters = array_intersect_key($adapters, $hasComments);
+        $adapters = array_intersect_key($adapters, $commentsForResources);
         foreach ($adapters as $adapter) {
             // Add the comment filter to the search.
             $sharedEventManager->attach(
@@ -285,7 +285,7 @@ class Module extends AbstractModule
         // No issue for creation: it cannot be created before the resource.
         // The deletion is managed automatically via sql (set null).
 
-        // Add headers to comment views.
+        // Add headers to comment views in admin.
         $sharedEventManager->attach(
             Controller\Admin\CommentController::class,
             'view.show.before',
@@ -307,7 +307,7 @@ class Module extends AbstractModule
             'items' => 'Omeka\Controller\Admin\Item',
             'media' => 'Omeka\Controller\Admin\Media',
         ];
-        $controllers = array_intersect_key($controllers, $hasComments);
+        $controllers = array_intersect_key($controllers, $commentsForResources);
         foreach ($controllers as $controller) {
             // Add the comment field to the admin advanced search page.
             $sharedEventManager->attach(
@@ -348,19 +348,20 @@ class Module extends AbstractModule
             );
         }
 
-        // Add the show comment to the show admin pages.
+        // Add the show comment to the show admin user pages.
         $sharedEventManager->attach(
             'Omeka\Controller\Admin\User',
             'view.show.after',
             [$this, 'viewShowAfterUser']
         );
 
+        // Add comment views in public side.
         $controllers = [
             'item_sets' => 'Omeka\Controller\Site\ItemSet',
             'items' => 'Omeka\Controller\Site\Item',
             'media' => 'Omeka\Controller\Site\Media',
         ];
-        $controllers = array_intersect_key($controllers, $hasComments);
+        $controllers = array_intersect_key($controllers, $commentsForResources);
         foreach ($controllers as $controller) {
             // Add the comment field to the public advanced search page.
             $sharedEventManager->attach(
@@ -379,8 +380,13 @@ class Module extends AbstractModule
             // Add the comment to the resource show public pages.
             $sharedEventManager->attach(
                 $controller,
+                'view.show.before',
+                [$this, 'viewShowBeforeResourcePublic']
+            );
+            $sharedEventManager->attach(
+                $controller,
                 'view.show.after',
-                [$this, 'viewShowAfterPublic']
+                [$this, 'viewShowAfterResourcePublic']
             );
         }
 
@@ -388,6 +394,12 @@ class Module extends AbstractModule
             \Omeka\Form\SettingForm::class,
             'form.add_elements',
             [$this, 'handleMainSettings']
+        );
+
+        $sharedEventManager->attach(
+            \Omeka\Form\SiteSettingsForm::class,
+            'form.add_elements',
+            [$this, 'handleSiteSettings']
         );
     }
 
@@ -570,21 +582,88 @@ class Module extends AbstractModule
      */
     public function viewShowAfterResource(Event $event): void
     {
-        $view = $event->getTarget();
-        $api = $this->getServiceLocator()->get('Omeka\ApiManager');
-        $resource = $view->vars()->resource;
-        $comments = $api->search('comments', ['resource_id' => $resource->id()])->getContent();
+        /**
+         * @var \Omeka\Api\Manager $api
+         * @var \Omeka\Mvc\Status $status
+         * @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource
+         */
+        $services = $this->getServiceLocator();
+        $api = $services->get('Omeka\ApiManager');
+        $status = $services->get('Omeka\Status');
 
-        echo '<div id="comments" class="section">';
-        echo $view->partial(
-            'common/admin/comments',
-            [
+        $view = $event->getTarget();
+
+        $resource = $view->vars()->resource;
+        $comments = $api->search('comments', [
+            'resource_id' => $resource->id()
+        ])->getContent();
+
+        if ($this->isCommentEnabledForResource($resource, true)) {
+            echo '<div id="comments" class="section">';
+            echo $view->partial('common/admin/comments', [
                 'resource' => $resource,
                 'comments' => $comments,
-            ]
-        );
-        echo $view->showCommentForm($resource);
-        echo '</div>';
+            ]);
+            echo $view->showCommentForm($resource);
+            echo '</div>';
+        }
+    }
+
+    /**
+     * Display the comments of a resource before it.
+     */
+    public function viewShowBeforeResourcePublic(Event $event): void
+    {
+        $this->viewShowForResourcePublic($event, 'before');
+    }
+
+    /**
+     * Display the comments of a resource after it.
+     */
+    public function viewShowAfterResourcePublic(Event $event): void
+    {
+        $this->viewShowForResourcePublic($event, 'after');
+    }
+
+    /**
+     * Display the comments of a resource.
+     */
+    protected function viewShowForResourcePublic(Event $event, string $beforeOrAfter): void
+    {
+        /**
+         * @var \Omeka\Api\Manager $api
+         * @var \Omeka\Mvc\Status $status
+         * @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource
+         * @var \Common\Stdlib\EasyMeta $easyMeta
+         */
+        $services = $this->getServiceLocator();
+        $api = $services->get('Omeka\ApiManager');
+        $status = $services->get('Omeka\Status');
+        $easyMeta = $services->get('Common\EasyMeta');
+
+        $view = $event->getTarget();
+
+        $resource = $view->vars()->resource;
+        $comments = $api->search('comments', [
+            'resource_id' => $resource->id()
+            ])->getContent();
+
+        // TODO Check module BlocksDisposition.
+        if ($this->isCommentEnabledForResource($resource, false)) {
+            $name = $easyMeta->resourceName(get_class($resource));
+            $key = $beforeOrAfter . '/' . $name;
+            $siteSettings = $services->get('Omeka\Settings\Site');
+            $showCommentForm = in_array($key, $siteSettings->get('comment_placement_form', []));
+            $showCommentList = in_array($key, $siteSettings->get('comment_placement_list', []));
+            if ($showCommentForm || $showCommentList) {
+                echo $view->partial('common/comments-container', [
+                    'resource' => $resource,
+                    'comments' => $comments,
+                    'showForm' => $showCommentForm,
+                    'showList' => $showCommentList,
+                ]);
+            }
+        }
     }
 
     /**
@@ -693,22 +772,6 @@ class Module extends AbstractModule
         $event->setParam('filters', $filters);
     }
 
-    /**
-     * Display a partial for a resource in public.
-     *
-     * @param Event $event
-     */
-    public function viewShowAfterPublic(Event $event): void
-    {
-        if (!$this->userCanRead()) {
-            return;
-        }
-
-        $view = $event->getTarget();
-        $resource = $view->resource;
-        echo $view->partial('common/comment', ['resource' => $resource]);
-    }
-
     protected function userCanRead()
     {
         $userIsAllowed = $this->getServiceLocator()->get('ViewHelperManager')
@@ -716,14 +779,36 @@ class Module extends AbstractModule
         return $userIsAllowed(Comment::class, 'read');
     }
 
-    protected function isCommentEnabledForResource(AbstractEntityRepresentation $resource)
-    {
+    protected function isCommentEnabledForResource(
+        AbstractEntityRepresentation $resource,
+        bool $isAdmin = false
+    ): bool {
         if ($resource->getControllerName() === 'user') {
             return true;
         }
-        $settings = $this->getServiceLocator()->get('Omeka\Settings');
-        $commentResources = $settings->get('comment_resources');
+
+        /**
+         * @var \Omeka\Settings\Settings $settings
+         * @var \Omeka\Settings\SiteSettings $siteSettings
+         */
+        $services = $this->getServiceLocator();
+        $settings = $services->get('Omeka\Settings');
+        $siteSettings = $services->get('Omeka\Settings\Site');
+
         $resourceName = $resource->resourceName();
+
+        // TODO Check for api? Or add specific option for api? Or for admin? See blocks disposition for site?
+        // For site, the blocks are used, so options are not checked here.
+
+        $commentResources = $settings->get('comment_resources') ?: [];
+
+        /*
+        if (!$isAdmin) {
+            $commentResourcesSite = $siteSettings->get('comment_resources') ?: [];
+            $commentResources = array_intersect($commentResources, $commentResourcesSite);
+        }
+        */
+
         return in_array($resourceName, $commentResources);
     }
 

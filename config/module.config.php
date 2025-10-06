@@ -40,6 +40,7 @@ return [
         'invokables' => [
             Form\SearchForm::class => Form\SearchForm::class,
             Form\SettingsFieldset::class => Form\SettingsFieldset::class,
+            Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],
         'factories' => [
             Form\CommentForm::class => Service\Form\CommentFormFactory::class,
@@ -49,6 +50,11 @@ return [
         'invokables' => [
             'commentForm' => Site\ResourcePageBlockLayout\CommentForm::class,
             'comments' => Site\ResourcePageBlockLayout\Comments::class,
+        ],
+    ],
+    'navigation_links' => [
+        'invokables' => [
+            'comments' => Site\Navigation\Link\Comments::class,
         ],
     ],
     'controllers' => [
@@ -143,7 +149,9 @@ return [
     ],
     'comment' => [
         'settings' => [
-            'comment_resources' => ['items'],
+            'comment_resources' => [
+                'items',
+            ],
             'comment_public_allow_view' => true,
             'comment_public_allow_comment' => true,
             'comment_public_require_moderation' => true,
@@ -155,6 +163,11 @@ return [
             'comment_legal_text' => '<p>I agree with <a rel="license" href="#" target="_blank">terms of use</a> and I accept to free my contribution under the license <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA</a>.</p>',
             'comment_wpapi_key' => '',
             'comment_antispam' => true,
+        ],
+        'site_settings' => [
+            'comment_placement_form' => [],
+            'comment_placement_list' => [],
+            'comment_list_open' => true,
         ],
     ],
 ];

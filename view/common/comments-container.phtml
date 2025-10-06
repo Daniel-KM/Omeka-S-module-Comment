@@ -1,0 +1,21 @@
+<?php
+/**
+ * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource
+ * @var bool $showForm
+ * @var bool $showList
+ */
+
+if (empty($showForm) && empty($showList)) {
+    return;
+}
+?>
+
+<div id="comments-container" class="block block-comments-container">
+    <?php if ($showList): ?>
+    <?= $this->comments($resource) ?>
+    <?php endif; ?>
+	<?php if ($showList): ?>
+    <?= $this->commentForm($resource) ?>
+    <?php endif; ?>
+</div>

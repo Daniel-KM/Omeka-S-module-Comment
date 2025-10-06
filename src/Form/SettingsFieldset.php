@@ -25,22 +25,6 @@ class SettingsFieldset extends Fieldset
             ->setOption('element_groups', $this->elementGroups)
 
             ->add([
-                'name' => 'comment_resources',
-                'type' => CommonElement\OptionalMultiCheckbox::class,
-                'options' => [
-                    'element_group' => 'comment',
-                    'label' => 'Resources to comment', // @translate
-                    'info' => 'The type of resources for which comment is enabled.', // @translate
-                    'value_options' => [
-                        'item_sets' => 'Item sets', // @translate
-                        'items' => 'Items', // @translate
-                        'media' => 'media', // @translate
-                        // 'site_pages' => 'Site pages', // @translate
-                    ],
-                ],
-            ])
-
-            ->add([
                 'name' => 'comment_public_allow_view',
                 'type' => Element\Checkbox::class,
                 'options' => [
