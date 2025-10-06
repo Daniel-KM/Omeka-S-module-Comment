@@ -136,9 +136,32 @@ class Module extends AbstractModule
      */
     protected function addAclRules(): void
     {
+        /**
+         * @var \Omeka\Permissions\Acl $acl
+         * @var \Omeka\Settings\Settings $settings
+         */
         $services = $this->getServiceLocator();
         $acl = $services->get('Omeka\Acl');
         $settings = $services->get('Omeka\Settings');
+
+        // TODO To be removed when roles will be integrated in core.
+        /** @see https://github.com/omeka/omeka-s/pull/2241 */
+
+        // Since Omeka 1.4, modules are ordered, so Guest comes after Access.
+        // See \Guest\Module::onBootstrap(). Manage other roles too: contributor, etc.
+        if (class_exists('Guest\Module', false)) {
+            if (!$acl->hasRole('guest')) {
+                $acl->addRole('guest');
+            }
+        }
+        if (class_exists('GuestPrivate\Module', false)) {
+            if (!$acl->hasRole('guest_private')) {
+                $acl->addRole('guest_private');
+            }
+            if (!$acl->hasRole('guest_private_site')) {
+                $acl->addRole('guest_private_site');
+            }
+        }
 
         $publicViewComment = $settings->get('comment_public_allow_view', false);
         $publicAllowComment = $settings->get('comment_public_allow_comment', false);
