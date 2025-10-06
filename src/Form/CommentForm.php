@@ -124,7 +124,7 @@ class CommentForm extends Form
             $legalText = $settingHelper('comment_legal_text', '');
             if ($legalText) {
                 // TODO Allow html legal agreement in the comment form help from here.
-                $legalText = str_replace('&nbsp;', ' ', strip_tags($legalText));
+                $legalText = strtr(strip_tags($legalText), ['&nbsp;' => ' ']);
                 $this->add([
                     'type' => Element\Checkbox::class,
                     'name' => 'legal_agreement',
