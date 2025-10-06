@@ -21,45 +21,26 @@ class CommentRepresentation extends AbstractEntityRepresentation
 
     public function getJsonLd()
     {
-        $owner = null;
-        if ($this->owner()) {
-            $owner = $this->owner()->getReference();
-        }
+        $getDateTimeJsonLd = function (?\DateTime $dateTime): ?array {
+            return $dateTime
+                ? [
+                    '@value' => $dateTime->format('c'),
+                    '@type' => 'http://www.w3.org/2001/XMLSchema#dateTime',
+                ]
+                : null;
+        };
 
-        $resource = null;
-        if ($this->resource()) {
-            $resource = $this->resource()->getReference();
-        }
+        $owner = $this->owner();
+        $resource = $this->resource();
+        $site = $this->site();
+        $parent = $this->parent();
+        $children = [];
 
-        $site = null;
-        if ($this->site()) {
-            $site = $this->site()->getReference();
-        }
-
-        $parent = null;
-        if ($this->parent()) {
-            $parent = $this->parent()->getReference();
-        }
-
-        $children = null;
         $commentChildren = $this->children();
         if ($commentChildren) {
-            $children = [];
             foreach ($commentChildren as $child) {
-                $children[] = $child->getReference();
+                $children[] = $child->getReference()->jsonSerialize();
             }
-        }
-
-        $created = [
-            '@value' => $this->getDateTime($this->created()),
-            '@type' => 'http://www.w3.org/2001/XMLSchema#dateTime',
-        ];
-        $modified = null;
-        if ($this->modified()) {
-            $modified = [
-                '@value' => $this->getDateTime($this->modified()),
-                '@type' => 'http://www.w3.org/2001/XMLSchema#dateTime',
-            ];
         }
 
         // TODO Describe parameters of the comment (@id, not only o:id, etc.)?
@@ -67,9 +48,9 @@ class CommentRepresentation extends AbstractEntityRepresentation
         // TODO Enable author email, ip and user agent according to rights.
         return [
             'o:id' => $this->id(),
-            'o:owner' => $owner,
-            'o:resource' => $resource,
-            'o:site' => $site,
+            'o:owner' => $owner ? $owner->getReference()->jsonSerialize() : null,
+            'o:resource' => $resource ? $resource->getReference()->jsonSerialize() : null,
+            'o:site' => $site ? $site->getReference()->jsonSerialize() : null,
             'o:path' => $this->path(),
             // 'o:email' => $this->email(),
             'o:name' => $this->name(),
@@ -77,13 +58,13 @@ class CommentRepresentation extends AbstractEntityRepresentation
             // 'o:ip' => $this->ip(),
             // 'o:user_agent' => $this->userAgent(),
             'o:body' => $this->body(),
-            'o:parent' => $parent,
+            'o:parent' => $parent ? $parent->getReference()->jsonSerialize() : null,
             'o:children' => $children,
             'o:approved' => $this->isApproved(),
             'o:flagged' => $this->isFlagged(),
             'o:spam' => $this->isSpam(),
-            'o:created' => $created,
-            'o:modified' => $modified,
+            'o:created' => $getDateTimeJsonLd($this->resource->getCreated()),
+            'o:modified' => $getDateTimeJsonLd($this->resource->getModified()),
         ];
     }
 

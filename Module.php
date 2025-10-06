@@ -512,14 +512,25 @@ class Module extends AbstractModule
             return;
         }
 
+        /**
+         * @var \Omeka\Api\Manager $api
+         */
+        $services = $this->getServiceLocator();
+        $api = $services->get('Omeka\ApiManager');
+
         $resource = $event->getTarget();
         $entityColumnName = $this->columnNameOfRepresentation($resource);
+
         $jsonLd = $event->getParam('jsonLd');
-        $api = $this->getServiceLocator()->get('Omeka\ApiManager');
+
+        // The reference is output from api and json-ld serialized early.
         $comments = $api
             ->search('comments', [$entityColumnName => $resource->id()], ['responseContent' => 'reference'])
             ->getContent();
-        $jsonLd['o:comment'] = $comments;
+        foreach ($comments as $child) {
+            $jsonLd['o:comment'][] = $child->jsonSerialize();
+        }
+
         $event->setParam('jsonLd', $jsonLd);
     }
 
