@@ -24,7 +24,7 @@ $gravatarUrl = '//www.gravatar.com/avatar/' . hash('sha256', trim($comment->emai
 
 <div class="comment-author">
     <p class="comment-author-name"><?= $authorText ?></p>
-    <img class="gravatar" src="<?= $gravatarUrl ?>" />
+    <img loading="lazy" class="gravatar" src="<?= $gravatarUrl ?>" />
 </div>
 <div class="comment-body<?php if ($flagged = $comment->isFlagged()): ?> comment-flagged<?php endif; ?><?php if ($comment->isSpam()): ?> comment-spam<?php endif; ?>">
     <?= $escape($comment->body()) ?>

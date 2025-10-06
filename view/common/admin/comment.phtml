@@ -31,7 +31,7 @@ $userIsAllowed = $plugins->get('userIsAllowed');
     <?php
     $gravatarUrl = '//www.gravatar.com/avatar/' . hash('sha256', trim($comment->email()));
     ?>
-    <img class="gravatar" src="<?= $gravatarUrl ?>" />
+    <img loading="lazy" class="gravatar" src="<?= $gravatarUrl ?>" />
 </div>
 <div class="comment-actions">
     <ul class="actions">
