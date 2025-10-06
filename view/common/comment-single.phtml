@@ -8,7 +8,7 @@
  * @var string $label
  * @var string $structure "flat" (default) or "threaded".
  * @var bool $closedOnLoad
- * @var int $maxDepth
+ * @var int $maxLength
  * @var bool $skipGravatar
  * @var string $legalText
  * @var int|null $parentId
@@ -31,7 +31,7 @@ if ($name = $comment->name()) {
     $authorText = $escape($translate('Anonymous'));
 }
 
-$skipGravatar = (bool) $siteSetting('comment_skip_gravatar');
+$skipGravatar ??= (bool) $siteSetting('comment_skip_gravatar');
 
 $publicRequireModeration = $setting('comment_public_require_moderation');
 $userrRequireModeration = $setting('comment_user_require_moderation');
@@ -39,7 +39,11 @@ $userCanComment = $comment->userIsAllowed('create');
 $userCanEdit = $comment->userIsAllowed('edit');
 $userCanFlag = $userIsAllowed(\Comment\Controller\Site\CommentController::class, 'flag');
 $userCanUnflag = $userIsAllowed(\Comment\Controller\Site\CommentController::class, 'unflag');
+
+$flagged = $comment->isFlagged();
+$isSpam = $comment->isSpam();
 ?>
+
 <?php /*// The comment id is in comment-list or comments-thread. Comment-thread includes comment children.
 <div id="comment-<?= $comment->id() ?>" class="comment" data-comment-id="<?= $comment->id() ?>">
 */ ?>
@@ -54,7 +58,7 @@ $userCanUnflag = $userIsAllowed(\Comment\Controller\Site\CommentController::clas
     <p class="comment-date"><?= $i18n->dateFormat($comment->created()) ?></p>
 </div>
 
-<div class="comment-body<?php if ($flagged = $comment->isFlagged()): ?> comment-flagged<?php endif; ?><?php if ($comment->isSpam()): ?> comment-spam<?php endif; ?>">
+<div class="comment-body<?= $flagged ? ' comment-flagged' : '' ?><?= $isSpam ? ' comment-spam' : '' ?>">
     <?= $escape($comment->body()) ?>
 </div>
 

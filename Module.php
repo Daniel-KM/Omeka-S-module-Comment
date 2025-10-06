@@ -487,24 +487,6 @@ class Module extends AbstractModule
         );
     }
 
-    public function handleMainSettings(Event $event): void
-    {
-        $this->handleAnySettings($event, 'settings');
-
-        /**
-         * @var \Omeka\Settings\Settings $settings
-         */
-        $services = $this->getServiceLocator();
-        $settings = $services->get('Omeka\Settings');
-
-        $value = $settings->get('comment_public_notify_post') ?: [];
-
-        $fieldset = $event->getTarget();
-        $fieldset
-            ->get('comment_public_notify_post')
-            ->setValue(implode("\n", $value));
-    }
-
     public function handleApiContext(Event $event): void
     {
         $context = $event->getParam('context');
@@ -832,11 +814,8 @@ class Module extends AbstractModule
 
     /**
      * Add details for a resource.
-     *
-     * @param Event $event
-     * @param UserRepresentation $owner
      */
-    public function viewDetails(Event $event, $owner = null): void
+    public function viewDetails(Event $event, ?UserRepresentation $owner = null): void
     {
         $representation = $owner ?: $event->getParam('entity');
         $columnName = $this->columnNameOfRepresentation($representation);
@@ -860,16 +839,14 @@ class Module extends AbstractModule
         $totalSpam = $api
             ->search('comments', [$columnName => $representation->id(), 'spam' => true, 'limit' => 0])
             ->getTotalResults();
-        echo $event->getTarget()->partial(
-            'common/admin/comments-details',
-            [
-                'resource' => $representation,
-                'total_comments' => $totalComments,
-                'total_approved' => $totalApproved,
-                'total_flagged' => $totalFlagged,
-                'total_spam' => $totalSpam,
-            ]
-        );
+
+        echo $event->getTarget()->partial('common/admin/comments-details',[
+            'resource' => $representation,
+            'total_comments' => $totalComments,
+            'total_approved' => $totalApproved,
+            'total_flagged' => $totalFlagged,
+            'total_spam' => $totalSpam,
+        ]);
     }
 
     /**

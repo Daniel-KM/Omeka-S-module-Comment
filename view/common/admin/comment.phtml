@@ -8,7 +8,7 @@
  * @var string $label
  * @var string $structure "flat" (default) or "threaded"
  * @var bool $closedOnLoad
- * @var int $maxDepth
+ * @var int $maxLength
  * @var bool $skipGravatar
  * @var string $legalText
  * @var null $parentId For threaded structure only. Null here.
@@ -53,8 +53,8 @@ if ($website = $comment->website()) {
             class="toggle-property approved unapproved o-icon-<?= $comment->isApproved() ? 'approved' : 'unapproved' ?>"
             data-url="<?= $escape($comment->url('toggle-approved')) ?>"
             data-status="<?= $comment->isApproved() ? 'approved' : 'unapproved' ?>"
-            aria-label="<?= $escape($translate('Toggle approbation')) ?>"
-            title="<?= $escape($translate('Toggle approbation')) ?>"></a></li>
+            aria-label="<?= $v = $escape($translate('Toggle approbation')) ?>"
+            title="<?= $v ?>"></a></li>
         <?php endif; ?>
         <?php if ($userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'flag')
             || ($comment->isFlagged() && $userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'unflag'))):
@@ -63,8 +63,8 @@ if ($website = $comment->website()) {
             class="toggle-property flagged unflagged o-icon-<?= $comment->isFlagged() ? 'flagged' : 'unflagged' ?>"
             data-url="<?= $escape($comment->url('toggle-flagged')) ?>"
             data-status="<?= $comment->isFlagged() ? 'flagged' : 'unflagged' ?>"
-            aria-label="<?= $escape($translate('Toggle flag')) ?>"
-            title="<?= $escape($translate('Toggle flag')) ?>"></a></li>
+            aria-label="<?= $v = $escape($translate('Toggle flag')) ?>"
+            title="<?= $v ?>"></a></li>
         <?php endif; ?>
         <?php if ($userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'set-spam')
             || $userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'set-not-spam')):
@@ -73,8 +73,8 @@ if ($website = $comment->website()) {
             class="toggle-property spam not-spam o-icon-<?= $comment->isSpam() ? 'spam' : 'not-spam' ?>"
             data-url="<?= $escape($comment->url('toggle-spam')) ?>"
             data-status="<?= $comment->isSpam() ? 'spam' : 'not-spam' ?>"
-            aria-label="<?= $escape($translate('Toggle spam')) ?>"
-            title="<?= $escape($translate('Toggle spam')) ?>"></a></li>
+            aria-label="<?= $v = $escape($translate('Toggle spam')) ?>"
+            title="<?= $v ?>"></a></li>
         <?php endif; ?>
         <?php if ($comment->userIsAllowed('edit')): ?>
         <li><a href="#"

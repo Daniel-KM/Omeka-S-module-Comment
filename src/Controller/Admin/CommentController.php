@@ -18,23 +18,30 @@ class CommentController extends AbstractCommentController
         $response = $this->api()->search('comments', $this->params()->fromQuery());
         $this->paginator($response->getTotalResults());
 
+        /** @var \Omeka\Form\ConfirmForm $formDeleteSelected */
         $formDeleteSelected = $this->getForm(ConfirmForm::class);
-        $formDeleteSelected->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'batch-delete'], true));
-        $formDeleteSelected->setButtonLabel('Confirm Delete'); // @translate
-        $formDeleteSelected->setAttribute('id', 'confirm-delete-selected');
+        $formDeleteSelected
+            ->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'batch-delete'], true))
+            ->setAttribute('id', 'confirm-delete-selected')
+            ->setButtonLabel('Confirm Delete'); // @translate
 
+        /** @var \Omeka\Form\ConfirmForm $formDeleteAll */
         $formDeleteAll = $this->getForm(ConfirmForm::class);
-        $formDeleteAll->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'batch-delete-all'], true));
-        $formDeleteAll->setButtonLabel('Confirm Delete'); // @translate
-        $formDeleteAll->setAttribute('id', 'confirm-delete-all');
-        $formDeleteAll->get('submit')->setAttribute('disabled', true);
+        $formDeleteAll
+            ->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'batch-delete-all'], true))
+            ->setAttribute('id', 'confirm-delete-all')
+            ->setButtonLabel('Confirm Delete'); // @translate
+        $formDeleteAll
+            ->get('submit')
+            ->setAttribute('disabled', true);
 
-        $view = new ViewModel;
         $comments = $response->getContent();
-        $view->setVariable('comments', $comments);
-        $view->setVariable('formDeleteSelected', $formDeleteSelected);
-        $view->setVariable('formDeleteAll', $formDeleteAll);
-        return $view;
+
+        return new ViewModel([
+            'comments' => $comments,
+            'formDeleteSelected' => $formDeleteSelected,
+            'formDeleteAll' => $formDeleteAll,
+        ]);
     }
 
     public function showDetailsAction()
@@ -42,10 +49,11 @@ class CommentController extends AbstractCommentController
         $response = $this->api()->read('comments', $this->params('id'));
         $comment = $response->getContent();
 
-        $view = new ViewModel;
-        $view->setTerminal(true);
-        $view->setVariable('resource', $comment);
-        return $view;
+        $view = new ViewModel([
+            'resource' => $comment,
+        ]);
+        return $view
+            ->setTerminal(true);
     }
 
     public function deleteConfirmAction()
@@ -53,19 +61,21 @@ class CommentController extends AbstractCommentController
         $response = $this->api()->read('comments', $this->params('id'));
         $comment = $response->getContent();
 
-        $view = new ViewModel;
-        $view->setTerminal(true);
-        $view->setTemplate('common/delete-confirm-details');
-        $view->setVariable('comment', $comment);
-        $view->setVariable('resource', $comment);
-        $view->setVariable('resourceLabel', 'comment');
-        $view->setVariable('partialPath', 'comment/admin/comment/show-details');
-        return $view;
+        $view = new ViewModel([
+            'comment' => $comment,
+            'resource' => $comment,
+            'resourceLabel' => 'comment',
+            'partialPath' => 'comment/admin/comment/show-details',
+        ]);
+        return $view
+            ->setTemplate('common/delete-confirm-details')
+            ->setTerminal(true);
     }
 
     public function deleteAction()
     {
         if ($this->getRequest()->isPost()) {
+            /** @var \Omeka\Form\ConfirmForm $form */
             $form = $this->getForm(ConfirmForm::class);
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
@@ -77,26 +87,25 @@ class CommentController extends AbstractCommentController
                 $this->messenger()->addFormErrors($form);
             }
         }
-        return $this->redirect()->toRoute(
-            'admin/comment',
-            ['action' => 'browse'],
-            true
-        );
+        return $this->redirect()->toRoute('admin/comment', ['action' => 'browse'], true);
     }
 
     public function batchDeleteConfirmAction()
     {
+        /** @var \Omeka\Form\ConfirmForm $form */
         $form = $this->getForm(ConfirmForm::class);
         $routeAction = $this->params()->fromQuery('all') ? 'batch-delete-all' : 'batch-delete';
-        $form->setAttribute('action', $this->url()->fromRoute(null, ['action' => $routeAction], true));
-        $form->setButtonLabel('Confirm delete'); // @translate
-        $form->setAttribute('id', 'batch-delete-confirm');
-        $form->setAttribute('class', $routeAction);
+        $form
+            ->setAttribute('action', $this->url()->fromRoute(null, ['action' => $routeAction], true))
+            ->setAttribute('id', 'batch-delete-confirm')
+            ->setAttribute('class', $routeAction)
+            ->setButtonLabel('Confirm delete'); // @translate
 
-        $view = new ViewModel;
-        $view->setTerminal(true);
-        $view->setVariable('form', $form);
-        return $view;
+        $view = new ViewModel([
+            'form' => $form,
+        ]);
+        return $view
+            ->setTerminal(true);
     }
 
     public function batchDeleteAction()
@@ -111,6 +120,7 @@ class CommentController extends AbstractCommentController
             return $this->redirect()->toRoute(null, ['action' => 'browse'], true);
         }
 
+        /** @var \Omeka\Form\ConfirmForm $form */
         $form = $this->getForm(ConfirmForm::class);
         $form->setData($this->getRequest()->getPost());
         if ($form->isValid()) {

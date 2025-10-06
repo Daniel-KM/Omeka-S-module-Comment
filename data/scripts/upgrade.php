@@ -38,27 +38,28 @@ if (!method_exists($this, 'checkModuleActiveVersion') || !$this->checkModuleActi
 
 if (version_compare($oldVersion, '3.1.5', '<')) {
     $sql = <<<'SQL'
-ALTER TABLE `comment` CHANGE `user_agent` `user_agent` text NOT NULL;
-SQL;
+        ALTER TABLE `comment` CHANGE `user_agent` `user_agent` text NOT NULL;
+        SQL;
     $connection->executeStatement($sql);
 }
 
 if (version_compare($oldVersion, '3.1.11', '<')) {
     $sql = <<<'SQL'
-DELETE FROM `site_setting`
-WHERE `id` IN ("comment_append_item_set_show", "comment_append_item_show", "comment_append_media_show");
-SQL;
+        DELETE FROM `site_setting`
+        WHERE `id` IN ("comment_append_item_set_show", "comment_append_item_show", "comment_append_media_show");
+        SQL;
     $connection->executeStatement($sql);
 }
 
 if (version_compare($oldVersion, '3.3.1.12', '<')) {
     $sql = <<<'SQL'
-ALTER TABLE `comment`
-CHANGE `owner_id` `owner_id` INT DEFAULT NULL,
-CHANGE `resource_id` `resource_id` INT DEFAULT NULL,
-CHANGE `site_id` `site_id` INT DEFAULT NULL,
-CHANGE `parent_id` `parent_id` INT DEFAULT NULL,
-CHANGE `modified` `modified` DATETIME DEFAULT NULL;
-SQL;
+        ALTER TABLE `comment`
+        CHANGE `owner_id` `owner_id` INT DEFAULT NULL,
+        CHANGE `resource_id` `resource_id` INT DEFAULT NULL,
+        CHANGE `site_id` `site_id` INT DEFAULT NULL,
+        CHANGE `parent_id` `parent_id` INT DEFAULT NULL,
+        CHANGE `modified` `modified` DATETIME DEFAULT NULL
+        ;
+        SQL;
     $connection->executeStatement($sql);
 }
