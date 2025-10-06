@@ -45,6 +45,11 @@ return [
             Form\CommentForm::class => Service\Form\CommentFormFactory::class,
         ],
     ],
+    'resource_page_block_layouts' => [
+        'invokables' => [
+            'commentForm' => Site\ResourcePageBlockLayout\CommentForm::class,
+        ],
+    ],
     'controllers' => [
         'invokables' => [
             Controller\Admin\CommentController::class => Controller\Admin\CommentController::class,
