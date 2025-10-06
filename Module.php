@@ -301,6 +301,11 @@ class Module extends AbstractModule
             'view.search.filters',
             [$this, 'filterSearchFiltersComment']
         );
+        $sharedEventManager->attach(
+            'Omeka\Controller\Admin\Query',
+            'view.search.filters',
+            [$this, 'filterSearchFiltersComment']
+        );
 
         $controllers = [
             'item_sets' => 'Omeka\Controller\Admin\ItemSet',
@@ -313,7 +318,7 @@ class Module extends AbstractModule
             $sharedEventManager->attach(
                 $controller,
                 'view.advanced_search',
-                [$this, 'displayAdvancedSearch']
+                [$this, 'handleViewAdvancedSearch']
             );
 
             // Add the show comments to the resource show admin pages.
@@ -330,6 +335,13 @@ class Module extends AbstractModule
                 [$this, 'viewShowAfterResource']
             );
         }
+
+        // Add search fields to the sidebar query form in advanced search pages.
+        $sharedEventManager->attach(
+            'Omeka\Controller\Admin\Query',
+            'view.advanced_search',
+            [$this, 'handleViewAdvancedSearch']
+        );
 
         $controllers['user'] = 'Omeka\Controller\Admin\User';
         foreach ($controllers as $controller) {
@@ -367,7 +379,7 @@ class Module extends AbstractModule
             $sharedEventManager->attach(
                 $controller,
                 'view.advanced_search',
-                [$this, 'displayAdvancedSearch']
+                [$this, 'handleViewAdvancedSearch']
             );
 
             // Filter the search filters for the advanced search pages.
@@ -712,7 +724,7 @@ class Module extends AbstractModule
      *
      * @param Event $event
      */
-    public function displayAdvancedSearch(Event $event): void
+    public function handleViewAdvancedSearch(Event $event): void
     {
         $query = $event->getParam('query', []);
         $query['has_comments'] = !empty($query['has_comments']);
