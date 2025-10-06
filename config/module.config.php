@@ -48,6 +48,7 @@ return [
     'resource_page_block_layouts' => [
         'invokables' => [
             'commentForm' => Site\ResourcePageBlockLayout\CommentForm::class,
+            'comments' => Site\ResourcePageBlockLayout\Comments::class,
         ],
     ],
     'controllers' => [
