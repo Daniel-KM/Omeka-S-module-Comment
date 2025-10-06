@@ -1,17 +1,3 @@
-@media screen {
-    .comment-form .o-icon-transmit::before {
-        background: url('../img/waiting-mini.gif') no-repeat scroll 0 0 transparent !important;
-        content: "";
-        width: 18px;
-        height: 18px;
-        line-height: 24px;
-        vertical-align: top;
-    }
-    .comment-form .o-icon-transmit {
-        cursor: progress;
-    }
-}
-
 #comment-main-container {
     clear: both;
 }

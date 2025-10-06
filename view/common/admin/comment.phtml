@@ -36,7 +36,7 @@ $skipGravatar = (bool) $siteSetting('comment_skip_gravatar');
     <?php endif; ?>
 </div>
 <div class="comment-actions">
-    <ul class="actions">
+    <ul class="actions icons-only">
         <?php // TODO Use buttons instead of a. ?>
         <?php if ($userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'approve')): ?>
         <li><a href="#"

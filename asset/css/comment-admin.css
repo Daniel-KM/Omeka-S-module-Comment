@@ -48,9 +48,6 @@
     .comment .single.actions a::before {
         text-align: inherit;
     }
-    .comment .single.actions .o-icon-transmit::before {
-        background: url('../img/waiting-mini.gif') no-repeat scroll 3px 3px transparent !important;
-    }
     .comment .o-icon-users,
     .comment .no-action::before {
         width: 24px;
@@ -138,11 +135,9 @@
         color: #FFFFFF;
         content: "";
     }
-    .comment .o-icon-transmit::before {
-        background: url('../img/waiting-mini.gif') no-repeat scroll 12px 3px transparent !important;
-        color: #000000;
-        content: "";
-        cursor: progress;
+
+    .comment .icons-only a .spinner {
+        margin-left: 0.5em;
     }
 }
 

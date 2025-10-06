@@ -20,14 +20,15 @@
          * approved/unapproved, flagged/unflagged, spam/not-spam.
          * It can be fail or error too.
          *
-         * @todo Use a button instead of a fake link.
+         * @todo Finalize to use jsend with buttons.
          */
-        $('#content').on('click', 'a.toggle-property', function(e) {
+        $('#content').on('click', '.toggle-property', function(e) {
             e.preventDefault();
             e.stopPropagation();
             const button = $(this);
-            const url = button.attr('data-url');
+            const url = button.attr('data-action') ? button.attr('data-action') : button.attr('data-url');
             var status = button.data('status');
+            // CommonDialog.jSend(e);
             $.ajax({
                 url: url,
                 beforeSend: function() {
@@ -65,19 +66,19 @@
             })
             .fail(CommonDialog.jSendFail)
             .always(function () {
-                button.addClass('o-icon-' + status);
                 CommonDialog.spinnerDisable(button[0]);
+                button.addClass('o-icon-' + status);
             });
         });
 
         /**
          * Approve or reject a list of comments in batch.
          */
-        $('#content').on('click', 'a.batch-property', function(e) {
+        $('#content').on('click', '.batch-property', function(e) {
             e.preventDefault();
             e.stopPropagation();
             var selected = $('.batch-edit td input[name="resource_ids[]"][type="checkbox"]:checked');
-            if (selected.length == 0) {
+            if (!selected.length) {
                 return;
             }
             var checked = selected.map(function() { return $(this).val(); }).get();
@@ -92,6 +93,7 @@
                         $(this)
                             .removeClass('o-icon-' + $(this).data('status'))
                             .prop('disabled', true);
+                        CommonDialog.spinnerEnable($(this)[0]);
                     });
                     CommonDialog.spinnerEnable(button[0]);
                     $('.select-all').prop('checked', false);
@@ -115,6 +117,7 @@
                     var row = $(this);
                     row.find('input[type="checkbox"]').prop('checked', false);
                     var iconLink = row.find('.toggle-property.' + status);
+                    CommonDialog.spinnerDisable(iconLink[0]);
                     iconLink
                         .data('status', status)
                         .addClass('o-icon-' + status)
@@ -135,6 +138,7 @@
                     $(this)
                         .addClass('o-icon-' + $(this).data('status'))
                         .prop('disabled', false);
+                    CommonDialog.spinnerDisable($(this)[0]);
                 });
                 CommonDialog.jSendFail(jqXHR);
             })

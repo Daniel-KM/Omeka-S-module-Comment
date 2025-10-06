@@ -151,7 +151,7 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
                 <?= $escape(mb_substr($comment->body(), 0, 200)) ?>
                 <span class="is-public-or-not<?php if (!$comment->isApproved()): echo ' o-icon-private'; endif; ?>" aria-label="<?= $translate('Private') ?>"></span>
                 <?php if (mb_strlen($comment->body()) > 200): echo '…'; endif; ?>
-                <ul class="actions">
+                <ul class="actions icons-only">
                 <?php // TODO Use buttons instead of a. ?>
                 <?php $editRightComment = $comment->userIsAllowed('update'); ?>
                     <?php if ($editRightComment): ?>
