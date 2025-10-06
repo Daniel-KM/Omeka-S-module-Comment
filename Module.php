@@ -686,26 +686,27 @@ class Module extends AbstractModule
      */
     public function viewDetails(Event $event, $owner = null): void
     {
-        // TODO Api limit 0?
-
         $representation = $owner ?: $event->getParam('entity');
         $columnName = $this->columnNameOfRepresentation($representation);
         $api = $this->getServiceLocator()->get('Omeka\ApiManager');
+
         // TODO Use one direct query instead of four for stats.
+
         $totalComments = $api
-            ->search('comments', [$columnName => $representation->id()])
+            ->search('comments', [$columnName => $representation->id(), 'limit' => 0])
             ->getTotalResults();
         if (empty($totalComments)) {
             return;
         }
+
         $totalApproved = $api
-            ->search('comments', [$columnName => $representation->id(), 'approved' => true])
+            ->search('comments', [$columnName => $representation->id(), 'approved' => true, 'limit' => 0])
             ->getTotalResults();
         $totalFlagged = $api
-            ->search('comments', [$columnName => $representation->id(), 'flagged' => true])
+            ->search('comments', [$columnName => $representation->id(), 'flagged' => true, 'limit' => 0])
             ->getTotalResults();
         $totalSpam = $api
-            ->search('comments', [$columnName => $representation->id(), 'spam' => true])
+            ->search('comments', [$columnName => $representation->id(), 'spam' => true, 'limit' => 0])
             ->getTotalResults();
         echo $event->getTarget()->partial(
             'common/admin/comments-details',
