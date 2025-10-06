@@ -60,13 +60,13 @@ $baseUrl = strtr($url('site/comment', ['action' => 'browse'], true), ['/browse' 
     <?php //= $hyperlink($translate('Advanced search'), $url(null, ['action' => 'search'], true), ['class' => 'advanced-search']) ?>
 </div>
 
-<div class="comment-subscription-list" data-comment-url="<?= $escapeAttr($baseUrl) ?>">
+<div class="comments-list comments-subscription-list" data-comment-url="<?= $escapeAttr($baseUrl) ?>">
 
     <?php $this->trigger('view.browse.before'); ?>
 
     <?php if (count($subscriptions)): ?>
 
-    <ul class="resource-list">
+    <ul class="resource-list comment-subscription-list">
         <?php
         $headingTerm = $siteSetting('browse_heading_property_term');
         $bodyTerm = $siteSetting('browse_body_property_term');

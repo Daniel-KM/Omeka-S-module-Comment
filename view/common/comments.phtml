@@ -35,7 +35,7 @@ $baseUrl = strtr($url('site/comment', ['action' => 'browse'], true), ['/browse' 
     <summary class="selection-summary" aria-expanded="<?= empty($closedOnLoad) ? 'true' : 'false' ?>">
         <?= $label ?: $translate('Comments') ?>
     </summary>
-    <div id="comments" class="comments" data-comment-url="<?= $escapeAttr($baseUrl) ?>">
+    <div id="comments" class="comments-resource" data-comment-url="<?= $escapeAttr($baseUrl) ?>">
         <?php if (empty($comments)): ?>
             <p><?= $translate('No comment yet! Be the first to add one!') ?></p>
         <?php elseif (($structure ?? null) === 'threaded'): ?>

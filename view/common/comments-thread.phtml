@@ -19,7 +19,7 @@ $partial = $plugins->get('partial');
 $vars = $this->vars();
 ?>
 
-<div class="comments-thread">
+<div class="resource-comments comments-thread">
 <?php foreach ($comments as $comment):
     $parent = $comment->parent();
     if (($parent && $parent->id() === $parentId) || (empty($parent) && empty($parentId))):
