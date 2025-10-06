@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
+
 namespace Comment\Db\Filter;
 
 use Comment\Entity\Comment;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\ClassMetaData;
 use Doctrine\ORM\Query\Filter\SQLFilter;
 use Omeka\Permissions\Acl;
@@ -22,7 +23,7 @@ class CommentVisibilityFilter extends SQLFilter
 
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
     {
-        if (Comment::class === $targetEntity->getName()) {
+        if ($targetEntity->getName() === Comment::class) {
             return $this->getCommentConstraint($targetTableAlias);
         }
 
@@ -52,7 +53,7 @@ class CommentVisibilityFilter extends SQLFilter
             $constraints[] = 'OR';
             $constraints[] = sprintf(
                 $alias . '.owner_id = %s',
-                $this->getConnection()->quote($identity->getId(), Type::INTEGER)
+                $this->getConnection()->quote($identity->getId(), Types::INTEGER)
             );
         }
 
