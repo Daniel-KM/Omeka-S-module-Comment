@@ -45,7 +45,7 @@ $commentForm->prepare();
             <?= $formText($element) ?>
         </div>
     </div>
-    <?php $element = $commentForm->get('o-module-comment:website'); ?>
+    <?php $element = $commentForm->get('o:website'); ?>
     <div class="field">
         <div class="field-meta">
             <?= $formLabel($element) ?>
@@ -56,7 +56,7 @@ $commentForm->prepare();
     </div>
 <?php endif; ?>
 
-    <?php $element = $commentForm->get('o-module-comment:body'); ?>
+    <?php $element = $commentForm->get('o:body'); ?>
     <div class="field">
         <div class="field-meta">
             <?= $formLabel($element) ?>
@@ -75,8 +75,8 @@ $commentForm->prepare();
         </div>
     </div>
     <?php endif; ?>
-    <?php if ($commentForm->has('o-module-comment:check')): /* honeyspot */ ?>
-    <?php $element = $commentForm->get('o-module-comment:check'); ?>
+    <?php if ($commentForm->has('o:check')): /* honeyspot */ ?>
+    <?php $element = $commentForm->get('o:check'); ?>
     <div class="field">
         <div class="inputs" required="required">
             <?= $formElement($element) ?>

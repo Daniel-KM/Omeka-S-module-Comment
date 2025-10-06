@@ -17,7 +17,7 @@ var Comment = {
             }
         }
 
-        field = form.find('[name="o-module-comment:body"]');
+        field = form.find('[name="o:body"]');
         var text = $.trim(field.val().replace(/\s+/g, ' '));
         if (text.length == 0) {
             field.val('');

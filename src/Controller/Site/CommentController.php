@@ -48,7 +48,7 @@ class CommentController extends AbstractCommentController
         }
 
         $api
-            ->update('comments', $commentId, ['o-module-comment:flagged' => $flagUnflag], [], ['isPartial' => true]);
+            ->update('comments', $commentId, ['o:flagged' => $flagUnflag], [], ['isPartial' => true]);
 
         if ($flagUnflag) {
             return new JsonModel(['status' => 'ok', 'id' => $commentId, 'action' => 'flagged']);

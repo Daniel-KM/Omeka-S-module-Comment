@@ -31,7 +31,7 @@ abstract class AbstractCommentController extends AbstractActionController
 
         $data = $this->params()->fromPost();
 
-        if (!empty($data['o-module-comment:check'])) {
+        if (!empty($data['o:check'])) {
             return $this->jsonError('Unauthorized access.', Response::STATUS_CODE_403); // @translate
         }
 
@@ -42,13 +42,13 @@ abstract class AbstractCommentController extends AbstractActionController
             return $this->jsonError('Are you really a robot?'); // @translate
         }
 
-        $data['o-module-comment:ip'] = $this->getClientIp();
-        if ($data['o-module-comment:ip'] == '::') {
+        $data['o:ip'] = $this->getClientIp();
+        if ($data['o:ip'] == '::') {
             return $this->jsonError('Unauthorized access.', Response::STATUS_CODE_403); // @translate
         }
 
-        $data['o-module-comment:user_agent'] = $this->getUserAgent();
-        if (empty($data['o-module-comment:user_agent'])) {
+        $data['o:user_agent'] = $this->getUserAgent();
+        if (empty($data['o:user_agent'])) {
             return $this->jsonError('Unauthorized access : no user agent.', Response::STATUS_CODE_403); // @translate
         }
 
@@ -88,7 +88,7 @@ abstract class AbstractCommentController extends AbstractActionController
                 return $this->jsonError('The parent comment doesn’t exist.'); // @translate
             }
         }
-        $data['o-module-comment:parent'] = $parent;
+        $data['o:parent'] = $parent;
 
         $user = $this->identity();
         $data['o:user'] = $user;
@@ -98,7 +98,7 @@ abstract class AbstractCommentController extends AbstractActionController
             $data['o:email'] = $user->getEmail();
             $data['o:name'] = $user->getName();
             $role = $user->getRole();
-            $data['o-module-comment:approved'] = in_array($role, $this->approbators)
+            $data['o:approved'] = in_array($role, $this->approbators)
                 || !$this->settings()->get('comment_user_require_moderation');
         } else {
             if (!$this->userIsAllowed(Comment::class, 'create')) {
@@ -110,7 +110,7 @@ abstract class AbstractCommentController extends AbstractActionController
                     return $this->jsonError('You should accept the legal agreement.'); // @translate
                 }
             }
-            $data['o-module-comment:approved'] = !$this->settings()->get('comment_public_require_moderation');
+            $data['o:approved'] = !$this->settings()->get('comment_public_require_moderation');
         }
 
         $site = $this->currentSite();
@@ -121,17 +121,17 @@ abstract class AbstractCommentController extends AbstractActionController
         }
         $data['o:site'] = $site;
 
-        if (empty($data['o-module-comment:body'])) {
+        if (empty($data['o:body'])) {
             return $this->jsonError('The comment cannot be empty.'); // @translate
         }
 
         $path = $data['path'];
-        $data['o-module-comment:path'] = $path;
+        $data['o:path'] = $path;
 
         // Validate the other elements of the form via the form itself.
         $options = [
             'resource_id' => $resourceId,
-            'site_slug' => $site ? $site->getSlug() : null,
+            'site_slug' => $site ? $site->slug() : null,
             'user' => $user,
             'path' => $path,
         ];
@@ -146,10 +146,10 @@ abstract class AbstractCommentController extends AbstractActionController
                 $messages);
         }
 
-        $data['o-module-comment:flagged'] = false;
-        $data['o-module-comment:spam'] = $this->checkSpam($data);
-        if ($data['o-module-comment:spam']) {
-            $data['o-module-comment:approved'] = false;
+        $data['o:flagged'] = false;
+        $data['o:spam'] = $this->checkSpam($data);
+        if ($data['o:spam']) {
+            $data['o:approved'] = false;
         }
 
         $response = $this->api($form)->create('comments', $data);
@@ -161,7 +161,7 @@ abstract class AbstractCommentController extends AbstractActionController
         }
         $comment = $response->getContent();
 
-        if ($data['o-module-comment:approved']) {
+        if ($data['o:approved']) {
             $this->messenger()->addSuccess('Your comment is online.'); // @translate
         } else {
             $this->messenger()->addSuccess('Your comment is awaiting moderation'); // @translate
@@ -178,7 +178,7 @@ abstract class AbstractCommentController extends AbstractActionController
         return new JsonModel([
             'content' => [
                 'resource_id' => $resourceId,
-                'moderation' => !$data['o-module-comment:approved'],
+                'moderation' => !$data['o:approved'],
             ],
         ]);
     }
@@ -194,7 +194,7 @@ abstract class AbstractCommentController extends AbstractActionController
     protected function checkSpam(array $data)
     {
         // Check if honey pot is filled.
-        if (!empty($data['o-module-comment:check'])) {
+        if (!empty($data['o:check'])) {
             return true;
         }
 
@@ -237,10 +237,10 @@ abstract class AbstractCommentController extends AbstractActionController
             'permalink' => $permalink,
             'comment_type' => 'comment',
             'comment_author_email' => $postData['o:email'],
-            'comment_content' => $postData['o-module-comment:body'],
+            'comment_content' => $postData['o:body'],
         ];
-        if (!empty($postData['o-module-comment:website'])) {
-            $data['comment_author_url'] = $postData['o-module-comment:website'];
+        if (!empty($postData['o:website'])) {
+            $data['comment_author_url'] = $postData['o:website'];
         }
         if (!empty($postData['o:name'])) {
             $data['comment_author_name'] = $postData['o:name'];

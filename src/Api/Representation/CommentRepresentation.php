@@ -16,7 +16,7 @@ class CommentRepresentation extends AbstractEntityRepresentation
 
     public function getJsonLdType()
     {
-        return 'o-module-comment:Comment';
+        return 'o:Comment';
     }
 
     public function getJsonLd()
@@ -70,18 +70,18 @@ class CommentRepresentation extends AbstractEntityRepresentation
             'o:owner' => $owner,
             'o:resource' => $resource,
             'o:site' => $site,
-            'o-module-comment:path' => $this->path(),
+            'o:path' => $this->path(),
             // 'o:email' => $this->email(),
             'o:name' => $this->name(),
-            'o-module-comment:website' => $this->website(),
-            // 'o-module-comment:ip' => $this->ip(),
-            // 'o-module-comment:user_agent' => $this->userAgent(),
-            'o-module-comment:body' => $this->body(),
-            'o-module-comment:parent' => $parent,
-            'o-module-comment:children' => $children,
-            'o-module-comment:approved' => $this->isApproved(),
-            'o-module-comment:flagged' => $this->isFlagged(),
-            'o-module-comment:spam' => $this->isSpam(),
+            'o:website' => $this->website(),
+            // 'o:ip' => $this->ip(),
+            // 'o:user_agent' => $this->userAgent(),
+            'o:body' => $this->body(),
+            'o:parent' => $parent,
+            'o:children' => $children,
+            'o:approved' => $this->isApproved(),
+            'o:flagged' => $this->isFlagged(),
+            'o:spam' => $this->isSpam(),
             'o:created' => $created,
             'o:modified' => $modified,
         ];

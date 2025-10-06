@@ -131,32 +131,32 @@ class CommentController extends AbstractCommentController
 
     public function batchApproveAction()
     {
-        return $this->batchUpdateProperty(['o-module-comment:approved' => true]);
+        return $this->batchUpdateProperty(['o:approved' => true]);
     }
 
     public function batchUnapproveAction()
     {
-        return $this->batchUpdateProperty(['o-module-comment:approved' => false]);
+        return $this->batchUpdateProperty(['o:approved' => false]);
     }
 
     public function batchFlagAction()
     {
-        return $this->batchUpdateProperty(['o-module-comment:flagged' => true]);
+        return $this->batchUpdateProperty(['o:flagged' => true]);
     }
 
     public function batchUnflagAction()
     {
-        return $this->batchUpdateProperty(['o-module-comment:flagged' => false]);
+        return $this->batchUpdateProperty(['o:flagged' => false]);
     }
 
     public function batchSetSpamAction()
     {
-        return $this->batchUpdateProperty(['o-module-comment:spam' => true]);
+        return $this->batchUpdateProperty(['o:spam' => true]);
     }
 
     public function batchSetNotSpamAction()
     {
-        return $this->batchUpdateProperty(['o-module-comment:spam' => false]);
+        return $this->batchUpdateProperty(['o:spam' => false]);
     }
 
     protected function batchUpdateProperty(array $data)
@@ -182,9 +182,9 @@ class CommentController extends AbstractCommentController
         $property = key($data);
 
         $statuses = [
-            'o-module-comment:approved' => ['unapproved', 'approved'],
-            'o-module-comment:flagged' => ['unflagged', 'flagged'],
-            'o-module-comment:spam' => ['not-spam', 'spam'],
+            'o:approved' => ['unapproved', 'approved'],
+            'o:flagged' => ['unflagged', 'flagged'],
+            'o:spam' => ['not-spam', 'spam'],
         ];
 
         return new JsonModel([
@@ -192,24 +192,24 @@ class CommentController extends AbstractCommentController
                 'property' => $property,
                 'value' => $value,
                 'status' => $statuses[$property][(int) $value],
-                'is_public' => $property === 'o-module-comment:approved' ? $value : null,
+                'is_public' => $property === 'o:approved' ? $value : null,
             ],
         ]);
     }
 
     public function toggleApprovedAction()
     {
-        return $this->toggleProperty('o-module-comment:approved');
+        return $this->toggleProperty('o:approved');
     }
 
     public function toggleFlaggedAction()
     {
-        return $this->toggleProperty('o-module-comment:flagged');
+        return $this->toggleProperty('o:flagged');
     }
 
     public function toggleSpamAction()
     {
-        return $this->toggleProperty('o-module-comment:spam');
+        return $this->toggleProperty('o:spam');
     }
 
     protected function toggleProperty($property)
@@ -218,13 +218,13 @@ class CommentController extends AbstractCommentController
         $comment = $this->api()->read('comments', $id)->getContent();
 
         switch ($property) {
-            case 'o-module-comment:approved':
+            case 'o:approved':
                 $value = !$comment->isApproved();
                 break;
-            case 'o-module-comment:flagged':
+            case 'o:flagged':
                 $value = !$comment->isFlagged();
                 break;
-            case 'o-module-comment:spam':
+            case 'o:spam':
                 $value = !$comment->isSpam();
                 break;
         }
@@ -238,9 +238,9 @@ class CommentController extends AbstractCommentController
         }
 
         $statuses = [
-            'o-module-comment:approved' => ['unapproved', 'approved'],
-            'o-module-comment:flagged' => ['unflagged', 'flagged'],
-            'o-module-comment:spam' => ['not-spam', 'spam'],
+            'o:approved' => ['unapproved', 'approved'],
+            'o:flagged' => ['unflagged', 'flagged'],
+            'o:spam' => ['not-spam', 'spam'],
         ];
 
         return new JsonModel([
@@ -248,7 +248,7 @@ class CommentController extends AbstractCommentController
                 'property' => $property,
                 'value' => $value,
                 'status' => $statuses[$property][(int) $value],
-                'is_public' => $property === 'o-module-comment:approved' ? $value : null,
+                'is_public' => $property === 'o:approved' ? $value : null,
             ],
         ]);
     }

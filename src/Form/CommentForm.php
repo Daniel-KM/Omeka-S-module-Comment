@@ -83,7 +83,7 @@ class CommentForm extends Form
 
             $this->add([
                 'type' => Element\Url::class,
-                'name' => 'o-module-comment:website',
+                'name' => 'o:website',
                 'options' => [
                     'label' => 'Website', // @translate
                 ],
@@ -95,7 +95,7 @@ class CommentForm extends Form
 
         $this->add([
             'type' => Element\Textarea::class,
-            'name' => 'o-module-comment:body',
+            'name' => 'o:body',
             'options' => [
                 'label' => 'Comment', // @translate
             ],
@@ -201,7 +201,7 @@ class CommentForm extends Form
                 // An honeypot for anti-spam. It’s hidden, so only bots fill it.
                 $this->add([
                     'type' => Element\Text::class,
-                    'name' => 'o-module-comment:check',
+                    'name' => 'o:check',
                     'options' => [
                         'label' => 'String to check', // @translate
                     ],
@@ -263,7 +263,7 @@ class CommentForm extends Form
 
         $this->getInputFilter()
             ->add([
-                'name' => 'o-module-comment:website',
+                'name' => 'o:website',
                 'required' => false,
             ]);
     }

@@ -519,7 +519,7 @@ class Module extends AbstractModule
         $comments = $api
             ->search('comments', [$entityColumnName => $resource->id()], ['responseContent' => 'reference'])
             ->getContent();
-        $jsonLd['o-module-comment:comment'] = $comments;
+        $jsonLd['o:comment'] = $comments;
         $event->setParam('jsonLd', $jsonLd);
     }
 

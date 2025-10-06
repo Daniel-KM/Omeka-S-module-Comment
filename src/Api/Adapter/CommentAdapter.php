@@ -114,20 +114,20 @@ class CommentAdapter extends AbstractEntityAdapter
                     $entity->setSite($site);
                 }
 
-                if (isset($data['o-module-comment:parent'])) {
-                    if (is_object($data['o-module-comment:parent'])) {
-                        $parent = $data['o-module-comment:parent'];
-                    } elseif (is_numeric($data['o-module-comment:parent']['o:id'])) {
+                if (isset($data['o:parent'])) {
+                    if (is_object($data['o:parent'])) {
+                        $parent = $data['o:parent'];
+                    } elseif (is_numeric($data['o:parent']['o:id'])) {
                         $parent = $this
-                            ->findEntity(['id' => $data['o-module-comment:parent']['o:id']]);
+                            ->findEntity(['id' => $data['o:parent']['o:id']]);
                     } else {
                         $parent = null;
                     }
                     $entity->setParent($parent);
                 }
 
-                $entity->setPath($request->getValue('o-module-comment:path', ''));
-                $entity->setBody($request->getValue('o-module-comment:body', ''));
+                $entity->setPath($request->getValue('o:path', ''));
+                $entity->setBody($request->getValue('o:body', ''));
 
                 $owner = $entity->getOwner();
                 if ($owner) {
@@ -138,7 +138,7 @@ class CommentAdapter extends AbstractEntityAdapter
                     $entity->setName($request->getValue('o:name'));
                 }
 
-                $entity->setWebsite($request->getValue('o-module-comment:website', ''));
+                $entity->setWebsite($request->getValue('o:website', ''));
                 $entity->setIp($this->getClientIp());
                 $entity->setUserAgent($this->getUserAgent());
                 break;
@@ -148,14 +148,14 @@ class CommentAdapter extends AbstractEntityAdapter
                 break;
         }
 
-        if ($this->shouldHydrate($request, 'o-module-comment:approved')) {
-            $entity->setApproved($request->getValue('o-module-comment:approved', false));
+        if ($this->shouldHydrate($request, 'o:approved')) {
+            $entity->setApproved($request->getValue('o:approved', false));
         }
-        if ($this->shouldHydrate($request, 'o-module-comment:flagged')) {
-            $entity->setFlagged($request->getValue('o-module-comment:flagged', false));
+        if ($this->shouldHydrate($request, 'o:flagged')) {
+            $entity->setFlagged($request->getValue('o:flagged', false));
         }
-        if ($this->shouldHydrate($request, 'o-module-comment:spam')) {
-            $entity->setSpam($request->getValue('o-module-comment:spam', false));
+        if ($this->shouldHydrate($request, 'o:spam')) {
+            $entity->setSpam($request->getValue('o:spam', false));
         }
 
         $this->updateTimestamps($request, $entity);
@@ -177,16 +177,16 @@ class CommentAdapter extends AbstractEntityAdapter
         }
 
         if ($entity->getIp() == '::') {
-            $errorStore->addError('o-module-comment:ip', 'The ip cannot be empty.'); // @translate
+            $errorStore->addError('o:ip', 'The ip cannot be empty.'); // @translate
         }
 
         if ($entity->getUserAgent() == false) {
-            $errorStore->addError('o-module-comment:user_agent', 'The user agent cannot be empty.'); // @translate
+            $errorStore->addError('o:user_agent', 'The user agent cannot be empty.'); // @translate
         }
 
         $body = $entity->getBody();
         if (!is_string($body) || $body === '') {
-            $errorStore->addError('o-module-comment:body', 'The body cannot be empty.'); // @translate
+            $errorStore->addError('o:body', 'The body cannot be empty.'); // @translate
         }
     }
 
@@ -304,9 +304,9 @@ class CommentAdapter extends AbstractEntityAdapter
     public function preprocessBatchUpdate(array $data, Request $request)
     {
         $updatables = [
-            'o-module-comment:approved' => true,
-            'o-module-comment:flagged' => true,
-            'o-module-comment:spam' => true,
+            'o:approved' => true,
+            'o:flagged' => true,
+            'o:spam' => true,
         ];
         $rawData = $request->getContent();
         $rawData = array_intersect_key($rawData, $updatables);
