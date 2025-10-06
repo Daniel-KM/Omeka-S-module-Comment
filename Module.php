@@ -464,6 +464,13 @@ class Module extends AbstractModule
             'form.add_elements',
             [$this, 'handleSiteSettings']
         );
+
+        // Guest integration.
+        $sharedEventManager->attach(
+            \Guest\Controller\Site\GuestController::class,
+            'guest.widgets',
+            [$this, 'handleGuestWidgets']
+        );
     }
 
     public function handleMainSettings(Event $event): void
@@ -994,5 +1001,22 @@ class Module extends AbstractModule
             'user' => 'owner_id',
         ];
         return $entityColumnNames[$representation->getControllerName()];
+    }
+
+    public function handleGuestWidgets(Event $event): void
+    {
+        $services = $this->getServiceLocator();
+        $plugins = $services->get('ViewHelperManager');
+        $partial = $plugins->get('partial');
+        $translate = $plugins->get('translate');
+        $siteSettings = $services->get('Omeka\Settings\Site');
+
+        $widget = [];
+        $widget['label'] = $siteSettings->get('comment_subscription_label', $translate('Subscription')); // @translate
+        $widget['content'] = $partial('guest/site/guest/widget/comment-subscription');
+
+        $widgets = $event->getParam('widgets');
+        $widgets['comment'] = $widget;
+        $event->setParam('widgets', $widgets);
     }
 }

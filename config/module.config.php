@@ -96,6 +96,32 @@ return [
                             ],
                         ],
                     ],
+                    'guest' => [
+                        // The default values for the guest user route are kept
+                        // to avoid issues for visitors when an upgrade of
+                        // module Guest occurs or when it is disabled.
+                        'type' => \Laminas\Router\Http\Literal::class,
+                        'options' => [
+                            'route' => '/guest',
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'comment' => [
+                                'type' => \Laminas\Router\Http\Segment::class,
+                                'options' => [
+                                    'route' => '/comment[/:action]',
+                                    'constraints' => [
+                                        'action' => 'browse|subscription',
+                                    ],
+                                    'defaults' => [
+                                        '__NAMESPACE__' => 'Comment\Controller\Site',
+                                        'controller' => Controller\Site\CommentController::class,
+                                        'action' => 'browse',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'admin' => [
