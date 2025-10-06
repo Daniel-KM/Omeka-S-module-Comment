@@ -82,7 +82,6 @@ class SettingsFieldset extends Fieldset
                 ],
             ])
 
-
             ->add([
                 'name' => 'comment_wpapi_key',
                 'type' => Element\Text::class,

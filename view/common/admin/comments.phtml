@@ -19,6 +19,7 @@ $partial = $plugins->get('partial');
 $assetUrl = $plugins->get('assetUrl');
 $translate = $plugins->get('translate');
 $escapeAttr = $plugins->get('escapeHtmlAttr');
+$subscriptionButton = $plugins->get('commentSubscriptionButton');
 
 $this->headLink()
     ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
@@ -36,6 +37,7 @@ $baseUrl = $url('admin/comment');
 ?>
 
 <div id="comments" class="comments" data-comment-url="<?= $escapeAttr($baseUrl) ?>">
+    <?= $subscriptionButton($resource) ?>
     <?php if (empty($comments)): ?>
         <p><?= $translate('No comment yet! Be the first to add one!') ?></p>
     <?php elseif (($structure ?? null) === 'threaded'): ?>

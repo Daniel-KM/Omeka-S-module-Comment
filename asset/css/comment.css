@@ -1,110 +1,158 @@
-#comment-main-container {
-    clear: both;
-}
+@media all {
+    #comment-main-container {
+        clear: both;
+    }
 
-#comments-container .comment-body {
-    margin-left: 100px !important;
-    margin-top: 12px !important;
-    min-height: 60px;
-    padding: 6px;
-}
+    #comments-container .comment-body {
+        margin-left: 100px !important;
+        margin-top: 12px !important;
+        min-height: 60px;
+        padding: 6px;
+    }
 
-#comment-form {
-    clear:both;
-    line-height: 1em;
-    /* max-width: 500px; */
-    padding-top: 1em;
-}
+    #comment-form {
+        clear:both;
+        line-height: 1em;
+        /* max-width: 500px; */
+        padding-top: 1em;
+    }
 
-#comment-form #submit {
-    clear: both;
-    display: block;
-}
+    #comment-form #submit {
+        clear: both;
+        display: block;
+    }
 
-.comment-field {
-    margin-bottom: 1em;
-}
+    .comment-field {
+        margin-bottom: 1em;
+    }
 
-.comment-explanation {
-    margin: 1em 0;
-}
+    .comment-explanation {
+        margin: 1em 0;
+    }
 
-.comment-field label, .comment-field input {
-    display: inline-block !important;
-    vertical-align: middle;
-}
+    .comment-field label, .comment-field input {
+        display: inline-block !important;
+        vertical-align: middle;
+    }
 
-.comment-field label {
-    width: 40%;
-    font-weight: bold;
-    margin: 0;
-}
+    .comment-field label {
+        width: 40%;
+        font-weight: bold;
+        margin: 0;
+    }
 
-.comment-field label[for="captcha"] {
-    width: 100%;
-}
+    .comment-field label[for="captcha"] {
+        width: 100%;
+    }
 
-.comment-field input[type="text"] {
-    width: 58%;
-    margin: 0;
-}
+    .comment-field input[type="text"] {
+        width: 58%;
+        margin: 0;
+    }
 
-#comments-container .comment-children {
-    margin-left: 18px !important;
-}
+    #comments-container .comment-children {
+        margin-left: 18px !important;
+    }
 
-.comment {
-    margin-left: 12px;
-    margin-top: 3px;
-    margin-bottom: 6px;
-    clear: both;
-    min-height: 80px;
-    /*width: 60%; */
-    /* min-width: 400px; */
-}
+    .comment {
+        margin-left: 12px;
+        margin-top: 3px;
+        margin-bottom: 6px;
+        clear: both;
+        min-height: 80px;
+        /*width: 60%; */
+        /* min-width: 400px; */
+    }
 
-.comment .comment-author {
-    float: left;
-    margin: 0 6px;
-    width: 30%;
-    min-width: 140px;
-}
+    .comment .comment-author {
+        float: left;
+        margin: 0 6px;
+        width: 30%;
+        min-width: 140px;
+    }
 
-.comment .comment-date {
-    opacity: 0.5;
-}
+    .comment .comment-date {
+        opacity: 0.5;
+    }
 
-.comment .comment-flag,
-.comment .comment-unflag {
-    cursor: pointer;
-    float: left;
-    padding-left: 6px;
-}
+    .comment .comment-flag,
+    .comment .comment-unflag {
+        cursor: pointer;
+        float: left;
+        padding-left: 6px;
+    }
 
-.comment .comment-spam,
-.comment .comment-flagged {
-    background-color: #F09999;
-}
+    .comment .comment-spam,
+    .comment .comment-flagged {
+        background-color: #F09999;
+    }
 
-.comment .comment-body p {
-    font-size: 1em;
-}
+    .comment .comment-body p {
+        font-size: 1em;
+    }
 
-.comment .comment-reply {
-    cursor: pointer;
-    float: right;
-}
+    .comment .comment-reply {
+        cursor: pointer;
+        float: right;
+    }
 
-.comment .comment-author-name {
-    margin: 0;
-}
+    .comment .comment-author-name {
+        margin: 0;
+    }
 
-.comment .success {
-    font-size: 1.8em;
-}
-.comment .errors {
-    color: red;
-}
-.comment input.hidden {
-    display:none;
+    .comment .success {
+        font-size: 1.8em;
+    }
+    .comment .errors {
+        color: red;
+    }
+    .comment input.hidden {
+        display:none;
+    }
+
+    /* Subscribe to a resource for comments */
+
+    /* Note: regular font awesome icons are no more free. */
+    button.comment-subscribe {
+        background-color: initial;
+    }
+    button.comment-subscribe:hover {
+        background-color: #dedede;
+    }
+    button.comment-subscribe.subscribed {
+        color: black;
+    }
+    button.comment-subscribe.unsubscribed {
+        color: gray;
+    }
+    button.comment-subscribe span.fa-sync.fa-spin {
+        /* Like fa-bookmark */
+        height: 20px;
+        width: 15px;
+    }
+    .comment-subscription-icon {
+        width: 30px;
+        height: 44px;
+        float: right;
+        clear: both;
+        position: relative;
+    }
+    .subscribed .comment-subscription-icon {
+        background: url(../img/comment-subscribed.svg) center / 22px no-repeat;
+    }
+    .unsubscribed .comment-subscription-icon {
+        background: url(../img/comment-unsubscribed.svg) center / 22px  no-repeat;
+    }
+    span.comment-subscription-icon.fa-sync.fa-spin {
+        height: 20px;
+        width: 20px;
+    }
+    span.comment-subscription-icon.fa-sync.fa-spin::before {
+        height: 20px;
+        width: 20px;
+        display: flex;
+        position: fixed;
+        top: -5px;
+        left: -5px;
+    }
 }

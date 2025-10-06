@@ -2,8 +2,9 @@
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
  * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource
- * @var bool $showForm
+ * @var bool $showSubscription
  * @var bool $showList
+ * @var bool $showForm
  * @var string $label
  * @var string $structure "flat" (default) or "threaded"
  * @var bool $closedOnLoad
@@ -14,12 +15,15 @@
  * @var array $options Options above as an array.
  */
 
-if (empty($showForm) && empty($showList)) {
+if (empty($showSubscription) && empty($showList) && empty($showForm) ) {
     return;
 }
 ?>
 
 <div id="comments-container" class="comments-container">
+    <?php if ($showSubscription): ?>
+    <?= $this->commentSubscriptionButton($resource, $options ?? []) ?>
+    <?php endif; ?>
     <?php if ($showList): ?>
     <?= $this->comments($resource, $options ?? []) ?>
     <?php endif; ?>

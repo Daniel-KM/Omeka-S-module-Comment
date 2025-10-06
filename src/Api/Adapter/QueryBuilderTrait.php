@@ -5,6 +5,8 @@ use Doctrine\ORM\QueryBuilder;
 
 /**
  * Trait to build queries.
+ *
+ * @deprecated Use CommonAdapterTrait instead.
  */
 trait QueryBuilderTrait
 {

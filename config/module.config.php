@@ -6,6 +6,7 @@ return [
     'api_adapters' => [
         'invokables' => [
             'comments' => Api\Adapter\CommentAdapter::class,
+            'comment_subscriptions' => Api\Adapter\CommentSubscriptionAdapter::class,
         ],
     ],
     'entity_manager' => [
@@ -30,6 +31,7 @@ return [
     'view_helpers' => [
         'invokables' => [
             'comments' => View\Helper\Comments::class,
+            'commentSubscriptionButton' => View\Helper\CommentSubscriptionButton::class,
         ],
         'factories' => [
             'commentForm' => Service\ViewHelper\CommentFormFactory::class,
@@ -50,6 +52,7 @@ return [
         'invokables' => [
             'commentForm' => Site\ResourcePageBlockLayout\CommentForm::class,
             'comments' => Site\ResourcePageBlockLayout\Comments::class,
+            'commentSubscriptionButton' => Site\ResourcePageBlockLayout\CommentSubscriptionButton::class,
         ],
     ],
     'navigation_links' => [
@@ -70,6 +73,8 @@ return [
                 'route' => 'admin/comment',
                 'controller' => Controller\Admin\CommentController::class,
                 'action' => 'browse',
+                'resource' => Controller\Admin\CommentController::class,
+                'class' => 'o-icon- fa-comments',
             ],
         ],
     ],
@@ -167,8 +172,10 @@ return [
             'comment_legal_text' => <<<'HTML'
                 <p>I agree with <a rel="license" href="#" target="_blank">terms of use</a> and I accept to free my contribution under the license <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA</a>.</p>
                 HTML, // @translate
+            'comment_subscribe_button' => '0',
         ],
         'site_settings' => [
+            'comment_placement_subscription' => [],
             'comment_placement_form' => [],
             'comment_placement_list' => [],
             'comment_label' => '',

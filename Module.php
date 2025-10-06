@@ -33,6 +33,8 @@ if (!class_exists('Common\TraitModule', false)) {
 }
 
 use Comment\Entity\Comment;
+use Comment\Entity\CommentSubscription;
+use Common\Stdlib\PsrMessage;
 use Common\TraitModule;
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
@@ -187,13 +189,19 @@ class Module extends AbstractModule
                 ->allow(null, [Controller\Site\CommentController::class], $controllerRights);
         }
 
-        // Identified users can comment. Reviewer and above can approve.
         $roles = $acl->getRoles();
         $acl
+            // Identified users can comment. Reviewer and above can approve.
             ->allow($roles, [Comment::class], ['read', 'create', 'update'])
             ->allow($roles, [Api\Adapter\CommentAdapter::class], ['search', 'read', 'create', 'update'])
             ->allow($roles, [Controller\Site\CommentController::class], ['show', 'flag', 'add'])
-            ->allow($roles, [Controller\Admin\CommentController::class], ['browse', 'flag', 'add', 'show-details']);
+            ->allow($roles, [Controller\Admin\CommentController::class], ['browse', 'flag', 'add', 'show-details'])
+            // Identified users can subscribe to comments.
+            // There is no update, only delete.
+            // Only create for own. There is no controller.
+            ->allow($roles, [CommentSubscription::class], ['read', 'create', 'delete'])
+            ->allow($roles, [Api\Adapter\CommentSubscriptionAdapter::class], ['search', 'read', 'create', 'delete'])
+        ;
 
         $approbators = [
             \Omeka\Permissions\Acl::ROLE_GLOBAL_ADMIN,
@@ -241,6 +249,8 @@ class Module extends AbstractModule
                     'show-details',
                 ]
             );
+
+        // FIXME Rights to create / delete a subscription is only for user.
     }
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager): void
@@ -311,6 +321,20 @@ class Module extends AbstractModule
 
         // No issue for creation: it cannot be created before the resource.
         // The deletion is managed automatically via sql (set null).
+
+        // Warn subscribed users after creation or update of a comment.
+        $sharedEventManager->attach(
+            \Comment\Api\Adapter\CommentAdapter::class,
+            'api.create.post',
+            [$this, 'handleCreateUpdateComment']
+        );
+        /* // TODO For now, comments cannot be updated and it should be a real update to notify.
+        $sharedEventManager->attach(
+            \Comment\Api\Adapter\CommentAdapter::class,
+            'api.update.post',
+            [$this, 'handleCreateUpdateComment']
+        );
+        */
 
         // Add headers to comment views in admin.
         $sharedEventManager->attach(
@@ -590,6 +614,73 @@ class Module extends AbstractModule
             );
     }
 
+    public function handleCreateUpdateComment(Event $event): void
+    {
+        // Get all users who subscribed to comments on this resource to notify.
+        /**
+         * @var \Omeka\Api\Manager $api
+         * @var \Omeka\Api\Request $request
+         * @var \Omeka\Api\Response $response
+         * @var \Omeka\Entity\Resource $resource
+         * @var \Common\Mvc\Controller\Plugin\SendEmail $sendEmail
+         * @var \Comment\Entity\CommentSubscription $subscription
+         */
+        $services = $this->getServiceLocator();
+        $api = $services->get('Omeka\ApiManager');
+        $request = $event->getParam('request');
+        $response = $event->getParam('response');
+        $resource = $response->getContent();
+
+        $subscriptions = $api
+            ->search('comment_subscriptions', ['resource_id' => $resource->getId()], ['responseContent' => 'resource'])
+            ->getContent();
+        if (!$subscriptions) {
+            return;
+        }
+
+        $adapter = $services->get('Omeka\ApiAdapterManager')->get('resources');
+        $settings =    $services->get('Omeka\Settings');
+        $translator = $services->get('MvcTranslator');
+        $sendEmail = $services->get('ControllerPluginManager')->get('sendEmail');
+
+        /** @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource */
+        $resource = $adapter->getRepresentation($resource);
+
+        // For now, comments cannot be updated and it should be a real update to notify.
+        // $isUpdate = strpos($request->getOperation(), 'update') !== false;
+
+        $subject = new PsrMessage(
+            '[{site_name}] New comment', // @translate
+            ['site_name' => $settings->get('installation_title')]
+        );
+        $subject = (string) $subject->setTranslator($translator);
+
+        $resourceUrl = $resource->siteUrl(null, true);
+
+        $body = new PsrMessage(<<<'TXT'
+            Hi,
+            
+            A new comment was published for resource #{resource_id} ({resource_title}).
+            
+            You can see it at {resource_url}#comments.
+            
+            Sincerely,
+            TXT, // @translate
+            [
+                'resource_id' => $resource->id(),
+                'resource_title' => (string) $resource->displayTitle(),
+                'resource_url' => $resourceUrl,
+            ]
+        );
+        $body = (string) $body->setTranslator($translator);
+
+        // TODO Use a background job.
+        foreach ($subscriptions as $subscription) {
+            $user = $subscription->getOwner();
+            $sendEmail($body, $subject, [$user->getEmail() => $user->getName()]);
+        }
+    }
+
     /**
      * Add the headers for admin management.
      *
@@ -703,14 +794,16 @@ class Module extends AbstractModule
             $name = $easyMeta->resourceName(get_class($resource));
             $key = $beforeOrAfter . '/' . $name;
             $siteSettings = $services->get('Omeka\Settings\Site');
-            $showCommentForm = in_array($key, $siteSettings->get('comment_placement_form', []));
+            $showCommentSubscription = in_array($key, $siteSettings->get('comment_placement_subscribe', []));
             $showCommentList = in_array($key, $siteSettings->get('comment_placement_list', []));
-            if ($showCommentForm || $showCommentList) {
+            $showCommentForm = in_array($key, $siteSettings->get('comment_placement_form', []));
+            if ($showCommentSubscription || $showCommentForm || $showCommentList) {
                 echo $view->partial('common/comments-container', [
                     'resource' => $resource,
                     'comments' => $comments,
-                    'showForm' => $showCommentForm,
+                    'showSubscription' => $showCommentSubscription,
                     'showList' => $showCommentList,
+                    'showForm' => $showCommentForm,
                 ]);
             }
         }

@@ -1,0 +1,36 @@
+<?php
+/**
+ * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\SiteRepresentation $site
+ * @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource
+ * @var \Omeka\Entity\User|null $user
+ * @var bool $isAllowed
+ * @var bool $isAllowedAnonymous
+ * @var bool $subscribed
+ * @var string $action "toggle" (default), "add", or "delete"
+ * @var string $urlButton
+ *
+ * and options passed from the caller.
+ */
+
+$plugins = $this->getHelperPluginManager();
+$translate = $plugins->get('translate');
+$escapeAttr = $plugins->get('escapeHtmlAttr');
+
+$textSelect['subscribed'] = $translate('Unsubscribe to comments');
+$textSelect['unsubscribed'] = $translate('Subscribe to comments');
+$textSelect['add'] = $textSelect['subscribed'];
+$textSelect['delete'] = $textSelect['unsubscribed'];
+$class = $subscribed ? 'subscribed' : 'unsubscribed';
+$text = in_array($action, ['add', 'delete']) ? $textSelect[$action] : $textSelect[$class];
+
+$disabled = !$user && !$isAllowedAnonymous;
+if ($disabled) {
+    $textSelect['unsubscribed'] = $translate('Log in to subscribe to comments');
+    $text = $textSelect['unsubscribed'];
+}
+?>
+
+<button type="button"<?= $disabled ? 'disabled="disabled"' : '' ?> class="button comment-subscribe <?= $class ?> comment-subscription-<?= $escapeAttr($action) ?>" data-id="<?= $resource->id() ?>" title="<?= $text ?>" data-subscription-action="<?= $escapeAttr($action) ?>" data-title-subscribed="<?= $textSelect['subscribed'] ?>" data-title-unsubscribed="<?= $textSelect['unsubscribed'] ?>" data-url="<?= $urlButton ?>">
+    <span class="comment-subscription-icon"></span>
+</button>

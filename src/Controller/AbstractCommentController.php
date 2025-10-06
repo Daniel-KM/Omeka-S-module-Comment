@@ -301,6 +301,83 @@ abstract class AbstractCommentController extends AbstractActionController
         ]);
     }
 
+    public function subscribeResourceAction()
+    {
+        $user = $this->identity();
+        if (!$user) {
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Unauthorized access.' // @translate
+            ))->setTranslator($this->translator()), Response::STATUS_CODE_403);
+        }
+
+        $data = $this->params()->fromPost()
+            + ['action' => 'toggle', 'id' => null];
+
+        $resourceId = (int) $data['id'];
+        if (empty($resourceId)) {
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Unauthorized access.' // @translate
+            ))->setTranslator($this->translator()), Response::STATUS_CODE_403);
+        }
+
+        /** @var \Omeka\Mvc\Controller\Plugin\Api $api */
+        $api = $this->api();
+
+        // Check a manipulation of the post for the resource.
+        try {
+            /** @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource */
+            $resource = $api->read('resources', ['id' => $resourceId])->getContent();
+        } catch (NotFoundException $e) {
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Resource not found.' // @translate
+            ))->setTranslator($this->translator()), Response::STATUS_CODE_403);
+        } catch (\Exception $e) {
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Unauthorized access.' // @translate
+            ))->setTranslator($this->translator()), Response::STATUS_CODE_403);
+        }
+
+        $action = $data['action'] ?: 'toggle';
+        if (!in_array($action, ['add', 'delete', 'toggle'])) {
+            return $this->jSend(JSend::FAIL, null, (new PsrMessage(
+                'Action {action} not allowed.', // @translate
+                ['action' => $action]
+            ))->setTranslator($this->translator()));
+        }
+
+        try {
+            $subscription = $api->read('comment_subscriptions', [
+                'owner' => $user->getId(),
+                'resource' => $resourceId,
+            ], [], ['responseContent' => 'resource'])->getContent();
+        } catch (\Exception $e) {
+            $subscription = null;
+        }
+
+        if ($action === 'toggle') {
+            $action = $subscription ? 'delete' : 'add';
+        }
+
+        if ($action === 'add') {
+            if (!$subscription) {
+                $subscription = $api->create('comment_subscriptions', [
+                    'o:owner' => ['o:id' => $user->getId()],
+                    'o:resource' => ['o:id' => $resourceId]
+                ], [], ['responseContent' => 'resource'])->getContent();
+            }
+        } else {
+            if ($subscription) {
+                $api->delete('comment_subscriptions', ['id' => $subscription->getId()]);
+                $subscription = null;
+            }
+        }
+
+        return $this->jSend(JSend::SUCCESS, [
+            'o:resource' => $resource->getReference()->jsonSerialize(),
+            'status' => $subscription ? 'subscribed' : 'unsubscribed',
+        ]);
+    }
+
     /**
      * Check if a comment is a spam.
      *

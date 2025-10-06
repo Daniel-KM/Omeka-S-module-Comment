@@ -67,24 +67,37 @@ var Comment = {
     },
 
     moveForm: function(event) {
-        $('#comment-form').insertAfter(event.target);
-        const commentId = Comment.getCommentId(event.target);
+        const button = event.currentTarget;
+        const commentId = Comment.getCommentId(button);
+        $('#comment-form').insertAfter(button);
         $('#comment_parent_id').val(commentId);
     },
 
     flag: function(event) {
-        var commentId = Comment.getCommentId(event.target);
-        const button = event.target;
+        const button = event.currentTarget;
+        const commentId = Comment.getCommentId(button);
         button.dataset.action = Comment.getBasePath() + '/flag';
         button.dataset.payload = JSON.stringify({ id: commentId });
+        event.target = button;
         CommonDialog.jSend(event);
     },
 
     unflag: function(event) {
-        var commentId = Comment.getCommentId(event.target);
-        const button = event.target;
+        const button = event.currentTarget;
+        const commentId = Comment.getCommentId(button);
         button.dataset.action = Comment.getBasePath() + '/unflag';
         button.dataset.payload = JSON.stringify({ id: commentId });
+        event.target = button;
+        CommonDialog.jSend(event);
+    },
+
+    subscribeResource: function(event) {
+        const button = event.currentTarget;
+        const action = button.dataset.subscriptionAction ? button.dataset.subscriptionAction : 'toggle';
+        const resourceId = button.dataset.id ? button.dataset.id : 0;
+        button.dataset.action = Comment.getBasePath() + '/subscribe-resource';
+        button.dataset.payload = JSON.stringify({ action: action, id: resourceId });
+        event.target = button;
         CommonDialog.jSend(event);
     },
 
@@ -103,6 +116,23 @@ var Comment = {
             comment.find('.comment-body').first().removeClass('comment-flagged');
             comment.find('.comment-flag').first().show();
             comment.find('.comment-unflag').first().hide();
+        } else if (response.data.status === 'subscribed') {
+            const button = $('.comment-subscribe[data-id="' + response.data['o:resource']['o:id'] + '"]');
+            if (button.length) {
+                button.removeClass('unsubscribed').addClass('subscribed');
+                button[0].setAttribute('title', button[0].dataset.titleSubscribed);
+                // Keep span with class for the icon.
+                // button.find('.comment-subscription-icon').next().remove();
+                // button.append(document.createTextNode(button[0].dataset.titleSubscribed));
+            }
+        } else if (response.data.status === 'unsubscribed') {
+            const button = $('.comment-subscribe[data-id="' + response.data['o:resource']['o:id'] + '"]');
+            if (button.length) {
+                button.removeClass('subscribed').addClass('unsubscribed');
+                button[0].setAttribute('title', button[0].dataset.titleUnsubscribed);
+                // button.find('.comment-subscription-icon').next().remove();
+                // button.append(document.createTextNode(button[0].dataset.titleUnsubscribed));
+            }
         }
     },
 
@@ -123,6 +153,7 @@ var Comment = {
         $('.comment-reply').click(Comment.handleReply);
         $('.comment-flag').click(Comment.flag);
         $('.comment-unflag').click(Comment.unflag);
+        $('.comment-subscribe').click(Comment.subscribeResource);
 
         $('.comment-form button').on('click', function(e) {
             e.preventDefault();

@@ -25,11 +25,11 @@ class SiteSettingsFieldset extends Fieldset
             ->setOption('element_groups', $this->elementGroups)
 
             ->add([
-                'name' => 'comment_placement_form',
+                'name' => 'comment_placement_subscription',
                 'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
                     'element_group' => 'comment',
-                    'label' => 'Display comment form', // @translate
+                    'label' => 'Display subscription button', // @translate
                     'value_options' => [
                         // 'block/items' => 'Items: Via resource block or custom theme', // @translate
                         // 'block/media' => 'Media: Via resource block or custom theme', // @translate
@@ -43,7 +43,7 @@ class SiteSettingsFieldset extends Fieldset
                     ],
                 ],
                 'attributes' => [
-                    'id' => 'comment_placement_form',
+                    'id' => 'comment_placement_subscription',
                     'required' => false,
                 ],
             ])
@@ -67,6 +67,29 @@ class SiteSettingsFieldset extends Fieldset
                 ],
                 'attributes' => [
                     'id' => 'comment_placement_list',
+                    'required' => false,
+                ],
+            ])
+            ->add([
+                'name' => 'comment_placement_form',
+                'type' => CommonElement\OptionalMultiCheckbox::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Display comment form', // @translate
+                    'value_options' => [
+                        // 'block/items' => 'Items: Via resource block or custom theme', // @translate
+                        // 'block/media' => 'Media: Via resource block or custom theme', // @translate
+                        // 'block/item_sets' => 'Item set: Via resource block or custom theme', // @translate
+                        'before/items' => 'Item: Top', // @translate
+                        'before/media' => 'Media: Top', // @translate
+                        'before/item_sets' => 'Item set: Top', // @translate
+                        'after/items' => 'Item: Bottom', // @translate
+                        'after/media' => 'Media: Bottom', // @translate
+                        'after/item_sets' => 'Item set: Bottom', // @translate
+                    ],
+                ],
+                'attributes' => [
+                    'id' => 'comment_placement_form',
                     'required' => false,
                 ],
             ])
@@ -133,6 +156,14 @@ class SiteSettingsFieldset extends Fieldset
                 'options' => [
                     'element_group' => 'comment',
                     'label' => 'Legal agreement', // @translate
+                ],
+            ])
+            ->add([
+                'name' => 'comment_subscribe_button',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Button to subscribe to comments', // @translate
                 ],
             ])
         ;
