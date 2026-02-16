@@ -4,4 +4,6 @@
  * @var \Omeka\Api\Representation\AbstractResourceRepresentation $resource
  */
 
-echo $this->commentSubscriptionButton($resource);
+// When used as a resource page block, the admin explicitly added
+// it, so skip the site setting check.
+echo $this->commentSubscriptionButton($resource, ['skipSettingCheck' => true]);

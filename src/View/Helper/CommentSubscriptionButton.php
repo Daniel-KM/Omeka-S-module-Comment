@@ -29,6 +29,20 @@ class CommentSubscriptionButton extends AbstractHelper
 
         $view = $this->getView();
         $plugins = $view->getHelperPluginManager();
+
+        // Check site setting to enable/disable the subscription button.
+        // When the button is used as a resource page block, the admin
+        // explicitly chose to add it, so skip the setting check.
+        if (empty($options['skipSettingCheck'])) {
+            $isSite = $view->status()->isSiteRequest();
+            if ($isSite) {
+                $siteSetting = $plugins->get('siteSetting');
+                if (!$siteSetting('comment_subscribe_button')) {
+                    return '';
+                }
+            }
+        }
+
         $partial = $plugins->get('partial');
 
         $user = $view->identity();
@@ -99,7 +113,7 @@ class CommentSubscriptionButton extends AbstractHelper
             'labelSubscribe' => $options['labelSubscribe'] ?? $options['label_subscribe'] ?? null,
             'labelUnsubscribe' => $options['labelUnsubscribe'] ?? $options['label_unsubscribe'] ?? null,
             'showLabel' => $options['showLabel'] ?? $options['show_label'] ?? false,
-        ] + $options;
+        ] + array_diff_key($options, array_flip(['skipSettingCheck']));
 
         return $partial($template, $args);
     }
