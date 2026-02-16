@@ -324,6 +324,14 @@ class SettingsFieldset extends Fieldset
                     'info' => 'This text will be shown beside the legal checkbox. Let empty if you don’t want to use a legal agreement.', // @translate
                 ],
             ])
+            ->add([
+                'name' => 'comment_website',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Display website field', // @translate
+                ],
+            ])
 
             ->add([
                 'name' => 'comment_groups',

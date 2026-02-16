@@ -239,7 +239,8 @@ var Comment = {
 
         // Function to toggle alias fields visibility.
         function toggleIdentityFields() {
-            var mode = $('input[name="comment_identity_mode"]:checked').val();
+            var mode = $('input[name="comment_identity_mode"]:checked').val()
+                || $('input[name="comment_identity_mode"][type="hidden"]').val();
             if (mode === 'alias') {
                 $aliasFields.show();
                 // Make email required when using alias.

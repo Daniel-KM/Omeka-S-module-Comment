@@ -162,8 +162,8 @@ abstract class AbstractCommentController extends AbstractActionController
                 // Name can default to empty or use provided value.
                 $data['o:name'] = $data['o:name'] ?? '';
             } elseif ($useAnonymous) {
-                // Anonymous mode: empty name and email.
-                $data['o:name'] = '';
+                // Anonymous mode: keep pseudo if provided, clear email.
+                $data['o:name'] = $data['o:name'] ?? '';
                 $data['o:email'] = '';
             } else {
                 // Use account info.

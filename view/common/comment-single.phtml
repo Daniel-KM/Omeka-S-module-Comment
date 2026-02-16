@@ -34,7 +34,7 @@ if ($name) {
     $authorText = $website ? $hyperlink($displayName, $website) : $escape($displayName);
 } else {
     // Truly anonymous with no name provided.
-    $authorText = $escape($translate('Anonymous'));
+    $authorText = $escape($translate('[Anonymous]'));
 }
 
 $skipGravatar ??= (bool) $siteSetting('comment_skip_gravatar');

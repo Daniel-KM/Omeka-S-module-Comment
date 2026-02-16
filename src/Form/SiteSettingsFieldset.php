@@ -150,6 +150,19 @@ class SiteSettingsFieldset extends Fieldset
                 ],
             ])
             ->add([
+                'name' => 'comment_website',
+                'type' => CommonElement\OptionalRadio::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Display website field', // @translate
+                    'value_options' => [
+                        '' => 'Use default', // @translate
+                        '1' => 'Yes', // @translate
+                        '0' => 'No', // @translate
+                    ],
+                ],
+            ])
+            ->add([
                 'name' => 'comment_subscribe_button',
                 'type' => Element\Checkbox::class,
                 'options' => [

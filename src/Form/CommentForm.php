@@ -98,8 +98,8 @@ class CommentForm extends Form
                 ],
             ]);
 
-            // Add alias fields (initially hidden via JS, shown when alias is selected).
-            if ($allowAlias) {
+            // Add alias/anonymous fields (initially hidden via JS, shown when alias or anonymous is selected).
+            if ($allowAlias || $allowAnonymous) {
                 $this->add([
                     'type' => Element\Text::class,
                     'name' => 'o:name',
@@ -155,16 +155,18 @@ class CommentForm extends Form
                 ],
             ]);
 
-            $this->add([
-                'type' => Element\Url::class,
-                'name' => 'o:website',
-                'options' => [
-                    'label' => 'Website', // @translate
-                ],
-                'attributes' => [
-                    'placeholder' => 'My website…', // @translate
-                ],
-            ]);
+            if ($this->fallbackSettings->get('comment_website', ['site', 'global'], true)) {
+                $this->add([
+                    'type' => Element\Url::class,
+                    'name' => 'o:website',
+                    'options' => [
+                        'label' => 'Website', // @translate
+                    ],
+                    'attributes' => [
+                        'placeholder' => 'My website…', // @translate
+                    ],
+                ]);
+            }
         }
 
         $this->add([
