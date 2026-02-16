@@ -85,7 +85,8 @@ class CommentSubscriptionButton extends AbstractHelper
             'resource' => $resource,
             'user' => $user,
             'isAllowed' => (bool) $user,
-            'isAllowedAnonymous' => $isAllowedAnonymous,
+            // Subscription always requires a logged-in user, unlike commenting.
+            'isAllowedAnonymous' => false,
             'subscribed' => $subscribed,
             'action' => $action,
             'urlButton' => $urlButton,
