@@ -38,4 +38,21 @@ class CommentSubscriptionButtonTest extends AbstractHttpControllerTestCase
         $this->assertTrue(CommentCache::hasSubscription(1, 999));
         $this->assertTrue(CommentCache::getSubscription(1, 999));
     }
+
+    public function testSubscribeButtonDefaultIsFalse(): void
+    {
+        $services = $this->getApplication()->getServiceManager();
+        $config = $services->get('Config');
+        $default = $config['comment']['settings']['comment_subscribe_button'] ?? null;
+        $this->assertEquals('0', $default, 'The default value for comment_subscribe_button should be "0" (disabled).');
+    }
+
+    public function testSubscribeButtonSettingIsCheckbox(): void
+    {
+        $services = $this->getApplication()->getServiceManager();
+        $formElementManager = $services->get('FormElementManager');
+        $fieldset = $formElementManager->get(\Comment\Form\SiteSettingsFieldset::class);
+        $element = $fieldset->get('comment_subscribe_button');
+        $this->assertInstanceOf(\Laminas\Form\Element\Checkbox::class, $element);
+    }
 }

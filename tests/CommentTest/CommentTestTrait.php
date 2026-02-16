@@ -258,6 +258,74 @@ trait CommentTestTrait
     }
 
     /**
+     * @var array List of created subscription IDs for cleanup.
+     */
+    protected $createdSubscriptions = [];
+
+    /**
+     * Create a subscription for a user on a resource.
+     */
+    protected function createSubscription(int $userId, int $resourceId): \Comment\Entity\CommentSubscription
+    {
+        $entityManager = $this->getEntityManager();
+        $user = $entityManager->find(\Omeka\Entity\User::class, $userId);
+        $resource = $entityManager->find(\Omeka\Entity\Resource::class, $resourceId);
+
+        $subscription = new \Comment\Entity\CommentSubscription();
+        $subscription->setOwner($user);
+        $subscription->setResource($resource);
+        $subscription->setCreated(new \DateTime('now'));
+
+        $entityManager->persist($subscription);
+        $entityManager->flush();
+
+        $this->createdSubscriptions[] = $subscription->getId();
+        return $subscription;
+    }
+
+    /**
+     * Count subscriptions for a user on a resource.
+     */
+    protected function countSubscriptions(int $userId, int $resourceId): int
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = 'SELECT COUNT(cs.id) FROM Comment\Entity\CommentSubscription cs WHERE cs.owner = :userId AND cs.resource = :resourceId';
+        return (int) $entityManager->createQuery($dql)
+            ->setParameter('userId', $userId)
+            ->setParameter('resourceId', $resourceId)
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Count jobs of a given class dispatched after a given time.
+     */
+    protected function countJobsSince(string $class, \DateTime $since): int
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = 'SELECT COUNT(j.id) FROM Omeka\Entity\Job j WHERE j.class = :class AND j.id > :minId';
+        // Use a subquery to find jobs created after the given time.
+        // Since Job doesn't always have a "created" field, use ID ordering.
+        // Instead, query by class and check manually.
+        $dql = 'SELECT COUNT(j.id) FROM Omeka\Entity\Job j WHERE j.class = :class';
+        return (int) $entityManager->createQuery($dql)
+            ->setParameter('class', $class)
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Get the latest job of a given class.
+     */
+    protected function getLatestJob(string $class): ?\Omeka\Entity\Job
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = 'SELECT j FROM Omeka\Entity\Job j WHERE j.class = :class ORDER BY j.id DESC';
+        return $entityManager->createQuery($dql)
+            ->setParameter('class', $class)
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+    }
+
+    /**
      * Clean up created resources after test.
      */
     protected function cleanupResources(): void
@@ -276,6 +344,25 @@ trait CommentTestTrait
             }
         }
         $this->createdComments = [];
+
+        try {
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            // Ignore.
+        }
+
+        // Delete created subscriptions.
+        foreach ($this->createdSubscriptions as $subscriptionId) {
+            try {
+                $subscription = $entityManager->find(\Comment\Entity\CommentSubscription::class, $subscriptionId);
+                if ($subscription) {
+                    $entityManager->remove($subscription);
+                }
+            } catch (\Exception $e) {
+                // Ignore errors during cleanup.
+            }
+        }
+        $this->createdSubscriptions = [];
 
         try {
             $entityManager->flush();

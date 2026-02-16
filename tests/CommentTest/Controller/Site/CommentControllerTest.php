@@ -268,6 +268,55 @@ class CommentControllerTest extends AbstractHttpControllerTestCase
     }
 
     // =========================================================================
+    // Auto-subscription Tests
+    // =========================================================================
+
+    public function testCommentCreatesSubscription(): void
+    {
+        $item = $this->createItem();
+        $user = $this->getCurrentUser();
+
+        // Verify no subscription exists yet.
+        $this->assertEquals(0, $this->countSubscriptions($user->getId(), $item->id()));
+
+        $this->dispatch('/s/test-site/comment/add', 'POST', [
+            'resource_id' => $item->id(),
+            'o:body' => 'Comment that should auto-subscribe',
+            'path' => '/s/test-site/item/' . $item->id(),
+        ]);
+
+        $this->assertResponseStatusCode(200);
+        $response = json_decode($this->getResponse()->getContent(), true);
+        $this->assertEquals('success', $response['status']);
+
+        // Verify subscription was created.
+        $this->assertEquals(1, $this->countSubscriptions($user->getId(), $item->id()));
+    }
+
+    public function testCommentDoesNotDuplicateSubscription(): void
+    {
+        $item = $this->createItem();
+        $user = $this->getCurrentUser();
+
+        // Pre-create a subscription.
+        $this->createSubscription($user->getId(), $item->id());
+        $this->assertEquals(1, $this->countSubscriptions($user->getId(), $item->id()));
+
+        $this->dispatch('/s/test-site/comment/add', 'POST', [
+            'resource_id' => $item->id(),
+            'o:body' => 'Second comment on same resource',
+            'path' => '/s/test-site/item/' . $item->id(),
+        ]);
+
+        $this->assertResponseStatusCode(200);
+        $response = json_decode($this->getResponse()->getContent(), true);
+        $this->assertEquals('success', $response['status']);
+
+        // Verify still only one subscription.
+        $this->assertEquals(1, $this->countSubscriptions($user->getId(), $item->id()));
+    }
+
+    // =========================================================================
     // Alias Mode Tests
     // =========================================================================
 
