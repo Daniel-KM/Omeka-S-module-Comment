@@ -507,9 +507,9 @@ msgstr ""
 "par ligne."
 
 #: src/Form/SettingsFieldset.php:90
-msgid "Allow non-admin users to edit their own comment"
+msgid "Allow non-admin users to edit or delete their own comment"
 msgstr ""
-"Autoriser les utilisateurs non-admin à modifier leurs propres commentaires"
+"Autoriser les utilisateurs non-admin à modifier ou supprimer leurs propres commentaires"
 
 #: src/Form/SettingsFieldset.php:99
 msgid "WordPress API key for Akismet if installed"
@@ -755,6 +755,44 @@ msgstr "La ressource ou le commentaire n’existe pas."
 #: config/module.config.php:214
 msgid "comment_legal_text"
 msgstr ""
+
+#: src/Controller/AbstractCommentController.php
+msgid "This comment has already been posted."
+msgstr "Ce commentaire a déjà été posté."
+
+#: src/Controller/AbstractCommentController.php
+msgid "The user has no right to delete this resource."
+msgstr "Cet utilisateur n'a pas le droit de supprimer cette ressource."
+
+#: src/Controller/AbstractCommentController.php
+msgid "Too many comments. Please wait before posting again."
+msgstr "Trop de commentaires. Veuillez patienter avant de poster à nouveau."
+
+#: src/Controller/AbstractCommentController.php
+msgid "Email is required when using an alias."
+msgstr "L'adresse mail est requise lors de l'utilisation d'un pseudonyme."
+
+#: src/Controller/AbstractCommentController.php
+msgid "Cannot reply to a comment that is not yet approved."
+msgstr "Impossible de répondre à un commentaire qui n'est pas encore approuvé."
+
+#: config/module.config.php
+msgid "Edit your comment"
+msgstr "Modifier votre commentaire"
+
+#: config/module.config.php
+msgid "Are you sure you want to delete this comment?"
+msgstr "Êtes-vous sûr de vouloir supprimer ce commentaire ?"
+
+#: view/comment/admin/comment/browse.phtml
+#: view/comment/admin/comment/show-details.phtml
+#: view/common/admin/comment.phtml
+msgid "Deleted"
+msgstr "Supprimé"
+
+#: data/scripts/upgrade.php
+msgid "Comments can now be soft-deleted. Deleted comments are hidden from the public but preserved for admin review."
+msgstr "Les commentaires peuvent maintenant être supprimés (masqués). Les commentaires supprimés sont cachés au public mais conservés pour la revue en admin."
 
 #, php-format
 #~ msgid ""
