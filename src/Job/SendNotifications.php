@@ -88,7 +88,7 @@ class SendNotifications extends AbstractJob
         $mailer = $services->get('Omeka\Mailer');
 
         $subscriptions = $api
-            ->search('comment_subscriptions', ['resource_id' => $resource->id()], ['responseContent' => 'resource'])
+            ->search('comment_subscriptions', ['resource_id' => $resource->id()], ['initialize' => false, 'finalize' => false, 'responseContent' => 'resource'])
             ->getContent();
 
         if (!$subscriptions) {
@@ -96,7 +96,10 @@ class SendNotifications extends AbstractJob
         }
 
         $siteName = $settings->get('installation_title');
-        $resourceUrl = $resource->siteUrl(null, true);
+        $siteSlug = $this->getArg('site_slug');
+        $resourceUrl = $siteSlug
+            ? $resource->siteUrl($siteSlug, true)
+            : $resource->apiUrl();
 
         $subjectTemplate = $settings->get('comment_email_subscriber_subject')
             ?: '[{site_name}] New comment'; // @translate
