@@ -64,7 +64,6 @@ class Module extends AbstractModule
 
     const NAMESPACE = __NAMESPACE__;
 
-
     public function onBootstrap(MvcEvent $event): void
     {
         parent::onBootstrap($event);
