@@ -544,8 +544,7 @@ abstract class AbstractCommentController extends AbstractActionController
         if ($action === 'add') {
             if (!$subscription) {
                 $subscription = $api->create('comment_subscriptions', [
-                    'o:owner' => ['o:id' => $user->getId()],
-                    'o:resource' => ['o:id' => $resourceId]
+                    'o:resource' => ['o:id' => $resourceId],
                 ])->getContent();
             }
         } else {

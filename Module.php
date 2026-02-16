@@ -198,7 +198,7 @@ class Module extends AbstractModule
             // Identified users can comment. Reviewer and above can approve.
             ->allow($roles, [Comment::class], ['read', 'create', 'update', 'change-owner'])
             ->allow($roles, [Api\Adapter\CommentAdapter::class], ['search', 'read', 'create', 'update'])
-            ->allow($roles, [Controller\Site\CommentController::class], ['browse', 'show', 'flag', 'add'])
+            ->allow($roles, [Controller\Site\CommentController::class], ['browse', 'show', 'flag', 'add', 'subscription', 'subscribe-resource'])
             ->allow($roles, [Controller\Admin\CommentController::class], ['browse', 'flag', 'add', 'show-details'])
             // Identified users can subscribe to comments.
             // There is no update, only delete.
