@@ -18,7 +18,7 @@ class CommentController extends AbstractCommentController
     {
         $user = $this->identity();
         if (!$user) {
-            return $this->redirect()->toRoute('site/guest/anonymous', ['action' => 'login'], ['query' => ['redirect' => $this->getRequest()->getRequestUri()]]);
+            return $this->redirect()->toRoute('site/guest/anonymous', ['site-slug' => $this->params('site-slug'), 'action' => 'login'], ['query' => ['redirect' => $this->getRequest()->getRequestUri()]]);
         }
 
         $this->browse()->setDefaults('comments');
@@ -56,7 +56,7 @@ class CommentController extends AbstractCommentController
     {
         $user = $this->identity();
         if (!$user) {
-            return $this->redirect()->toRoute('site/guest/anonymous', ['action' => 'login'], ['query' => ['redirect' => $this->getRequest()->getRequestUri()]]);
+            return $this->redirect()->toRoute('site/guest/anonymous', ['site-slug' => $this->params('site-slug'), 'action' => 'login'], ['query' => ['redirect' => $this->getRequest()->getRequestUri()]]);
         }
 
         // Browse the subscription of the user.
