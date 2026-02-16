@@ -53,6 +53,8 @@ $baseUrl = $site ? $url('site/comment', ['site-slug' => $site->slug()]) : $url('
 </nav>
 <?php endif; ?>
 
+<?= $this->messages() ?>
+
 <?= $this->pageTitle($translate('My comments'), 2) ?>
 
 <?php //= $this->searchFilters() ?>
