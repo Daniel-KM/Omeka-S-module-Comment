@@ -146,7 +146,7 @@ var Comment = {
                 this.setAttribute('title', this.dataset.titleSubscribed);
                 const textSpan = $(this).find('.comment-subscription-text');
                 if (textSpan.length) {
-                    textSpan.text(this.dataset.titleSubscribed);
+                    textSpan.text(this.dataset.textSubscribed || this.dataset.titleSubscribed);
                 }
             });
         } else if (response.data.data.status === 'unsubscribed') {
@@ -158,7 +158,7 @@ var Comment = {
                   this.setAttribute('title', this.dataset.titleUnsubscribed);
                   const textSpan = $(this).find('.comment-subscription-text');
                   if (textSpan.length) {
-                      textSpan.text(this.dataset.titleUnsubscribed);
+                      textSpan.text(this.dataset.textUnsubscribed || this.dataset.titleUnsubscribed);
                   }
               });
               // Remove the resource from the list if on subscriptions page.

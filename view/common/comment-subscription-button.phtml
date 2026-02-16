@@ -48,8 +48,8 @@ $disabled = !$user && !$isAllowedAnonymous;
 
 <?php else: ?>
 
-<button type="button" class="button comment-subscribe <?= $class ?> comment-subscription-<?= $escapeAttr($action) ?>" data-id="<?= $resource->id() ?>" title="<?= $escapeAttr($text) ?>" data-subscription-action="<?= $escapeAttr($action) ?>" data-title-subscribed="<?= $textSelect['subscribed'] ?>" data-title-unsubscribed="<?= $textSelect['unsubscribed'] ?>" data-url="<?= $urlButton ?>" data-comment-url="<?= $urlBaseComment ?>">
-	<span class="comment-subscription-icon"></span>
+<button type="button" class="button comment-subscribe <?= $class ?> comment-subscription-<?= $escapeAttr($action) ?>" data-id="<?= $resource->id() ?>" title="<?= $escapeAttr($text) ?>" data-subscription-action="<?= $escapeAttr($action) ?>" data-title-subscribed="<?= $escapeAttr($textSelect['subscribed']) ?>" data-title-unsubscribed="<?= $escapeAttr($textSelect['unsubscribed']) ?>" data-text-subscribed="<?= $escapeAttr($textSelect['subscribed']) ?>" data-text-unsubscribed="<?= $escapeAttr($textSelect['unsubscribed']) ?>" data-url="<?= $urlButton ?>" data-comment-url="<?= $urlBaseComment ?>">
+    <span class="comment-subscription-icon"></span>
     <?php if ($text): ?>
     <span class="comment-subscription-text"><?= $escape($text) ?></span>
     <?php endif; ?>
