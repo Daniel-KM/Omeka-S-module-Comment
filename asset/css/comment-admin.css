@@ -77,6 +77,7 @@
     .comment .resource-name::before {
         display: inline-block;
         font-family: "Font Awesome 5 Free";
+        font-weight: 900;
         padding-left: 3px;
         padding-right: 3px;
         width: 24px;
@@ -140,6 +141,14 @@
     .comment .icons-only a .spinner,
     .comment .icons-only button .spinner {
         margin-left: 0.5em;
+    }
+
+    .comment-deleted {
+        font-style: italic;
+        opacity: .6;
+    }
+    .comment-status-deleted {
+        font-style: italic;
     }
 }
 

@@ -61,14 +61,20 @@ class CommentController extends AbstractCommentController
         $response = $this->api()->read('comments', $this->params('id'));
         $comment = $response->getContent();
 
+        /** @var \Omeka\Form\ConfirmForm $form */
+        $form = $this->getForm(ConfirmForm::class);
+        $form->setAttribute('action', $comment->url('delete'));
+        $form->setAttribute('id', 'confirm-delete-comment');
+        $form->setButtonLabel('Confirm delete'); // @translate
+
         $view = new ViewModel([
-            'comment' => $comment,
             'resource' => $comment,
-            'resourceLabel' => 'comment',
+            'form' => $form,
+            'isDeleted' => $comment->isDeleted(),
             'partialPath' => 'comment/admin/comment/show-details',
         ]);
         return $view
-            ->setTemplate('common/delete-confirm-details')
+            ->setTemplate('comment/admin/comment/delete-confirm')
             ->setTerminal(true);
     }
 
@@ -79,9 +85,18 @@ class CommentController extends AbstractCommentController
             $form = $this->getForm(ConfirmForm::class);
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
-                $response = $this->api($form)->delete('comments', $this->params('id'));
-                if ($response) {
-                    $this->messenger()->addSuccess('Comment successfully deleted.'); // @translate
+                $id = $this->params('id');
+                $hardDelete = (bool) $this->params()->fromPost('hard_delete', false);
+                if ($hardDelete) {
+                    $response = $this->api($form)->delete('comments', $id);
+                    if ($response) {
+                        $this->messenger()->addSuccess('Comment permanently deleted.'); // @translate
+                    }
+                } else {
+                    $response = $this->api($form)->update('comments', $id, ['o:deleted' => true], [], ['isPartial' => true]);
+                    if ($response) {
+                        $this->messenger()->addSuccess('Comment soft-deleted.'); // @translate
+                    }
                 }
             } else {
                 $this->messenger()->addFormErrors($form);

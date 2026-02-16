@@ -1,0 +1,40 @@
+<?php
+/**
+ * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Comment\Api\Representation\CommentRepresentation $resource
+ * @var \Omeka\Form\ConfirmForm $form
+ * @var bool $isDeleted
+ * @var string $partialPath
+ */
+
+$translate = $this->plugin('translate');
+
+$isDeleted = !empty($this->isDeleted);
+?>
+<div id="sidebar-confirm">
+    <h3><?= $translate('Delete comment') ?></h3>
+    <?php if ($isDeleted): ?>
+    <p><?= $translate('This comment is already soft-deleted. It will be permanently removed.') ?></p>
+    <?php else: ?>
+    <p><?= $translate('Are you sure you would like to delete this comment?') ?></p>
+    <?php endif; ?>
+    <label><input type="checkbox" name="hard-delete-check"<?php if ($isDeleted): ?> checked disabled<?php endif; ?>> <?= $translate('Permanently delete (hard delete)') ?></label>
+    <?= $this->form($this->form) ?>
+</div>
+
+<?php if (isset($this->partialPath)): ?>
+    <?= $this->partial($this->partialPath) ?>
+<?php endif; ?>
+
+<script>
+$('.sidebar').on('submit', '#confirm-delete-comment', function(e) {
+    var sidebar = $(this).closest('.sidebar');
+    var checked = sidebar.find('input[name="hard-delete-check"]').prop('checked');
+    <?php if ($isDeleted): ?>
+    checked = true;
+    <?php endif; ?>
+    if (checked) {
+        $(this).append('<input type="hidden" name="hard_delete" value="1">');
+    }
+});
+</script>

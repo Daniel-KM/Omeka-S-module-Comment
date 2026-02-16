@@ -17,15 +17,14 @@ $escapeAttr = $plugins->get('escapeHtmlAttr');
 $userIsAllowed = $plugins->get('userIsAllowed');
 
 $this->headLink()
-    ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
-    ->appendStylesheet($assetUrl('css/comment.css', 'Comment'))
+    ->appendStylesheet($assetUrl('css/common-dialog-admin.css', 'Common'))
     ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'));
 $this->headScript()
     ->appendFile($assetUrl('js/common-dialog.js', 'Common'), 'text/javascript', ['defer' => 'defer'])
     ->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer'])
     ->appendFile($assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 
-$this->htmlElement('body')->appendAttribute('class', 'comment comments browse');
+$this->htmlElement('body')->appendAttribute('class', 'comments browse');
 
 $batchEditRight = $userIsAllowed(CommentAdapter::class, 'batch-update')
     || $userIsAllowed(CommentAdapter::class, 'batch-delete');
@@ -128,7 +127,7 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
                 <?php if ($batchEditRight): ?>
                     <input type="checkbox" name="resource_ids[]" value="<?= $comment->id() ?>">
                 <?php endif; ?>
-                <div class="comment-body">
+                <div class="comment-body<?php if ($comment->isDeleted()): ?> comment-deleted<?php endif; ?>">
                     <?= $escape(mb_substr($comment->body(), 0, 200)) ?>
                 </div>
                 <span class="is-public-or-not<?php if (!$comment->isApproved()): echo ' o-icon-private'; endif; ?>" aria-label="<?= $translate('Private') ?>"></span>
@@ -232,11 +231,11 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
     <?= $this->pagination() ?>
 </div>
 
-<div class="sidebar">
-    <button type="button"
-        class="sidebar-close o-icon-close"
-        aria-label="<?= $v = $escapeAttr($translate('Close')) ?>"
-        title="<?= $v ?>"></button>
+<div id="sidebar" class="sidebar">
+    <?= $hyperlink('', '#', [
+        'class' => 'sidebar-close o-icon-close',
+        'title' => $translate('Close'),
+    ]) ?>
     <div class="sidebar-content"></div>
 </div>
 

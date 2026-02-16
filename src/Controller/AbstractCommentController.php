@@ -139,7 +139,8 @@ abstract class AbstractCommentController extends AbstractActionController
         $data['o:user'] = $user ? ['o:id' => $user->getId()] : null;
 
         if ($user) {
-            $data['o:owner'] = ['o:id' => $user->getId()];
+            // Do not set o:owner explicitly: the adapter auto-assigns the
+            // current user on create, avoiding the need for 'change-owner'.
 
             // Check if user chose to use an alias or anonymous mode.
             $identityMode = $data['comment_identity_mode'] ?? 'account';
@@ -273,8 +274,8 @@ abstract class AbstractCommentController extends AbstractActionController
                 ]);
             } catch (NotFoundException $e) {
                 // Not subscribed yet, create subscription.
+                // Do not set o:owner: auto-assigned by adapter.
                 $this->api()->create('comment_subscriptions', [
-                    'o:owner' => ['o:id' => $user->getId()],
                     'o:resource' => ['o:id' => $resourceId],
                 ]);
             } catch (\Exception $e) {
@@ -466,15 +467,29 @@ abstract class AbstractCommentController extends AbstractActionController
         $role = $user->getRole();
         $isApprobator = in_array($role, $this->approbators);
 
-        // Soft delete: mark as deleted, keep in database.
-        try {
-            $this->api()->update('comments', $commentId, [
-                'o:deleted' => true,
-            ], [], ['isPartial' => true]);
-        } catch (\Exception $e) {
-            return $this->jSend()->error(null, new PsrMessage(
-                'An error occurred.' // @translate
-            ));
+        // Check if hard delete is requested (admin only, via query param).
+        $hardDelete = $isApprobator
+            && $this->params()->fromPost('hard_delete', false);
+
+        if ($hardDelete) {
+            try {
+                $this->api()->delete('comments', $commentId);
+            } catch (\Exception $e) {
+                return $this->jSend()->error(null, new PsrMessage(
+                    'An error occurred.' // @translate
+                ));
+            }
+        } else {
+            // Soft delete: mark as deleted, keep in database.
+            try {
+                $this->api()->update('comments', $commentId, [
+                    'o:deleted' => true,
+                ], [], ['isPartial' => true]);
+            } catch (\Exception $e) {
+                return $this->jSend()->error(null, new PsrMessage(
+                    'An error occurred.' // @translate
+                ));
+            }
         }
 
         return $this->jSend()->success([

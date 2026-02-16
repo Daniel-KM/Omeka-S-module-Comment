@@ -179,12 +179,12 @@ class Module extends AbstractModule
         // Check if public can comment and flag, and read comments and own ones.
         if ($anonymousViewComment) {
             if ($anonymousAllowComment) {
-                $entityRights = ['read', 'create', 'update', 'change-owner'];
+                $entityRights = ['read', 'create', 'update'];
                 $adapterRights = ['search', 'read', 'create', 'update'];
                 $controllerRights = ['browse', 'show', 'flag', 'add'];
                 // Anonymous can never edit, it is a non-sense.
             } else {
-                $entityRights = ['read', 'update', 'change-owner'];
+                $entityRights = ['read', 'update'];
                 $adapterRights = ['search', 'read', 'update'];
                 $controllerRights = ['browse', 'show', 'flag'];
             }
@@ -196,7 +196,7 @@ class Module extends AbstractModule
 
         $acl
             // Identified users can comment. Reviewer and above can approve.
-            ->allow($roles, [Comment::class], ['read', 'create', 'update', 'change-owner'])
+            ->allow($roles, [Comment::class], ['read', 'create', 'update'])
             ->allow($roles, [Api\Adapter\CommentAdapter::class], ['search', 'read', 'create', 'update'])
             ->allow($roles, [Controller\Site\CommentController::class], ['browse', 'show', 'flag', 'add', 'subscription', 'subscribe-resource'])
             ->allow($roles, [Controller\Admin\CommentController::class], ['browse', 'flag', 'add', 'show-details'])
@@ -218,7 +218,7 @@ class Module extends AbstractModule
             ->allow(
                 $approbators,
                 [Comment::class],
-                ['read', 'create', 'update', 'delete', 'edit', 'view-all']
+                ['read', 'create', 'update', 'delete', 'edit', 'view-all', 'change-owner']
             )
             ->allow(
                 $approbators,
@@ -733,7 +733,7 @@ class Module extends AbstractModule
         $assetUrl = $plugins->get('assetUrl');
 
         $view->headLink()
-            ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
+            ->appendStylesheet($assetUrl('css/common-dialog-admin.css', 'Common'))
             ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'));
         $view->headScript()
             ->appendFile($assetUrl('js/common-dialog.js', 'Common'), 'text/javascript', ['defer' => 'defer'])

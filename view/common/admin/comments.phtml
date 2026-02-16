@@ -22,7 +22,7 @@ $escapeAttr = $plugins->get('escapeHtmlAttr');
 $subscriptionButton = $plugins->get('commentSubscriptionButton');
 
 $this->headLink()
-    ->appendStylesheet($assetUrl('css/common-dialog.css', 'Common'))
+    ->appendStylesheet($assetUrl('css/common-dialog-admin.css', 'Common'))
     ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'))
     ->appendStylesheet($assetUrl('css/comment.css', 'Comment'));
 $this->headScript()
@@ -45,4 +45,12 @@ $baseUrl = $url('admin/comment');
     <?php else: ?>
         <?= $partial('common/comments-list') ?>
     <?php endif; ?>
+</div>
+
+<div id="sidebar-comment" class="sidebar">
+    <?= $this->hyperlink('', '#', [
+        'class' => 'sidebar-close o-icon-close',
+        'title' => $translate('Close'),
+    ]) ?>
+    <div class="sidebar-content"></div>
 </div>

@@ -82,19 +82,17 @@ if ($website = $comment->website()) {
             aria-label="<?= $v = $escape($translate('Edit')) ?>"
             title="<?= $v ?>"></button></li>
         <?php endif; ?>
-        <?php /* // TODO Delete comments from resources.
-        <?php if ($userIsAllowed(\Comment\Controller\Admin\CommentController::class, 'delete')): ?>
-        <li><a href="<?= $escape($comment->url('delete')) ?>"
-            onclick="return confirm(<?= json_encode($translate('Are you sure to delete this comment?')) ?>;"
+        <?php if ($comment->userIsAllowed('delete')): ?>
+        <li><button type="button"
             class="o-icon-delete sidebar-content"
+            data-sidebar-selector="#sidebar-comment"
             data-sidebar-content-url="<?= $escape($comment->url('delete-confirm')) ?>"
-            aria-label="<?= $escape($translate('Delete')) ?>"
-            title="<?= $escape($translate('Delete')) ?>"></a></li>
+            aria-label="<?= $v = $escape($translate('Delete')) ?>"
+            title="<?= $v ?>"></button></li>
         <?php endif; ?>
-        */ ?>
     </ul>
 </div>
-<div class="comment-body">
+<div class="comment-body<?php if ($comment->isDeleted()): ?> comment-deleted<?php endif; ?>">
     <?= $escape($comment->body()) ?>
 </div>
 <?php if ($comment->userIsAllowed('create')): ?>

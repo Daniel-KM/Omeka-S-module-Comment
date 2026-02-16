@@ -72,6 +72,25 @@
         });
 
         /**
+         * Handle sidebar-content buttons.
+         *
+         * Omeka admin.js handles only "a.sidebar-content" (links). This
+         * handler adds support for "button.sidebar-content" so that
+         * accessible buttons can be used instead of fake links.
+         *
+         * @see admin.js "a.sidebar-content"
+         */
+        $('#content').on('click', 'button.sidebar-content', function(e) {
+            e.preventDefault();
+            var sidebarSelector = $(this).data('sidebar-selector') || '#content > .sidebar';
+            var sidebar = $(sidebarSelector);
+            if ($(this).data('sidebar-content-url')) {
+                Omeka.populateSidebarContent(sidebar, $(this).data('sidebar-content-url'));
+            }
+            Omeka.openSidebar(sidebar);
+        });
+
+        /**
          * Approve or reject a list of comments in batch.
          */
         $('#content').on('click', '.batch-property', function(e) {

@@ -68,6 +68,12 @@ $hyperlink = $plugins->get('hyperlink');
         <?php endif; ?>
         </div>
     </div>
+    <?php if ($comment->isDeleted()): ?>
+    <div class="meta-group">
+        <h4><?= $translate('Status') ?></h4>
+        <div class="value comment-status-deleted"><?= $escape($translate('Deleted')) ?></div>
+    </div>
+    <?php endif; ?>
     <div class="meta-group">
         <h4><?= $translate('Date Created') ?></h4>
         <div class="value"><?= $escape($i18n->dateFormat($comment->created())) ?></div>
