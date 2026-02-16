@@ -70,6 +70,11 @@ class CommentSubscriptionButton extends AbstractHelper
         $isSite = $view->status()->isSiteRequest();
         $site = $isSite ? $view->currentSite() : null;
 
+        // In rare cases, the route may "site", but the site not yet prepared.
+        if ($isSite && !$site) {
+            return '';
+        }
+
         $action = $options['action'] ?? 'toggle';
 
         $url = $plugins->get('url');
