@@ -246,6 +246,8 @@ return [
         'The resource doesn’t exist.', // @translate
         'Something went wrong', // @translate
         'The resource or the comment doesn’t exist.', // @translate
+        'Edit your comment', // @translate
+        'Are you sure you want to delete this comment?', // @translate
     ],
     'comment' => [
         'settings' => [

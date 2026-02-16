@@ -195,7 +195,7 @@ class SettingsFieldset extends Fieldset
                 'type' => Element\Checkbox::class,
                 'options' => [
                     'element_group' => 'comment',
-                    'label' => 'Allow non-admin users to edit their own comment', // @translate
+                    'label' => 'Allow non-admin users to edit or delete their own comment', // @translate
                 ],
             ])
 

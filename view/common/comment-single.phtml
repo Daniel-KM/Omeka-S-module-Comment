@@ -43,6 +43,7 @@ $publicRequireModeration = $setting('comment_public_require_moderation');
 $userrRequireModeration = $setting('comment_user_require_moderation');
 $userCanComment = $comment->userIsAllowed('create');
 $userCanEdit = $comment->userIsAllowed('edit');
+$userCanDelete = $comment->userIsAllowed('delete');
 $userCanFlag = $userIsAllowed(\Comment\Controller\Site\CommentController::class, 'flag');
 $userCanUnflag = $userIsAllowed(\Comment\Controller\Site\CommentController::class, 'unflag');
 
@@ -98,6 +99,15 @@ $isSpam = $comment->isSpam();
             title="<?= $v ?>">
                 <span class="comment-edit-icon"></span>
                 <span class="comment-edit-text"><?= $escape($translate('Edit')) ?></span>
+            </button>
+        <?php endif; ?>
+        <?php if ($userCanDelete): ?>
+        <button type="button"
+            class="comment-action comment-delete"
+            aria-label="<?= $v = $escapeAttr($translate('Delete')) ?>"
+            title="<?= $v ?>">
+                <span class="comment-delete-icon"></span>
+                <span class="comment-delete-text"><?= $escape($translate('Delete')) ?></span>
             </button>
         <?php endif; ?>
     </div>

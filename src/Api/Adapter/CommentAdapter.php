@@ -35,6 +35,7 @@ class CommentAdapter extends AbstractEntityAdapter
         'approved' => 'approved',
         'flagged' => 'flagged',
         'spam' => 'spam',
+        'deleted' => 'deleted',
         'path' => 'path',
         'email' => 'email',
         'website' => 'website',
@@ -59,6 +60,7 @@ class CommentAdapter extends AbstractEntityAdapter
         'approved' => 'approved',
         'flagged' => 'flagged',
         'spam' => 'spam',
+        'deleted' => 'deleted',
         'path' => 'path',
         'email' => 'email',
         'website' => 'website',
@@ -282,6 +284,7 @@ class CommentAdapter extends AbstractEntityAdapter
             'approved' => 'approved',
             'flagged' => 'flagged',
             'spam' => 'spam',
+            'deleted' => 'deleted',
         ] as $queryKey => $column) {
             if (array_key_exists($queryKey, $query)) {
                 // An empty string means true in order to manage get/post query.
@@ -436,6 +439,14 @@ class CommentAdapter extends AbstractEntityAdapter
             }
             $entity->setSpam($newSpam);
         }
+        if ($this->shouldHydrate($request, 'o:deleted')) {
+            $newDeleted = (bool) $request->getValue('o:deleted', false);
+            $oldDeleted = $entity->isDeleted();
+            if ($request->getOperation() === Request::UPDATE && $newDeleted !== $oldDeleted) {
+                $entity->addHistoryEntry($newDeleted ? 'delete' : 'undelete', [], $userId);
+            }
+            $entity->setDeleted($newDeleted);
+        }
 
         $this->updateTimestamps($request, $entity);
     }
@@ -490,6 +501,7 @@ class CommentAdapter extends AbstractEntityAdapter
             'o:approved' => true,
             'o:flagged' => true,
             'o:spam' => true,
+            'o:deleted' => true,
         ];
         $rawData = $request->getContent();
         $rawData = array_intersect_key($rawData, $updatables);

@@ -67,6 +67,7 @@ class CommentRepresentation extends AbstractEntityRepresentation
             'o:approved' => $this->isApproved(),
             'o:flagged' => $this->isFlagged(),
             'o:spam' => $this->isSpam(),
+            'o:deleted' => $this->isDeleted(),
             'o:path' => $this->path(),
             'o:name' => $this->name(),
             'o:website' => $this->website(),
@@ -134,6 +135,11 @@ class CommentRepresentation extends AbstractEntityRepresentation
     public function isSpam(): bool
     {
         return $this->resource->isSpam();
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->resource->isDeleted();
     }
 
     public function path(): string

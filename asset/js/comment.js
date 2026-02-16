@@ -85,6 +85,7 @@ var Comment = {
     },
 
     edit: function(event) {
+        event.preventDefault();
         const button = event.currentTarget;
         const commentId = Comment.getCommentId(button);
         const commentBody = $(button).closest('.comment').find('.comment-body').text().trim();
@@ -99,6 +100,23 @@ var Comment = {
             }
             button.dataset.action = Comment.getBasePath() + '/' + commentId  +'/edit';
             button.dataset.payload = JSON.stringify({ 'o:body': updatedText });
+            event.target = button;
+            CommonDialog.jSend(event);
+        });
+    },
+
+    delete: function(event) {
+        event.preventDefault();
+        const button = event.currentTarget;
+        const commentId = Comment.getCommentId(button);
+        CommonDialog.dialogConfirm({
+            message: Omeka.jsTranslate('Are you sure you want to delete this comment?'),
+        }).then(function(confirmed) {
+            if (!confirmed) {
+                return;
+            }
+            button.dataset.action = Comment.getBasePath() + '/' + commentId + '/delete';
+            button.dataset.payload = JSON.stringify({});
             event.target = button;
             CommonDialog.jSend(event);
         });
@@ -138,6 +156,16 @@ var Comment = {
         }
         if (response.data.data.status === 'commented') {
             location.reload();
+        } else if (response.data.data.status === 'deleted') {
+            var commentId = response.data.data.comment['o:id'];
+            // Remove from DOM: the comment div and its parent li if on browse page.
+            var $comment = $('#comment-' + commentId);
+            var $li = $comment.closest('li.resource');
+            if ($li.length) {
+                $li.remove();
+            } else {
+                $comment.remove();
+            }
         } else if (response.data.data.status === 'flagged') {
             const comment = $('#comment-' + response.data.data.comment['o:id']);
             comment.find('.comment-body').first().addClass('comment-flagged');
@@ -234,6 +262,7 @@ var Comment = {
 
         $('.comment-reply').click(Comment.handleReply);
         $('.comment-edit').click(Comment.edit);
+        $('.comment-delete').click(Comment.delete);
         $('.comment-flag').click(Comment.flag);
         $('.comment-unflag').click(Comment.unflag);
         $('.comment-subscribe:not(.comment-login').click(Comment.subscribeResource);

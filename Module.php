@@ -208,10 +208,10 @@ class Module extends AbstractModule
         ;
         if ($userAllowEdit) {
             $acl
-                ->allow($nonApprobators, [Comment::class], ['edit'], new OwnsEntityAssertion())
-                ->allow($nonApprobators, [Api\Adapter\CommentAdapter::class], ['edit'])
-                ->allow($nonApprobators, [Controller\Site\CommentController::class], ['edit'])
-                ->allow($nonApprobators, [Controller\Admin\CommentController::class], ['edit']);
+                ->allow($nonApprobators, [Comment::class], ['edit', 'delete'], new OwnsEntityAssertion())
+                ->allow($nonApprobators, [Api\Adapter\CommentAdapter::class], ['edit', 'delete'])
+                ->allow($nonApprobators, [Controller\Site\CommentController::class], ['edit', 'delete'])
+                ->allow($nonApprobators, [Controller\Admin\CommentController::class], ['edit', 'delete']);
         }
 
         $acl
@@ -254,6 +254,11 @@ class Module extends AbstractModule
                     'delete-confirm',
                     'show-details',
                 ]
+            )
+            ->allow(
+                $approbators,
+                [Controller\Site\CommentController::class],
+                ['edit', 'delete']
             );
 
         // FIXME Rights to create / delete a subscription is only for user.
@@ -631,8 +636,8 @@ class Module extends AbstractModule
         /** @var \Comment\Entity\Comment $comment */
         $comment = $response->getContent();
 
-        // Only notify if the comment is approved (published).
-        if (!$comment->isApproved()) {
+        // Only notify if the comment is approved (published) and not deleted.
+        if (!$comment->isApproved() || $comment->isDeleted()) {
             return;
         }
 
@@ -697,8 +702,8 @@ class Module extends AbstractModule
         /** @var \Comment\Entity\Comment $comment */
         $comment = $response->getContent();
 
-        // Double-check the comment is actually flagged.
-        if (!$comment->isFlagged()) {
+        // Double-check the comment is actually flagged and not deleted.
+        if (!$comment->isFlagged() || $comment->isDeleted()) {
             return;
         }
 

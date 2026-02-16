@@ -42,6 +42,9 @@ class CommentVisibilityFilter extends SQLFilter
             return '';
         }
 
+        // Soft-deleted comments are hidden from all non-admin users.
+        $notDeleted = $alias . '.deleted = 0';
+
         $constraints = [];
 
         // Users can view approved resources.
@@ -57,7 +60,7 @@ class CommentVisibilityFilter extends SQLFilter
             );
         }
 
-        return implode(' ', $constraints);
+        return $notDeleted . ' AND (' . implode(' ', $constraints) . ')';
     }
 
     public function setAcl(Acl $acl): void

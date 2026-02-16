@@ -47,6 +47,11 @@ class SendNotifications extends AbstractJob
             return;
         }
 
+        // Skip notifications for deleted comments.
+        if ($comment->isDeleted()) {
+            return;
+        }
+
         // Retrieve the resource.
         try {
             $resource = $api->read('resources', $resourceId)->getContent();

@@ -427,6 +427,64 @@ abstract class AbstractCommentController extends AbstractActionController
         }
     }
 
+    public function deleteAction()
+    {
+        /** @var \Omeka\Entity\User $user */
+        $user = $this->identity();
+        if (!$user) {
+            return $this->jSend()->fail(null, new PsrMessage(
+                'Unauthorized access.' // @translate
+            ), Response::STATUS_CODE_403);
+        }
+
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return $this->jSend()->fail(null, new PsrMessage(
+                'Unauthorized access.' // @translate
+            ), Response::STATUS_CODE_403);
+        }
+
+        $commentId = $this->params('id');
+
+        try {
+            $response = $this->api()->read('comments', $commentId);
+        } catch (\Exception $e) {
+            return $this->jSend()->fail(null, new PsrMessage(
+                'Unauthorized access or not found.' // @translate
+            ), Response::STATUS_CODE_403);
+        }
+
+        /** @var \Comment\Api\Representation\CommentRepresentation $comment */
+        $comment = $response->getContent();
+
+        if (!$comment->userIsAllowed('delete')) {
+            return $this->jSend()->fail(null, new PsrMessage(
+                'The user has no right to delete this resource.' // @translate
+            ), Response::STATUS_CODE_403);
+        }
+
+        $role = $user->getRole();
+        $isApprobator = in_array($role, $this->approbators);
+
+        // Soft delete: mark as deleted, keep in database.
+        try {
+            $this->api()->update('comments', $commentId, [
+                'o:deleted' => true,
+            ], [], ['isPartial' => true]);
+        } catch (\Exception $e) {
+            return $this->jSend()->error(null, new PsrMessage(
+                'An error occurred.' // @translate
+            ));
+        }
+
+        return $this->jSend()->success([
+            'comment' => ['o:id' => (int) $commentId],
+            'status' => 'deleted',
+        ], $this->translate(
+            'Comment successfully deleted.' // @translate
+        ));
+    }
+
     public function flagAction()
     {
         return $this->flagUnflag(true);

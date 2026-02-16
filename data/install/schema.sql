@@ -7,6 +7,7 @@ CREATE TABLE `comment` (
     `approved` TINYINT(1) DEFAULT 0 NOT NULL,
     `flagged` TINYINT(1) DEFAULT 0 NOT NULL,
     `spam` TINYINT(1) DEFAULT 0 NOT NULL,
+    `deleted` TINYINT(1) DEFAULT 0 NOT NULL,
     `path` VARCHAR(1024) NOT NULL,
     `email` VARCHAR(190) NOT NULL,
     `name` VARCHAR(190) NOT NULL,

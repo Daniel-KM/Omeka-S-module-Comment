@@ -101,12 +101,7 @@
         margin: 0;
     }
 
-    .comment .success {
-        font-size: 1.8em;
-    }
-    .comment .errors {
-        color: red;
-    }
+
     .comment input.hidden {
         display:none;
     }
