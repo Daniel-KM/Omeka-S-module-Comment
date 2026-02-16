@@ -61,6 +61,39 @@ $commentForm->prepare();
             <?= $formText($element) ?>
         </div>
     </div>
+<?php elseif ($commentForm->has('comment_identity_mode')): ?>
+    <?php // Identity mode (alias/anonymous) for logged-in users. ?>
+    <?php $element = $commentForm->get('comment_identity_mode'); ?>
+    <div class="field">
+        <div class="field-meta">
+            <?= $formLabel($element) ?>
+        </div>
+        <div class="inputs">
+            <?= $formElement($element) ?>
+        </div>
+    </div>
+    <?php if ($commentForm->has('o:name')): ?>
+    <?php $element = $commentForm->get('o:name'); ?>
+    <div class="field">
+        <div class="field-meta">
+            <?= $formLabel($element) ?>
+        </div>
+        <div class="inputs">
+            <?= $formText($element) ?>
+        </div>
+    </div>
+    <?php endif; ?>
+    <?php if ($commentForm->has('o:email')): ?>
+    <?php $element = $commentForm->get('o:email'); ?>
+    <div class="field">
+        <div class="field-meta">
+            <?= $formLabel($element) ?>
+        </div>
+        <div class="inputs">
+            <?= $formText($element) ?>
+        </div>
+    </div>
+    <?php endif; ?>
 <?php endif; ?>
 
     <?php $element = $commentForm->get('o:body'); ?>
