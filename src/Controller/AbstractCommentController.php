@@ -206,6 +206,12 @@ abstract class AbstractCommentController extends AbstractActionController
             ));
         }
 
+        // Prevent duplicate comment (same body + resource + user/ip within 60s).
+        $duplicateCheck = $this->checkDuplicateComment($resourceId, $data['o:body'], $user, $data['o:ip']);
+        if ($duplicateCheck) {
+            return $duplicateCheck;
+        }
+
         $path = $data['path'];
         $data['o:path'] = $path;
 
@@ -694,6 +700,54 @@ abstract class AbstractCommentController extends AbstractActionController
             return $this->jSend()->fail(null, new PsrMessage(
                 'Too many comments. Please wait before posting again.' // @translate
             ), Response::STATUS_CODE_429);
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if a duplicate comment was recently posted.
+     *
+     * @param int $resourceId
+     * @param string $body
+     * @param \Omeka\Entity\User|null $user
+     * @param string $ip
+     * @return \Laminas\View\Model\JsonModel|null Error response or null if allowed.
+     */
+    protected function checkDuplicateComment(int $resourceId, string $body, $user, string $ip)
+    {
+        /** @var \Doctrine\ORM\EntityManager $entityManager */
+        $entityManager = $this->getEvent()->getApplication()
+            ->getServiceManager()
+            ->get('Omeka\EntityManager');
+
+        $since = new \DateTime('-60 seconds');
+        $dql = 'SELECT COUNT(c.id) FROM Comment\Entity\Comment c'
+            . ' WHERE c.resource = :resourceId'
+            . ' AND c.body = :body'
+            . ' AND c.created >= :since';
+        $params = [
+            'resourceId' => $resourceId,
+            'body' => $body,
+            'since' => $since,
+        ];
+
+        if ($user) {
+            $dql .= ' AND c.owner = :userId';
+            $params['userId'] = $user->getId();
+        } else {
+            $dql .= ' AND c.ip = :ip';
+            $params['ip'] = $ip;
+        }
+
+        $count = (int) $entityManager->createQuery($dql)
+            ->setParameters($params)
+            ->getSingleScalarResult();
+
+        if ($count > 0) {
+            return $this->jSend()->fail(null, new PsrMessage(
+                'This comment has already been posted.' // @translate
+            ));
         }
 
         return null;

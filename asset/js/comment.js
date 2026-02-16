@@ -7,10 +7,17 @@
  */
 
 var Comment = {
+    _submitting: false,
+
     validate: function(form) {
         var button = form.find('button');
         var error = false;
         var field;
+
+        // Prevent double submission.
+        if (Comment._submitting || button.prop('disabled')) {
+            return;
+        }
 
         var isAnonymous = $('#comment-main-container').data('is-anonymous');
 
@@ -44,6 +51,10 @@ var Comment = {
                 return;
             }
         }
+
+        // Disable immediately to prevent double submission.
+        Comment._submitting = true;
+        button.prop('disabled', true);
 
         // Use CommonDialog.jSend for AJAX submission.
         CommonDialog.jSend({
