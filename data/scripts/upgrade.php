@@ -33,7 +33,8 @@ if (!method_exists($this, 'checkModuleActiveVersion') || !$this->checkModuleActi
         $translate('The module %1$s should be upgraded to version %2$s or later.'), // @translate
         'Common', '3.4.79'
     );
-    throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);
+    $messenger->addError($message);
+    throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $translate('Missing requirement. Unable to upgrade.')); // @translate
 }
 
 if (version_compare($oldVersion, '3.1.5', '<')) {
@@ -215,6 +216,8 @@ if (version_compare($oldVersion, '3.4.15', '<')) {
 }
 
 if (version_compare($oldVersion, '3.4.16', '<')) {
+    // TODO This new index was added in 3.4.15, but a bad version during previous upgrade make it skipped.
+
     // Remove duplicate subscriptions before adding unique constraint.
     // Keep the oldest subscription (smallest id) for each owner-resource pair.
     $sql = <<<'SQL'
@@ -244,6 +247,22 @@ if (version_compare($oldVersion, '3.4.16', '<')) {
 
     $message = new PsrMessage(
         'A unique constraint has been added to prevent duplicate subscriptions.' // @translate
+    );
+    $messenger->addSuccess($message);
+
+    // Add soft delete column.
+    $sql = <<<'SQL'
+        ALTER TABLE `comment`
+        ADD `deleted` TINYINT(1) DEFAULT 0 NOT NULL AFTER `spam`;
+        SQL;
+    try {
+        $connection->executeStatement($sql);
+    } catch (\Exception $e) {
+        // Already created.
+    }
+
+    $message = new PsrMessage(
+        'Comments can now be soft-deleted. Deleted comments are hidden from the public but preserved for admin review.' // @translate
     );
     $messenger->addSuccess($message);
 }
