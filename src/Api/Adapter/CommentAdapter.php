@@ -143,28 +143,22 @@ class CommentAdapter extends AbstractEntityAdapter
             $groups = $this->getServiceLocator()->get('Omeka\Settings')->get('comment_groups');
             if (in_array('none', $values)) {
                 // Exclude comments whose item belongs to any group item sets.
+                // Use a NOT IN subquery instead of LEFT JOIN to avoid
+                // false positives when items belong to both grouped and
+                // non-grouped item sets (ManyToMany generates two joins
+                // and the WITH condition only applies to the second one).
                 $groupItemSets = array_unique(array_merge(...array_values($groups)));
                 if ($groupItemSets) {
-                    $itemAlias = $this->createAlias();
-                    $itemSetAlias = $this->createAlias();
+                    $itemSubAlias = $this->createAlias();
+                    $itemSetSubAlias = $this->createAlias();
                     $paramAlias = $this->createAlias();
+                    $subQb = $this->getEntityManager()->createQueryBuilder();
+                    $subQb->select($itemSubAlias . '.id')
+                        ->from(Item::class, $itemSubAlias)
+                        ->join($itemSubAlias . '.itemSets', $itemSetSubAlias)
+                        ->where($expr->in($itemSetSubAlias . '.id', ':' . $paramAlias));
                     $qb
-                        // Join items (may be null for comments on other types).
-                        ->leftJoin(
-                            Item::class,
-                            $itemAlias,
-                            'WITH',
-                            $expr->eq('omeka_root.resource', $itemAlias . '.id')
-                        )
-                        // Join only item sets that are in the grouped list.
-                        ->leftJoin(
-                            $itemAlias . '.itemSets',
-                            $itemSetAlias,
-                            'WITH',
-                            $expr->in($itemSetAlias . '.id', ':' . $paramAlias)
-                        )
-                        // Keep comments where no grouped item set matched.
-                        ->andWhere($expr->isNull($itemSetAlias . '.id'))
+                        ->andWhere($expr->notIn('omeka_root.resource', $subQb->getDQL()))
                         ->setParameter($paramAlias, $groupItemSets, Connection::PARAM_INT_ARRAY);
                 }
             } else {
