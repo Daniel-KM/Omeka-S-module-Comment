@@ -83,6 +83,7 @@ return [
                 'action' => 'browse',
                 'resource' => Controller\Admin\CommentController::class,
                 'class' => 'o-icon- fa-comments',
+                'admin_section' => 'users',
             ],
         ],
     ],
