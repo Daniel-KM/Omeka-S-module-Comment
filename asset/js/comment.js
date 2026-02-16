@@ -47,7 +47,10 @@ var Comment = {
             var legalAgreement = form.find('[name="legal_agreement"]');
             if (legalAgreement.length > 0 && !legalAgreement.prop('checked')) {
                 var msg = 'You should accept the legal agreement.';
-                CommonDialog.dialogAlert(Omeka.jsTranslate(msg));
+                CommonDialog.dialogAlert({
+                    heading: Omeka.jsTranslate('Comment'),
+                    message: Omeka.jsTranslate(msg),
+                });
                 return;
             }
         }
@@ -90,6 +93,7 @@ var Comment = {
         const commentId = Comment.getCommentId(button);
         const commentBody = $(button).closest('.comment').find('.comment-body').text().trim();
         CommonDialog.dialogPrompt({
+            heading: Omeka.jsTranslate('Comment'),
             message: Omeka.jsTranslate('Edit your comment'),
             textarea: true,
             defaultValue: commentBody,
@@ -110,6 +114,7 @@ var Comment = {
         const button = event.currentTarget;
         const commentId = Comment.getCommentId(button);
         CommonDialog.dialogConfirm({
+            heading: Omeka.jsTranslate('Comment'),
             message: Omeka.jsTranslate('Are you sure you want to delete this comment?'),
         }).then(function(confirmed) {
             if (!confirmed) {

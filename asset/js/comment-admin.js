@@ -39,7 +39,11 @@
             .done(function(data) {
                 if (!data.data || !Object.keys(data.data).length) {
                     const msg = CommonDialog.jSendMessage(data) || Omeka.jsTranslate('An error occurred.');
-                    CommonDialog.dialogAlert({ message: msg, nl2br: true });
+                    CommonDialog.dialogAlert({
+                        heading: Omeka.jsTranslate('Comment'),
+                        message: msg,
+                        nl2br: true,
+                    });
                     document.dispatchEvent(new CustomEvent('o:jsend-fail', { detail: data }));
                     data = {
                         data: {
@@ -121,7 +125,11 @@
             .done(function(data) {
                 if (!data.data || !Object.keys(data.data).length) {
                     const msg = CommonDialog.jSendMessage(data) || Omeka.jsTranslate('An error occurred.');
-                    CommonDialog.dialogAlert({ message: msg, nl2br: true });
+                    CommonDialog.dialogAlert({
+                        heading: Omeka.jsTranslate('Comment'),
+                        message: msg,
+                        nl2br: true,
+                    });
                     document.dispatchEvent(new CustomEvent('o:jsend-fail', { detail: data }));
                     data = {
                         data: {
