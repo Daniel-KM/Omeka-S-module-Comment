@@ -83,7 +83,7 @@ $baseUrl = $site ? $url('site/comment', ['site-slug' => $site->slug()]) : $url('
                 $escape($heading));
             ?>
         <li class="resource <?= $resourceType ?> subscription-removable" data-id="<?= $resource->id() ?>" data-subscription-action="delete">
-            <?= $subscriptionButton($resource, ['action' => 'delete']) ?>
+            <?= $subscriptionButton($resource, ['action' => 'delete', 'showLabel' => true, 'skipSettingCheck' => true]) ?>
             <?= $resource->linkRaw($linkContent, null, ['class' => 'resource-link']) ?>
             <?php if ($this->commentHasNewComment($resource)): ?>
             <span class="comment-new-badge"><?= $escape($translate('New comment')) ?></span>
