@@ -19,6 +19,7 @@ $siteSetting = $plugins->get('siteSetting');
 $escapeAttr = $plugins->get('escapeHtmlAttr');
 $guestNavigation = $user && $plugins->has('guestNavigation') ? $plugins->get('guestNavigation')() : null;
 $breadcrumbs = $plugins->has('breadcrumbs') ? $plugins->get('breadcrumbs') : null;
+$translatePlural = $plugins->get('translatePlural');
 $subscriptionButton = $plugins->get('commentSubscriptionButton');
 
 $filterLocale = (bool) $this->siteSetting('filter_locale_values');
@@ -67,12 +68,12 @@ $sortOptions = [
     'resource_title-asc' => $translate('Title (ascending)'), // @translate
     'resource_title-desc' => $translate('Title (descending)'), // @translate
 ];
+$totalResults = $this->pagination()->getPaginator()->getTotalCount();
 ?>
 <div class="browse-controls">
     <?= $pg = $this->pagination() ?>
-    <?php //= $hyperlink($translate('Advanced search'), $url(null, ['action' => 'search'], true), ['class' => 'advanced-search']) ?>
-    <?php //= $this->browse()->renderSortSelector('comment_subscriptions') ?>
     <div class="per-pages-and-sort">
+        <span class="browse-total"><?= sprintf($translatePlural('%d resource', '%d resources', $totalResults), $totalResults) // @translate ?></span>
         <label for="sort-subscriptions"><?= $translate('Sort by') ?></label>
         <select id="sort-subscriptions" onchange="var v=this.value.split('-'),p=new URLSearchParams(window.location.search);p.set('sort_by',v[0]);p.set('sort_order',v[1]);window.location.search=p;">
             <?php foreach ($sortOptions as $value => $label): ?>

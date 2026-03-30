@@ -18,6 +18,7 @@ $translate = $plugins->get('translate');
 $thumbnail = $plugins->get('thumbnail');
 $siteSetting = $plugins->get('siteSetting');
 $escapeAttr = $plugins->get('escapeHtmlAttr');
+$translatePlural = $plugins->get('translatePlural');
 $guestNavigation = $user && $plugins->has('guestNavigation') ? $plugins->get('guestNavigation')() : null;
 $breadcrumbs = $plugins->has('breadcrumbs') ? $plugins->get('breadcrumbs') : null;
 
@@ -69,12 +70,12 @@ $sortOptions = [
     'resource_title-asc' => $translate('Title (ascending)'), // @translate
     'resource_title-desc' => $translate('Title (descending)'), // @translate
 ];
+$totalResults = $this->pagination()->getPaginator()->getTotalCount();
 ?>
 <div class="browse-controls">
     <?= $pg = $this->pagination() ?>
-    <?php //= $hyperlink($translate('Advanced search'), $url(null, ['action' => 'search'], true), ['class' => 'advanced-search']) ?>
-    <?php //= $this->browse()->renderSortSelector('comments') ?>
     <div class="per-pages-and-sort">
+        <span class="browse-total"><?= sprintf($translatePlural('%d comment', '%d comments', $totalResults), $totalResults) // @translate ?></span>
         <label for="sort-comments"><?= $translate('Sort by') ?></label>
         <select id="sort-comments" onchange="var v=this.value.split('-'),p=new URLSearchParams(window.location.search);p.set('sort_by',v[0]);p.set('sort_order',v[1]);window.location.search=p;">
             <?php foreach ($sortOptions as $value => $label): ?>
