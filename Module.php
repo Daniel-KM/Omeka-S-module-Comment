@@ -713,10 +713,12 @@ class Module extends AbstractModule
 
         // Dispatch background job for sending notifications.
         $dispatcher = $services->get(\Omeka\Job\Dispatcher::class);
+        $site = $comment->getSite();
         $dispatcher->dispatch(\Comment\Job\SendNotifications::class, [
             'type' => 'flagged',
             'comment_id' => $comment->getId(),
             'resource_id' => $resource->getId(),
+            'site_slug' => $site ? $site->getSlug() : null,
         ]);
     }
 
