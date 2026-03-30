@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-06 00:00+0000\n"
+"POT-Creation-Date: 2026-03-30 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,62 +17,74 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/scripts/upgrade.php:33 Module.php:91
+#: data/scripts/upgrade.php:33 Module.php:84
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
 
-#: Module.php:105
+#: data/scripts/upgrade.php:37
+msgid "Missing requirement. Unable to upgrade."
+msgstr ""
+
+#: Module.php:98
 #, php-format
 msgid ""
 "I agree with %1$sterms of use%2$s and I accept to free my contribution under "
 "the license %3$sCC BY-SA%2$s."
 msgstr ""
 
-#: Module.php:879 Module.php:898
+#: Module.php:943 Module.php:962
 msgid "Has comments"
 msgstr ""
 
-#: Module.php:880 Module.php:899 Module.php:912
+#: Module.php:944 Module.php:963 Module.php:976
 msgid "true"
 msgstr ""
 
-#: Module.php:904
+#: Module.php:968
 msgid "Approved"
 msgstr ""
 
-#: Module.php:905
+#: Module.php:969
 msgid "Flagged"
 msgstr ""
 
-#: Module.php:906
+#: Module.php:970
 msgid "Is spam"
 msgstr ""
 
-#: Module.php:911
+#: Module.php:975
 msgid "false"
 msgstr ""
 
-#: Module.php:1009 view/guest/site/guest/comment-browse.phtml:56
+#: Module.php:1073 view/guest/site/guest/comment-browse.phtml:59
 #: view/guest/site/guest/widget/comment-browse.phtml:16
 msgid "My comments"
 msgstr ""
 
-#: Module.php:1013
+#: Module.php:1077
 msgid "Subscription"
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:235
+#: src/Controller/AbstractCommentController.php:255
+msgid "There is issue in your comment."
+msgstr ""
+
+#: src/Controller/AbstractCommentController.php:309
 msgid ""
 "Comment was added to the resource. It will be displayed definitely when "
 "approved."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:345
+#: src/Controller/AbstractCommentController.php:422
 msgid "Comment was updated. It will be displayed definitely when approved."
 msgstr ""
 
-#: src/Controller/Admin/CommentController.php:267
+#: src/Controller/AbstractCommentController.php:501
+msgid "Comment successfully deleted."
+msgstr ""
+
+#: src/Controller/Admin/CommentController.php:282
 msgid "An internal error occurred."
 msgstr ""
 
@@ -84,93 +96,103 @@ msgstr ""
 msgid "Are you sure you would like to delete the selected comments?"
 msgstr ""
 
-#: view/comment/admin/comment/browse.phtml:36
-#: view/comment/admin/comment/browse.phtml:139
-#: view/comment/admin/comment/show-details.phtml:20
-msgid "Commenter"
-msgstr ""
-
-#: view/comment/admin/comment/browse.phtml:40
-msgid "Commenter email"
-msgstr ""
-
-#: view/comment/admin/comment/browse.phtml:48
-#: view/comment/admin/comment/browse.phtml:140
-msgid "Date commented"
-msgstr ""
-
-#: view/comment/admin/comment/browse.phtml:59
+#: view/comment/admin/comment/browse.phtml:35
 #: view/common/admin/comments-details.phtml:25 view/common/comments.phtml:38
 msgid "Comments"
 msgstr ""
 
+#: view/comment/admin/comment/browse.phtml:53
+#: view/comment/admin/comment/browse.phtml:55
+msgid "Approve"
+msgstr ""
+
+#: view/comment/admin/comment/browse.phtml:59
+#: view/comment/admin/comment/browse.phtml:61
+msgid "Unapprove"
+msgstr ""
+
+#: view/comment/admin/comment/browse.phtml:65
+#: view/comment/admin/comment/browse.phtml:67
+msgid "Flag"
+msgstr ""
+
+#: view/comment/admin/comment/browse.phtml:71
+#: view/comment/admin/comment/browse.phtml:73
+msgid "Unflag"
+msgstr ""
+
 #: view/comment/admin/comment/browse.phtml:77
 #: view/comment/admin/comment/browse.phtml:79
-msgid "Approve"
+msgid "Set spam"
 msgstr ""
 
 #: view/comment/admin/comment/browse.phtml:83
 #: view/comment/admin/comment/browse.phtml:85
-msgid "Unapprove"
-msgstr ""
-
-#: view/comment/admin/comment/browse.phtml:89
-#: view/comment/admin/comment/browse.phtml:91
-msgid "Flag"
-msgstr ""
-
-#: view/comment/admin/comment/browse.phtml:95
-#: view/comment/admin/comment/browse.phtml:97
-msgid "Unflag"
-msgstr ""
-
-#: view/comment/admin/comment/browse.phtml:101
-#: view/comment/admin/comment/browse.phtml:103
-msgid "Set spam"
-msgstr ""
-
-#: view/comment/admin/comment/browse.phtml:107
-#: view/comment/admin/comment/browse.phtml:109
 msgid "Set not spam"
 msgstr ""
 
-#: view/comment/admin/comment/browse.phtml:124
+#: view/comment/admin/comment/browse.phtml:100
 msgid "There are no comments."
 msgstr ""
 
-#: view/comment/admin/comment/browse.phtml:167
-#: view/common/admin/comment.phtml:56
+#: view/comment/admin/comment/browse.phtml:115
+#: view/comment/admin/comment/show-details.phtml:20
+msgid "Commenter"
+msgstr ""
+
+#: view/comment/admin/comment/browse.phtml:116
+msgid "Date commented"
+msgstr ""
+
+#: view/comment/admin/comment/browse.phtml:142
+#: view/common/admin/comment.phtml:55
 msgid "Toggle approbation"
 msgstr ""
 
-#: view/comment/admin/comment/browse.phtml:173
-#: view/common/admin/comment.phtml:66
+#: view/comment/admin/comment/browse.phtml:148
+#: view/common/admin/comment.phtml:65
 msgid "Toggle flag"
 msgstr ""
 
-#: view/comment/admin/comment/browse.phtml:179
-#: view/common/admin/comment.phtml:76
+#: view/comment/admin/comment/browse.phtml:154
+#: view/common/admin/comment.phtml:75
 msgid "Toggle spam"
 msgstr ""
 
-#: view/comment/admin/comment/browse.phtml:214
+#: view/comment/admin/comment/browse.phtml:189
 #: view/comment/admin/comment/show-details.phtml:48
 msgid "Removed"
 msgstr ""
 
-#: view/comment/admin/comment/browse.phtml:232
+#: view/comment/admin/comment/browse.phtml:207
 #, php-format
 msgid "Created: %s"
 msgstr ""
 
-#: view/comment/admin/comment/browse.phtml:235
+#: view/comment/admin/comment/browse.phtml:210
 #, php-format
 msgid "Modified: %s"
 msgstr ""
 
-#: view/comment/admin/comment/browse.phtml:239
+#: view/comment/admin/comment/browse.phtml:219
 #, php-format
 msgid "Edited: %s"
+msgstr ""
+
+#: view/comment/admin/comment/delete-confirm.phtml:15
+msgid "Delete comment"
+msgstr ""
+
+#: view/comment/admin/comment/delete-confirm.phtml:17
+msgid "This comment is already soft-deleted. It will be permanently removed."
+msgstr ""
+
+#: view/comment/admin/comment/delete-confirm.phtml:19
+msgid "Are you sure you would like to delete this comment?"
+msgstr ""
+
+#: view/comment/admin/comment/delete-confirm.phtml:21
+msgid "Permanently delete (hard delete)"
 msgstr ""
 
 #: view/comment/admin/comment/show-details.phtml:17
@@ -190,13 +212,17 @@ msgstr ""
 msgid "No site"
 msgstr ""
 
+#: view/comment/admin/comment/show-details.phtml:74
+msgid "Deleted"
+msgstr ""
+
 #: view/common/admin/comment.phtml:34
 #, php-format
 msgid "Website: %s"
 msgstr ""
 
-#: view/common/admin/comment.phtml:102 view/common/comment-single.phtml:103
-#: view/common/comment-single.phtml:106
+#: view/common/admin/comment.phtml:99 view/common/comment-single.phtml:119
+#: view/common/comment-single.phtml:122
 msgid "Reply"
 msgstr ""
 
@@ -224,15 +250,15 @@ msgstr ""
 msgid "No comment yet! Be the first to add one!"
 msgstr ""
 
-#: view/common/comment-single.phtml:31
-msgid "Anonymous"
+#: view/common/comment-single.phtml:33 view/common/comment-single.phtml:37
+msgid "[Anonymous]"
 msgstr ""
 
-#: view/common/comment-single.phtml:72 view/common/comment-single.phtml:75
+#: view/common/comment-single.phtml:79 view/common/comment-single.phtml:82
 msgid "Flag inappropriate"
 msgstr ""
 
-#: view/common/comment-single.phtml:82 view/common/comment-single.phtml:85
+#: view/common/comment-single.phtml:89 view/common/comment-single.phtml:92
 msgid "Unflag inappropriate"
 msgstr ""
 
@@ -244,7 +270,7 @@ msgstr ""
 msgid "Subscribe to comments"
 msgstr ""
 
-#: view/common/comment-subscription-button.phtml:34
+#: view/common/comment-subscription-button.phtml:38
 msgid "Log in to subscribe to comments"
 msgstr ""
 
@@ -252,15 +278,52 @@ msgstr ""
 msgid "No comment yet! Log in and be the first to add one!"
 msgstr ""
 
-#: view/guest/site/guest/comment-browse.phtml:105
+#: view/common/resource-page-block-layout/comment-new-comment-notification.phtml:18
+#: view/guest/site/guest/comment-subscription.phtml:117
+msgid "New comment"
+msgstr ""
+
+#: view/common/resource-page-block-layout/comment-subscription-status.phtml:15
+msgid "I’m subscribed to this resource"
+msgstr ""
+
+#: view/common/resource-page-block-layout/comment-subscription-status.phtml:16
+msgid "I’m not subscribed to this resource"
+msgstr ""
+
+#: view/guest/site/guest/comment-browse.phtml:68
+#: view/guest/site/guest/comment-subscription.phtml:66
+msgid "Date (descending)"
+msgstr ""
+
+#: view/guest/site/guest/comment-browse.phtml:69
+#: view/guest/site/guest/comment-subscription.phtml:67
+msgid "Date (ascending)"
+msgstr ""
+
+#: view/guest/site/guest/comment-browse.phtml:70
+#: view/guest/site/guest/comment-subscription.phtml:68
+msgid "Title (ascending)"
+msgstr ""
+
+#: view/guest/site/guest/comment-browse.phtml:71
+#: view/guest/site/guest/comment-subscription.phtml:69
+msgid "Title (descending)"
+msgstr ""
+
+#: view/guest/site/guest/comment-browse.phtml:128
 msgid "You have no comments yet."
 msgstr ""
 
-#: view/guest/site/guest/comment-subscription.phtml:54
+#: view/guest/site/guest/comment-subscription.phtml:57
 msgid "Subscriptions"
 msgstr ""
 
-#: view/guest/site/guest/comment-subscription.phtml:99
+#: view/guest/site/guest/comment-subscription.phtml:85
+msgid "Per page"
+msgstr ""
+
+#: view/guest/site/guest/comment-subscription.phtml:133
 msgid "You have no subscription yet."
 msgstr ""
 
@@ -268,183 +331,320 @@ msgstr ""
 msgid "My subscriptions"
 msgstr ""
 
-#: data/scripts/upgrade.php:125
+#: data/scripts/upgrade.php:126
 msgid ""
 "The templates and view helpers were renamed. You should check your theme. "
 "Matching templates: {json}"
 msgstr ""
 
-#: data/scripts/upgrade.php:168
+#: data/scripts/upgrade.php:169
 msgid ""
 "Resource blocks were added to display the comments and the comment form via "
 "the theme config."
 msgstr ""
 
-#: data/scripts/upgrade.php:173
+#: data/scripts/upgrade.php:174
 msgid ""
 "A resource block allows to subscribe to a resource to be notified when a "
 "comment is added."
 msgstr ""
 
-#: data/scripts/upgrade.php:178
+#: data/scripts/upgrade.php:179
 msgid "An option allows to skip display of gravatar."
 msgstr ""
 
-#: data/scripts/upgrade.php:183
+#: data/scripts/upgrade.php:184
 msgid "It is now possible to edit for the user or an admin to edit a comment."
 msgstr ""
 
-#: Module.php:656
+#: data/scripts/upgrade.php:213
+msgid ""
+"Comment history is now tracked. Edits, flags, and moderation actions are "
+"recorded. The \"edited\" column has been removed."
+msgstr ""
+
+#: data/scripts/upgrade.php:249
+msgid "A unique constraint has been added to prevent duplicate subscriptions."
+msgstr ""
+
+#: data/scripts/upgrade.php:265
+msgid ""
+"Comments can now be soft-deleted. Deleted comments are hidden from the "
+"public but preserved for admin review."
+msgstr ""
+
+#: data/scripts/upgrade.php:282
+msgid "New comment notifications are now available for subscribed users."
+msgstr ""
+
+#: view/guest/site/guest/comment-subscription.phtml:78
+#, php-format
+msgid "%d resources"
+msgstr ""
+
+#: view/guest/site/guest/comment-browse.phtml:78
+#, php-format
+msgid "%d comments"
+msgstr ""
+
+#: src/Job/SendNotifications.php:38
+msgid "Missing required arguments."
+msgstr ""
+
+#: src/Job/SendNotifications.php:47
+msgid "Comment #{comment_id} not found."
+msgstr ""
+
+#: src/Job/SendNotifications.php:63
+msgid "Resource #{resource_id} not found."
+msgstr ""
+
+#: src/Job/SendNotifications.php:81
+msgid "Unknown notification type \"{type}\"."
+msgstr ""
+
+#: src/Job/SendNotifications.php:113 src/Form/SettingsFieldset.php:95
+#: config/module.config.php:266
 msgid "[{site_name}] New comment"
 msgstr ""
 
-#: Module.php:657
-msgid "installation_title"
+#: src/Job/SendNotifications.php:115 src/Form/SettingsFieldset.php:108
+#: config/module.config.php:267
+msgid ""
+"Hi,\n"
+"\n"
+"A new comment was published for resource #{resource_id} ({resource_title}).\n"
+"\n"
+"You can see it at {resource_url}#comments.\n"
+"\n"
+"Sincerely,"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:32
+#: src/Job/SendNotifications.php:153 src/Job/SendNotifications.php:233
+#: src/Job/SendNotifications.php:309
+msgid "Failed to send email to {email}: {error}"
+msgstr ""
+
+#: src/Job/SendNotifications.php:160
+msgid "Sent subscriber notifications for comment #{comment_id}."
+msgstr ""
+
+#: src/Job/SendNotifications.php:183 src/Form/SettingsFieldset.php:130
+#: config/module.config.php:276
+msgid "[{site_name}] New public comment"
+msgstr ""
+
+#: src/Job/SendNotifications.php:185
+msgid ""
+"A comment was added to resource #{resource_id} ({resource_title}).\n"
+"\n"
+"Author: {comment_author} <{comment_email}>\n"
+"\n"
+"Comment:\n"
+"{comment_body}\n"
+"\n"
+"Public page: {resource_url}\n"
+"Admin page: {admin_url}"
+msgstr ""
+
+#: src/Job/SendNotifications.php:240
+msgid "Sent moderator notifications for comment #{comment_id}."
+msgstr ""
+
+#: src/Job/SendNotifications.php:263 src/Form/SettingsFieldset.php:166
+#: config/module.config.php:287
+msgid "[{site_name}] Comment flagged for review"
+msgstr ""
+
+#: src/Job/SendNotifications.php:265 src/Form/SettingsFieldset.php:179
+#: config/module.config.php:288
+msgid ""
+"A comment has been flagged for review.\n"
+"\n"
+"Resource: #{resource_id} ({resource_title})\n"
+"Author: {comment_author} <{comment_email}>\n"
+"\n"
+"Comment:\n"
+"{comment_body}\n"
+"\n"
+"Review at: {admin_url}"
+msgstr ""
+
+#: src/Job/SendNotifications.php:316
+msgid "Sent flagged comment notifications for comment #{comment_id}."
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:19
+msgid "Old themes"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:33
 msgid "Display subscription button (old themes)"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:34 src/Form/SiteSettingsFieldset.php:54
-#: src/Form/SiteSettingsFieldset.php:74
-msgid "Item: Top"
 msgstr ""
 
 #: src/Form/SiteSettingsFieldset.php:35 src/Form/SiteSettingsFieldset.php:55
 #: src/Form/SiteSettingsFieldset.php:75
-msgid "Media: Top"
+msgid "Item: Top"
 msgstr ""
 
 #: src/Form/SiteSettingsFieldset.php:36 src/Form/SiteSettingsFieldset.php:56
 #: src/Form/SiteSettingsFieldset.php:76
-msgid "Item set: Top"
+msgid "Media: Top"
 msgstr ""
 
 #: src/Form/SiteSettingsFieldset.php:37 src/Form/SiteSettingsFieldset.php:57
 #: src/Form/SiteSettingsFieldset.php:77
-msgid "Item: Bottom"
+msgid "Item set: Top"
 msgstr ""
 
 #: src/Form/SiteSettingsFieldset.php:38 src/Form/SiteSettingsFieldset.php:58
 #: src/Form/SiteSettingsFieldset.php:78
-msgid "Media: Bottom"
+msgid "Item: Bottom"
 msgstr ""
 
 #: src/Form/SiteSettingsFieldset.php:39 src/Form/SiteSettingsFieldset.php:59
 #: src/Form/SiteSettingsFieldset.php:79
+msgid "Media: Bottom"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:40 src/Form/SiteSettingsFieldset.php:60
+#: src/Form/SiteSettingsFieldset.php:80
 msgid "Item set: Bottom"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:52
+#: src/Form/SiteSettingsFieldset.php:53
 msgid "Display comments (old themes)"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:72
+#: src/Form/SiteSettingsFieldset.php:73
 msgid "Display comment form (old themes)"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:93 src/Form/SettingsFieldset.php:119
+#: src/Form/SiteSettingsFieldset.php:94 src/Form/SettingsFieldset.php:274
 msgid "Main label"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:101 src/Form/SettingsFieldset.php:127
+#: src/Form/SiteSettingsFieldset.php:102 src/Form/SettingsFieldset.php:282
 msgid "Structure"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:103 src/Form/SiteSettingsFieldset.php:116
-#: src/Form/SiteSettingsFieldset.php:138
+#: src/Form/SiteSettingsFieldset.php:104 src/Form/SiteSettingsFieldset.php:117
+#: src/Form/SiteSettingsFieldset.php:139 src/Form/SiteSettingsFieldset.php:160
 msgid "Use default"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:104 src/Form/SettingsFieldset.php:129
+#: src/Form/SiteSettingsFieldset.php:105 src/Form/SettingsFieldset.php:284
 msgid "Flat (by date)"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:105 src/Form/SettingsFieldset.php:130
+#: src/Form/SiteSettingsFieldset.php:106 src/Form/SettingsFieldset.php:285
 msgid "Threaded (by conversation)"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:114 src/Form/SettingsFieldset.php:139
+#: src/Form/SiteSettingsFieldset.php:115 src/Form/SettingsFieldset.php:294
 msgid "Closed on load"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:127 src/Form/SettingsFieldset.php:147
+#: src/Form/SiteSettingsFieldset.php:128 src/Form/SettingsFieldset.php:302
 msgid "Max length"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:135 src/Form/SettingsFieldset.php:155
+#: src/Form/SiteSettingsFieldset.php:136 src/Form/SettingsFieldset.php:310
 msgid "Display gravatar"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:149 src/Form/SettingsFieldset.php:168
+#: src/Form/SiteSettingsFieldset.php:150 src/Form/SettingsFieldset.php:323
 msgid "Legal agreement"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:157
+#: src/Form/SiteSettingsFieldset.php:158 src/Form/SettingsFieldset.php:332
+msgid "Display website field"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:171
 msgid "Button to subscribe to comments"
 msgstr ""
 
-#: src/Form/CommentForm.php:69
-msgid "My name…"
+#: src/Form/CommentForm.php:81
+msgid "Use an alias"
 msgstr ""
 
-#: src/Form/CommentForm.php:82
-msgid "My email (it won’t be displayed)…"
+#: src/Form/CommentForm.php:84
+msgid "Comment anonymously"
 msgstr ""
 
-#: src/Form/CommentForm.php:95
-msgid "My website…"
+#: src/Form/CommentForm.php:92
+msgid "Comment as"
 msgstr ""
 
 #: src/Form/CommentForm.php:107
+msgid "Alias"
+msgstr ""
+
+#: src/Form/CommentForm.php:111
+msgid "My alias…"
+msgstr ""
+
+#: src/Form/CommentForm.php:125 src/Form/CommentForm.php:152
+msgid "My email (it won't be displayed)…"
+msgstr ""
+
+#: src/Form/CommentForm.php:139
+msgid "My name…"
+msgstr ""
+
+#: src/Form/CommentForm.php:166
+msgid "My website…"
+msgstr ""
+
+#: src/Form/CommentForm.php:179
 msgid "My comment…"
 msgstr ""
 
-#: src/Form/CommentForm.php:117
+#: src/Form/CommentForm.php:189
 msgid "Proposed comment cannot be empty."
 msgstr ""
 
-#: src/Form/CommentForm.php:119
+#: src/Form/CommentForm.php:191
 #, php-format
 msgid "Comment cannot be longer than %d characters."
 msgstr ""
 
-#: src/Form/CommentForm.php:136
+#: src/Form/CommentForm.php:208
 msgid "Terms of service"
 msgstr ""
 
-#: src/Form/CommentForm.php:150
+#: src/Form/CommentForm.php:222
 msgid "You must agree to the terms and conditions."
 msgstr ""
 
-#: src/Form/CommentForm.php:177
+#: src/Form/CommentForm.php:249
 #, php-format
 msgid "How much is %d plus %d?"
 msgstr ""
 
-#: src/Form/CommentForm.php:186
+#: src/Form/CommentForm.php:258
 #, php-format
 msgid "To prove you are not a robot, answer this question: %s"
 msgstr ""
 
-#: src/Form/CommentForm.php:192
+#: src/Form/CommentForm.php:264
 msgid "You must answer the antispam question."
 msgstr ""
 
-#: src/Form/CommentForm.php:198
+#: src/Form/CommentForm.php:270
 msgid "Check your anwser to the antispam question."
 msgstr ""
 
-#: src/Form/CommentForm.php:210
+#: src/Form/CommentForm.php:282
 msgid "String to check"
 msgstr ""
 
-#: src/Form/CommentForm.php:213
+#: src/Form/CommentForm.php:285
 msgid "Set the string to check"
 msgstr ""
 
-#: src/Form/CommentForm.php:266
+#: src/Form/CommentForm.php:338
 msgid "Comment it!"
 msgstr ""
 
@@ -485,84 +685,219 @@ msgid ""
 "The list of emails to notify when a comment is posted or flagged, one by row."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:90
+#: src/Form/SettingsFieldset.php:91
+msgid "Subscriber notification: subject"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:92 src/Form/SettingsFieldset.php:127
+#: src/Form/SettingsFieldset.php:163
+msgid "Placeholders: {site_name}"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:103
+msgid "Subscriber notification: body"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:104
+msgid ""
+"Placeholders: {site_name}, {resource_id}, {resource_title}, {resource_url}, "
+"{comment_author}, {comment_body}"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:126
+msgid "Moderator notification: subject"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:138
+msgid "Moderator notification: body"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:139
+msgid ""
+"Placeholders: {site_name}, {resource_id}, {resource_title}, {resource_url}, "
+"{comment_author}, {comment_email}, {comment_body}"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:143 config/module.config.php:277
+msgid ""
+"A comment was added to resource #{resource_id} ({resource_title}).\n"
+"\n"
+"Author: {comment_author} <{comment_email}>\n"
+"\n"
+"Comment:\n"
+"{comment_body}\n"
+"\n"
+"Review at: {resource_url}"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:162
+msgid "Flagged comment notification: subject"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:174
+msgid "Flagged comment notification: body"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:175
+msgid ""
+"Placeholders: {site_name}, {resource_id}, {resource_title}, "
+"{comment_author}, {comment_email}, {comment_body}, {admin_url}"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:198
 msgid "Allow non-admin users to edit or delete their own comment"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:99
+#: src/Form/SettingsFieldset.php:207
+msgid "Allow users to comment with an alias"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:208
+msgid ""
+"If checked, logged-in users can choose to comment with a custom name and "
+"email instead of their account information. The comment remains linked to "
+"their account."
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:217
+msgid "Allow users to comment anonymously"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:218
+msgid ""
+"If checked, logged-in users can choose to comment anonymously. Their name "
+"will be displayed as \"[Anonymous]\" but the comment remains linked to their "
+"account for moderation purposes."
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:227
 msgid "WordPress API key for Akismet if installed"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:109
+#: src/Form/SettingsFieldset.php:237
 msgid "Simple antispam"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:110
+#: src/Form/SettingsFieldset.php:238
 msgid ""
 "If checked, a simple antispam (an addition of two digits) will be added for "
 "anonymous people if ReCaptcha is not set."
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:169
+#: src/Form/SettingsFieldset.php:247
+msgid "Rate limit: max comments"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:248
+msgid ""
+"Maximum number of comments allowed per IP address within the time period. "
+"Set 0 or empty to disable."
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:260
+msgid "Rate limit: period (minutes)"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:261
+msgid "Time window in minutes for the rate limit."
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:324
 msgid ""
 "This text will be shown beside the legal checkbox. Let empty if you don’t "
 "want to use a legal agreement."
 msgstr ""
 
-#: src/Api/Adapter/CommentAdapter.php:347
+#: src/Form/SettingsFieldset.php:341
+msgid "Shortcuts to group comments by item sets"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:342
+msgid ""
+"A group allows to separate comments that have different purposes, fo example "
+"comments to identify and generic comments. The url will be \"?group={name}"
+"\". Set a list a name, then a \"=\", then a list of item set ids. The "
+"special group \"none\" allows to get comments without group."
+msgstr ""
+
+#: src/Form/CommentsBrowseFieldset.php:18
+msgid "Search pool query"
+msgstr ""
+
+#: src/Form/CommentsBrowseFieldset.php:32
+msgid "comment-limit"
+msgstr ""
+
+#: src/Api/Adapter/CommentAdapter.php:479
 msgid "The ip cannot be empty."
 msgstr ""
 
-#: src/Api/Adapter/CommentAdapter.php:351
+#: src/Api/Adapter/CommentAdapter.php:483
 msgid "The user agent cannot be empty."
 msgstr ""
 
-#: src/Api/Adapter/CommentAdapter.php:356
+#: src/Api/Adapter/CommentAdapter.php:488
 msgid "The body cannot be empty."
 msgstr ""
 
-#: src/Api/Adapter/CommentSubscriptionAdapter.php:142
+#: src/Api/Adapter/CommentAdapter.php:494
+#: src/Controller/AbstractCommentController.php:129
+msgid "Cannot reply to a comment that is not yet approved."
+msgstr ""
+
+#: src/Api/Adapter/CommentSubscriptionAdapter.php:128
 msgid "This user has already subscribed to this resource."
 msgstr ""
 
-#: src/Controller/Admin/CommentController.php:84
-msgid "Comment successfully deleted."
+#: src/Controller/Admin/CommentController.php:93
+msgid "Comment permanently deleted."
 msgstr ""
 
-#: src/Controller/Admin/CommentController.php:119
+#: src/Controller/Admin/CommentController.php:98
+msgid "Comment soft-deleted."
+msgstr ""
+
+#: src/Controller/Admin/CommentController.php:134
 msgid "You must select at least one comment to batch delete."
 msgstr ""
 
-#: src/Controller/Admin/CommentController.php:129
+#: src/Controller/Admin/CommentController.php:144
 msgid "Comments successfully deleted."
 msgstr ""
 
-#: src/Controller/Admin/CommentController.php:139
+#: src/Controller/Admin/CommentController.php:154
 msgid "Delete of all comments is not supported currently."
 msgstr ""
 
-#: src/Controller/Admin/CommentController.php:187
+#: src/Controller/Admin/CommentController.php:202
 msgid "No comments submitted."
 msgstr ""
 
-#: src/Controller/Admin/CommentController.php:196
-#: src/Controller/Admin/CommentController.php:263
+#: src/Controller/Admin/CommentController.php:211
+#: src/Controller/Admin/CommentController.php:278
 msgid "[Comment]: {msg}"
+msgstr ""
+
+#: src/Controller/AbstractCommentController.php:28
+msgid "The url to add comment was accessed without post data."
 msgstr ""
 
 #: src/Controller/AbstractCommentController.php:31
 #: src/Controller/AbstractCommentController.php:39
 #: src/Controller/AbstractCommentController.php:55
-#: src/Controller/AbstractCommentController.php:72
-#: src/Controller/AbstractCommentController.php:85
-#: src/Controller/AbstractCommentController.php:90
-#: src/Controller/AbstractCommentController.php:132
-#: src/Controller/AbstractCommentController.php:252
-#: src/Controller/AbstractCommentController.php:277
-#: src/Controller/AbstractCommentController.php:403
-#: src/Controller/AbstractCommentController.php:422
-#: src/Controller/AbstractCommentController.php:432
-#: src/Controller/AbstractCommentController.php:449
+#: src/Controller/AbstractCommentController.php:80
+#: src/Controller/AbstractCommentController.php:95
+#: src/Controller/AbstractCommentController.php:102
+#: src/Controller/AbstractCommentController.php:180
+#: src/Controller/AbstractCommentController.php:326
+#: src/Controller/AbstractCommentController.php:353
+#: src/Controller/AbstractCommentController.php:439
+#: src/Controller/AbstractCommentController.php:446
+#: src/Controller/AbstractCommentController.php:554
+#: src/Controller/AbstractCommentController.php:573
+#: src/Controller/AbstractCommentController.php:583
+#: src/Controller/AbstractCommentController.php:600
+#: src/Controller/AbstractCommentController.php:651
 msgid "Unauthorized access."
 msgstr ""
 
@@ -570,193 +905,197 @@ msgstr ""
 msgid "Are you really a robot?"
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:62
+#: src/Controller/AbstractCommentController.php:68
 msgid "Unauthorized access : no user agent."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:70
+#: src/Controller/AbstractCommentController.php:77
 msgid "The url to add comment was accessed without managed resource."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:83
+#: src/Controller/AbstractCommentController.php:92
 msgid "The url to add comment was accessed without resource id."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:88
+#: src/Controller/AbstractCommentController.php:99
 msgid "The url to add comment was accessed without resource."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:106
+#: src/Controller/AbstractCommentController.php:118
+#: src/Controller/AbstractCommentController.php:122
 msgid "The parent comment does not exist."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:110
-msgid "The parent comment doesn’t exist."
+#: src/Controller/AbstractCommentController.php:159
+msgid "Email is required when using an alias."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:139
-#: config/module.config.php:188
+#: src/Controller/AbstractCommentController.php:187
+#: config/module.config.php:254
 msgid "You should accept the legal agreement."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:158
+#: src/Controller/AbstractCommentController.php:206
 msgid "The comment cannot be empty."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:178
-#: src/Controller/AbstractCommentController.php:201
-msgid "There is issue in your comment."
-msgstr ""
-
-#: src/Controller/AbstractCommentController.php:214
+#: src/Controller/AbstractCommentController.php:287
 msgid "Your comment is online."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:216
+#: src/Controller/AbstractCommentController.php:289
 msgid "Your comment is awaiting moderation"
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:260
+#: src/Controller/AbstractCommentController.php:334
+#: src/Controller/AbstractCommentController.php:456
 msgid "Unauthorized access or not found."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:269
+#: src/Controller/AbstractCommentController.php:343
 msgid "The user has no right to edit this resource."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:284
+#: src/Controller/AbstractCommentController.php:350
+msgid "The url to edit comment was accessed without post data."
+msgstr ""
+
+#: src/Controller/AbstractCommentController.php:360
 msgid "No text submitted."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:290
+#: src/Controller/AbstractCommentController.php:366
 msgid "Text submitted is the same than the existing one."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:321
+#: src/Controller/AbstractCommentController.php:396
+#: src/Controller/AbstractCommentController.php:481
+#: src/Controller/AbstractCommentController.php:492
 msgid "An error occurred."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:377
+#: src/Controller/AbstractCommentController.php:465
+msgid "The user has no right to delete this resource."
+msgstr ""
+
+#: src/Controller/AbstractCommentController.php:527
 msgid "The comment id cannot be identified."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:379
-#: src/Controller/AbstractCommentController.php:395
+#: src/Controller/AbstractCommentController.php:530
+#: src/Controller/AbstractCommentController.php:546
 msgid "Comment not found."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:391
+#: src/Controller/AbstractCommentController.php:542
 msgid "The comment #{comment_id} cannot be identified."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:399
+#: src/Controller/AbstractCommentController.php:550
 msgid "The comment #{comment_id} cannot be accessed."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:445
+#: src/Controller/AbstractCommentController.php:596
 msgid "Resource not found."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:456
+#: src/Controller/AbstractCommentController.php:607
 msgid "Action {action} not allowed."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:512
-msgid "Akismet not available: install it."
+#: src/Controller/AbstractCommentController.php:658
+msgid "Missing resource."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:567
-msgid "SERVER_ADDR"
+#: src/Controller/AbstractCommentController.php:677
+msgid "No subscription found for this resource."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:569
-msgid "[{site}] New public comment"
+#: src/Controller/AbstractCommentController.php:705
+msgid "Akismet is not available: install it."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:574
-msgid ""
-"A comment was added to resource #{resource_id} ({resource_url}) by {name} "
-"<{email}}>."
+#: src/Controller/AbstractCommentController.php:812
+msgid "Rate limit exceeded for IP {ip}: {count} comments in {period} minutes."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:579
-msgid "Comment: {msg}"
+#: src/Controller/AbstractCommentController.php:816
+msgid "Too many comments. Please wait before posting again."
 msgstr ""
 
-#: src/Controller/AbstractCommentController.php:596
-msgid "Unable to send an email after commenting."
+#: src/Controller/AbstractCommentController.php:864
+msgid "This comment has already been posted."
 msgstr ""
 
 #: src/Site/ResourcePageBlockLayout/CommentForm.php:13
 msgid "Comment: Form"
 msgstr ""
 
+#: src/Site/ResourcePageBlockLayout/CommentNewCommentNotification.php:13
+msgid "Comment: New comment notification"
+msgstr ""
+
 #: src/Site/ResourcePageBlockLayout/Comments.php:13
 msgid "Comment: List"
+msgstr ""
+
+#: src/Site/ResourcePageBlockLayout/CommentSubscriptionStatus.php:13
+msgid "Comment: Subscription status"
 msgstr ""
 
 #: src/Site/ResourcePageBlockLayout/CommentSubscriptionButton.php:13
 msgid "Comment: Subscription button"
 msgstr ""
 
-#: config/module.config.php:189
-msgid "Comment was added to the resource."
+#: src/Site/BlockLayout/CommentsBrowse.php:28
+msgid "Comment: Browse"
 msgstr ""
 
-#: config/module.config.php:190
-msgid "It will be displayed definitely when approved."
+#: src/Site/BlockLayout/CommentsBrowse.php:120
+msgid "comments"
 msgstr ""
 
-#: config/module.config.php:191
-msgid "Request too long to process."
+#: config/module.config.php:223 config/module.config.php:229
+#: config/module.config.php:235 config/module.config.php:240
+msgid "Date created"
 msgstr ""
 
-#: config/module.config.php:192
-msgid "The resource doesn’t exist."
+#: config/module.config.php:224 config/module.config.php:236
+msgid "Date modified"
 msgstr ""
 
-#: config/module.config.php:194
-msgid "The resource or the comment doesn’t exist."
-msgstr ""
-
-#: config/module.config.php:214
-msgid "comment_legal_text"
-msgstr ""
-
-#: src/Controller/AbstractCommentController.php
-msgid "This comment has already been posted."
-msgstr ""
-
-#: src/Controller/AbstractCommentController.php
-msgid "The user has no right to delete this resource."
-msgstr ""
-
-#: src/Controller/AbstractCommentController.php
-msgid "Too many comments. Please wait before posting again."
-msgstr ""
-
-#: src/Controller/AbstractCommentController.php
-msgid "Email is required when using an alias."
-msgstr ""
-
-#: src/Controller/AbstractCommentController.php
-msgid "Cannot reply to a comment that is not yet approved."
-msgstr ""
-
-#: config/module.config.php
-msgid "Edit your comment"
-msgstr ""
-
-#: config/module.config.php
+#: config/module.config.php:245
 msgid "Are you sure you want to delete this comment?"
 msgstr ""
 
-#: view/comment/admin/comment/browse.phtml
-#: view/comment/admin/comment/show-details.phtml
-#: view/common/admin/comment.phtml
-msgid "Deleted"
+#: config/module.config.php:247
+msgid "Comment was added to the resource."
 msgstr ""
 
-#: data/scripts/upgrade.php
-msgid "Comments can now be soft-deleted. Deleted comments are hidden from the public but preserved for admin review."
+#: config/module.config.php:248
+msgid "Edit your comment"
+msgstr ""
+
+#: config/module.config.php:249
+msgid "It will be displayed definitely when approved."
+msgstr ""
+
+#: config/module.config.php:250
+msgid "Request too long to process."
+msgstr ""
+
+#: config/module.config.php:252
+msgid "The resource doesn’t exist."
+msgstr ""
+
+#: config/module.config.php:253
+msgid "The resource or the comment doesn’t exist."
+msgstr ""
+
+#: config/module.config.php:310
+msgid ""
+"<p>I agree with <a rel=\"license\" href=\"#\" target=\"_blank\">terms of "
+"use</a> and I accept to free my contribution under the license <a "
+"rel=\"license\" href=\"https://creativecommons.org/licenses/by-sa/3.0/\" "
+"target=\"_blank\">CC BY-SA</a>.</p>"
 msgstr ""
