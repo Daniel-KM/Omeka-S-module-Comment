@@ -69,6 +69,16 @@ class CommentSubscription extends AbstractEntity
      */
     protected $created;
 
+    /**
+     * @var DateTime|null
+     *
+     * @Column(
+     *     type="datetime",
+     *     nullable=true
+     * )
+     */
+    protected $lastViewed;
+
     public function getId()
     {
         return $this->id;
@@ -105,5 +115,16 @@ class CommentSubscription extends AbstractEntity
     public function getCreated(): DateTime
     {
         return $this->created;
+    }
+
+    public function setLastViewed(?DateTime $lastViewed): self
+    {
+        $this->lastViewed = $lastViewed;
+        return $this;
+    }
+
+    public function getLastViewed(): ?DateTime
+    {
+        return $this->lastViewed;
     }
 }

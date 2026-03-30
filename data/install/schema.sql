@@ -30,6 +30,7 @@ CREATE TABLE `comment_subscription` (
     `owner_id` INT NOT NULL,
     `resource_id` INT NOT NULL,
     `created` DATETIME NOT NULL,
+    `last_viewed` DATETIME DEFAULT NULL,
     INDEX `IDX_3B2FA8AE7E3C61F9` (`owner_id`),
     INDEX `IDX_3B2FA8AE89329D25` (`resource_id`),
     UNIQUE INDEX `UNIQ_3B2FA8AE7E3C61F989329D25` (`owner_id`, `resource_id`),

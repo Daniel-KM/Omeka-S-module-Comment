@@ -197,7 +197,7 @@ class Module extends AbstractModule
             // Identified users can comment. Reviewer and above can approve.
             ->allow($roles, [Comment::class], ['read', 'create', 'update'])
             ->allow($roles, [Api\Adapter\CommentAdapter::class], ['search', 'read', 'create', 'update'])
-            ->allow($roles, [Controller\Site\CommentController::class], ['browse', 'show', 'flag', 'add', 'subscription', 'subscribe-resource'])
+            ->allow($roles, [Controller\Site\CommentController::class], ['browse', 'show', 'flag', 'add', 'subscription', 'subscribe-resource', 'mark-as-read'])
             ->allow($roles, [Controller\Admin\CommentController::class], ['browse', 'flag', 'add', 'show-details'])
             // Identified users can subscribe to comments.
             // There is no update, only delete.
@@ -825,6 +825,22 @@ class Module extends AbstractModule
 
         $resource = $view->vars()->resource;
         $resourceId = $resource->id();
+
+        // Update last_viewed for subscribed users.
+        $user = $services->get('Omeka\AuthenticationService')->getIdentity();
+        if ($user) {
+            $entityManager = $services->get('Omeka\EntityManager');
+            $dql = 'UPDATE Comment\Entity\CommentSubscription cs '
+                . 'SET cs.lastViewed = :now '
+                . 'WHERE cs.owner = :userId AND cs.resource = :resourceId';
+            $entityManager->createQuery($dql)
+                ->setParameters([
+                    'now' => new \DateTime('now'),
+                    'userId' => $user->getId(),
+                    'resourceId' => $resourceId,
+                ])
+                ->execute();
+        }
 
         // Use cached comments if available.
         if (CommentCache::hasResource($resourceId)) {

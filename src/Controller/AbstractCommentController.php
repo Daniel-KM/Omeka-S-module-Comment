@@ -641,6 +641,46 @@ abstract class AbstractCommentController extends AbstractActionController
         ]);
     }
 
+    public function markAsReadAction()
+    {
+        $user = $this->identity();
+        if (!$user) {
+            return $this->jSend()->fail(null, new PsrMessage(
+                'Unauthorized access.' // @translate
+            ), Response::STATUS_CODE_403);
+        }
+
+        $resourceId = (int) $this->params()->fromPost('resource_id');
+        if (empty($resourceId)) {
+            return $this->jSend()->fail(null, new PsrMessage(
+                'Missing resource.' // @translate
+            ));
+        }
+
+        $entityManager = $this->getEvent()->getApplication()
+            ->getServiceManager()->get('Omeka\EntityManager');
+        $dql = 'UPDATE Comment\Entity\CommentSubscription cs '
+            . 'SET cs.lastViewed = :now '
+            . 'WHERE cs.owner = :userId AND cs.resource = :resourceId';
+        $updated = $entityManager->createQuery($dql)
+            ->setParameters([
+                'now' => new \DateTime('now'),
+                'userId' => $user->getId(),
+                'resourceId' => $resourceId,
+            ])
+            ->execute();
+
+        if (!$updated) {
+            return $this->jSend()->fail(null, new PsrMessage(
+                'No subscription found for this resource.' // @translate
+            ));
+        }
+
+        return $this->jSend()->success([
+            'status' => 'read',
+        ]);
+    }
+
     /**
      * Check if a comment is a spam.
      *

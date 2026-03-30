@@ -67,10 +67,10 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'approved', 'flagged', 'spam', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'created', 'modified', 'history'];
+            return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'approved', 'flagged', 'spam', 'deleted', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'created', 'modified', 'history'];
         }
 
-        return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'approved', 'flagged', 'spam', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'created', 'modified', 'history'];
+        return ['__isInitialized__', 'id', 'owner', 'resource', 'site', 'approved', 'flagged', 'spam', 'deleted', 'path', 'email', 'name', 'website', 'ip', 'userAgent', 'body', 'parent', 'children', 'created', 'modified', 'history'];
     }
 
     /**
@@ -322,6 +322,28 @@ class Comment extends \Comment\Entity\Comment implements \Doctrine\ORM\Proxy\Pro
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'isSpam', []);
 
         return parent::isSpam();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setDeleted($deleted): \Comment\Entity\Comment
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDeleted', [$deleted]);
+
+        return parent::setDeleted($deleted);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isDeleted(): bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isDeleted', []);
+
+        return parent::isDeleted();
     }
 
     /**

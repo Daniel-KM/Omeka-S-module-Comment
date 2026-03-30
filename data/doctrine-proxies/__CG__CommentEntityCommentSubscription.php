@@ -67,10 +67,10 @@ class CommentSubscription extends \Comment\Entity\CommentSubscription implements
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'owner', 'resource', 'created'];
+            return ['__isInitialized__', 'id', 'owner', 'resource', 'created', 'lastViewed'];
         }
 
-        return ['__isInitialized__', 'id', 'owner', 'resource', 'created'];
+        return ['__isInitialized__', 'id', 'owner', 'resource', 'created', 'lastViewed'];
     }
 
     /**
@@ -256,6 +256,28 @@ class CommentSubscription extends \Comment\Entity\CommentSubscription implements
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreated', []);
 
         return parent::getCreated();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLastViewed(?\DateTime $lastViewed): \Comment\Entity\CommentSubscription
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLastViewed', [$lastViewed]);
+
+        return parent::setLastViewed($lastViewed);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLastViewed(): ?\DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLastViewed', []);
+
+        return parent::getLastViewed();
     }
 
     /**

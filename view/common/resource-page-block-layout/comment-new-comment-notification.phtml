@@ -1,0 +1,20 @@
+<?php
+/**
+ * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource
+ */
+
+if (!$this->commentHasNewComment($resource)) {
+    return;
+}
+
+$plugins = $this->getHelperPluginManager();
+$escape = $plugins->get('escapeHtml');
+$translate = $plugins->get('translate');
+?>
+
+<div class="block block-has-new-comment">
+    <div class="comment-new-badge">
+        <span><?= $escape($translate('New comment')) ?></span>
+    </div>
+</div>

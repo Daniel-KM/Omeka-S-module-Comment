@@ -21,6 +21,11 @@ class CommentCache
     protected static $subscriptions = [];
 
     /**
+     * @var array Cache of new comment status indexed by "userId-resourceId".
+     */
+    protected static $newComments = [];
+
+    /**
      * Get comments for a resource.
      */
     public static function getByResource(int $resourceId): ?array
@@ -72,11 +77,39 @@ class CommentCache
     }
 
     /**
+     * Get new comment status.
+     */
+    public static function getNewComment(int $userId, int $resourceId): ?bool
+    {
+        $key = $userId . '-' . $resourceId;
+        return self::$newComments[$key] ?? null;
+    }
+
+    /**
+     * Set new comment status.
+     */
+    public static function setNewComment(int $userId, int $resourceId, bool $hasNew): void
+    {
+        $key = $userId . '-' . $resourceId;
+        self::$newComments[$key] = $hasNew;
+    }
+
+    /**
+     * Check if new comment status is cached.
+     */
+    public static function hasNewCommentCached(int $userId, int $resourceId): bool
+    {
+        $key = $userId . '-' . $resourceId;
+        return isset(self::$newComments[$key]);
+    }
+
+    /**
      * Clear all caches (useful for testing).
      */
     public static function clear(): void
     {
         self::$resources = [];
         self::$subscriptions = [];
+        self::$newComments = [];
     }
 }

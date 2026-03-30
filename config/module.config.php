@@ -30,6 +30,7 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
+            'commentHasNewComment' => View\Helper\CommentHasNewComment::class,
             'commentIsSubscribed' => View\Helper\CommentIsSubscribed::class,
             'commentsResource' => View\Helper\CommentsResource::class,
             'commentSubscriptionButton' => View\Helper\CommentSubscriptionButton::class,
@@ -60,6 +61,7 @@ return [
             'commentForm' => Site\ResourcePageBlockLayout\CommentForm::class,
             'comments' => Site\ResourcePageBlockLayout\Comments::class,
             'commentSubscriptionButton' => Site\ResourcePageBlockLayout\CommentSubscriptionButton::class,
+            'commentNewCommentNotification' => Site\ResourcePageBlockLayout\CommentNewCommentNotification::class,
             'commentSubscriptionStatus' => Site\ResourcePageBlockLayout\CommentSubscriptionStatus::class,
         ],
     ],
