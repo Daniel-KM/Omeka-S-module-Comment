@@ -84,7 +84,7 @@ if (version_compare($oldVersion, '3.4.14', '<')) {
         SQL;
     try {
         $connection->executeStatement($sql);
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
         // Already created.
     }
 
@@ -103,7 +103,7 @@ if (version_compare($oldVersion, '3.4.14', '<')) {
         SQL;
     try {
         $connection->executeStatement($sql);
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
         // Already created.
     }
 
@@ -194,7 +194,7 @@ if (version_compare($oldVersion, '3.4.15', '<')) {
         SQL;
     try {
         $connection->executeStatement($sql);
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
         // Already created.
     }
 
@@ -205,7 +205,7 @@ if (version_compare($oldVersion, '3.4.15', '<')) {
         SQL;
     try {
         $connection->executeStatement($sql);
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
         // Already dropped.
     }
 
@@ -229,7 +229,7 @@ if (version_compare($oldVersion, '3.4.16', '<')) {
         SQL;
     try {
         $connection->executeStatement($sql);
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
         // Ignore errors.
     }
 
@@ -241,7 +241,7 @@ if (version_compare($oldVersion, '3.4.16', '<')) {
         SQL;
     try {
         $connection->executeStatement($sql);
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
         // Already exists.
     }
 
@@ -257,7 +257,7 @@ if (version_compare($oldVersion, '3.4.16', '<')) {
         SQL;
     try {
         $connection->executeStatement($sql);
-    } catch (\Exception $e) {
+    } catch (\Throwable $e) {
         // Already created.
     }
 

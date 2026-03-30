@@ -39,7 +39,7 @@ class SendNotifications extends AbstractJob
         // Retrieve the comment.
         try {
             $comment = $api->read('comments', $commentId)->getContent();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->logger->err(
                 'SendNotifications job: comment #{comment_id} not found.', // @translate
                 ['comment_id' => $commentId]
@@ -55,7 +55,7 @@ class SendNotifications extends AbstractJob
         // Retrieve the resource.
         try {
             $resource = $api->read('resources', $resourceId)->getContent();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->logger->err(
                 'SendNotifications job: resource #{resource_id} not found.', // @translate
                 ['resource_id' => $resourceId]
@@ -145,7 +145,7 @@ class SendNotifications extends AbstractJob
                     ->setSubject($subject)
                     ->setBody($body);
                 $mailer->send($message);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $this->logger->err(
                     'SendNotifications job: failed to send email to {email}: {error}', // @translate
                     ['email' => $user->getEmail(), 'error' => $e->getMessage()]
@@ -220,7 +220,7 @@ class SendNotifications extends AbstractJob
                     ->setSubject($subject)
                     ->setBody($body);
                 $mailer->send($message);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $this->logger->err(
                     'SendNotifications job: failed to send email to {email}: {error}', // @translate
                     ['email' => $email, 'error' => $e->getMessage()]
@@ -296,7 +296,7 @@ class SendNotifications extends AbstractJob
                     ->setSubject($subject)
                     ->setBody($body);
                 $mailer->send($message);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $this->logger->err(
                     'SendNotifications job: failed to send email to {email}: {error}', // @translate
                     ['email' => $email, 'error' => $e->getMessage()]

@@ -206,7 +206,7 @@ class CommentController extends AbstractCommentController
         try {
             $this->api()
                 ->batchUpdate('comments', $resourceIds, $data, ['continueOnError' => true]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->logger()->err(
                 '[Comment]: {msg}', // @translate
                 ['msg' => $e->getMessage()]
@@ -273,7 +273,7 @@ class CommentController extends AbstractCommentController
         try {
             $this->api()
                 ->update('comments', ['id' => $id], $data, [], ['isPartial' => true]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->logger()->err(
                 '[Comment]: {msg}', // @translate
                 ['msg' => $e->getMessage()]
