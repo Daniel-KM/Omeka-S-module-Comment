@@ -16,6 +16,7 @@ class SiteSettingsFieldset extends Fieldset
 
     protected $elementGroups = [
         'comment' => 'Comments', // @translate
+        'themes_old' => 'Old themes', // @translate
     ];
 
     public function init(): void
@@ -28,7 +29,7 @@ class SiteSettingsFieldset extends Fieldset
                 'name' => 'comment_placement_subscription',
                 'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
-                    'element_group' => 'comment',
+                    'element_group' => 'themes_old',
                     'label' => 'Display subscription button (old themes)', // @translate
                     'value_options' => [
                         'before/items' => 'Item: Top', // @translate
@@ -48,7 +49,7 @@ class SiteSettingsFieldset extends Fieldset
                 'name' => 'comment_placement_list',
                 'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
-                    'element_group' => 'comment',
+                    'element_group' => 'themes_old',
                     'label' => 'Display comments (old themes)', // @translate
                     'value_options' => [
                         'before/items' => 'Item: Top', // @translate
@@ -68,7 +69,7 @@ class SiteSettingsFieldset extends Fieldset
                 'name' => 'comment_placement_form',
                 'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
-                    'element_group' => 'comment',
+                    'element_group' => 'themes_old',
                     'label' => 'Display comment form (old themes)', // @translate
                     'value_options' => [
                         'before/items' => 'Item: Top', // @translate
