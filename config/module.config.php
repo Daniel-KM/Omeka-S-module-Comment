@@ -242,15 +242,16 @@ return [
         ],
     ],
     'js_translate_strings' => [
-        'You should accept the legal agreement.', // @translate
+        'Are you sure you want to delete this comment?', // @translate
+        'Comment', // @translate
         'Comment was added to the resource.', // @translate
+        'Edit your comment', // @translate
         'It will be displayed definitely when approved.', // @translate
         'Request too long to process.', // @translate
-        'The resource doesn’t exist.', // @translate
         'Something went wrong', // @translate
+        'The resource doesn’t exist.', // @translate
         'The resource or the comment doesn’t exist.', // @translate
-        'Edit your comment', // @translate
-        'Are you sure you want to delete this comment?', // @translate
+        'You should accept the legal agreement.', // @translate
     ],
     'comment' => [
         'settings' => [
