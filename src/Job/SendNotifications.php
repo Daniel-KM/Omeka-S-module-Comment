@@ -24,6 +24,9 @@ class SendNotifications extends AbstractJob
     {
         $services = $this->getServiceLocator();
         $this->logger = $services->get('Omeka\Logger');
+        $referenceIdProcessor = new \Laminas\Log\Processor\ReferenceId();
+        $referenceIdProcessor->setReferenceId('comment/send-notifications/job_' . $this->job->getId());
+        $this->logger->addProcessor($referenceIdProcessor);
         $settings = $services->get('Omeka\Settings');
         $api = $services->get('Omeka\ApiManager');
 
@@ -32,7 +35,7 @@ class SendNotifications extends AbstractJob
         $resourceId = $this->getArg('resource_id');
 
         if (!$type || !$commentId || !$resourceId) {
-            $this->logger->err('SendNotifications job: missing required arguments.');
+            $this->logger->err('Missing required arguments.'); // @translate
             return;
         }
 
@@ -41,7 +44,7 @@ class SendNotifications extends AbstractJob
             $comment = $api->read('comments', $commentId)->getContent();
         } catch (\Throwable $e) {
             $this->logger->err(
-                'SendNotifications job: comment #{comment_id} not found.', // @translate
+                'Comment #{comment_id} not found.', // @translate
                 ['comment_id' => $commentId]
             );
             return;
@@ -57,7 +60,7 @@ class SendNotifications extends AbstractJob
             $resource = $api->read('resources', $resourceId)->getContent();
         } catch (\Throwable $e) {
             $this->logger->err(
-                'SendNotifications job: resource #{resource_id} not found.', // @translate
+                'Resource #{resource_id} not found.', // @translate
                 ['resource_id' => $resourceId]
             );
             return;
@@ -75,7 +78,7 @@ class SendNotifications extends AbstractJob
                 break;
             default:
                 $this->logger->err(
-                    'SendNotifications job: unknown notification type "{type}".', // @translate
+                    'Unknown notification type "{type}".', // @translate
                     ['type' => $type]
                 );
         }
@@ -147,14 +150,14 @@ class SendNotifications extends AbstractJob
                 $mailer->send($message);
             } catch (\Throwable $e) {
                 $this->logger->err(
-                    'SendNotifications job: failed to send email to {email}: {error}', // @translate
+                    'Failed to send email to {email}: {error}', // @translate
                     ['email' => $user->getEmail(), 'error' => $e->getMessage()]
                 );
             }
         }
 
         $this->logger->info(
-            'SendNotifications job: sent subscriber notifications for comment #{comment_id}.', // @translate
+            'Sent subscriber notifications for comment #{comment_id}.', // @translate
             ['comment_id' => $comment->id()]
         );
     }
@@ -227,14 +230,14 @@ class SendNotifications extends AbstractJob
                 $mailer->send($message);
             } catch (\Throwable $e) {
                 $this->logger->err(
-                    'SendNotifications job: failed to send email to {email}: {error}', // @translate
+                    'Failed to send email to {email}: {error}', // @translate
                     ['email' => $email, 'error' => $e->getMessage()]
                 );
             }
         }
 
         $this->logger->info(
-            'SendNotifications job: sent moderator notifications for comment #{comment_id}.', // @translate
+            'Sent moderator notifications for comment #{comment_id}.', // @translate
             ['comment_id' => $comment->id()]
         );
     }
@@ -303,14 +306,14 @@ class SendNotifications extends AbstractJob
                 $mailer->send($message);
             } catch (\Throwable $e) {
                 $this->logger->err(
-                    'SendNotifications job: failed to send email to {email}: {error}', // @translate
+                    'Failed to send email to {email}: {error}', // @translate
                     ['email' => $email, 'error' => $e->getMessage()]
                 );
             }
         }
 
         $this->logger->info(
-            'SendNotifications job: sent flagged comment notifications for comment #{comment_id}.', // @translate
+            'Sent flagged comment notifications for comment #{comment_id}.', // @translate
             ['comment_id' => $comment->id()]
         );
     }
