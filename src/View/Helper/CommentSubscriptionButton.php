@@ -72,7 +72,7 @@ class CommentSubscriptionButton extends AbstractHelper
                 try {
                     $api->read('comment_subscriptions', ['owner' => $userId, 'resource' => $resourceId], [], ['responseContent' => 'resource']);
                     $subscribed = true;
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     // Not subscribed.
                 }
                 CommentCache::setSubscription($userId, $resourceId, $subscribed);

@@ -94,7 +94,7 @@ abstract class AbstractCommentController extends AbstractActionController
             return $this->jSend()->fail(null, new PsrMessage(
                 'Unauthorized access.' // @translate
             ), Response::STATUS_CODE_403);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->logger()->warn(
                 'The url to add comment was accessed without resource.' // @translate
             );
@@ -117,7 +117,7 @@ abstract class AbstractCommentController extends AbstractActionController
                 return $this->jSend()->error(null, new PsrMessage(
                     'The parent comment does not exist.' // @translate
                 ));
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 return $this->jSend()->error(null, new PsrMessage(
                     'The parent comment does not exist.' // @translate
                 ));
@@ -247,7 +247,7 @@ abstract class AbstractCommentController extends AbstractActionController
         // Remove non allowed data.
         try {
             $response = $this->api($form)->create('comments', $data);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $response = null;
         }
         if (!$response) {
@@ -278,7 +278,7 @@ abstract class AbstractCommentController extends AbstractActionController
                 $this->api()->create('comment_subscriptions', [
                     'o:resource' => ['o:id' => $resourceId],
                 ]);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // Ignore other errors silently.
             }
         }
@@ -328,7 +328,7 @@ abstract class AbstractCommentController extends AbstractActionController
 
         try {
             $response = $this->api()->read('comments', $this->params('id'));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return $this->jSend()->fail(null, new PsrMessage(
                 'Unauthorized access or not found.' // @translate
             ), Response::STATUS_CODE_403);
@@ -386,7 +386,7 @@ abstract class AbstractCommentController extends AbstractActionController
         // Save the new body.
         try {
             $response = $this->api()->update('comments', $resourceId, $data, [], ['isPartial' => true]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $response = null;
         }
         // Normally not possible because checked above.
@@ -449,7 +449,7 @@ abstract class AbstractCommentController extends AbstractActionController
 
         try {
             $response = $this->api()->read('comments', $commentId);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return $this->jSend()->fail(null, new PsrMessage(
                 'Unauthorized access or not found.' // @translate
             ), Response::STATUS_CODE_403);
@@ -474,7 +474,7 @@ abstract class AbstractCommentController extends AbstractActionController
         if ($hardDelete) {
             try {
                 $this->api()->delete('comments', $commentId);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 return $this->jSend()->error(null, new PsrMessage(
                     'An error occurred.' // @translate
                 ));
@@ -485,7 +485,7 @@ abstract class AbstractCommentController extends AbstractActionController
                 $this->api()->update('comments', $commentId, [
                     'o:deleted' => true,
                 ], [], ['isPartial' => true]);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 return $this->jSend()->error(null, new PsrMessage(
                     'An error occurred.' // @translate
                 ));
@@ -543,7 +543,7 @@ abstract class AbstractCommentController extends AbstractActionController
             return $this->jSend()->fail(null, new PsrMessage(
                 'Comment not found.' // @translate
             ));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->logger()->warn(
                 'The comment #{comment_id} cannot be accessed.', // @translate
                 ['comment_id' => $commentId]
@@ -593,7 +593,7 @@ abstract class AbstractCommentController extends AbstractActionController
             return $this->jSend()->fail(null, new PsrMessage(
                 'Resource not found.' // @translate
             ), Response::STATUS_CODE_403);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return $this->jSend()->fail(null, new PsrMessage(
                 'Unauthorized access.' // @translate
             ), Response::STATUS_CODE_403);
@@ -612,7 +612,7 @@ abstract class AbstractCommentController extends AbstractActionController
                 'owner' => $user->getId(),
                 'resource' => $resourceId,
             ])->getContent();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $subscription = null;
         }
 
@@ -712,7 +712,7 @@ abstract class AbstractCommentController extends AbstractActionController
             $akismetData = $this->getAkismetData($data);
             try {
                 $isSpam = $akismet->isSpam($akismetData);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 $isSpam = true;
             }
         }
@@ -800,7 +800,7 @@ abstract class AbstractCommentController extends AbstractActionController
                 'created_after' => $since,
             ], ['returnScalar' => 'id']);
             $count = $response->getTotalResults();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // On error, allow the comment (fail open).
             return null;
         }
