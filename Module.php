@@ -535,10 +535,17 @@ class Module extends AbstractModule
 
         $entityColumnName = $this->columnNameOfEntity($first);
 
-        $api = $this->getServiceLocator()->get('Omeka\ApiManager');
-        $comments = $api
-            ->search('comments', [$entityColumnName => $resourceIds])
-            ->getContent();
+        // The cache is a best-effort optimization. If the database connection
+        // was lost (e.g. during a long-running job), skip silently:
+        // filterJsonLd() will handle its own fallback or propagate real error.
+        try {
+            $api = $this->getServiceLocator()->get('Omeka\ApiManager');
+            $comments = $api
+                ->search('comments', [$entityColumnName => $resourceIds])
+                ->getContent();
+        } catch (\Doctrine\DBAL\Exception\ConnectionLost $e) {
+            return;
+        }
 
         $byResource = [];
         foreach ($comments as $comment) {
