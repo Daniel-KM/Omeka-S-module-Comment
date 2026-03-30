@@ -266,3 +266,20 @@ if (version_compare($oldVersion, '3.4.16', '<')) {
     );
     $messenger->addSuccess($message);
 }
+
+if (version_compare($oldVersion, '3.4.17', '<')) {
+    $sql = <<<'SQL'
+        ALTER TABLE `comment_subscription`
+        ADD `last_viewed` DATETIME DEFAULT NULL AFTER `created`;
+        SQL;
+    try {
+        $connection->executeStatement($sql);
+    } catch (\Throwable $e) {
+        // Already created.
+    }
+
+    $message = new PsrMessage(
+        'New comment notifications are now available for subscribed users.' // @translate
+    );
+    $messenger->addSuccess($message);
+}
