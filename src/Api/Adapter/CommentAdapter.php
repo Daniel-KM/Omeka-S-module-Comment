@@ -299,16 +299,16 @@ class CommentAdapter extends AbstractEntityAdapter
         }
     }
 
-    // public function sortQuery(QueryBuilder $qb, array $query)
-    // {
-    //     if (is_string($query['sort_by'])) {
-    //         switch ($query['sort_by']) {
-    //             default:
-    //                 parent::sortQuery($qb, $query);
-    //                 break;
-    //         }
-    //     }
-    // }
+    public function sortQuery(QueryBuilder $qb, array $query)
+    {
+        if (isset($query['sort_by']) && $query['sort_by'] === 'resource_title') {
+            $resourceAlias = $qb->createAlias();
+            $qb->innerJoin('omeka_root.resource', $resourceAlias);
+            $qb->addOrderBy("$resourceAlias.title", $query['sort_order'] ?? 'asc');
+            return;
+        }
+        parent::sortQuery($qb, $query);
+    }
 
     public function hydrate(Request $request, EntityInterface $entity,
         ErrorStore $errorStore
