@@ -68,16 +68,24 @@ $sortOptions = [
     'resource_title-asc' => $translate('Title (ascending)'), // @translate
     'resource_title-desc' => $translate('Title (descending)'), // @translate
 ];
+$perPage = (int) $this->params()->fromQuery('per_page', 25);
+$perPageOptions = [25, 50, 100];
 $totalResults = $this->pagination()->getPaginator()->getTotalCount();
 ?>
 <div class="browse-controls">
     <?= $pg = $this->pagination() ?>
     <div class="per-pages-and-sort">
         <span class="browse-total"><?= sprintf($translatePlural('%d resource', '%d resources', $totalResults), $totalResults) // @translate ?></span>
-        <label for="sort-subscriptions"><?= $translate('Sort by') ?></label>
-        <select id="sort-subscriptions" onchange="var v=this.value.split('-'),p=new URLSearchParams(window.location.search);p.set('sort_by',v[0]);p.set('sort_order',v[1]);window.location.search=p;">
+        <label for="sort-subscriptions"><?= $translate('Sort by') // @translate ?></label>
+        <select id="sort-subscriptions" onchange="var v=this.value.split('-'),p=new URLSearchParams(window.location.search);p.set('sort_by',v[0]);p.set('sort_order',v[1]);p.delete('page');window.location.search=p;">
             <?php foreach ($sortOptions as $value => $label): ?>
             <option value="<?= $escapeAttr($value) ?>"<?= $value === $currentSort ? ' selected' : '' ?>><?= $escape($label) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <label for="per-page-subscriptions"><?= $translate('Per page') // @translate ?></label>
+        <select id="per-page-subscriptions" class="per-page" onchange="var p=new URLSearchParams(window.location.search);p.set('per_page',this.value);p.delete('page');window.location.search=p;">
+            <?php foreach ($perPageOptions as $pp): ?>
+            <option value="<?= $pp ?>"<?= $pp === $perPage ? ' selected' : '' ?>><?= $pp ?></option>
             <?php endforeach; ?>
         </select>
     </div>
