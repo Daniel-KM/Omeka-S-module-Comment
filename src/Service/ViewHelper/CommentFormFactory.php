@@ -3,7 +3,7 @@
 namespace Comment\Service\ViewHelper;
 
 use Comment\View\Helper\CommentForm;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class CommentFormFactory implements FactoryInterface
