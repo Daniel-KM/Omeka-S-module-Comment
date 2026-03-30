@@ -47,10 +47,12 @@ class CommentSubscriptionRepresentation extends AbstractEntityRepresentation
         return $this->getAdapter('users')->getRepresentation($owner);
     }
 
-    public function resource(): AbstractResourceRepresentation
+    public function resource(): ?AbstractResourceRepresentation
     {
         $resource = $this->resource->getResource();
-        return $this->getAdapter('resources')->getRepresentation($resource);
+        return $resource
+            ? $this->getAdapter('resources')->getRepresentation($resource)
+            : null;
     }
 
     public function created(): DateTime
