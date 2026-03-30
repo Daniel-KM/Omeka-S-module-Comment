@@ -187,14 +187,19 @@ class SendNotifications extends AbstractJob
                 Comment:
                 {comment_body}
 
-                Review at: {resource_url}
+                Public page: {resource_url}
+                Admin page: {admin_url}
                 MAIL; // @translate
 
+        $siteSlug = $this->getArg('site_slug');
         $placeholders = [
             'site_name' => $siteName,
             'resource_id' => $resource->id(),
             'resource_title' => (string) $resource->displayTitle(),
-            'resource_url' => $resource->adminUrl(),
+            'resource_url' => $siteSlug
+                ? $resource->siteUrl($siteSlug, true)
+                : $resource->apiUrl(),
+            'admin_url' => $resource->adminUrl(null, true),
             'comment_author' => $comment->name() ?: 'Anonymous',
             'comment_email' => $comment->email() ?: 'N/A',
             'comment_body' => $comment->body(),
@@ -273,7 +278,7 @@ class SendNotifications extends AbstractJob
             'comment_author' => $comment->name() ?: 'Anonymous',
             'comment_email' => $comment->email() ?: 'N/A',
             'comment_body' => $comment->body(),
-            'admin_url' => $comment->adminUrl(),
+            'admin_url' => $resource->adminUrl(null, true),
         ];
 
         $subject = new PsrMessage($subjectTemplate, $placeholders);
