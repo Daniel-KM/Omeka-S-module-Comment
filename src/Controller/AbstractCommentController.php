@@ -295,6 +295,7 @@ abstract class AbstractCommentController extends AbstractActionController
                 'type' => 'moderators',
                 'comment_id' => $comment->id(),
                 'resource_id' => $resourceId,
+                'site_slug' => $site ? $site->slug() : null,
             ]);
         }
 
@@ -400,11 +401,12 @@ abstract class AbstractCommentController extends AbstractActionController
         $comment = $response->getContent();
 
         if ($this->settings()->get('comment_public_notify_post')) {
-            // Dispatch background job for moderator notification.
+            $commentSite = $comment->site();
             $this->jobDispatcher()->dispatch(\Comment\Job\SendNotifications::class, [
                 'type' => 'moderators',
                 'comment_id' => $comment->id(),
                 'resource_id' => $resourceId,
+                'site_slug' => $commentSite ? $commentSite->slug() : null,
             ]);
         }
 
