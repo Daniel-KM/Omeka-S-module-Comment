@@ -63,7 +63,7 @@ class CommentForm extends Form
         $this
             ->setAttribute('id', 'comment-form')
             ->setAttribute('action', $action)
-            ->setAttribute('class', 'comment-form disable-unsaved-warning')
+            ->setAttribute('class', 'comment-form jsend-form disable-unsaved-warning')
             ->setAttribute('data-resource-id', $resourceId);
 
         // Check if alias/anonymous modes are allowed for logged-in users.
