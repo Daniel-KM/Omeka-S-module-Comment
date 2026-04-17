@@ -1,0 +1,1200 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Daniel Berthereau <Daniel.github@Berthereau.net>, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-17 00:00+0000\n"
+"PO-Revision-Date: 2026-04-1 00:00+0000\n"
+"Last-Translator: Bob Coret <bob@coret.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.6\n"
+
+#: data/scripts/upgrade.php:33 Module.php:84
+#, php-format
+msgid "The module %1$s should be upgraded to version %2$s or later."
+msgstr "De module %1$s moet worden geüpgraded naar versie %2$s of later."
+
+#: data/scripts/upgrade.php:37
+msgid "Missing requirement. Unable to upgrade."
+msgstr "Ontbrekende vereiste. Upgraden niet mogelijk."
+
+#: Module.php:98
+#, php-format
+msgid ""
+"I agree with %1$sterms of use%2$s and I accept to free my contribution under "
+"the license %3$sCC BY-SA%2$s."
+msgstr ""
+"Accepteer de %1$sgebruiksvoorwaarden %2$s en accepteer de bijdrage van "
+"de licentie %3$sCC BY-SA%2$s."
+
+#: Module.php:943 Module.php:962
+msgid "Has comments"
+msgstr "Heeft opmerkingen"
+
+#: Module.php:944 Module.php:963 Module.php:976
+msgid "true"
+msgstr "waar"
+
+#: Module.php:968
+msgid "Approved"
+msgstr "Goedgekeurd"
+
+#: Module.php:969
+msgid "Flagged"
+msgstr "Gemarkeerd"
+
+#: Module.php:970
+msgid "Is spam"
+msgstr "Is spam"
+
+#: Module.php:975
+msgid "false"
+msgstr "onwaar"
+
+#: Module.php:1073 view/guest/site/guest/comment-browse.phtml:59
+#: view/guest/site/guest/widget/comment-browse.phtml:16
+msgid "My comments"
+msgstr "Mijn opmerkingen"
+
+#: Module.php:1077
+msgid "Subscription"
+msgstr "Abonnement"
+
+#: src/Controller/AbstractCommentController.php:255
+msgid "There is issue in your comment."
+msgstr "Er is een probleem met uw reactie."
+
+#: src/Controller/AbstractCommentController.php:309
+msgid ""
+"Comment was added to the resource. It will be displayed definitely when "
+"approved."
+msgstr ""
+"De opmerking is toegevoegd aan de bron. Deze wordt permanent toegevoegd zodra "
+"deze is goedgekeurd."
+
+#: src/Controller/AbstractCommentController.php:422
+msgid "Comment was updated. It will be displayed definitely when approved."
+msgstr ""
+"De opmerking is aangepast. Deze wordt definitief toegevoegd zodra deze is "
+"goedgekeurd."
+
+#: src/Controller/AbstractCommentController.php:501
+msgid "Comment successfully deleted."
+msgstr "Reactie succesvol verwijderd."
+
+#: src/Controller/Admin/CommentController.php:282
+msgid "An internal error occurred."
+msgstr "Er is een interne fout opgetreden."
+
+#: view/comment/admin/comment/batch-delete-confirm.phtml:12
+msgid "Delete comments"
+msgstr "Verwijder opmerkingen"
+
+#: view/comment/admin/comment/batch-delete-confirm.phtml:13
+msgid "Are you sure you would like to delete the selected comments?"
+msgstr "Weet je zeker dat je de geselecteerde reacties wilt verwijderen?"
+
+#: view/comment/admin/comment/browse.phtml:35
+#: view/common/admin/comments-details.phtml:25 view/common/comments.phtml:38
+msgid "Comments"
+msgstr "Opmerkingen"
+
+#: view/comment/admin/comment/browse.phtml:53
+#: view/comment/admin/comment/browse.phtml:55
+msgid "Approve"
+msgstr "Goedkeuren"
+
+#: view/comment/admin/comment/browse.phtml:59
+#: view/comment/admin/comment/browse.phtml:61
+msgid "Unapprove"
+msgstr "Afkeuren"
+
+#: view/comment/admin/comment/browse.phtml:65
+#: view/comment/admin/comment/browse.phtml:67
+msgid "Flag"
+msgstr "Markeren"
+
+#: view/comment/admin/comment/browse.phtml:71
+#: view/comment/admin/comment/browse.phtml:73
+msgid "Unflag"
+msgstr "Demarkeren"
+
+#: view/comment/admin/comment/browse.phtml:77
+#: view/comment/admin/comment/browse.phtml:79
+msgid "Set spam"
+msgstr "Markeer als spam"
+
+#: view/comment/admin/comment/browse.phtml:83
+#: view/comment/admin/comment/browse.phtml:85
+msgid "Set not spam"
+msgstr "Markeer als geen spam"
+
+#: view/comment/admin/comment/browse.phtml:100
+msgid "There are no comments."
+msgstr "Er zijn geen reacties."
+
+#: view/comment/admin/comment/browse.phtml:115
+#: view/comment/admin/comment/show-details.phtml:20
+msgid "Commenter"
+msgstr "Commentator"
+
+#: view/comment/admin/comment/browse.phtml:116
+msgid "Date commented"
+msgstr "Datum commentaar"
+
+#: view/comment/admin/comment/browse.phtml:142
+#: view/common/admin/comment.phtml:55
+msgid "Toggle approbation"
+msgstr "Goedkeuring ongedaan maken"
+
+#: view/comment/admin/comment/browse.phtml:148
+#: view/common/admin/comment.phtml:65
+msgid "Toggle flag"
+msgstr "Keer de markering om"
+
+#: view/comment/admin/comment/browse.phtml:154
+#: view/common/admin/comment.phtml:75
+msgid "Toggle spam"
+msgstr "Schakel spam om"
+
+#: view/comment/admin/comment/browse.phtml:189
+#: view/comment/admin/comment/show-details.phtml:48
+msgid "Removed"
+msgstr "Verwijderd"
+
+#: view/comment/admin/comment/browse.phtml:207
+#, php-format
+msgid "Created: %s"
+msgstr "Gemaakt: %s"
+
+#: view/comment/admin/comment/browse.phtml:210
+#, php-format
+msgid "Modified: %s"
+msgstr "Bewerkt: %s"
+
+#: view/comment/admin/comment/browse.phtml:219
+#, php-format
+msgid "Edited: %s"
+msgstr "Bewerkt: %s"
+
+#: view/comment/admin/comment/delete-confirm.phtml:15
+msgid "Delete comment"
+msgstr "Reactie verwijderen"
+
+#: view/comment/admin/comment/delete-confirm.phtml:17
+msgid "This comment is already soft-deleted. It will be permanently removed."
+msgstr ""
+"Deze reactie is al gemarkeerd als verwijderd. Hij wordt permanent "
+"uit de database verwijderd."
+
+#: view/comment/admin/comment/delete-confirm.phtml:19
+msgid "Are you sure you would like to delete this comment?"
+msgstr "Weet je zeker dat je de geselecteerde reactie wilt verwijderen?"
+
+#: view/comment/admin/comment/delete-confirm.phtml:21
+msgid "Permanently delete (hard delete)"
+msgstr "Permanente verwijdering (uit de database)"
+
+#: view/comment/admin/comment/show-details.phtml:17
+#, php-format
+msgid "Comment #%d"
+msgstr "Reactie nr. %d"
+
+#: view/comment/admin/comment/show-details.phtml:20
+msgid "(public)"
+msgstr "(openbaar)"
+
+#: view/comment/admin/comment/show-details.phtml:37
+msgid "No resource"
+msgstr "Geen bron"
+
+#: view/comment/admin/comment/show-details.phtml:66
+msgid "No site"
+msgstr "Geen site"
+
+#: view/comment/admin/comment/show-details.phtml:74
+msgid "Deleted"
+msgstr "Verwijderd"
+
+#: view/common/admin/comment.phtml:34
+#, php-format
+msgid "Website: %s"
+msgstr "Website: %s"
+
+#: view/common/admin/comment.phtml:99 view/common/comment-single.phtml:119
+#: view/common/comment-single.phtml:122
+msgid "Reply"
+msgstr "Antwoorden"
+
+#: view/common/admin/comments-details.phtml:28
+#, php-format
+msgid "Total: %s"
+msgstr "Totaal: %s"
+
+#: view/common/admin/comments-details.phtml:33
+#, php-format
+msgid "Approved: %s / Unapproved: %s"
+msgstr "Goedgekeurs: %s / Afgekeurd: %s"
+
+#: view/common/admin/comments-details.phtml:39
+#, php-format
+msgid "Flagged: %s / Unflagged: %s"
+msgstr "Gemarkeerd: %s / Niet gemarkeerd: %s"
+
+#: view/common/admin/comments-details.phtml:45
+#, php-format
+msgid "Spam: %s / Not spam: %s"
+msgstr "Spam: %s / Geen spam: %s"
+
+#: view/common/admin/comments.phtml:42 view/common/comments.phtml:42
+msgid "No comment yet! Be the first to add one!"
+msgstr "Nog geen reacties! Ben jij de eerste die een reactie plaatst?"
+
+#: view/common/comment-single.phtml:33 view/common/comment-single.phtml:37
+msgid "[Anonymous]"
+msgstr "[anoniem]"
+
+#: view/common/comment-single.phtml:79 view/common/comment-single.phtml:82
+msgid "Flag inappropriate"
+msgstr "Markeer als ongepast"
+
+#: view/common/comment-single.phtml:89 view/common/comment-single.phtml:92
+msgid "Unflag inappropriate"
+msgstr "Rapporteer als correct"
+
+#: view/common/comment-subscription-button.phtml:25
+msgid "Unsubscribe to comments"
+msgstr "Uitschrijven voor reacties"
+
+#: view/common/comment-subscription-button.phtml:26
+msgid "Subscribe to comments"
+msgstr "Abonneer je op reacties"
+
+#: view/common/comment-subscription-button.phtml:38
+msgid "Log in to subscribe to comments"
+msgstr "Log in om je te abonneren op reacties"
+
+#: view/common/comments.phtml:44
+msgid "No comment yet! Log in and be the first to add one!"
+msgstr ""
+"Nog geen reacties! Ben jij de eerste die een reactie plaatst?"
+
+#: view/common/resource-page-block-layout/comment-new-comment-notification.phtml:18
+#: view/guest/site/guest/comment-subscription.phtml:117
+msgid "New comment"
+msgstr "Nieuwe reactie"
+
+#: view/common/resource-page-block-layout/comment-subscription-status.phtml:15
+msgid "I’m subscribed to this resource"
+msgstr "Ik ben geabonneerd op deze bron"
+
+#: view/common/resource-page-block-layout/comment-subscription-status.phtml:16
+msgid "I’m not subscribed to this resource"
+msgstr "Ik ben niet geabonneerd op deze bron"
+
+#: view/guest/site/guest/comment-browse.phtml:68
+#: view/guest/site/guest/comment-subscription.phtml:66
+msgid "Date (descending)"
+msgstr "Datum (aflopend)"
+
+#: view/guest/site/guest/comment-browse.phtml:69
+#: view/guest/site/guest/comment-subscription.phtml:67
+msgid "Date (ascending)"
+msgstr "Datum (oplopend)"
+
+#: view/guest/site/guest/comment-browse.phtml:70
+#: view/guest/site/guest/comment-subscription.phtml:68
+msgid "Title (ascending)"
+msgstr "Titel (oplopend)"
+
+#: view/guest/site/guest/comment-browse.phtml:71
+#: view/guest/site/guest/comment-subscription.phtml:69
+msgid "Title (descending)"
+msgstr "Titel (aflopend)"
+
+#: view/guest/site/guest/comment-browse.phtml:128
+msgid "You have no comments yet."
+msgstr "Je hebt geen opmerkingen."
+
+#: view/guest/site/guest/comment-subscription.phtml:57
+msgid "Subscriptions"
+msgstr "Abonnementen"
+
+#: view/guest/site/guest/comment-subscription.phtml:85
+msgid "Per page"
+msgstr "Per pagina"
+
+#: view/guest/site/guest/comment-subscription.phtml:133
+msgid "You have no subscription yet."
+msgstr "Je hebt geen abonnement."
+
+#: view/guest/site/guest/widget/comment-subscription.phtml:16
+msgid "My subscriptions"
+msgstr "Mijn abonnementen"
+
+#: data/scripts/upgrade.php:126
+msgid ""
+"The templates and view helpers were renamed. You should check your theme. "
+"Matching templates: {json}"
+msgstr ""
+"De sjablonen en weergaveassistenten zijn hernoemd. Controleer uw thema. "
+"Bijbehorende sjablonen: {json}"
+
+#: data/scripts/upgrade.php:169
+msgid ""
+"Resource blocks were added to display the comments and the comment form via "
+"the theme config."
+msgstr ""
+"Via de thema-instellingen zijn resourceblokken toegevoegd om reacties en "
+"het formulier weer te geven."
+
+#: data/scripts/upgrade.php:174
+msgid ""
+"A resource block allows to subscribe to a resource to be notified when a "
+"comment is added."
+msgstr ""
+"Met een resourceblok kunt u zich abonneren op een resource, zodat u een "
+"melding ontvangt wanneer er een reactie wordt toegevoegd."
+
+#: data/scripts/upgrade.php:179
+msgid "An option allows to skip display of gravatar."
+msgstr "Er is een optie beschikbaar om de gravatar te verbergen."
+
+#: data/scripts/upgrade.php:184
+msgid "It is now possible to edit for the user or an admin to edit a comment."
+msgstr ""
+"Gebruikers en beheerders kunnen nu reacties bewerken."
+
+#: data/scripts/upgrade.php:213
+msgid ""
+"Comment history is now tracked. Edits, flags, and moderation actions are "
+"recorded. The \"edited\" column has been removed."
+msgstr ""
+"De geschiedenis van elke reactie wordt nu bijgehouden. Bewerkings-, rapportage- "
+"en moderatieacties worden geregistreerd. De kolom \"bewerkt\" is verwijderd."
+
+#: data/scripts/upgrade.php:249
+msgid "A unique constraint has been added to prevent duplicate subscriptions."
+msgstr "Er is een beperking toegevoegd om dubbele abonnementen te voorkomen."
+
+#: data/scripts/upgrade.php:265
+msgid ""
+"Comments can now be soft-deleted. Deleted comments are hidden from the "
+"public but preserved for admin review."
+msgstr ""
+"Reacties kunnen nu worden verwijderd (verborgen). Verwijderde reacties "
+"zijn niet zichtbaar voor het publiek, maar worden bewaard zodat de beheerder "
+"ze kan bekijken."
+
+#: data/scripts/upgrade.php:282
+msgid "New comment notifications are now available for subscribed users."
+msgstr ""
+"Abonnees ontvangen nu meldingen van nieuwe reacties."
+
+#: view/guest/site/guest/comment-subscription.phtml:78
+#, php-format
+msgid "%d resources"
+msgstr "%d bronnen"
+
+#: view/guest/site/guest/comment-browse.phtml:78
+#, php-format
+msgid "%d comments"
+msgstr "%d opmerkingen"
+
+#: src/Job/SendNotifications.php:38
+msgid "Missing required arguments."
+msgstr "Verplichte argumenten ontbreken."
+
+#: src/Job/SendNotifications.php:47
+msgid "Comment #{comment_id} not found."
+msgstr "Reactie #{comment_id} niet gevonden."
+
+#: src/Job/SendNotifications.php:63
+msgid "Resource #{resource_id} not found."
+msgstr "Bron #{resource_id} niet gevonden."
+
+#: src/Job/SendNotifications.php:81
+msgid "Unknown notification type \"{type}\"."
+msgstr "Onbekend meldingstype: \"{type}\"."
+
+#: src/Job/SendNotifications.php:113 src/Form/SettingsFieldset.php:95
+#: config/module.config.php:266
+msgid "[{site_name}] New comment"
+msgstr "[{site_name}] Nieuwe reactie"
+
+#: src/Job/SendNotifications.php:115 src/Form/SettingsFieldset.php:108
+#: config/module.config.php:267
+msgid ""
+"Hi,\n"
+"\n"
+"A new comment was published for resource #{resource_id} ({resource_title}).\n"
+"\n"
+"You can see it at {resource_url}#comments.\n"
+"\n"
+"Sincerely,"
+msgstr ""
+"Hallo,\n"
+"\n"
+"Er is een nieuwe reactie geplaatst voor resource #{resource_id} "
+"({resource_title}).\n"
+"\n"
+"Je kunt het bekijken op {resource_url}#comments.\n"
+"\n"
+"Gegroet,"
+
+#: src/Job/SendNotifications.php:153 src/Job/SendNotifications.php:233
+#: src/Job/SendNotifications.php:309
+msgid "Failed to send email to {email}: {error}"
+msgstr "Het verzenden van de e-mail naar {email} is mislukt: {error}"
+
+#: src/Job/SendNotifications.php:160
+msgid "Sent subscriber notifications for comment #{comment_id}."
+msgstr ""
+"Er zijn meldingen verzonden naar abonnees voor reactie #{comment_id}."
+
+#: src/Job/SendNotifications.php:183 src/Form/SettingsFieldset.php:130
+#: config/module.config.php:276
+msgid "[{site_name}] New public comment"
+msgstr "[{site_name}] Nieuwe publieke reactie"
+
+#: src/Job/SendNotifications.php:185
+msgid ""
+"A comment was added to resource #{resource_id} ({resource_title}).\n"
+"\n"
+"Author: {comment_author} <{comment_email}>\n"
+"\n"
+"Comment:\n"
+"{comment_body}\n"
+"\n"
+"Public page: {resource_url}\n"
+"Admin page: {admin_url}"
+msgstr ""
+"Er is een nieuwe reactie geplaatst voor resource #{resource_id} "
+"({resource_title}).\n"
+"\n"
+"Auteur: {comment_author} <{comment_email}>\n"
+"\n"
+"Opmerking:\n"
+"{comment_body}\n"
+"\n"
+"Openbare pagina: {resource_url}\n"
+"Beheerpagina: {admin_url}"
+
+#: src/Job/SendNotifications.php:240
+msgid "Sent moderator notifications for comment #{comment_id}."
+msgstr "Er is een melding naar de moderator gestuurd voor reactie #{comment_id}."
+
+#: src/Job/SendNotifications.php:263 src/Form/SettingsFieldset.php:166
+#: config/module.config.php:287
+msgid "[{site_name}] Comment flagged for review"
+msgstr "[{site_name}] Opmerking gemarkeerd voor validatie"
+
+#: src/Job/SendNotifications.php:265 src/Form/SettingsFieldset.php:179
+#: config/module.config.php:288
+msgid ""
+"A comment has been flagged for review.\n"
+"\n"
+"Resource: #{resource_id} ({resource_title})\n"
+"Author: {comment_author} <{comment_email}>\n"
+"\n"
+"Comment:\n"
+"{comment_body}\n"
+"\n"
+"Review at: {admin_url}"
+msgstr ""
+"Een reactie is gemarkeerd voor beoordeling.\n"
+"\n"
+"Bron: #{resource_id} ({resource_title})\n"
+"Auteur: {comment_author} <{comment_email}>\n"
+"\n"
+"Opmerking:\n"
+"{comment_body}\n"
+"\n"
+"Beheerpagina: {admin_url}"
+
+#: src/Job/SendNotifications.php:316
+msgid "Sent flagged comment notifications for comment #{comment_id}."
+msgstr "Er is een melding verzonden voor de gemarkeerde reactie #{comment_id}.."
+
+#: src/Form/SiteSettingsFieldset.php:19
+msgid "Old themes"
+msgstr "Oude thema's"
+
+#: src/Form/SiteSettingsFieldset.php:33
+msgid "Display subscription button (old themes)"
+msgstr "Toon de abonnementsknop (oude thema's))"
+
+#: src/Form/SiteSettingsFieldset.php:35 src/Form/SiteSettingsFieldset.php:55
+#: src/Form/SiteSettingsFieldset.php:75
+msgid "Item: Top"
+msgstr "Inhoud: bovenaan"
+
+#: src/Form/SiteSettingsFieldset.php:36 src/Form/SiteSettingsFieldset.php:56
+#: src/Form/SiteSettingsFieldset.php:76
+msgid "Media: Top"
+msgstr "Media : bovenaan"
+
+#: src/Form/SiteSettingsFieldset.php:37 src/Form/SiteSettingsFieldset.php:57
+#: src/Form/SiteSettingsFieldset.php:77
+msgid "Item set: Top"
+msgstr "Collectie : bovenaan"
+
+#: src/Form/SiteSettingsFieldset.php:38 src/Form/SiteSettingsFieldset.php:58
+#: src/Form/SiteSettingsFieldset.php:78
+msgid "Item: Bottom"
+msgstr "Object : onderaan"
+
+#: src/Form/SiteSettingsFieldset.php:39 src/Form/SiteSettingsFieldset.php:59
+#: src/Form/SiteSettingsFieldset.php:79
+msgid "Media: Bottom"
+msgstr "Media : onderaan"
+
+#: src/Form/SiteSettingsFieldset.php:40 src/Form/SiteSettingsFieldset.php:60
+#: src/Form/SiteSettingsFieldset.php:80
+msgid "Item set: Bottom"
+msgstr "Collectie : onderaan"
+
+#: src/Form/SiteSettingsFieldset.php:53
+msgid "Display comments (old themes)"
+msgstr "Toon reacties (oude thema's)"
+
+#: src/Form/SiteSettingsFieldset.php:73
+msgid "Display comment form (old themes)"
+msgstr "Het reactieformulier weergeven (oude thema's)"
+
+#: src/Form/SiteSettingsFieldset.php:94 src/Form/SettingsFieldset.php:274
+msgid "Main label"
+msgstr "Belangrijkste label"
+
+#: src/Form/SiteSettingsFieldset.php:102 src/Form/SettingsFieldset.php:282
+msgid "Structure"
+msgstr "Structuur"
+
+#: src/Form/SiteSettingsFieldset.php:104 src/Form/SiteSettingsFieldset.php:117
+#: src/Form/SiteSettingsFieldset.php:139 src/Form/SiteSettingsFieldset.php:160
+msgid "Use default"
+msgstr "Gebruik de standaard"
+
+#: src/Form/SiteSettingsFieldset.php:105 src/Form/SettingsFieldset.php:284
+msgid "Flat (by date)"
+msgstr "Plat (per datum)"
+
+#: src/Form/SiteSettingsFieldset.php:106 src/Form/SettingsFieldset.php:285
+msgid "Threaded (by conversation)"
+msgstr "Draad (per gesprek)"
+
+#: src/Form/SiteSettingsFieldset.php:115 src/Form/SettingsFieldset.php:294
+msgid "Closed on load"
+msgstr "Gesloten tijdens het laden"
+
+#: src/Form/SiteSettingsFieldset.php:128 src/Form/SettingsFieldset.php:302
+msgid "Max length"
+msgstr "Maximale lengte"
+
+#: src/Form/SiteSettingsFieldset.php:136 src/Form/SettingsFieldset.php:310
+msgid "Display gravatar"
+msgstr "Toon gravatar"
+
+#: src/Form/SiteSettingsFieldset.php:150 src/Form/SettingsFieldset.php:323
+msgid "Legal agreement"
+msgstr "Gebruiksvoorwaarden"
+
+#: src/Form/SiteSettingsFieldset.php:158 src/Form/SettingsFieldset.php:332
+msgid "Display website field"
+msgstr "Toon website veld"
+
+#: src/Form/SiteSettingsFieldset.php:171
+msgid "Button to subscribe to comments"
+msgstr "Knop om je te abonneren op reacties"
+
+#: src/Form/CommentForm.php:81
+msgid "Use an alias"
+msgstr "Gebruik een alias"
+
+#: src/Form/CommentForm.php:84
+msgid "Comment anonymously"
+msgstr "Geef anoniem commentaar"
+
+#: src/Form/CommentForm.php:92
+msgid "Comment as"
+msgstr "Geef commentaar als"
+
+#: src/Form/CommentForm.php:107
+msgid "Alias"
+msgstr "Alias"
+
+#: src/Form/CommentForm.php:111
+msgid "My alias…"
+msgstr "Mijn alias…"
+
+#: src/Form/CommentForm.php:125 src/Form/CommentForm.php:152
+msgid "My email (it won't be displayed)…"
+msgstr "Mijn e-mailadres (wordt niet weergegeven)…"
+
+#: src/Form/CommentForm.php:139
+msgid "My name…"
+msgstr "Mijn naam…"
+
+#: src/Form/CommentForm.php:166
+msgid "My website…"
+msgstr "Mijn website…"
+
+#: src/Form/CommentForm.php:179
+msgid "My comment…"
+msgstr "Mijn opmerking…"
+
+#: src/Form/CommentForm.php:189
+msgid "Proposed comment cannot be empty."
+msgstr "De opmerking mag niet leeg zijn."
+
+#: src/Form/CommentForm.php:191
+#, php-format
+msgid "Comment cannot be longer than %d characters."
+msgstr "De opmerking mag niet langer zijn dan %d tekens."
+
+#: src/Form/CommentForm.php:208
+msgid "Terms of service"
+msgstr "Gebruiksvoorwaarden"
+
+#: src/Form/CommentForm.php:222
+msgid "You must agree to the terms and conditions."
+msgstr "U dient de gebruiksvoorwaarden te accepteren."
+
+#: src/Form/CommentForm.php:249
+#, php-format
+msgid "How much is %d plus %d?"
+msgstr "Wat is %d plus %d?"
+
+#: src/Form/CommentForm.php:258
+#, php-format
+msgid "To prove you are not a robot, answer this question: %s"
+msgstr ""
+"Om te bewijzen dat u geen robot bent, beantwoordt u de volgende vraag: "
+"%s"
+
+#: src/Form/CommentForm.php:264
+msgid "You must answer the antispam question."
+msgstr "U moet de antispamvraag beantwoorden."
+
+#: src/Form/CommentForm.php:270
+msgid "Check your anwser to the antispam question."
+msgstr "Controleer je antwoord op de antispamvraag."
+
+#: src/Form/CommentForm.php:282
+msgid "String to check"
+msgstr "Tekenreeks om te controleren"
+
+#: src/Form/CommentForm.php:285
+msgid "Set the string to check"
+msgstr "Stel de te controleren tekenreeks in"
+
+#: src/Form/CommentForm.php:338
+msgid "Comment it!"
+msgstr "Verstuur opmerking"
+
+#: src/Form/SettingsFieldset.php:32
+msgid "Allow public to view comments"
+msgstr "Sta het publiek toe de reacties te zien"
+
+#: src/Form/SettingsFieldset.php:33
+msgid "If unchecked, comments will be displayed only in admin pages."
+msgstr ""
+"Als dit vakje niet is aangevinkt, worden reacties alleen op beheerderspagina's weergegeven."
+
+#: src/Form/SettingsFieldset.php:42
+msgid "Allow public to comment"
+msgstr "Geef het publiek de mogelijkheid om te reageren."
+
+#: src/Form/SettingsFieldset.php:43
+msgid "Allows everyone to comment, including non-registered users."
+msgstr "Sta iedereen toe om te reageren, ook anonieme bezoekers."
+
+#: src/Form/SettingsFieldset.php:52
+msgid "Require moderation for public comments"
+msgstr "Het is verplicht om openbare reacties te modereren."
+
+#: src/Form/SettingsFieldset.php:53 src/Form/SettingsFieldset.php:63
+msgid "If unchecked, comments will appear immediately."
+msgstr "Als dit niet is aangevinkt, verschijnen de reacties direct."
+
+#: src/Form/SettingsFieldset.php:62
+msgid "Require moderation for non-admin users"
+msgstr "Verplichte moderatie voor niet-beheerders."
+
+#: src/Form/SettingsFieldset.php:72
+msgid "Notify public comments by email"
+msgstr "Stel het publiek per e-mail op de hoogte van reacties."
+
+#: src/Form/SettingsFieldset.php:73
+msgid ""
+"The list of emails to notify when a comment is posted or flagged, one by row."
+msgstr ""
+"De lijst met e-mailadressen waarnaar een melding moet worden gestuurd wanneer "
+"een reactie wordt geplaatst of gerapporteerd, één per regel."
+
+#: src/Form/SettingsFieldset.php:91
+msgid "Subscriber notification: subject"
+msgstr "Abonnementsmelding: onderwerp"
+
+#: src/Form/SettingsFieldset.php:92 src/Form/SettingsFieldset.php:127
+#: src/Form/SettingsFieldset.php:163
+msgid "Placeholders: {site_name}"
+msgstr "Jokers: {site_name}"
+
+#: src/Form/SettingsFieldset.php:103
+msgid "Subscriber notification: body"
+msgstr "Notification d’abonnement : corps"
+
+#: src/Form/SettingsFieldset.php:104
+msgid ""
+"Placeholders: {site_name}, {resource_id}, {resource_title}, {resource_url}, "
+"{comment_author}, {comment_body}"
+msgstr ""
+"Jokers: {site_name}, {resource_id}, {resource_title}, {resource_url}, "
+"{comment_author}, {comment_body}"
+
+#: src/Form/SettingsFieldset.php:126
+msgid "Moderator notification: subject"
+msgstr "Notification au modérateur : sujet"
+
+#: src/Form/SettingsFieldset.php:138
+msgid "Moderator notification: body"
+msgstr "Melding aan moderator: inhoud"
+
+#: src/Form/SettingsFieldset.php:139
+msgid ""
+"Placeholders: {site_name}, {resource_id}, {resource_title}, {resource_url}, "
+"{comment_author}, {comment_email}, {comment_body}"
+msgstr ""
+"Jokers: {site_name}, {resource_id}, {resource_title}, {resource_url}, "
+"{comment_author}, {comment_email}, {comment_body}"
+
+#: src/Form/SettingsFieldset.php:143 config/module.config.php:277
+msgid ""
+"A comment was added to resource #{resource_id} ({resource_title}).\n"
+"\n"
+"Author: {comment_author} <{comment_email}>\n"
+"\n"
+"Comment:\n"
+"{comment_body}\n"
+"\n"
+"Review at: {resource_url}"
+msgstr ""
+"Er is een nieuwe reactie geplaatst voor resource #{resource_id} "
+"({resource_title}).\n"
+"\n"
+"Auteur: {comment_author} <{comment_email}>\n"
+"\n"
+"Opmerking :\n"
+"{comment_body}\n"
+"\n"
+"Beheerpagina: {resource_url}"
+
+#: src/Form/SettingsFieldset.php:162
+msgid "Flagged comment notification: subject"
+msgstr "Melding voor een gemarkeerde reactie: onderwerpt"
+
+#: src/Form/SettingsFieldset.php:174
+msgid "Flagged comment notification: body"
+msgstr "Melding voor een gemarkeerde reactie: inhoud"
+
+#: src/Form/SettingsFieldset.php:175
+msgid ""
+"Placeholders: {site_name}, {resource_id}, {resource_title}, "
+"{comment_author}, {comment_email}, {comment_body}, {admin_url}"
+msgstr ""
+"Jokers: {site_name}, {resource_id}, {resource_title}, {comment_author}, "
+"{comment_email}, {comment_body}, {admin_url}"
+
+#: src/Form/SettingsFieldset.php:198
+msgid "Allow non-admin users to edit or delete their own comment"
+msgstr ""
+"Sta niet-beheerders toe om hun eigen reacties te bewerken of te verwijderen."
+
+#: src/Form/SettingsFieldset.php:207
+msgid "Allow users to comment with an alias"
+msgstr "Sta gebruikers toe om onder een pseudoniem te reageren"
+
+#: src/Form/SettingsFieldset.php:208
+msgid ""
+"If checked, logged-in users can choose to comment with a custom name and "
+"email instead of their account information. The comment remains linked to "
+"their account."
+msgstr ""
+"Indien aangevinkt, kunnen ingelogde gebruikers ervoor kiezen om te reageren "
+"met een persoonlijke naam en e-mailadres in plaats van hun accountgegevens. "
+"De reactie blijft gekoppeld aan hun account."
+
+#: src/Form/SettingsFieldset.php:217
+msgid "Allow users to comment anonymously"
+msgstr "Geef het publiek de mogelijkheid om anoniem te reageren"
+
+#: src/Form/SettingsFieldset.php:218
+msgid ""
+"If checked, logged-in users can choose to comment anonymously. Their name "
+"will be displayed as \"[Anonymous]\" but the comment remains linked to their "
+"account for moderation purposes."
+msgstr ""
+"Indien aangevinkt, kunnen ingelogde gebruikers ervoor kiezen om anoniem "
+"te reageren. Hun naam wordt weergegeven als \"[Anoniem]\", maar de reactie "
+"blijft gekoppeld aan hun account voor moderatiedoeleinden."
+
+#: src/Form/SettingsFieldset.php:227
+msgid "WordPress API key for Akismet if installed"
+msgstr "WordPress API-sleutel voor Akismet, indien geïnstalleerd"
+
+#: src/Form/SettingsFieldset.php:237
+msgid "Simple antispam"
+msgstr "Simpele antispam"
+
+#: src/Form/SettingsFieldset.php:238
+msgid ""
+"If checked, a simple antispam (an addition of two digits) will be added for "
+"anonymous people if ReCaptcha is not set."
+msgstr ""
+"Indien aangevinkt, wordt een eenvoudige antispamfilter (de toevoeging van "
+"twee cijfers) toegevoegd voor anonieme bezoekers, als ReCaptcha niet is geconfigureerd."
+
+#: src/Form/SettingsFieldset.php:247
+msgid "Rate limit: max comments"
+msgstr "Limiet beperking: maximaal aantal reacties"
+
+#: src/Form/SettingsFieldset.php:248
+msgid ""
+"Maximum number of comments allowed per IP address within the time period. "
+"Set 0 or empty to disable."
+msgstr ""
+"Maximaal aantal reacties per IP-adres per tijdsperiode. Voer 0 of een "
+"lege waarde in om dit uit te schakelen."
+
+#: src/Form/SettingsFieldset.php:260
+msgid "Rate limit: period (minutes)"
+msgstr "Limiet beperking: periode (minuten)"
+
+#: src/Form/SettingsFieldset.php:261
+msgid "Time window in minutes for the rate limit."
+msgstr "Tijdsvenster in minuten voor de beperking."
+
+#: src/Form/SettingsFieldset.php:324
+msgid ""
+"This text will be shown beside the legal checkbox. Let empty if you don’t "
+"want to use a legal agreement."
+msgstr ""
+"Deze tekst wordt weergegeven naast het selectievakje voor het accepteren "
+"van de algemene voorwaarden. Laat dit veld leeg als u de gebruiksvoorwaarden "
+"niet wilt accepteren."
+
+#: src/Form/SettingsFieldset.php:341
+msgid "Shortcuts to group comments by item sets"
+msgstr "Sneltoetsen voor het groeperen van opmerkingen per verzameling"
+
+#: src/Form/SettingsFieldset.php:342
+msgid ""
+"A group allows to separate comments that have different purposes, fo example "
+"comments to identify and generic comments. The url will be \"?group={name}"
+"\". Set a list a name, then a \"=\", then a list of item set ids. The "
+"special group \"none\" allows to get comments without group."
+msgstr ""
+"Met een groep kunt u opmerkingen scheiden die verschillende doeleinden dienen, "
+"bijvoorbeeld opmerkingen ter identificatie en algemene opmerkingen. De URL is "
+"\"?group={name}\". Geef de lijstnaam op, vervolgens een \"=\", en daarna een "
+"lijst met verzamelingen. De speciale groep \"none\" geeft u de mogelijkheid om "
+"opmerkingen zonder groep op te halen."
+
+#: src/Form/CommentsBrowseFieldset.php:18
+msgid "Search pool query"
+msgstr "Zoekopdracht"
+
+#: src/Form/CommentsBrowseFieldset.php:32
+msgid "comment-limit"
+msgstr "comment-limit"
+
+#: src/Api/Adapter/CommentAdapter.php:479
+msgid "The ip cannot be empty."
+msgstr "Het IP-adres mag niet leeg zijn."
+
+#: src/Api/Adapter/CommentAdapter.php:483
+msgid "The user agent cannot be empty."
+msgstr "De user agent mag niet leeg zijn."
+
+#: src/Api/Adapter/CommentAdapter.php:488
+msgid "The body cannot be empty."
+msgstr "De inhoud mag niet leeg zijn."
+
+#: src/Api/Adapter/CommentAdapter.php:494
+#: src/Controller/AbstractCommentController.php:129
+msgid "Cannot reply to a comment that is not yet approved."
+msgstr "Het is niet mogelijk om te reageren op een reactie die nog niet is goedgekeurd."
+
+#: src/Api/Adapter/CommentSubscriptionAdapter.php:128
+msgid "This user has already subscribed to this resource."
+msgstr "Deze gebruiker heeft zich al geabonneerd op deze bron."
+
+#: src/Controller/Admin/CommentController.php:93
+msgid "Comment permanently deleted."
+msgstr "Reactie is succesvol en permanent verwijderd."
+
+#: src/Controller/Admin/CommentController.php:98
+msgid "Comment soft-deleted."
+msgstr "Reactie gemarkeerd als verwijderd."
+
+#: src/Controller/Admin/CommentController.php:134
+msgid "You must select at least one comment to batch delete."
+msgstr "Je moet minimaal één reactie selecteren om te verwijderen."
+
+#: src/Controller/Admin/CommentController.php:144
+msgid "Comments successfully deleted."
+msgstr "Reacties succesvol verwijderd."
+
+#: src/Controller/Admin/CommentController.php:154
+msgid "Delete of all comments is not supported currently."
+msgstr "Het verwijderen van alle reacties is niet geïmplementeerd."
+
+#: src/Controller/Admin/CommentController.php:202
+msgid "No comments submitted."
+msgstr "Er zijn geen reacties geplaatst."
+
+#: src/Controller/Admin/CommentController.php:211
+#: src/Controller/Admin/CommentController.php:278
+msgid "[Comment]: {msg}"
+msgstr "[Comment]: {msg}"
+
+#: src/Controller/AbstractCommentController.php:28
+msgid "The url to add comment was accessed without post data."
+msgstr "De URL voor het toevoegen van een reactie werd aangeroepen zonder dat er gegevens waren ingevoerd."
+
+#: src/Controller/AbstractCommentController.php:31
+#: src/Controller/AbstractCommentController.php:39
+#: src/Controller/AbstractCommentController.php:55
+#: src/Controller/AbstractCommentController.php:80
+#: src/Controller/AbstractCommentController.php:95
+#: src/Controller/AbstractCommentController.php:102
+#: src/Controller/AbstractCommentController.php:180
+#: src/Controller/AbstractCommentController.php:326
+#: src/Controller/AbstractCommentController.php:353
+#: src/Controller/AbstractCommentController.php:439
+#: src/Controller/AbstractCommentController.php:446
+#: src/Controller/AbstractCommentController.php:554
+#: src/Controller/AbstractCommentController.php:573
+#: src/Controller/AbstractCommentController.php:583
+#: src/Controller/AbstractCommentController.php:600
+#: src/Controller/AbstractCommentController.php:651
+msgid "Unauthorized access."
+msgstr "Toegang verboden."
+
+#: src/Controller/AbstractCommentController.php:48
+msgid "Are you really a robot?"
+msgstr "Ben je werkelijk een robot?"
+
+#: src/Controller/AbstractCommentController.php:68
+msgid "Unauthorized access : no user agent."
+msgstr "Toegang geweigerd: geen gebruikersagent."
+
+#: src/Controller/AbstractCommentController.php:77
+msgid "The url to add comment was accessed without managed resource."
+msgstr ""
+"De URL voor het toevoegen van een reactie werd aangeroepen zonder de "
+"bron aan te geven."
+
+#: src/Controller/AbstractCommentController.php:92
+msgid "The url to add comment was accessed without resource id."
+msgstr ""
+"De URL om een ​​reactie toe te voegen werd aangeroepen zonder de identificatiecode "
+"van de bron."
+
+#: src/Controller/AbstractCommentController.php:99
+msgid "The url to add comment was accessed without resource."
+msgstr "De URL voor het toevoegen van een reactie werd aangeroepen zonder dat "
+"er bronnen beschikbaar waren."
+
+#: src/Controller/AbstractCommentController.php:118
+#: src/Controller/AbstractCommentController.php:122
+msgid "The parent comment does not exist."
+msgstr "De oudercommentaar bestaat niet."
+
+#: src/Controller/AbstractCommentController.php:159
+msgid "Email is required when using an alias."
+msgstr "Een e-mailadres is vereist bij gebruik van een pseudoniem."
+
+#: src/Controller/AbstractCommentController.php:187
+#: config/module.config.php:254
+msgid "You should accept the legal agreement."
+msgstr "U dient de gebruiksvoorwaarden te accepteren."
+
+#: src/Controller/AbstractCommentController.php:206
+msgid "The comment cannot be empty."
+msgstr "De opmerking mag niet leeg zijn."
+
+#: src/Controller/AbstractCommentController.php:287
+msgid "Your comment is online."
+msgstr "Je reactie staat online."
+
+#: src/Controller/AbstractCommentController.php:289
+msgid "Your comment is awaiting moderation"
+msgstr "Je reactie wordt momenteel beoordeeld"
+
+#: src/Controller/AbstractCommentController.php:334
+#: src/Controller/AbstractCommentController.php:456
+msgid "Unauthorized access or not found."
+msgstr "Toegang geweigerd of niet gevonden."
+
+#: src/Controller/AbstractCommentController.php:343
+msgid "The user has no right to edit this resource."
+msgstr "Deze gebruiker heeft niet het recht om deze bron te wijzigen."
+
+#: src/Controller/AbstractCommentController.php:350
+msgid "The url to edit comment was accessed without post data."
+msgstr "De URL om een ​​reactie te bewerken werd aangeroepen zonder dat er gegevens waren opgeslagen."
+
+#: src/Controller/AbstractCommentController.php:360
+msgid "No text submitted."
+msgstr "Geen tekst ingediend."
+
+#: src/Controller/AbstractCommentController.php:366
+msgid "Text submitted is the same than the existing one."
+msgstr "De ingediende tekst is identiek aan de bestaande tekst."
+
+#: src/Controller/AbstractCommentController.php:396
+#: src/Controller/AbstractCommentController.php:481
+#: src/Controller/AbstractCommentController.php:492
+msgid "An error occurred."
+msgstr "Er is een fout opgetreden."
+
+#: src/Controller/AbstractCommentController.php:465
+msgid "The user has no right to delete this resource."
+msgstr "Deze gebruiker heeft niet het recht om deze bron te verwijderen."
+
+#: src/Controller/AbstractCommentController.php:527
+msgid "The comment id cannot be identified."
+msgstr "Het commentaar-ID kan niet worden vastgesteld."
+
+#: src/Controller/AbstractCommentController.php:530
+#: src/Controller/AbstractCommentController.php:546
+msgid "Comment not found."
+msgstr "Geen commentaar gevonden."
+
+#: src/Controller/AbstractCommentController.php:542
+msgid "The comment #{comment_id} cannot be identified."
+msgstr "De reactie #{comment_id} kan niet worden geïdentificeerd."
+
+#: src/Controller/AbstractCommentController.php:550
+msgid "The comment #{comment_id} cannot be accessed."
+msgstr "De reactie #{comment_id} is niet toegankelijk."
+
+#: src/Controller/AbstractCommentController.php:596
+msgid "Resource not found."
+msgstr "Bron niet gevonden."
+
+#: src/Controller/AbstractCommentController.php:607
+msgid "Action {action} not allowed."
+msgstr "Actie {action} niet toegestaan."
+
+#: src/Controller/AbstractCommentController.php:658
+msgid "Missing resource."
+msgstr "Ontbrekende bron."
+
+#: src/Controller/AbstractCommentController.php:677
+msgid "No subscription found for this resource."
+msgstr "Er is geen abonnement gevonden voor deze bron."
+
+#: src/Controller/AbstractCommentController.php:705
+msgid "Akismet is not available: install it."
+msgstr "Akismet is niet beschikbaar: het moet nog geïnstalleerd worden."
+
+#: src/Controller/AbstractCommentController.php:812
+msgid "Rate limit exceeded for IP {ip}: {count} comments in {period} minutes."
+msgstr ""
+"Limiet overschreden voor IP-adres {IP}: {count} reacties in {period} "
+"minuten."
+
+#: src/Controller/AbstractCommentController.php:816
+msgid "Too many comments. Please wait before posting again."
+msgstr "Te veel reacties. Wacht even voordat je opnieuw een bericht plaatst."
+
+#: src/Controller/AbstractCommentController.php:864
+msgid "This comment has already been posted."
+msgstr "Deze reactie is al geplaatst."
+
+#: src/Site/ResourcePageBlockLayout/CommentForm.php:13
+msgid "Comment: Form"
+msgstr "Commentaar: Vorm"
+
+#: src/Site/ResourcePageBlockLayout/CommentNewCommentNotification.php:13
+msgid "Comment: New comment notification"
+msgstr "Opmerking: Melding van een nieuwe opmerking"
+
+#: src/Site/ResourcePageBlockLayout/Comments.php:13
+msgid "Comment: List"
+msgstr "Commentaar: Lijst"
+
+#: src/Site/ResourcePageBlockLayout/CommentSubscriptionStatus.php:13
+msgid "Comment: Subscription status"
+msgstr "Opmerking: Abonnementsstatus"
+
+#: src/Site/ResourcePageBlockLayout/CommentSubscriptionButton.php:13
+msgid "Comment: Subscription button"
+msgstr "Opmerking: Abonnementsknop"
+
+#: src/Site/BlockLayout/CommentsBrowse.php:28
+msgid "Comment: Browse"
+msgstr "Commentaar: Bladeren"
+
+#: src/Site/BlockLayout/CommentsBrowse.php:120
+msgid "comments"
+msgstr "opmerkingen"
+
+#: config/module.config.php:223 config/module.config.php:229
+#: config/module.config.php:235 config/module.config.php:240
+msgid "Date created"
+msgstr "Aanmaakdatum"
+
+#: config/module.config.php:224 config/module.config.php:236
+msgid "Date modified"
+msgstr "Datum gewijzigd"
+
+#: config/module.config.php:245
+msgid "Are you sure you want to delete this comment?"
+msgstr "Weet je zeker dat je deze reactie wilt verwijderen?"
+
+#: config/module.config.php:247
+msgid "Comment was added to the resource."
+msgstr "De opmerking is aan de bron toegevoegd."
+
+#: config/module.config.php:248
+msgid "Edit your comment"
+msgstr "Bewerk je reactie"
+
+#: config/module.config.php:249
+msgid "It will be displayed definitely when approved."
+msgstr "Het wordt permanent toegevoegd zodra het is goedgekeurd."
+
+#: config/module.config.php:250
+msgid "Request too long to process."
+msgstr "De verwerking van het verzoek duurt te lang."
+
+#: config/module.config.php:252
+msgid "The resource doesn’t exist."
+msgstr "De bron bestaat niet."
+
+#: config/module.config.php:253
+msgid "The resource or the comment doesn’t exist."
+msgstr "De bron of opmerking bestaat niet."
+
+#: config/module.config.php:310
+msgid ""
+"<p>I agree with <a rel=\"license\" href=\"#\" target=\"_blank\">terms of "
+"use</a> and I accept to free my contribution under the license <a "
+"rel=\"license\" href=\"https://creativecommons.org/licenses/by-sa/3.0/\" "
+"target=\"_blank\">CC BY-SA</a>.</p>"
+msgstr ""
+"Ik accepteer de <a rel=\"license\" href=\"#\" target=\"_blank\">gebruiksvoorwaarden</a> "
+"en ga ermee akkoord mijn bijdrage vrij te geven onder de <a "
+"rel=\"license\" href=\"https://creativecommons.org/licenses/by-sa/3.0/\" "
+"target=\"_blank\">CC BY-SA</a> licentie.</p>"
