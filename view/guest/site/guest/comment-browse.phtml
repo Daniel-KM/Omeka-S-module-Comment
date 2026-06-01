@@ -103,11 +103,20 @@ $totalResults = $this->pagination()->getPaginator()->getTotalCount();
             $linkContent = sprintf('%s<span class="resource-name">%s</span>',
                 $thumbnail($resource, 'medium'),
                 $escape($heading));
+            $resourceSites = $resource instanceof \Omeka\Api\Representation\MediaRepresentation
+                ? $resource->item()->sites()
+                : (method_exists($resource, 'sites') ? $resource->sites() : []);
+            $resourceSiteSlug = $site && isset($resourceSites[$site->id()])
+                ? $site->slug()
+                : ($resourceSites ? reset($resourceSites)->slug() : null);
+            $resourceUrl = $resourceSiteSlug ? $resource->siteUrl($resourceSiteSlug) : null;
             $vars->offsetSet('resource', $resource);
             $vars->offsetSet('comment', $comment);
             ?>
         <li class="comment resource <?= $resourceType ?>" data-id="<?= $resource->id() ?>">
-            <?= $resource->linkRaw($linkContent, null, ['class' => 'resource-link']) ?>
+            <?= $resourceUrl
+                ? sprintf('<a href="%s" class="resource-link">%s</a>', $escapeAttr($resourceUrl), $linkContent)
+                : sprintf('<span class="resource-link">%s</span>', $linkContent) ?>
             <?php if (false && $body): ?>
             <div class="description"><?= $escape($body) ?></div>
             <?php endif; ?>

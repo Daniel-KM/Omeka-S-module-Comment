@@ -109,10 +109,19 @@ $totalResults = $this->pagination()->getPaginator()->getTotalCount();
             $linkContent = sprintf('%s<span class="resource-name">%s</span>',
                 $thumbnail($resource, 'medium'),
                 $escape($heading));
+            $resourceSites = $resource instanceof \Omeka\Api\Representation\MediaRepresentation
+                ? $resource->item()->sites()
+                : (method_exists($resource, 'sites') ? $resource->sites() : []);
+            $resourceSiteSlug = $site && isset($resourceSites[$site->id()])
+                ? $site->slug()
+                : ($resourceSites ? reset($resourceSites)->slug() : null);
+            $resourceUrl = $resourceSiteSlug ? $resource->siteUrl($resourceSiteSlug) : null;
             ?>
         <li class="resource <?= $resourceType ?> subscription-removable" data-id="<?= $resource->id() ?>" data-subscription-action="delete">
             <?= $subscriptionButton($resource, ['action' => 'delete', 'showLabel' => true, 'skipSettingCheck' => true]) ?>
-            <?= $resource->linkRaw($linkContent, null, ['class' => 'resource-link']) ?>
+            <?= $resourceUrl
+                ? sprintf('<a href="%s" class="resource-link">%s</a>', $escapeAttr($resourceUrl), $linkContent)
+                : sprintf('<span class="resource-link">%s</span>', $linkContent) ?>
             <?php if ($this->commentHasNewComment($resource)): ?>
             <span class="comment-new-badge"><?= $escape($translate('New comment')) ?></span>
             <?php endif; ?>
