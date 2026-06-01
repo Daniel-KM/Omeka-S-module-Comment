@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2026 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 #, fuzzy
 msgid ""
@@ -10,21 +10,27 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-01 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
+"Language: br\n"
+"Language-Team: br <LL@li.org>\n"
+"Plural-Forms: nplurals=6; plural=(n==1 ? 0 : n%10==1 && n%100!=11 && "
+"n%100!=71 && n%100!=91 ? 1 : n%10==2 && n%100!=12 && n%100!=72 && n%100!=92 ?"
+" 2 : (n%10==3 || n%10==4 || n%10==9) && n%100!=13 && n%100!=14 && n%100!=19 "
+"&& n%100!=73 && n%100!=74 && n%100!=79 && n%100!=93 && n%100!=94 && n%100!=99"
+" ? 3 : n%1000000==0 ? 4 : 5);\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
 
-#: data/scripts/upgrade.php:33 Module.php:84
+#: Module.php:84 data/scripts/upgrade.php:33
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
-msgstr ""
+msgstr "Ar modul %1$s a zlefe bezañ hizivaet d'ar stumm %2$s pe unan nevesoc'h."
 
 #: data/scripts/upgrade.php:37
 msgid "Missing requirement. Unable to upgrade."
-msgstr ""
+msgstr "Rekizadenn a vank. N'haller ket hizivaat."
 
 #: Module.php:98
 #, php-format
@@ -32,423 +38,447 @@ msgid ""
 "I agree with %1$sterms of use%2$s and I accept to free my contribution under "
 "the license %3$sCC BY-SA%2$s."
 msgstr ""
+"A-du on gant an %1$stermenoù implij%2$s hag e asantan dieubiñ ma degasadenn "
+"dindan al lisans %3$sCC BY-SA%2$s."
 
 #: Module.php:956 Module.php:975
 msgid "Has comments"
-msgstr ""
+msgstr "Gant evezhiadennoù"
 
 #: Module.php:957 Module.php:976 Module.php:989
 msgid "true"
-msgstr ""
+msgstr "gwir"
 
 #: Module.php:981
 msgid "Approved"
-msgstr ""
+msgstr "Aprouet"
 
 #: Module.php:982
 msgid "Flagged"
-msgstr ""
+msgstr "Merket"
 
 #: Module.php:983
 msgid "Is spam"
-msgstr ""
+msgstr "Spam eo"
 
 #: Module.php:988
 msgid "false"
-msgstr ""
+msgstr "gaou"
 
 #: Module.php:1086 view/guest/site/guest/comment-browse.phtml:59
 #: view/guest/site/guest/widget/comment-browse.phtml:16
 msgid "My comments"
-msgstr ""
+msgstr "Ma evezhiadennoù"
 
 #: Module.php:1090
 msgid "Subscription"
-msgstr ""
+msgstr "Koumanant"
 
 #: src/Controller/AbstractCommentController.php:252
 msgid "There is issue in your comment."
-msgstr ""
+msgstr "Ur gudenn zo en ho evezhiadenn."
 
 #: src/Controller/AbstractCommentController.php:306
 msgid ""
 "Comment was added to the resource. It will be displayed definitely when "
 "approved."
 msgstr ""
+"Ouzhpennet eo bet un evezhiadenn d'ar vammenn. Diskouezet e vo hep mar pa vo "
+"aprouet."
 
 #: src/Controller/AbstractCommentController.php:419
 msgid "Comment was updated. It will be displayed definitely when approved."
 msgstr ""
+"Ouzhpennet eo bet un evezhiadenn d'ar vammenn. Diskouezet e vo hep mar pa vo "
+"aprouet."
 
 #: src/Controller/AbstractCommentController.php:498
 msgid "Comment successfully deleted."
-msgstr ""
+msgstr "Hizivaet eo bet an evezhiadenn. Diskouezet e vo hep mar pa vo aprouet."
 
 #: src/Controller/Admin/CommentController.php:77
 msgid "No email defined for this comment."
-msgstr ""
+msgstr "Postel ebet termenet evit an evezhiadenn-mañ."
 
 #: src/Controller/Admin/CommentController.php:85
 msgid "Empty message."
-msgstr ""
+msgstr "Kemenadenn goullo."
 
 #: src/Controller/Admin/CommentController.php:88
 msgid "Too long message."
-msgstr ""
+msgstr "Kelaouenn re hir."
 
 #: src/Controller/Admin/CommentController.php:96
 msgid "Reply to your comment"
-msgstr ""
+msgstr "Respont d'ho evezhiadenn"
 
 #: src/Controller/Admin/CommentController.php:103
 msgid "Too long subject."
-msgstr ""
+msgstr "Danvez re hir."
 
 #: src/Controller/Admin/CommentController.php:126
 msgid "Sorry, the message cannot be sent. Contact the administrator."
-msgstr ""
+msgstr "Digarezit, n'haller ket kas ar gemennadenn. Kit e darempred gant ar merour."
 
 #: src/Controller/Admin/CommentController.php:413
 msgid "An internal error occurred."
-msgstr ""
+msgstr "Ur fazi diabarzh zo c'hoarvezet."
 
 #: view/comment/admin/comment/batch-delete-confirm.phtml:12
 msgid "Delete comments"
-msgstr ""
+msgstr "Dilemel an evezhiadennoù"
 
 #: view/comment/admin/comment/batch-delete-confirm.phtml:13
 msgid "Are you sure you would like to delete the selected comments?"
-msgstr ""
+msgstr "Ha sur oc'h e fell deoc'h diverkañ an evezhiadennoù dibabet?"
 
 #: view/comment/admin/comment/browse.phtml:39
 #: view/common/admin/comments-details.phtml:25 view/common/comments.phtml:38
 msgid "Comments"
-msgstr ""
+msgstr "Evezhiadennoù"
 
 #: view/comment/admin/comment/browse.phtml:45
 msgid "Quick filter"
-msgstr ""
+msgstr "Sil buan"
 
 #: view/comment/admin/comment/browse.phtml:57
 msgid "Actions"
-msgstr ""
+msgstr "Oberoù"
 
 #: view/comment/admin/comment/browse.phtml:62
 msgid "Approve"
-msgstr ""
+msgstr "Aprouiñ"
 
 #: view/comment/admin/comment/browse.phtml:66
 msgid "Unapprove"
-msgstr ""
+msgstr "Dizemgleviñ"
 
 #: view/comment/admin/comment/browse.phtml:70
 msgid "Flag"
-msgstr ""
+msgstr "Banniel"
 
 #: view/comment/admin/comment/browse.phtml:74
 msgid "Unflag"
-msgstr ""
+msgstr "Lakaat da chom didalvez"
 
 #: view/comment/admin/comment/browse.phtml:78
 msgid "Set spam"
-msgstr ""
+msgstr "Spammañ"
 
 #: view/comment/admin/comment/browse.phtml:82
 msgid "Set not spam"
-msgstr ""
+msgstr "N'eo ket ur strob"
 
 #: view/comment/admin/comment/browse.phtml:101
 msgid "There are no comments."
-msgstr ""
+msgstr "N'eus evezhiadenn ebet."
 
 #: view/comment/admin/comment/browse.phtml:116
 #: view/comment/admin/comment/show-details.phtml:20
 msgid "Commenter"
-msgstr ""
+msgstr "Eiler"
 
 #: view/comment/admin/comment/browse.phtml:117
 msgid "Date commented"
-msgstr ""
+msgstr "Deiziad an evezhiadenn"
 
 #: view/comment/admin/comment/browse.phtml:129
 msgid "Select comment"
-msgstr ""
+msgstr "Diuzit un evezhiadenn"
 
-#: view/comment/admin/comment/browse.phtml:143
-#: view/common/admin/comment.phtml:65
+#: view/comment/admin/comment/browse.phtml:143 view/common/admin/comment.phtml:65
 msgid "Toggle flag"
-msgstr ""
+msgstr "Cheñch banniel"
 
-#: view/comment/admin/comment/browse.phtml:149
-#: view/common/admin/comment.phtml:75
+#: view/comment/admin/comment/browse.phtml:149 view/common/admin/comment.phtml:75
 msgid "Toggle spam"
-msgstr ""
+msgstr "Gemm ar strob"
 
-#: view/comment/admin/comment/browse.phtml:155
-#: view/common/admin/comment.phtml:55
+#: view/comment/admin/comment/browse.phtml:155 view/common/admin/comment.phtml:55
 msgid "Toggle approbation"
-msgstr ""
+msgstr "Gweredekaat an aprouadenn"
 
 #: view/comment/admin/comment/browse.phtml:162
 #: view/common/dialog/comment-send-message.phtml:22
 msgid "Reply to the commenter"
-msgstr ""
+msgstr "Respont d'an eiler"
 
 #: view/comment/admin/comment/browse.phtml:200
 #: view/comment/admin/comment/show-details.phtml:48
 msgid "Removed"
-msgstr ""
+msgstr "Lamet"
 
 #: view/comment/admin/comment/browse.phtml:218
-#, php-format
+#, php-format, python-format
 msgid "Created: %s"
-msgstr ""
+msgstr "Krouet : %s"
 
 #: view/comment/admin/comment/browse.phtml:221
-#, php-format
+#, php-format, python-format
 msgid "Modified: %s"
-msgstr ""
+msgstr "Kemmet : %s"
 
 #: view/comment/admin/comment/browse.phtml:230
-#, php-format
+#, php-format, python-format
 msgid "Edited: %s"
-msgstr ""
+msgstr "Kemmet : %s"
 
 #: view/comment/admin/comment/browse.phtml:270
 msgid "Filter comments"
-msgstr ""
+msgstr "Silañ an evezhiadennoù"
 
 #: view/comment/admin/comment/delete-confirm.phtml:15
 msgid "Delete comment"
-msgstr ""
+msgstr "Dilemel an evezhiadenn"
 
 #: view/comment/admin/comment/delete-confirm.phtml:17
 msgid "This comment is already soft-deleted. It will be permanently removed."
-msgstr ""
+msgstr "An evezhiadenn-mañ zo dija dilamet da c'hortoz. Lamet e vo da viken."
 
 #: view/comment/admin/comment/delete-confirm.phtml:19
 msgid "Are you sure you would like to delete this comment?"
-msgstr ""
+msgstr "Ha sur oc'h e fell deoc'h diverkañ an evezhiadenn-mañ?"
 
 #: view/comment/admin/comment/delete-confirm.phtml:21
 msgid "Permanently delete (hard delete)"
-msgstr ""
+msgstr "Dilemel da viken (dilemel start)"
 
 #: view/comment/admin/comment/show-details.phtml:17
-#, php-format
+#, php-format, python-format
 msgid "Comment #%d"
-msgstr ""
+msgstr "Evezhiadenn #%d"
 
 #: view/comment/admin/comment/show-details.phtml:20
 msgid "(public)"
-msgstr ""
+msgstr "(foran)"
 
 #: view/comment/admin/comment/show-details.phtml:37
 msgid "No resource"
-msgstr ""
+msgstr "N'eus danvez ebet"
 
 #: view/comment/admin/comment/show-details.phtml:66
 msgid "No site"
-msgstr ""
+msgstr "Lec'hienn ebet"
 
 #: view/comment/admin/comment/show-details.phtml:74
 msgid "Deleted"
-msgstr ""
+msgstr "Lammet"
 
 #: view/common/admin/comment.phtml:34
-#, php-format
+#, php-format, python-format
 msgid "Website: %s"
-msgstr ""
+msgstr "Lec'hienn : %s"
 
 #: view/common/admin/comment.phtml:99 view/common/comment-single.phtml:119
 #: view/common/comment-single.phtml:122
 msgid "Reply"
-msgstr ""
+msgstr "Respont"
 
 #: view/common/admin/comments-details.phtml:28
-#, php-format
+#, php-format, python-format
 msgid "Total: %s"
-msgstr ""
+msgstr "Hollad: %s"
 
 #: view/common/admin/comments-details.phtml:33
-#, php-format
+#, php-format, python-format
 msgid "Approved: %s / Unapproved: %s"
-msgstr ""
+msgstr "Aprouet : %s / Nann-aprouet : %s"
 
 #: view/common/admin/comments-details.phtml:39
-#, php-format
+#, php-format, python-format
 msgid "Flagged: %s / Unflagged: %s"
-msgstr ""
+msgstr "Merket : %s / Dimerket : %s"
 
 #: view/common/admin/comments-details.phtml:45
-#, php-format
+#, php-format, python-format
 msgid "Spam: %s / Not spam: %s"
-msgstr ""
+msgstr "Spam: %s / N'eo ket spam: %s"
 
 #: view/common/admin/comments.phtml:42 view/common/comments.phtml:42
 msgid "No comment yet! Be the first to add one!"
-msgstr ""
+msgstr "Evezhiadenn ebet evit ar poent! Bez an hini kentañ o lakaat unan!"
 
 #: view/common/comment-single.phtml:33 view/common/comment-single.phtml:37
 msgid "[Anonymous]"
-msgstr ""
+msgstr "Dianav"
 
 #: view/common/comment-single.phtml:79 view/common/comment-single.phtml:82
 msgid "Flag inappropriate"
-msgstr ""
+msgstr "Merkañ evel dizereat"
 
 #: view/common/comment-single.phtml:89 view/common/comment-single.phtml:92
 msgid "Unflag inappropriate"
-msgstr ""
+msgstr "Dizalañ dizereat"
 
 #: view/common/comment-subscription-button.phtml:25
 msgid "Unsubscribe to comments"
-msgstr ""
+msgstr "Paouez da resev evezhiadennoù"
 
 #: view/common/comment-subscription-button.phtml:26
 msgid "Subscribe to comments"
-msgstr ""
+msgstr "En em goumanantiñ d'an evezhiadennoù"
 
 #: view/common/comment-subscription-button.phtml:38
 msgid "Log in to subscribe to comments"
-msgstr ""
+msgstr "Kevreañ evit koumanantiñ d'an evezhiadennoù"
 
 #: view/common/comments.phtml:44
 msgid "No comment yet! Log in and be the first to add one!"
 msgstr ""
+"Evezhiadenn ebet evit ar poent! Kevaskit ha bezit an hini kentañ o lakaat "
+"unan!"
 
 #: view/common/resource-page-block-layout/comment-new-comment-notification.phtml:18
 #: view/guest/site/guest/comment-subscription.phtml:126
 msgid "New comment"
-msgstr ""
+msgstr "Evezhiadenn nevez"
 
 #: view/common/resource-page-block-layout/comment-subscription-status.phtml:15
 msgid "I’m subscribed to this resource"
-msgstr ""
+msgstr "Koumanantet on d'ar vammenn-mañ"
 
 #: view/common/resource-page-block-layout/comment-subscription-status.phtml:16
 msgid "I’m not subscribed to this resource"
-msgstr ""
+msgstr "N'on ket koumanantet d'ar vammenn-mañ"
 
 #: view/guest/site/guest/comment-browse.phtml:68
 #: view/guest/site/guest/comment-subscription.phtml:66
 msgid "Date (descending)"
-msgstr ""
+msgstr "Deiziad (diskenn)"
 
 #: view/guest/site/guest/comment-browse.phtml:69
 #: view/guest/site/guest/comment-subscription.phtml:67
 msgid "Date (ascending)"
-msgstr ""
+msgstr "Deiziad (kresk)"
 
 #: view/guest/site/guest/comment-browse.phtml:70
 #: view/guest/site/guest/comment-subscription.phtml:68
 msgid "Title (ascending)"
-msgstr ""
+msgstr "Titl (kresk)"
 
 #: view/guest/site/guest/comment-browse.phtml:71
 #: view/guest/site/guest/comment-subscription.phtml:69
 msgid "Title (descending)"
-msgstr ""
+msgstr "Titl (diskenn)"
 
 #: view/guest/site/guest/comment-browse.phtml:137
 msgid "You have no comments yet."
-msgstr ""
+msgstr "N'eus evezhiadenn ebet ganeoc'h c'hoazh."
 
 #: view/guest/site/guest/comment-subscription.phtml:57
 msgid "Subscriptions"
-msgstr ""
+msgstr "Koumanantoù"
 
 #: view/guest/site/guest/comment-subscription.phtml:85
 msgid "Per page"
-msgstr ""
+msgstr "Da bep pajenn"
 
 #: view/guest/site/guest/comment-subscription.phtml:142
 msgid "You have no subscription yet."
-msgstr ""
+msgstr "N'hoc'h eus c'hoazh koumanant ebet."
 
 #: view/guest/site/guest/widget/comment-subscription.phtml:16
 msgid "My subscriptions"
-msgstr ""
+msgstr "Ma c'houmanantoù"
 
 #: data/scripts/upgrade.php:128
+#, python-brace-format
 msgid ""
 "The templates and view helpers were renamed. You should check your theme. "
 "Matching templates: {json}"
 msgstr ""
+"Adanvet eo bet ar patromoù hag ar skoazellerien gwelet. Gwiriekait ho tem. "
+"Patromoù a glot : {json}"
 
 #: data/scripts/upgrade.php:171
 msgid ""
 "Resource blocks were added to display the comments and the comment form via "
 "the theme config."
 msgstr ""
+"Ouzhpennet eo bet blokoù danvez evit diskouez an evezhiadennoù ha furmskrid "
+"an evezhiadennoù dre arventenn an tem."
 
 #: data/scripts/upgrade.php:176
 msgid ""
 "A resource block allows to subscribe to a resource to be notified when a "
 "comment is added."
 msgstr ""
+"Ur bloc'had danvez a ro an tu da en em goumanantiñ d'un danvez evit bezañ "
+"kelaouet pa vez ouzhpennet un evezhiadenn."
 
 #: data/scripts/upgrade.php:181
 msgid "An option allows to skip display of gravatar."
-msgstr ""
+msgstr "Un dibab a ro an tu da lammat diskwel ar gravatar."
 
 #: data/scripts/upgrade.php:186
 msgid "It is now possible to edit for the user or an admin to edit a comment."
-msgstr ""
+msgstr "Posupl eo bremañ d'un implijer pe d'ur merour kemmañ un evezhiadenn."
 
 #: data/scripts/upgrade.php:215
 msgid ""
 "Comment history is now tracked. Edits, flags, and moderation actions are "
 "recorded. The \"edited\" column has been removed."
 msgstr ""
+"Heuliet e vez bremañ istor an evezhiadennoù. Enrollet e vez ar c'hemmadennoù,"
+" ar merkoù hag an oberoù moderat. Lamet eo bet ar golonenn \"kemmet\"."
 
 #: data/scripts/upgrade.php:251
 msgid "A unique constraint has been added to prevent duplicate subscriptions."
-msgstr ""
+msgstr "Ur redi dibar a zo bet ouzhpennet evit mirout ouzh ar c'houmanantoù doubl."
 
 #: data/scripts/upgrade.php:267
 msgid ""
-"Comments can now be soft-deleted. Deleted comments are hidden from the "
-"public but preserved for admin review."
+"Comments can now be soft-deleted. Deleted comments are hidden from the public"
+" but preserved for admin review."
 msgstr ""
+"Gallout a reer bremañ diverkañ an evezhiadennoù da c'hortoz. An evezhiadennoù"
+" diverket a zo kuzhet diouzh an holl met miret e vezont evit ma c'hallfe an "
+"admin o adwelet."
 
 #: data/scripts/upgrade.php:284
 msgid "New comment notifications are now available for subscribed users."
 msgstr ""
+"Ar c'hemennoù evit an evezhiadennoù nevez a zo hegerz bremañ evit an "
+"implijerien goumanantet."
 
 #: view/guest/site/guest/comment-subscription.phtml:78
-#, php-format
+#, php-format, python-format
 msgid "%d resources"
-msgstr ""
+msgstr "%d danvez"
 
 #: view/guest/site/guest/comment-browse.phtml:78
-#, php-format
+#, php-format, python-format
 msgid "%d comments"
-msgstr ""
+msgstr "%d evezhiadenn(où)"
 
 #: src/Job/SendNotifications.php:54
 msgid "Missing required arguments."
-msgstr ""
+msgstr "Mankout a ra an arguzennoù rekis."
 
 #: src/Job/SendNotifications.php:63
+#, python-brace-format
 msgid "Comment #{comment_id} not found."
-msgstr ""
+msgstr "Evezhiadenn #{comment_id} n'eo ket bet kavet."
 
 #: src/Job/SendNotifications.php:79
+#, python-brace-format
 msgid "Resource #{resource_id} not found."
-msgstr ""
+msgstr "N'eo ket bet kavet ar vammenn #{resource_id}."
 
 #: src/Job/SendNotifications.php:99
+#, python-brace-format
 msgid "Unknown notification type \"{type}\"."
-msgstr ""
+msgstr "Seurt kemennadenn dianav \"{type}\"."
 
-#: src/Job/SendNotifications.php:152 src/Form/SettingsFieldset.php:151
-#: config/module.config.php:287
+#: config/module.config.php:287 src/Form/SettingsFieldset.php:151
+#: src/Job/SendNotifications.php:152
+#, python-brace-format
 msgid "[{site_name}] New comment"
-msgstr ""
+msgstr "[{site_name}] Evezhiadenn nevez"
 
-#: src/Job/SendNotifications.php:154 src/Form/SettingsFieldset.php:164
-#: config/module.config.php:288
+#: config/module.config.php:288 src/Form/SettingsFieldset.php:164
+#: src/Job/SendNotifications.php:154
+#, python-brace-format
 msgid ""
 "Hi,\n"
 "\n"
@@ -458,22 +488,34 @@ msgid ""
 "\n"
 "Sincerely,"
 msgstr ""
+"Demat,\n"
+"\n"
+"Un evezhiadenn nevez zo bet embannet evit ar vammenn #{resource_id} "
+"({resource_title}).\n"
+"\n"
+"Gallout a rit he gwelet war {resource_url}#comments.\n"
+"\n"
+"A-zevri,"
 
 #: src/Job/SendNotifications.php:189 src/Job/SendNotifications.php:265
 #: src/Job/SendNotifications.php:337
+#, python-brace-format
 msgid "Failed to send email to {email}."
-msgstr ""
+msgstr "C'hwitet war kas postel da {email}."
 
 #: src/Job/SendNotifications.php:196
+#, python-brace-format
 msgid "Sent subscriber notifications for comment #{comment_id}."
-msgstr ""
+msgstr "Kaset kemennadennoù d'ar goumananterien evit an evezhiadenn #{comment_id}."
 
-#: src/Job/SendNotifications.php:218 src/Form/SettingsFieldset.php:186
-#: config/module.config.php:297
+#: config/module.config.php:297 src/Form/SettingsFieldset.php:186
+#: src/Job/SendNotifications.php:218
+#, python-brace-format
 msgid "[{site_name}] New public comment"
-msgstr ""
+msgstr "[{site_name}] Evezhiadenn foran nevez"
 
 #: src/Job/SendNotifications.php:220
+#, python-brace-format
 msgid ""
 "A comment was added to resource #{resource_id} ({resource_title}).\n"
 "\n"
@@ -485,18 +527,33 @@ msgid ""
 "Public page: {resource_url}\n"
 "Admin page: {admin_url}"
 msgstr ""
+"Ouzhpennet ez eus bet un evezhiadenn d'ar vammenn #{resource_id} "
+"({resource_title}).\n"
+"\n"
+"Aozer: {comment_author} <{comment_email}>\n"
+"\n"
+"Evezhiadenn:\n"
+"{comment_body}\n"
+"\n"
+"Pajenn foran: {resource_url}\n"
+"Pajenn ar verour: {admin_url}"
 
 #: src/Job/SendNotifications.php:272
+#, python-brace-format
 msgid "Sent moderator notifications for comment #{comment_id}."
 msgstr ""
+"Kaset eo bet kemennadennoù d'ar moderatorien evit an evezhiadenn "
+"#{comment_id}."
 
-#: src/Job/SendNotifications.php:294 src/Form/SettingsFieldset.php:222
-#: config/module.config.php:308
+#: config/module.config.php:308 src/Form/SettingsFieldset.php:222
+#: src/Job/SendNotifications.php:294
+#, python-brace-format
 msgid "[{site_name}] Comment flagged for review"
-msgstr ""
+msgstr "[{site_name}] Evezhiadenn merket evit bezañ adwelet"
 
-#: src/Job/SendNotifications.php:296 src/Form/SettingsFieldset.php:235
-#: config/module.config.php:309
+#: config/module.config.php:309 src/Form/SettingsFieldset.php:235
+#: src/Job/SendNotifications.php:296
+#, python-brace-format
 msgid ""
 "A comment has been flagged for review.\n"
 "\n"
@@ -508,233 +565,250 @@ msgid ""
 "\n"
 "Review at: {admin_url}"
 msgstr ""
+"Un evezhiadenn zo bet merket da vezañ adwelet.\n"
+"\n"
+"Danvez : #{resource_id} ({resource_title})\n"
+"Aozer : {comment_author} <{comment_email}>\n"
+"\n"
+"Evezhiadenn :\n"
+"{comment_body}\n"
+"\n"
+"Adwelet e : {admin_url}"
 
 #: src/Job/SendNotifications.php:344
+#, python-brace-format
 msgid "Sent flagged comment notifications for comment #{comment_id}."
 msgstr ""
+"Kaset eo bet kemennadennoù evit merkañ evezh ouzh an evezhiadenn "
+"#{comment_id}."
 
 #: src/Form/SiteSettingsFieldset.php:19
 msgid "Old themes"
-msgstr ""
+msgstr "Temoù kozh"
 
 #: src/Form/SiteSettingsFieldset.php:33
 msgid "Display subscription button"
-msgstr ""
+msgstr "Diskouez ar bouton koumanantiñ"
 
 #: src/Form/SiteSettingsFieldset.php:35 src/Form/SiteSettingsFieldset.php:55
 #: src/Form/SiteSettingsFieldset.php:75
 msgid "Item: Top"
-msgstr ""
+msgstr "Elfenenn: Krec'h"
 
 #: src/Form/SiteSettingsFieldset.php:36 src/Form/SiteSettingsFieldset.php:56
 #: src/Form/SiteSettingsFieldset.php:76
 msgid "Media: Top"
-msgstr ""
+msgstr "Mediaoù: Uhel"
 
 #: src/Form/SiteSettingsFieldset.php:37 src/Form/SiteSettingsFieldset.php:57
 #: src/Form/SiteSettingsFieldset.php:77
 msgid "Item set: Top"
-msgstr ""
+msgstr "Strollad elfenn : Krec'h"
 
 #: src/Form/SiteSettingsFieldset.php:38 src/Form/SiteSettingsFieldset.php:58
 #: src/Form/SiteSettingsFieldset.php:78
 msgid "Item: Bottom"
-msgstr ""
+msgstr "Elfennañ: traoñ"
 
 #: src/Form/SiteSettingsFieldset.php:39 src/Form/SiteSettingsFieldset.php:59
 #: src/Form/SiteSettingsFieldset.php:79
 msgid "Media: Bottom"
-msgstr ""
+msgstr "Media: traoñ"
 
 #: src/Form/SiteSettingsFieldset.php:40 src/Form/SiteSettingsFieldset.php:60
 #: src/Form/SiteSettingsFieldset.php:80
 msgid "Item set: Bottom"
-msgstr ""
+msgstr "Strollad elfenn : traoñ"
 
 #: src/Form/SiteSettingsFieldset.php:53
 msgid "Display comments"
-msgstr ""
+msgstr "Diskouez an evezhiadennoù"
 
 #: src/Form/SiteSettingsFieldset.php:73
 msgid "Display comment form"
-msgstr ""
+msgstr "Diskouez furmskrid an evezhiadennoù"
 
-#: src/Form/SiteSettingsFieldset.php:94 src/Form/SettingsFieldset.php:330
+#: src/Form/SettingsFieldset.php:330 src/Form/SiteSettingsFieldset.php:94
 msgid "Main label"
-msgstr ""
+msgstr "Etiked pennañ"
 
-#: src/Form/SiteSettingsFieldset.php:102 src/Form/SettingsFieldset.php:338
+#: src/Form/SettingsFieldset.php:338 src/Form/SiteSettingsFieldset.php:102
 msgid "Structure"
-msgstr ""
+msgstr "Framm"
 
 #: src/Form/SiteSettingsFieldset.php:104 src/Form/SiteSettingsFieldset.php:117
 #: src/Form/SiteSettingsFieldset.php:139 src/Form/SiteSettingsFieldset.php:160
 msgid "Use default"
-msgstr ""
+msgstr "Implijout an dreistpennad"
 
-#: src/Form/SiteSettingsFieldset.php:105 src/Form/SettingsFieldset.php:340
+#: src/Form/SettingsFieldset.php:340 src/Form/SiteSettingsFieldset.php:105
 msgid "Flat (by date)"
-msgstr ""
+msgstr "Plat (hervez an deiziad)"
 
-#: src/Form/SiteSettingsFieldset.php:106 src/Form/SettingsFieldset.php:341
+#: src/Form/SettingsFieldset.php:341 src/Form/SiteSettingsFieldset.php:106
 msgid "Threaded (by conversation)"
-msgstr ""
+msgstr "A-neudennoù (hervez ar gaoz)"
 
-#: src/Form/SiteSettingsFieldset.php:115 src/Form/SettingsFieldset.php:350
+#: src/Form/SettingsFieldset.php:350 src/Form/SiteSettingsFieldset.php:115
 msgid "Closed on load"
-msgstr ""
+msgstr "Serret pa vez karg"
 
-#: src/Form/SiteSettingsFieldset.php:128 src/Form/SettingsFieldset.php:358
+#: src/Form/SettingsFieldset.php:358 src/Form/SiteSettingsFieldset.php:128
 msgid "Max length"
-msgstr ""
+msgstr "Hed brasañ"
 
-#: src/Form/SiteSettingsFieldset.php:136 src/Form/SettingsFieldset.php:366
+#: src/Form/SettingsFieldset.php:366 src/Form/SiteSettingsFieldset.php:136
 msgid "Display gravatar"
-msgstr ""
+msgstr "Diskouez ar gravatar"
 
-#: src/Form/SiteSettingsFieldset.php:150 src/Form/SettingsFieldset.php:379
+#: src/Form/SettingsFieldset.php:379 src/Form/SiteSettingsFieldset.php:150
 msgid "Legal agreement"
-msgstr ""
+msgstr "Emglev lezennel"
 
-#: src/Form/SiteSettingsFieldset.php:158 src/Form/SettingsFieldset.php:388
+#: src/Form/SettingsFieldset.php:388 src/Form/SiteSettingsFieldset.php:158
 msgid "Display website field"
-msgstr ""
+msgstr "Diskouez maezienn al lec'hienn"
 
 #: src/Form/SiteSettingsFieldset.php:171
 msgid "Button to subscribe to comments"
-msgstr ""
+msgstr "Bouton evit en em goumanantiñ d'an evezhiadennoù"
 
 #: src/Form/CommentForm.php:81
 msgid "Use an alias"
-msgstr ""
+msgstr "Implij un anv-all"
 
 #: src/Form/CommentForm.php:84
 msgid "Comment anonymously"
-msgstr ""
+msgstr "Lezit un evezhiadenn dizanv"
 
 #: src/Form/CommentForm.php:92
 msgid "Comment as"
-msgstr ""
+msgstr "Evezhiadenn evel"
 
 #: src/Form/CommentForm.php:107
 msgid "Alias"
-msgstr ""
+msgstr "Lesanv"
 
 #: src/Form/CommentForm.php:111
 msgid "My alias…"
-msgstr ""
+msgstr "Ma lesanv…"
 
 #: src/Form/CommentForm.php:125 src/Form/CommentForm.php:154
 msgid "My email (it won't be displayed)…"
-msgstr ""
+msgstr "Ma postel (ne vo ket diskouezet)…"
 
 #: src/Form/CommentForm.php:140
 msgid "My name…"
-msgstr ""
+msgstr "Ma anv…"
 
 #: src/Form/CommentForm.php:169
 msgid "My website…"
-msgstr ""
+msgstr "Ma lec'hienn..."
 
 #: src/Form/CommentForm.php:183
 msgid "My comment…"
-msgstr ""
+msgstr "Ma evezhiadenn…"
 
 #: src/Form/CommentForm.php:193
 msgid "Proposed comment cannot be empty."
-msgstr ""
+msgstr "Ar evezhiadenn kinniget ne c'hall ket bezañ goullo."
 
 #: src/Form/CommentForm.php:195
-#, php-format
+#, php-format, python-format
 msgid "Comment cannot be longer than %d characters."
-msgstr ""
+msgstr "Ne c'hall ket un evezhiadenn bezañ hiroc'h eget %d arouezenn."
 
 #: src/Form/CommentForm.php:212
 msgid "Terms of service"
-msgstr ""
+msgstr "Termenoù servij"
 
 #: src/Form/CommentForm.php:227
 msgid "You must agree to the terms and conditions."
-msgstr ""
+msgstr "Ret eo deoc'h asantiñ d'an termenoù ha d'an divizoù."
 
 #: src/Form/CommentForm.php:254
-#, php-format
+#, php-format, python-format
 msgid "How much is %d plus %d?"
-msgstr ""
+msgstr "Pegen bras eo %d mui %d?"
 
 #: src/Form/CommentForm.php:263
-#, php-format
+#, php-format, python-format
 msgid "To prove you are not a robot, answer this question: %s"
-msgstr ""
+msgstr "Evit prouiñ n'oc'h ket ur robot, respontit d'ar goulenn-mañ : %s"
 
 #: src/Form/CommentForm.php:269
 msgid "You must answer the antispam question."
-msgstr ""
+msgstr "Ret eo deoc'h respont d'ar goulenn enep-spam."
 
 #: src/Form/CommentForm.php:275
 msgid "Check your anwser to the antispam question."
-msgstr ""
+msgstr "Gwiriait ho respont d'ar goulenn enep-spam."
 
 #: src/Form/CommentForm.php:287
 msgid "String to check"
-msgstr ""
+msgstr "Nerzh da wiriañ"
 
 #: src/Form/CommentForm.php:290
 msgid "Set the string to check"
-msgstr ""
+msgstr "Lakaat an neudenn da wiriañ"
 
 #: src/Form/CommentForm.php:343
 msgid "Comment it!"
-msgstr ""
+msgstr "Lezit un evezhiadenn!"
 
 #: src/Form/SettingsFieldset.php:32
 msgid "Resources that can be commented"
-msgstr ""
+msgstr "Danvezioù a c'haller evezhiañ"
 
-#: src/Form/SettingsFieldset.php:38 src/Form/QuickSearchForm.php:72
+#: src/Form/QuickSearchForm.php:72 src/Form/SettingsFieldset.php:38
 msgid "Digital objects"
-msgstr ""
+msgstr "Traoù niverel"
 
 #: src/Form/SettingsFieldset.php:48
 msgid "Allow public to view comments"
-msgstr ""
+msgstr "Aotren an dud da welet an evezhiadennoù"
 
 #: src/Form/SettingsFieldset.php:49
 msgid "If unchecked, comments will be displayed only in admin pages."
 msgstr ""
+"Ma ne vezont ket meret, ne vo gwelet an evezhiadennoù nemet war pajennoù ar "
+"merour."
 
 #: src/Form/SettingsFieldset.php:58
 msgid "Allow public to comment"
-msgstr ""
+msgstr "Aotren an dud da lezel evezhiadennoù"
 
 #: src/Form/SettingsFieldset.php:59
 msgid "Allows everyone to comment, including non-registered users."
 msgstr ""
+"Aotren a ra an holl da reiñ o soñj, en o zouez an implijerien n'int ket "
+"enskrivet."
 
 #: src/Form/SettingsFieldset.php:68
 msgid "Require moderation for public comments"
-msgstr ""
+msgstr "Goulenn ur moderadur evit an evezhiadennoù foran"
 
 #: src/Form/SettingsFieldset.php:69 src/Form/SettingsFieldset.php:79
 msgid "If unchecked, comments will appear immediately."
-msgstr ""
+msgstr "Ma ne vez ket gwiriet, e teuio an evezhiadennoù war wel diouzhtu."
 
 #: src/Form/SettingsFieldset.php:78
 msgid "Require moderation for non-admin users"
-msgstr ""
+msgstr "Goulenn ur moderadur evit an implijerien n'int ket merourien"
 
 #: src/Form/SettingsFieldset.php:88
 msgid "Notify public comments by email"
-msgstr ""
+msgstr "Kelaouiñ an evezhiadennoù foran dre bostel"
 
 #: src/Form/SettingsFieldset.php:89
-msgid ""
-"The list of emails to notify when a comment is posted or flagged, one by row."
+msgid "The list of emails to notify when a comment is posted or flagged, one by row."
 msgstr ""
+"Roll ar posteloù da gemenn pa vez embannet pe merket un evezhiadenn, unan dre"
+" renkenn."
 
 #: src/Form/SettingsFieldset.php:105
 msgid "Reply-to address of the notification emails"
-msgstr ""
+msgstr "Chomlec'h respont posteloù ar gemennadennoù"
 
 #: src/Form/SettingsFieldset.php:106
 msgid ""
@@ -742,55 +816,70 @@ msgid ""
 "to the commenter). If empty, the administrator email is used. The sender "
 "(from) remains the unique installation address."
 msgstr ""
+"Implijet evel chomlec'h respont evit kemennadennoù an enskriverien (respontet"
+" e vez kemennadennoù ar moderator d'an eiler). Ma'z eo goullo e vez implijet "
+"postel ar merour. Chom a ra an kaser (chomlec'h 'eus') evel chomlec'h unel ar"
+" staliadur."
 
 #: src/Form/SettingsFieldset.php:118
 msgid "Default subject when answering a comment"
-msgstr ""
+msgstr "Danvez dre ziouer pa respontet d'un evezhiadenn"
 
 #: src/Form/SettingsFieldset.php:119 src/Form/SettingsFieldset.php:132
+#, python-brace-format
 msgid ""
 "Placeholders: {name}, {email}, {comment}, {resource_title}, {resource_url}, "
 "{main_title}, {main_url}."
 msgstr ""
+"Plasdermenoù: {name}, {email}, {comment}, {resource_title}, {resource_url}, "
+"{main_title}, {main_url}."
 
 #: src/Form/SettingsFieldset.php:131
 msgid "Default message when answering a comment"
-msgstr ""
+msgstr "Kemenadenn dre ziouer pa respontet d'un evezhiadenn"
 
 #: src/Form/SettingsFieldset.php:147
 msgid "Subscriber notification: subject"
-msgstr ""
+msgstr "Kemenadenn d'ar c'houmananter : danvez"
 
 #: src/Form/SettingsFieldset.php:148 src/Form/SettingsFieldset.php:183
 #: src/Form/SettingsFieldset.php:219
+#, python-brace-format
 msgid "Placeholders: {site_name}"
-msgstr ""
+msgstr "Plasdermennoù: {site_name}"
 
 #: src/Form/SettingsFieldset.php:159
 msgid "Subscriber notification: body"
-msgstr ""
+msgstr "Kemenadenn d'ar c'houmananter : korf"
 
 #: src/Form/SettingsFieldset.php:160
+#, python-brace-format
 msgid ""
 "Placeholders: {site_name}, {resource_id}, {resource_title}, {resource_url}, "
 "{comment_author}, {comment_body}"
 msgstr ""
+"Plasdermenoù: {site_name}, {resource_id}, {resource_title}, {resource_url}, "
+"{comment_author}, {comment_body}"
 
 #: src/Form/SettingsFieldset.php:182
 msgid "Moderator notification: subject"
-msgstr ""
+msgstr "Kemenadenn d'ar moderator : danvez"
 
 #: src/Form/SettingsFieldset.php:194
 msgid "Moderator notification: body"
-msgstr ""
+msgstr "Kemenadenn d'ar moderator: korf"
 
 #: src/Form/SettingsFieldset.php:195
+#, python-brace-format
 msgid ""
 "Placeholders: {site_name}, {resource_id}, {resource_title}, {resource_url}, "
 "{comment_author}, {comment_email}, {comment_body}"
 msgstr ""
+"Plasdermenoù: {site_name}, {resource_id}, {resource_title}, {resource_url}, "
+"{comment_author}, {comment_email}, {comment_body}"
 
-#: src/Form/SettingsFieldset.php:199 config/module.config.php:298
+#: config/module.config.php:298 src/Form/SettingsFieldset.php:199
+#, python-brace-format
 msgid ""
 "A comment was added to resource #{resource_id} ({resource_title}).\n"
 "\n"
@@ -801,28 +890,42 @@ msgid ""
 "\n"
 "Review at: {resource_url}"
 msgstr ""
+"Ouzhpennet ez eus bet un evezhiadenn d'ar vammenn #{resource_id} "
+"({resource_title}).\n"
+"\n"
+"Aozer: {comment_author} <{comment_email}>\n"
+"\n"
+"Evezhiadenn:\n"
+"{comment_body}\n"
+"\n"
+"Gwelet war: {resource_url}"
 
 #: src/Form/SettingsFieldset.php:218
 msgid "Flagged comment notification: subject"
-msgstr ""
+msgstr "Kemennadenn evezhiadenn merket : danvez"
 
 #: src/Form/SettingsFieldset.php:230
 msgid "Flagged comment notification: body"
-msgstr ""
+msgstr "Kemennadenn notennet evit ar evezhiadenn: korf"
 
 #: src/Form/SettingsFieldset.php:231
+#, python-brace-format
 msgid ""
-"Placeholders: {site_name}, {resource_id}, {resource_title}, "
-"{comment_author}, {comment_email}, {comment_body}, {admin_url}"
+"Placeholders: {site_name}, {resource_id}, {resource_title}, {comment_author},"
+" {comment_email}, {comment_body}, {admin_url}"
 msgstr ""
+"Plasdermenoù: {site_name}, {resource_id}, {resource_title}, {comment_author},"
+" {comment_email}, {comment_body}, {admin_url}"
 
 #: src/Form/SettingsFieldset.php:254
 msgid "Allow non-admin users to edit or delete their own comment"
 msgstr ""
+"Aotren an implijerien n'int ket merour da gemmañ pe da zilemel o evezhiadenn "
+"dezho o-unan"
 
 #: src/Form/SettingsFieldset.php:263
 msgid "Allow users to comment with an alias"
-msgstr ""
+msgstr "Aotren an implijerien da lezel evezhiadennoù gant un anv-implij"
 
 #: src/Form/SettingsFieldset.php:264
 msgid ""
@@ -830,10 +933,13 @@ msgid ""
 "email instead of their account information. The comment remains linked to "
 "their account."
 msgstr ""
+"Ma vez diuzet, e c'hall an implijerien gevreet dibab lezel un evezhiadenn "
+"gant un anv hag ur chomlec'h postel personelaet e-lec'h titouroù o c'hont. "
+"Chom a ra an evezhiadenn liammet ouzh o c'hont."
 
 #: src/Form/SettingsFieldset.php:273
 msgid "Allow users to comment anonymously"
-msgstr ""
+msgstr "Aotren an implijerien da lezel evezhiadennoù dizanv"
 
 #: src/Form/SettingsFieldset.php:274
 msgid ""
@@ -841,166 +947,184 @@ msgid ""
 "will be displayed as \"[Anonymous]\" but the comment remains linked to their "
 "account for moderation purposes."
 msgstr ""
+"Ma vez diuzet, e c'hall an implijerien gevreet dibab lezel un evezhiadenn "
+"dizanv. Diskouezet e vo o anv evel \"[Dizanv]\" met chom a raio an "
+"evezhiadenn liammet ouzh o c'hont evit abegoù moderadur."
 
 #: src/Form/SettingsFieldset.php:283
 msgid "WordPress API key for Akismet if installed"
-msgstr ""
+msgstr "Alc'hwez API WordPress evit Akismet ma'z eo staliet"
 
 #: src/Form/SettingsFieldset.php:293
 msgid "Simple antispam"
-msgstr ""
+msgstr "Enep-spam eeun"
 
 #: src/Form/SettingsFieldset.php:294
 msgid ""
 "If checked, a simple antispam (an addition of two digits) will be added for "
 "anonymous people if ReCaptcha is not set."
 msgstr ""
+"Ma vez diket, e vo ouzhpennet un enep-spam eeun (sammadur div sifr) evit an "
+"dud dizanv ma n'eo ket staliet ReCaptcha."
 
 #: src/Form/SettingsFieldset.php:303
 msgid "Rate limit: max comments"
-msgstr ""
+msgstr "Bevenn an tizh: d'ar muiañ a evezhiadennoù"
 
 #: src/Form/SettingsFieldset.php:304
 msgid ""
-"Maximum number of comments allowed per IP address within the time period. "
-"Set 0 or empty to disable."
+"Maximum number of comments allowed per IP address within the time period. Set"
+" 0 or empty to disable."
 msgstr ""
+"An niver brasañ a evezhiadennoù aotreet dre chomlec'h IP e-kerzh ar prantad "
+"amzer. Lakait 0 pe goullo evit diweredekaat."
 
 #: src/Form/SettingsFieldset.php:316
 msgid "Rate limit: period (minutes)"
-msgstr ""
+msgstr "Bevenn an tizh: prantad (munutennoù)"
 
 #: src/Form/SettingsFieldset.php:317
 msgid "Time window in minutes for the rate limit."
-msgstr ""
+msgstr "Prantad amzer e munutennoù evit ar vevenn-tizh."
 
 #: src/Form/SettingsFieldset.php:380
 msgid ""
 "This text will be shown beside the legal checkbox. Let empty if you don’t "
 "want to use a legal agreement."
 msgstr ""
+"Diskouezet e vo an destenn-mañ e-kichen ar voest da asantiñ d'an diviz "
+"lezennel. Lezit anezhi goullo ma ne fell ket deoc'h ober gant un emglev "
+"lezennel."
 
 #: src/Form/SettingsFieldset.php:397
 msgid "Shortcuts to group comments by item sets"
-msgstr ""
+msgstr "Hentoù berr evit rummañ an evezhiadennoù dre strolladoù elfennoù"
 
 #: src/Form/SettingsFieldset.php:398
+#, python-brace-format
 msgid ""
 "A group allows to separate comments that have different purposes, fo example "
-"comments to identify and generic comments. The url will be \"?group={name}"
-"\". Set a list a name, then a \"=\", then a list of item set ids. The "
-"special group \"none\" allows to get comments without group."
+"comments to identify and generic comments. The url will be \"?group={name}\"."
+" Set a list a name, then a \"=\", then a list of item set ids. The special "
+"group \"none\" allows to get comments without group."
 msgstr ""
+"Ur strollad a ro an tu da zispartiañ evezhiadennoù o deus palioù disheñvel, "
+"da skouer evezhiadennoù evit anavezout hag evezhiadennoù hollek. An URL a vo "
+"\"?group={name}\". Roit ul listenn un anv, da c'houde un \"=\", ha da c'houde"
+" ul listenn IDoù strolladoù elfennoù. Ar strollad ispisial \"none\" a ro an "
+"tu da gaout evezhiadennoù hep strollad."
 
 #: src/Form/QuickSearchForm.php:44
 msgid "User by id"
-msgstr ""
+msgstr "Implijer dre ID"
 
 #: src/Form/QuickSearchForm.php:54
 msgid "Resource by id"
-msgstr ""
+msgstr "Danvez dre ID"
 
 #: src/Form/QuickSearchForm.php:67
 msgid "All resources"
-msgstr ""
+msgstr "An holl danvezioù"
 
 #: src/Form/QuickSearchForm.php:83
 msgid "Has resource"
-msgstr ""
+msgstr "Ennañ e kaver"
 
 #: src/Form/QuickSearchForm.php:140
 msgid "Spam"
-msgstr ""
+msgstr "Spam"
 
 #: src/Form/CommentsBrowseFieldset.php:18
 msgid "Search pool query"
-msgstr ""
+msgstr "Klask reked poull"
 
 #: src/Form/CommentsBrowseFieldset.php:32
 msgid "comment-limit"
-msgstr ""
+msgstr "bevenn an evezhiadennoù"
 
 #: src/Form/SendMessageForm.php:34
 msgid "Message"
-msgstr ""
+msgstr "Kemenadenn"
 
 #: src/Form/SendMessageForm.php:46
 msgid "Copy to me"
-msgstr ""
+msgstr "Eilskrid din"
 
 #: src/Form/SendMessageForm.php:48
 msgid "No copy"
-msgstr ""
+msgstr "N'eus eilskrid ebet"
 
 #: src/Form/SendMessageForm.php:49
 msgid "Copy (cc)"
-msgstr ""
+msgstr "Eilañ (skridenn)"
 
 #: src/Form/SendMessageForm.php:50
 msgid "Hidden copy (bcc)"
-msgstr ""
+msgstr "Eilskrid kuzh (bcc)"
 
 #: src/Form/SendMessageForm.php:62
 msgid "Send message"
-msgstr ""
+msgstr "Kas ur gemennadenn"
 
 #: src/Api/Adapter/CommentAdapter.php:485
 msgid "The ip cannot be empty."
-msgstr ""
+msgstr "Ne c'hall ket an IP bezañ goullo."
 
 #: src/Api/Adapter/CommentAdapter.php:489
 msgid "The user agent cannot be empty."
-msgstr ""
+msgstr "N'hall ket an ajañt implijer bezañ goullo."
 
 #: src/Api/Adapter/CommentAdapter.php:494
 msgid "The body cannot be empty."
-msgstr ""
+msgstr "Ne c'hall ket ar c'horf bezañ goullo."
 
 #: src/Api/Adapter/CommentAdapter.php:500
 #: src/Controller/AbstractCommentController.php:129
 msgid "Cannot reply to a comment that is not yet approved."
-msgstr ""
+msgstr "N'haller ket respont d'un evezhiadenn n'eo ket bet aprouet c'hoazh."
 
 #: src/Api/Adapter/CommentSubscriptionAdapter.php:131
 msgid "This user has already subscribed to this resource."
-msgstr ""
+msgstr "An implijer-mañ en deus enskrivet dija d'ar vammenn-mañ."
 
 #: src/Controller/Admin/CommentController.php:131
+#, python-brace-format
 msgid "Message successfully sent to {email}."
-msgstr ""
+msgstr "Kelaouenn kaset gant berzh da {email}."
 
 #: src/Controller/Admin/CommentController.php:224
 msgid "Comment permanently deleted."
-msgstr ""
+msgstr "Evezhiadenn diverket da viken."
 
 #: src/Controller/Admin/CommentController.php:229
 msgid "Comment soft-deleted."
-msgstr ""
+msgstr "Evezhiadenn diverket en un doare blot."
 
 #: src/Controller/Admin/CommentController.php:265
 msgid "You must select at least one comment to batch delete."
-msgstr ""
+msgstr "Ret eo deoc'h dibab ur evezhiadenn da nebeutañ evit o diverkañ a-stroll."
 
 #: src/Controller/Admin/CommentController.php:275
 msgid "Comments successfully deleted."
-msgstr ""
+msgstr "Evezhiadennoù diverket gant berzh."
 
 #: src/Controller/Admin/CommentController.php:285
 msgid "Delete of all comments is not supported currently."
-msgstr ""
+msgstr "N'haller ket diverkañ an holl evezhiadennoù evit ar poent."
 
 #: src/Controller/Admin/CommentController.php:333
 msgid "No comments submitted."
-msgstr ""
+msgstr "Evezhiadenn ebet kaset."
 
 #: src/Controller/Admin/CommentController.php:342
 #: src/Controller/Admin/CommentController.php:409
+#, python-brace-format
 msgid "[Comment]: {msg}"
-msgstr ""
+msgstr "[Evezhiadenn]: {msg}"
 
 #: src/Controller/AbstractCommentController.php:28
 msgid "The url to add comment was accessed without post data."
-msgstr ""
+msgstr "Tizhet eo bet an URL evit ouzhpennañ un evezhiadenn hep roadennoù post."
 
 #: src/Controller/AbstractCommentController.php:31
 #: src/Controller/AbstractCommentController.php:39
@@ -1019,208 +1143,215 @@ msgstr ""
 #: src/Controller/AbstractCommentController.php:597
 #: src/Controller/AbstractCommentController.php:648
 msgid "Unauthorized access."
-msgstr ""
+msgstr "Moned hep aotre."
 
 #: src/Controller/AbstractCommentController.php:48
 msgid "Are you really a robot?"
-msgstr ""
+msgstr "Ha da vat out ur robot?"
 
 #: src/Controller/AbstractCommentController.php:68
 msgid "Unauthorized access : no user agent."
-msgstr ""
+msgstr "Moned hep aotre : ajañt implijer ebet."
 
 #: src/Controller/AbstractCommentController.php:77
 msgid "The url to add comment was accessed without managed resource."
-msgstr ""
+msgstr "Tizhet eo bet an URL evit ouzhpennañ un evezhiadenn hep danvez meret."
 
 #: src/Controller/AbstractCommentController.php:92
 msgid "The url to add comment was accessed without resource id."
-msgstr ""
+msgstr "Tizhet eo bet an URL evit ouzhpennañ un evezhiadenn hep ID ar vammenn."
 
 #: src/Controller/AbstractCommentController.php:99
 msgid "The url to add comment was accessed without resource."
-msgstr ""
+msgstr "Tizhet eo bet an URL evit ouzhpennañ un evezhiadenn hep danvez."
 
 #: src/Controller/AbstractCommentController.php:118
 #: src/Controller/AbstractCommentController.php:122
 msgid "The parent comment does not exist."
-msgstr ""
+msgstr "Ne vez ket eus ar evezhiadenn bennañ."
 
 #: src/Controller/AbstractCommentController.php:159
 msgid "Email is required when using an alias."
-msgstr ""
+msgstr "Ret eo reiñ ur chomlec'h postel pa implijer un anv-badez all."
 
-#: src/Controller/AbstractCommentController.php:187
-#: config/module.config.php:257
+#: config/module.config.php:257 src/Controller/AbstractCommentController.php:187
 msgid "You should accept the legal agreement."
-msgstr ""
+msgstr "Rankout a rafec'h asantiñ d'an emglev lezennel."
 
 #: src/Controller/AbstractCommentController.php:206
 msgid "The comment cannot be empty."
-msgstr ""
+msgstr "Ne c'hall ket an evezhiadenn bezañ goullo."
 
 #: src/Controller/AbstractCommentController.php:283
 msgid "Your comment is online."
-msgstr ""
+msgstr "Ho evezhiadenn zo enlinenn."
 
 #: src/Controller/AbstractCommentController.php:285
 msgid "Your comment is awaiting moderation"
-msgstr ""
+msgstr "Ho evezhiadenn a zo o c'hortoz bezañ moderet"
 
 #: src/Controller/AbstractCommentController.php:331
 #: src/Controller/AbstractCommentController.php:453
 msgid "Unauthorized access or not found."
-msgstr ""
+msgstr "Moned hep aotre pe n'eo ket bet kavet."
 
 #: src/Controller/AbstractCommentController.php:340
 msgid "The user has no right to edit this resource."
-msgstr ""
+msgstr "N'en deus ket an implijer ar gwir da gemmañ ar vammenn-mañ."
 
 #: src/Controller/AbstractCommentController.php:347
 msgid "The url to edit comment was accessed without post data."
-msgstr ""
+msgstr "Tizhet eo bet an URL evit kemmañ an evezhiadenn hep roadennoù post."
 
 #: src/Controller/AbstractCommentController.php:357
 msgid "No text submitted."
-msgstr ""
+msgstr "Testenn ebet kaset."
 
 #: src/Controller/AbstractCommentController.php:363
 msgid "Text submitted is the same than the existing one."
-msgstr ""
+msgstr "An destenn kaset zo heñvel"
 
 #: src/Controller/AbstractCommentController.php:393
 #: src/Controller/AbstractCommentController.php:478
 #: src/Controller/AbstractCommentController.php:489
 msgid "An error occurred."
-msgstr ""
+msgstr "Ur fazi zo c'hoarvezet."
 
 #: src/Controller/AbstractCommentController.php:462
 msgid "The user has no right to delete this resource."
-msgstr ""
+msgstr "N'en deus ket an implijer ar gwir da diverkañ ar vammenn-mañ."
 
 #: src/Controller/AbstractCommentController.php:524
 msgid "The comment id cannot be identified."
-msgstr ""
+msgstr "N'haller ket anavezout ID an evezhiadenn."
 
 #: src/Controller/AbstractCommentController.php:527
 #: src/Controller/AbstractCommentController.php:543
 msgid "Comment not found."
-msgstr ""
+msgstr "Evezhiadenn n'eo ket bet kavet."
 
 #: src/Controller/AbstractCommentController.php:539
+#, python-brace-format
 msgid "The comment #{comment_id} cannot be identified."
-msgstr ""
+msgstr "N'haller ket anavezout an evezhiadenn #{comment_id}."
 
 #: src/Controller/AbstractCommentController.php:547
+#, python-brace-format
 msgid "The comment #{comment_id} cannot be accessed."
-msgstr ""
+msgstr "N'haller ket tizhout an evezhiadenn #{comment_id}."
 
 #: src/Controller/AbstractCommentController.php:593
 msgid "Resource not found."
-msgstr ""
+msgstr "N'eus ket kavet ar vammenn."
 
 #: src/Controller/AbstractCommentController.php:604
+#, python-brace-format
 msgid "Action {action} not allowed."
-msgstr ""
+msgstr "N'eo ket aotreet an ober {action}."
 
 #: src/Controller/AbstractCommentController.php:655
 msgid "Missing resource."
-msgstr ""
+msgstr "Mankout a ra ar vammenn."
 
 #: src/Controller/AbstractCommentController.php:674
 msgid "No subscription found for this resource."
-msgstr ""
+msgstr "N'eus kavet koumanant ebet evit ar vammenn-mañ."
 
 #: src/Controller/AbstractCommentController.php:702
 msgid "Akismet is not available: install it."
-msgstr ""
+msgstr "Akismet n'eo ket hegerz : stailhit anezhañ."
 
 #: src/Controller/AbstractCommentController.php:809
+#, python-brace-format
 msgid "Rate limit exceeded for IP {ip}: {count} comments in {period} minutes."
 msgstr ""
+"Tremenet an harz evit ar chomlec'h IP {ip} : {count} evezhiadenn(où) e "
+"{period} munutenn(où)."
 
 #: src/Controller/AbstractCommentController.php:813
 msgid "Too many comments. Please wait before posting again."
-msgstr ""
+msgstr "Re a evezhiadennoù. Gortozit mar plij a-raok embann en-dro."
 
 #: src/Controller/AbstractCommentController.php:861
 msgid "This comment has already been posted."
-msgstr ""
+msgstr "Ar evezhiadenn-mañ zo bet lakaet dija."
 
 #: src/Site/Navigation/Link/CommentSubscriptions.php:13
 msgid "Comment: Subscriptions"
-msgstr ""
+msgstr "Evezhiadenn: Koumanantoù"
 
 #: src/Site/ResourcePageBlockLayout/CommentForm.php:13
 msgid "Comment: Form"
-msgstr ""
+msgstr "Evezhiadenn: Furmskrid"
 
 #: src/Site/ResourcePageBlockLayout/CommentNewCommentNotification.php:13
 msgid "Comment: New comment notification"
-msgstr ""
+msgstr "Evezhiadenn: Kemennadenn evezhiadenn nevez"
 
 #: src/Site/ResourcePageBlockLayout/Comments.php:13
 msgid "Comment: List"
-msgstr ""
+msgstr "Evezhiadenn: Roll"
 
 #: src/Site/ResourcePageBlockLayout/CommentSubscriptionStatus.php:13
 msgid "Comment: Subscription status"
-msgstr ""
+msgstr "Evezhiadenn: Stad ar c'houmanant"
 
 #: src/Site/ResourcePageBlockLayout/CommentSubscriptionButton.php:13
 msgid "Comment: Subscription button"
-msgstr ""
+msgstr "Evezhiadenn: Botoñs koumanantiñ"
 
 #: src/Site/BlockLayout/CommentsBrowse.php:28
 msgid "Comment: Browse"
-msgstr ""
+msgstr "Evezhiadenn: Furchal"
 
 #: src/Site/BlockLayout/CommentsBrowse.php:120
 msgid "comments"
-msgstr ""
+msgstr "evezhiadennoù"
 
 #: config/module.config.php:226 config/module.config.php:232
 #: config/module.config.php:238 config/module.config.php:243
 msgid "Date created"
-msgstr ""
+msgstr "Deiziad krouidigezh"
 
 #: config/module.config.php:227 config/module.config.php:239
 msgid "Date modified"
-msgstr ""
+msgstr "Deiziad kemmet"
 
 #: config/module.config.php:248
 msgid "Are you sure you want to delete this comment?"
-msgstr ""
+msgstr "Ha sur oc'h e fell deoc'h diverkañ an evezhiadenn-mañ?"
 
 #: config/module.config.php:250
 msgid "Comment was added to the resource."
-msgstr ""
+msgstr "Ouzhpennet eo bet un evezhiadenn d'ar vammenn."
 
 #: config/module.config.php:251
 msgid "Edit your comment"
-msgstr ""
+msgstr "Kemmañ hoc'h evezhiadenn"
 
 #: config/module.config.php:252
 msgid "It will be displayed definitely when approved."
-msgstr ""
+msgstr "Diskouezet e vo da vat ur wech aprouet."
 
 #: config/module.config.php:253
 msgid "Request too long to process."
-msgstr ""
+msgstr "Goulenn re hir da blediñ gantañ."
 
 #: config/module.config.php:255
 msgid "The resource doesn’t exist."
-msgstr ""
+msgstr "Ne vez ket eus ar vammenn."
 
 #: config/module.config.php:256
 msgid "The resource or the comment doesn’t exist."
-msgstr ""
+msgstr "Ne zo ket eus ar vammenn pe eus an evezhiadenn."
 
 #: config/module.config.php:269
+#, python-brace-format
 msgid "Reply to your comment on {main_title}"
-msgstr ""
+msgstr "Respont d'ho evezhiadenn diwar-benn {main_title}"
 
 #: config/module.config.php:270
+#, python-brace-format
 msgid ""
 "Hi {name},\n"
 "\n"
@@ -1237,6 +1368,20 @@ msgid ""
 "\n"
 "{comment}"
 msgstr ""
+"Salud {name},\n"
+"\n"
+"\n"
+"\n"
+"A-galon,\n"
+"\n"
+"{main_title}\n"
+"{main_url}\n"
+"\n"
+"--\n"
+"\n"
+"Ho evezhiadenn diwar-benn {resource_title}:\n"
+"\n"
+"{comment}"
 
 #: config/module.config.php:331
 msgid ""
@@ -1245,3 +1390,8 @@ msgid ""
 "rel=\"license\" href=\"https://creativecommons.org/licenses/by-sa/3.0/\" "
 "target=\"_blank\">CC BY-SA</a>.</p>"
 msgstr ""
+"A-du on gant an <a rel=\"license\" href=\"#\" target=\"_blank\">termenoù "
+"implijout hag e asantan dieubiñ ma degasadenn dindan al <a rel=\"license\" "
+"href=\"https://creativecommons.org/licenses/by-sa/3.0/\" target=\"_blank"
+"\">aotre-implijout CC BY-SA"
+
