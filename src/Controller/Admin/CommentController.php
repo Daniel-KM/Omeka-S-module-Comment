@@ -4,6 +4,7 @@ namespace Comment\Controller\Admin;
 
 use Comment\Api\Representation\CommentRepresentation;
 use Comment\Controller\AbstractCommentController;
+use Comment\Form\QuickSearchForm;
 use Common\Stdlib\PsrMessage;
 use Laminas\View\Model\ViewModel;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
@@ -15,25 +16,28 @@ class CommentController extends AbstractCommentController
     {
         $this->browse()->setDefaults('comments');
 
-        $response = $this->api()->search('comments', $this->params()->fromQuery());
+        $query = $this->params()->fromQuery();
+        $response = $this->api()->search('comments', $query);
         $this->paginator($response->getTotalResults());
 
         /** @var \Omeka\Form\ConfirmForm $formDeleteSelected */
         $formDeleteSelected = $this->getForm(ConfirmForm::class);
         $formDeleteSelected
             ->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'batch-delete'], true))
-            ->setAttribute('id', 'confirm-delete-selected')
             ->setButtonLabel('Confirm Delete'); // @translate
 
         /** @var \Omeka\Form\ConfirmForm $formDeleteAll */
         $formDeleteAll = $this->getForm(ConfirmForm::class);
         $formDeleteAll
             ->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'batch-delete-all'], true))
-            ->setAttribute('id', 'confirm-delete-all')
             ->setButtonLabel('Confirm Delete'); // @translate
         $formDeleteAll
             ->get('submit')
             ->setAttribute('disabled', true);
+
+        $formSearch = $this->getForm(QuickSearchForm::class);
+        $formSearch->setAttribute('action', $this->url()->fromRoute(null, ['action' => 'browse'], true));
+        $formSearch->setData($query);
 
         $comments = $response->getContent();
 
@@ -41,6 +45,7 @@ class CommentController extends AbstractCommentController
             'comments' => $comments,
             'formDeleteSelected' => $formDeleteSelected,
             'formDeleteAll' => $formDeleteAll,
+            'formSearch' => $formSearch,
         ]);
     }
 
@@ -112,7 +117,6 @@ class CommentController extends AbstractCommentController
         $routeAction = $this->params()->fromQuery('all') ? 'batch-delete-all' : 'batch-delete';
         $form
             ->setAttribute('action', $this->url()->fromRoute(null, ['action' => $routeAction], true))
-            ->setAttribute('id', 'batch-delete-confirm')
             ->setAttribute('class', $routeAction)
             ->setButtonLabel('Confirm delete'); // @translate
 

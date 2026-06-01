@@ -2,6 +2,7 @@
 /**
  * @var \Laminas\View\Renderer\PhpRenderer $this
  * @var \Comment\Api\Representation\CommentRepresentation[] $comments
+ * @var \Comment\Form\QuickSearchForm $formSearch
  */
 
 use Comment\Api\Adapter\CommentAdapter;
@@ -18,9 +19,12 @@ $userIsAllowed = $plugins->get('userIsAllowed');
 
 $this->headLink()
     ->appendStylesheet($assetUrl('css/common-dialog-admin.css', 'Common'))
+    ->appendStylesheet($assetUrl('css/common-page-action-menu.css', 'Common'))
+    ->appendStylesheet($assetUrl('css/common-quick-search.css', 'Common'))
     ->appendStylesheet($assetUrl('css/comment-admin.css', 'Comment'));
 $this->headScript()
     ->appendFile($assetUrl('js/common-dialog.js', 'Common'), 'text/javascript', ['defer' => 'defer'])
+    ->appendFile($assetUrl('js/common-quick-search.js', 'Common'), 'text/javascript', ['defer' => 'defer'])
     ->appendFile($assetUrl('js/comment.js', 'Comment'), 'text/javascript', ['defer' => 'defer'])
     ->appendFile($assetUrl('js/comment-admin.js', 'Comment'), 'text/javascript', ['defer' => 'defer']);
 
@@ -38,55 +42,52 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
 
  <div class="browse-controls">
     <?= $this->pagination() ?>
-    <?php // echo $hyperlink($translate('Advanced search'), $url(null, ['action' => 'search'], ['query' => $this->params()->fromQuery()], true), ['class' => 'advanced-search']) ?>
+    <button type="button" class="button search quick-search"><?= $escape($translate('Quick filter')) ?></button>
     <?= $this->browse()->renderSortSelector('comments') ?>
 </div>
 
-<form method="post" id="batch-form" class="disable-unsaved-warning">
-
 <?php if ($comments): ?>
+<form method="post" id="batch-form" class="disable-unsaved-warning">
 <div id="page-actions">
     <?php if ($userIsAllowed(CommentAdapter::class, 'batch-update')): ?>
-    <button type="button"
-        class="button batch-actions batch-property"
-        data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-approve'], true)) ?>"
-        aria-label="<?= $escapeAttr($translate('Approve')) ?>"
-        data-status="approved"
-        title="<?= $escapeAttr($translate('Approve')) ?>"><?= $escape($translate('Approve')) ?></button>
-    <button type="button"
-        class="button batch-actions batch-property"
-        data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-unapprove'], true)) ?>"
-        aria-label="<?= $escapeAttr($translate('Unapprove')) ?>"
-        data-status="unapproved"
-        title="<?= $escapeAttr($translate('Unapprove')) ?>"><?= $escape($translate('Unapprove')) ?></button>
-    <button type="button"
-        class="button batch-actions batch-property"
-        data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-flag'], true)) ?>"
-        aria-label="<?= $escapeAttr($translate('Flag')) ?>"
-        data-status="flagged"
-        title="<?= $escapeAttr($translate('Flag')) ?>"><?= $escape($translate('Flag')) ?></button>
-    <button type="button"
-        class="button batch-actions batch-property"
-        data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-unflag'], true)) ?>"
-        aria-label="<?= $escapeAttr($translate('Unflag')) ?>"
-        data-status="unflagged"
-        title="<?= $escapeAttr($translate('Unflag')) ?>"><?= $escape($translate('Unflag')) ?></button>
-    <button type="button"
-        class="button batch-actions batch-property"
-        data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-set-spam'], true)) ?>"
-        aria-label="<?= $escapeAttr($translate('Set spam')) ?>"
-        data-status="spam"
-        title="<?= $escapeAttr($translate('Set spam')) ?>"><?= $escape($translate('Set spam')) ?></button>
-    <button type="button"
-        class="button batch-actions batch-property"
-        data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-set-not-spam'], true)) ?>"
-        aria-label="<?= $escapeAttr($translate('Set not spam')) ?>"
-        data-status="not-spam"
-        title="<?= $escapeAttr($translate('Set not spam')) ?>"><?= $escape($translate('Set not spam')) ?></button>
+    <div class="page-action-menu">
+        <div class="with-sub-menu">
+            <a href="#" class="button expand"
+                aria-label="<?= $escapeAttr($translate('Expand')) ?>"
+                title="<?= $escapeAttr($translate('Expand')) ?>"><?= $escape($translate('Actions')) ?></a>
+            <ul class="collapsible">
+                <li><button type="button"
+                    class="batch-actions batch-property"
+                    data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-approve'], true)) ?>"
+                    data-status="approved"><?= $escape($translate('Approve')) ?></button></li>
+                <li><button type="button"
+                    class="batch-actions batch-property"
+                    data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-unapprove'], true)) ?>"
+                    data-status="unapproved"><?= $escape($translate('Unapprove')) ?></button></li>
+                <li><button type="button"
+                    class="batch-actions batch-property"
+                    data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-flag'], true)) ?>"
+                    data-status="flagged"><?= $escape($translate('Flag')) ?></button></li>
+                <li><button type="button"
+                    class="batch-actions batch-property"
+                    data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-unflag'], true)) ?>"
+                    data-status="unflagged"><?= $escape($translate('Unflag')) ?></button></li>
+                <li><button type="button"
+                    class="batch-actions batch-property"
+                    data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-set-spam'], true)) ?>"
+                    data-status="spam"><?= $escape($translate('Set spam')) ?></button></li>
+                <li><button type="button"
+                    class="batch-actions batch-property"
+                    data-batch-property-url="<?= $escapeAttr($url(null, ['action' => 'batch-set-not-spam'], true)) ?>"
+                    data-status="not-spam"><?= $escape($translate('Set not spam')) ?></button></li>
+            </ul>
+        </div>
+    </div>
     <?php endif; ?>
     <?php if ($userIsAllowed(CommentAdapter::class, 'batch-delete')): ?>
     <button type="button"
         class="button delete batch-actions sidebar-content"
+        data-sidebar-selector="#sidebar"
         data-sidebar-content-url="<?= $escapeAttr($url(null, ['action' => 'batch-delete-confirm'], true)) ?>"
         aria-label="<?= $escapeAttr($translate('Delete')) ?>"
         title="<?= $escapeAttr($translate('Delete')) ?>"><?= $escape($translate('Delete')) ?></button>
@@ -163,11 +164,13 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
                     <?php if ($comment->userIsAllowed('delete')): ?>
                     <li><button type="button"
                         class="o-icon-delete sidebar-content"
+                        data-sidebar-selector="#sidebar"
                         data-sidebar-content-url="<?= $escapeAttr($comment->url('delete-confirm')) ?>"
                         aria-label="<?= $v = $escape($translate('Delete')) ?>"
                         title="<?= $v ?>"></button></li>
                     <?php endif; ?>
                     <li><button type="button"
+                        data-sidebar-selector="#sidebar"
                         data-sidebar-content-url="<?= $escapeAttr($comment->url('show-details')) ?>"
                         class="o-icon-more sidebar-content"
                         aria-label="<?= $v = $escape($translate('Details')) ?>"
@@ -253,3 +256,8 @@ $('.sidebar').on('submit', '#batch-delete-confirm', function(e) {
 });
 </script>
 <?php endif; ?>
+
+<?= $this->partial('common/quick-search-sidebar', [
+    'formSearch' => $formSearch,
+    'title' => $translate('Filter comments'),
+]) ?>

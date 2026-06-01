@@ -44,6 +44,7 @@ return [
         'invokables' => [
             Form\CommentsBrowseFieldset::class => Form\CommentsBrowseFieldset::class,
             Form\CommentsSearchForm::class => Form\CommentsSearchForm::class,
+            Form\QuickSearchForm::class => Form\QuickSearchForm::class,
             Form\SettingsFieldset::class => Form\SettingsFieldset::class,
             Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],
