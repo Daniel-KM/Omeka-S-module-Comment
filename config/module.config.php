@@ -262,6 +262,7 @@ return [
             'comment_public_allow_comment' => true,
             'comment_public_require_moderation' => true,
             'comment_public_notify_post' => [],
+            'comment_reply_to_email' => '',
             // Email templates with placeholders.
             'comment_email_subscriber_subject' => '[{site_name}] New comment', // @translate
             'comment_email_subscriber_body' => <<<'TXT'

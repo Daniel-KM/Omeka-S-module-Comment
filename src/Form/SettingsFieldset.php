@@ -95,6 +95,19 @@ class SettingsFieldset extends Fieldset
                     'rows' => 5,
                 ],
             ])
+            ->add([
+                'name' => 'comment_reply_to_email',
+                'type' => CommonElement\OptionalEmail::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Reply-to address of the notification emails', // @translate
+                    'info' => 'Used as reply-to for subscriber notifications (moderator notifications reply to the commenter). If empty, the administrator email is used. The sender (from) remains the unique installation address.', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'comment_reply_to_email',
+                    'required' => false,
+                ],
+            ])
 
             // Email templates for subscriber notifications.
             ->add([

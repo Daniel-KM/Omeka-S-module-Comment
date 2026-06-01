@@ -20,6 +20,11 @@ class SendNotifications extends AbstractJob
      */
     protected $logger;
 
+    /**
+     * @var \Common\Mvc\Controller\Plugin\SendEmail
+     */
+    protected $sendEmail;
+
     public function perform(): void
     {
         $services = $this->getServiceLocator();
@@ -29,6 +34,9 @@ class SendNotifications extends AbstractJob
         $this->logger->addProcessor($referenceIdProcessor);
         $settings = $services->get('Omeka\Settings');
         $api = $services->get('Omeka\ApiManager');
+        // SendEmail only depends on injected services, so it can be used out of
+        // a controller (here in a job).
+        $this->sendEmail = $services->get('ControllerPluginManager')->get('sendEmail');
 
         $type = $this->getArg('type');
         $commentId = $this->getArg('comment_id');
@@ -85,6 +93,26 @@ class SendNotifications extends AbstractJob
     }
 
     /**
+     * Resolve the reply-to address. The from stays the unique installation
+     * sender (managed by Common\SendEmail). When a reply from the commenter is
+     * expected (moderator notifications), the reply-to is the commenter, else
+     * the configured support address, else the administrator.
+     */
+    protected function resolveReplyTo($comment, bool $preferCommenter): ?array
+    {
+        if ($preferCommenter) {
+            $email = $comment->email();
+            if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return [$email => (string) $comment->name()];
+            }
+        }
+        $settings = $this->getServiceLocator()->get('Omeka\Settings');
+        $support = $settings->get('comment_reply_to_email')
+            ?: $settings->get('administrator_email');
+        return $support ? [$support => ''] : null;
+    }
+
+    /**
      * Notify subscribers when a comment is approved.
      */
     protected function notifySubscribers($comment, $resource): void
@@ -93,7 +121,6 @@ class SendNotifications extends AbstractJob
         $entityManager = $services->get('Omeka\EntityManager');
         $settings = $services->get('Omeka\Settings');
         $translator = $services->get('MvcTranslator');
-        $mailer = $services->get('Omeka\Mailer');
 
         // Query entities directly: the job may run as the comment owner
         // (anonymous or guest) who is not allowed to search subscriptions.
@@ -139,21 +166,18 @@ class SendNotifications extends AbstractJob
         $body = new PsrMessage($bodyTemplate, $placeholders);
         $body = (string) $body->setTranslator($translator);
 
+        $replyTo = $this->resolveReplyTo($comment, false);
+
         foreach ($subscriptions as $subscription) {
             $user = $subscription->getOwner();
             if (!$user) {
                 continue;
             }
-            try {
-                $message = $mailer->createMessage();
-                $message->addTo($user->getEmail(), $user->getName())
-                    ->setSubject($subject)
-                    ->setBody($body);
-                $mailer->send($message);
-            } catch (\Throwable $e) {
+            $result = $this->sendEmail->__invoke($body, $subject, [$user->getEmail() => (string) $user->getName()], null, null, null, $replyTo);
+            if (!$result) {
                 $this->logger->err(
-                    'Failed to send email to {email}: {error}', // @translate
-                    ['email' => $user->getEmail(), 'error' => $e->getMessage()]
+                    'Failed to send email to {email}.', // @translate
+                    ['email' => $user->getEmail()]
                 );
             }
         }
@@ -172,7 +196,6 @@ class SendNotifications extends AbstractJob
         $services = $this->getServiceLocator();
         $settings = $services->get('Omeka\Settings');
         $translator = $services->get('MvcTranslator');
-        $mailer = $services->get('Omeka\Mailer');
 
         $notifyEmails = $settings->get('comment_public_notify_post');
         if (!$notifyEmails) {
@@ -220,20 +243,17 @@ class SendNotifications extends AbstractJob
             ? $notifyEmails
             : array_filter(array_map('trim', explode("\n", $notifyEmails)));
 
+        $replyTo = $this->resolveReplyTo($comment, true);
+
         foreach ($emails as $email) {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 continue;
             }
-            try {
-                $message = $mailer->createMessage();
-                $message->addTo($email)
-                    ->setSubject($subject)
-                    ->setBody($body);
-                $mailer->send($message);
-            } catch (\Throwable $e) {
+            $result = $this->sendEmail->__invoke($body, $subject, [$email => ''], null, null, null, $replyTo);
+            if (!$result) {
                 $this->logger->err(
-                    'Failed to send email to {email}: {error}', // @translate
-                    ['email' => $email, 'error' => $e->getMessage()]
+                    'Failed to send email to {email}.', // @translate
+                    ['email' => $email]
                 );
             }
         }
@@ -252,7 +272,6 @@ class SendNotifications extends AbstractJob
         $services = $this->getServiceLocator();
         $settings = $services->get('Omeka\Settings');
         $translator = $services->get('MvcTranslator');
-        $mailer = $services->get('Omeka\Mailer');
 
         $notifyEmails = $settings->get('comment_public_notify_post');
         if (!$notifyEmails) {
@@ -296,20 +315,17 @@ class SendNotifications extends AbstractJob
             ? $notifyEmails
             : array_filter(array_map('trim', explode("\n", $notifyEmails)));
 
+        $replyTo = $this->resolveReplyTo($comment, true);
+
         foreach ($emails as $email) {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 continue;
             }
-            try {
-                $message = $mailer->createMessage();
-                $message->addTo($email)
-                    ->setSubject($subject)
-                    ->setBody($body);
-                $mailer->send($message);
-            } catch (\Throwable $e) {
+            $result = $this->sendEmail->__invoke($body, $subject, [$email => ''], null, null, null, $replyTo);
+            if (!$result) {
                 $this->logger->err(
-                    'Failed to send email to {email}: {error}', // @translate
-                    ['email' => $email, 'error' => $e->getMessage()]
+                    'Failed to send email to {email}.', // @translate
+                    ['email' => $email]
                 );
             }
         }
