@@ -41,7 +41,7 @@ class SiteSettingsFieldsetTest extends AbstractHttpControllerTestCase
     {
         $this->assertTrue($this->fieldset->has('comment_placement_subscription'));
         $element = $this->fieldset->get('comment_placement_subscription');
-        $this->assertEquals('Display subscription button (old themes)', $element->getLabel());
+        $this->assertEquals('Display subscription button', $element->getLabel());
 
         $valueOptions = $element->getValueOptions();
         $this->assertArrayHasKey('before/items', $valueOptions);
@@ -52,14 +52,14 @@ class SiteSettingsFieldsetTest extends AbstractHttpControllerTestCase
     {
         $this->assertTrue($this->fieldset->has('comment_placement_list'));
         $element = $this->fieldset->get('comment_placement_list');
-        $this->assertEquals('Display comments (old themes)', $element->getLabel());
+        $this->assertEquals('Display comments', $element->getLabel());
     }
 
     public function testFieldsetHasPlacementFormElement(): void
     {
         $this->assertTrue($this->fieldset->has('comment_placement_form'));
         $element = $this->fieldset->get('comment_placement_form');
-        $this->assertEquals('Display comment form (old themes)', $element->getLabel());
+        $this->assertEquals('Display comment form', $element->getLabel());
     }
 
     public function testFieldsetHasLabelElement(): void

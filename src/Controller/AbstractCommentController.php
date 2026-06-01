@@ -229,7 +229,7 @@ abstract class AbstractCommentController extends AbstractActionController
         $form->setData($data);
         if (!$form->isValid()) {
             return $this->jSend()->fail(
-                $this->jSend()->flattenFormMessages($form),
+                $this->jSend()->flattenFormMessages($form, true),
                 new PsrMessage('There is issue in your comment.') // @translate
             );
         }
@@ -248,7 +248,7 @@ abstract class AbstractCommentController extends AbstractActionController
         }
         if (!$response) {
             return $this->jSend()->fail(
-                $this->jSend()->flattenFormMessages($form),
+                $this->jSend()->flattenFormMessages($form, true),
                 $this->translate('There is issue in your comment.') // @translate
             );
         }

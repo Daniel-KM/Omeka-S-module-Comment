@@ -30,7 +30,7 @@ class SiteSettingsFieldset extends Fieldset
                 'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
                     'element_group' => 'themes_old',
-                    'label' => 'Display subscription button (old themes)', // @translate
+                    'label' => 'Display subscription button', // @translate
                     'value_options' => [
                         'before/items' => 'Item: Top', // @translate
                         'before/media' => 'Media: Top', // @translate
@@ -50,7 +50,7 @@ class SiteSettingsFieldset extends Fieldset
                 'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
                     'element_group' => 'themes_old',
-                    'label' => 'Display comments (old themes)', // @translate
+                    'label' => 'Display comments', // @translate
                     'value_options' => [
                         'before/items' => 'Item: Top', // @translate
                         'before/media' => 'Media: Top', // @translate
@@ -70,7 +70,7 @@ class SiteSettingsFieldset extends Fieldset
                 'type' => CommonElement\OptionalMultiCheckbox::class,
                 'options' => [
                     'element_group' => 'themes_old',
-                    'label' => 'Display comment form (old themes)', // @translate
+                    'label' => 'Display comment form', // @translate
                     'value_options' => [
                         'before/items' => 'Item: Top', // @translate
                         'before/media' => 'Media: Top', // @translate

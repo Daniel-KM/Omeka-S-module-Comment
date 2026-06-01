@@ -102,7 +102,9 @@ if (version_compare($oldVersion, '3.4.14', '<')) {
         ALTER TABLE `comment_subscription` ADD CONSTRAINT `FK_3B2FA8AE89329D25` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`id`) ON DELETE CASCADE;
         SQL;
     try {
-        $connection->executeStatement($sql);
+        foreach (array_filter(array_map('trim', explode(";\n", $sql))) as $sql) {
+            $connection->executeStatement($sql);
+        }
     } catch (\Throwable $e) {
         // Already created.
     }
