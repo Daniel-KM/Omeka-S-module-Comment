@@ -90,14 +90,16 @@ class SendNotifications extends AbstractJob
     protected function notifySubscribers($comment, $resource): void
     {
         $services = $this->getServiceLocator();
-        $api = $services->get('Omeka\ApiManager');
+        $entityManager = $services->get('Omeka\EntityManager');
         $settings = $services->get('Omeka\Settings');
         $translator = $services->get('MvcTranslator');
         $mailer = $services->get('Omeka\Mailer');
 
-        $subscriptions = $api
-            ->search('comment_subscriptions', ['resource_id' => $resource->id()], ['initialize' => false, 'finalize' => false, 'responseContent' => 'resource'])
-            ->getContent();
+        // Query entities directly: the job may run as the comment owner
+        // (anonymous or guest) who is not allowed to search subscriptions.
+        $subscriptions = $entityManager
+            ->getRepository(\Comment\Entity\CommentSubscription::class)
+            ->findBy(['resource' => $resource->id()]);
 
         if (!$subscriptions) {
             return;
