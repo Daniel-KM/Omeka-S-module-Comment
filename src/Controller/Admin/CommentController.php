@@ -243,6 +243,7 @@ class CommentController extends AbstractCommentController
         $routeAction = $this->params()->fromQuery('all') ? 'batch-delete-all' : 'batch-delete';
         $form
             ->setAttribute('action', $this->url()->fromRoute(null, ['action' => $routeAction], true))
+            ->setAttribute('id', 'batch-delete-confirm')
             ->setAttribute('class', $routeAction)
             ->setButtonLabel('Confirm delete'); // @translate
 
