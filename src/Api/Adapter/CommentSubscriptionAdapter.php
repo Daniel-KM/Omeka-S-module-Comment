@@ -24,6 +24,7 @@ class CommentSubscriptionAdapter extends AbstractEntityAdapter
         'item_set_id' => 'resource',
         'item_id' => 'resource',
         'media_id' => 'resource',
+        'digital_object_id' => 'resource',
         'created' => 'created',
         // For info.
         // // 'resource_title' => 'resource',
@@ -36,6 +37,7 @@ class CommentSubscriptionAdapter extends AbstractEntityAdapter
         'item_set' => 'resource',
         'item' => 'resource',
         'media' => 'resource',
+        'digital_object' => 'resource',
         'created' => 'created',
     ];
 
@@ -48,6 +50,7 @@ class CommentSubscriptionAdapter extends AbstractEntityAdapter
             'item_set_id' => 'resource',
             'item_id' => 'resource',
             'media_id' => 'resource',
+            'digital_object_id' => 'resource',
             'owner_id' => 'owner',
         ],
         'datetime' => [

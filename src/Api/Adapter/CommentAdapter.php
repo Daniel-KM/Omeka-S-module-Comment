@@ -31,6 +31,7 @@ class CommentAdapter extends AbstractEntityAdapter
         'item_set_id' => 'resource',
         'item_id' => 'resource',
         'media_id' => 'resource',
+        'digital_object_id' => 'resource',
         'site_id' => 'site',
         'approved' => 'approved',
         'flagged' => 'flagged',
@@ -56,6 +57,7 @@ class CommentAdapter extends AbstractEntityAdapter
         'item_set' => 'resource',
         'item' => 'resource',
         'media' => 'resource',
+        'digital_object' => 'resource',
         'site' => 'site',
         'approved' => 'approved',
         'flagged' => 'flagged',
@@ -84,6 +86,7 @@ class CommentAdapter extends AbstractEntityAdapter
             'item_set_id' => 'resource',
             'item_id' => 'resource',
             'media_id' => 'resource',
+            'digital_object_id' => 'resource',
             'owner_id' => 'owner',
             'site_id' => 'site',
         ],
@@ -258,6 +261,9 @@ class CommentAdapter extends AbstractEntityAdapter
                 'items' => Item::class,
                 'media' => Media::class,
             ];
+            if (class_exists(\DigitalObject\Entity\DigitalObject::class)) {
+                $mapResourceTypes['digital_objects'] = \DigitalObject\Entity\DigitalObject::class;
+            }
             if ($query['resource_type'] === 'resources') {
                 $qb
                      ->andWhere($expr->isNotNull('omeka_root.resource'));
