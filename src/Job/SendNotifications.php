@@ -25,6 +25,14 @@ class SendNotifications extends AbstractJob
      */
     protected $sendEmail;
 
+    /**
+     * Scheme + host (e.g. "https://example.org") used to make any relative URL
+     * absolute. Resolved once via the ServerUrl view helper, with a fallback on
+     * settings when the helper has no host (CLI without --server-url, or sync
+     * dispatch from a request where HTTP_HOST is missing).
+     */
+    protected ?string $serverUrlBase = null;
+
     public function perform(): void
     {
         $services = $this->getServiceLocator();
@@ -73,6 +81,8 @@ class SendNotifications extends AbstractJob
             );
             return;
         }
+
+        $this->initServerUrlBase();
 
         switch ($type) {
             case 'subscribers':
@@ -134,9 +144,9 @@ class SendNotifications extends AbstractJob
 
         $siteName = $settings->get('installation_title');
         $siteSlug = $this->getArg('site_slug');
-        $resourceUrl = $siteSlug
+        $resourceUrl = $this->absoluteUrl($siteSlug
             ? $resource->siteUrl($siteSlug, true)
-            : $resource->apiUrl();
+            : $resource->apiUrl());
 
         $subjectTemplate = $settings->get('comment_email_subscriber_subject')
             ?: '[{site_name}] New comment'; // @translate
@@ -224,10 +234,10 @@ class SendNotifications extends AbstractJob
             'site_name' => $siteName,
             'resource_id' => $resource->id(),
             'resource_title' => (string) $resource->displayTitle(),
-            'resource_url' => $siteSlug
+            'resource_url' => $this->absoluteUrl($siteSlug
                 ? $resource->siteUrl($siteSlug, true)
-                : $resource->apiUrl(),
-            'admin_url' => $resource->adminUrl(null, true),
+                : $resource->apiUrl()),
+            'admin_url' => $this->absoluteUrl($resource->adminUrl(null, true)),
             'comment_author' => $comment->name() ?: 'Anonymous',
             'comment_email' => $comment->email() ?: 'N/A',
             'comment_body' => $comment->body(),
@@ -302,7 +312,7 @@ class SendNotifications extends AbstractJob
             'comment_author' => $comment->name() ?: 'Anonymous',
             'comment_email' => $comment->email() ?: 'N/A',
             'comment_body' => $comment->body(),
-            'admin_url' => $resource->adminUrl(null, true),
+            'admin_url' => $this->absoluteUrl($resource->adminUrl(null, true)),
         ];
 
         $subject = new PsrMessage($subjectTemplate, $placeholders);
@@ -334,5 +344,78 @@ class SendNotifications extends AbstractJob
             'Sent flagged comment notifications for comment #{comment_id}.', // @translate
             ['comment_id' => $comment->id()]
         );
+    }
+
+    /**
+     * Resolve scheme + host for absolutizing URLs in mail bodies.
+     */
+    protected function initServerUrlBase(): void
+    {
+        $services = $this->getServiceLocator();
+        $helpers = $services->get('ViewHelperManager');
+        try {
+            $serverUrl = $helpers->get('ServerUrl');
+            $host = method_exists($serverUrl, 'getHost') ? (string) $serverUrl->getHost() : '';
+            if ($host !== '') {
+                $scheme = method_exists($serverUrl, 'getScheme') ? (string) $serverUrl->getScheme() : 'http';
+                $port = method_exists($serverUrl, 'getPort') ? $serverUrl->getPort() : null;
+                $base = $scheme . '://' . $host;
+                if ($port && !in_array((int) $port, [80, 443], true)) {
+                    $base .= ':' . $port;
+                }
+                $this->serverUrlBase = $base;
+                return;
+            }
+        } catch (\Throwable $e) {
+        }
+        // Fallback on a configured base URL.
+        $settings = $services->get('Omeka\Settings');
+        $candidates = [
+            $settings->get('comment_server_url'),
+            $settings->get('installation_url'),
+            $settings->get('default_site_url'),
+        ];
+        foreach ($candidates as $candidate) {
+            if (!$candidate) {
+                continue;
+            }
+            $parts = parse_url((string) $candidate);
+            if (!empty($parts['scheme']) && !empty($parts['host'])) {
+                $base = $parts['scheme'] . '://' . $parts['host'];
+                if (!empty($parts['port']) && !in_array((int) $parts['port'], [80, 443], true)) {
+                    $base .= ':' . $parts['port'];
+                }
+                $this->serverUrlBase = $base;
+                return;
+            }
+        }
+        $this->serverUrlBase = null;
+    }
+
+    /**
+     * Make a URL absolute when scheme/host are missing.
+     */
+    protected function absoluteUrl(?string $url): string
+    {
+        $url = (string) $url;
+        if ($url === '') {
+            return '';
+        }
+        // Already absolute (scheme://host/...).
+        if (preg_match('~^[a-z][a-z0-9+.-]*://~i', $url)) {
+            return $url;
+        }
+        if ($this->serverUrlBase === null) {
+            return $url;
+        }
+        // Handle "http:/path", "https:/path" produced by ServerUrl without
+        // host.
+        if (preg_match('~^([a-z][a-z0-9+.-]*):/(?!/)(.*)$~i', $url, $m)) {
+            $url = '/' . ltrim($m[2], '/');
+        }
+        if ($url === '' || $url[0] !== '/') {
+            $url = '/' . $url;
+        }
+        return $this->serverUrlBase . $url;
     }
 }
