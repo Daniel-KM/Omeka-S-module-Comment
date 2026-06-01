@@ -160,7 +160,30 @@ var Comment = {
             return;
         }
         if (response.data.data.status === 'commented') {
-            location.reload();
+            var moderation = !!response.data.data.moderation;
+            var msg = moderation
+                ? Omeka.jsTranslate('Your comment was added. It will be displayed once approved.')
+                : Omeka.jsTranslate('Your comment is online.');
+            var commentId = response.data.data.comment && response.data.data.comment['o:id']
+                ? response.data.data.comment['o:id'] : null;
+            var anchor = commentId ? '#comment-' + commentId : '#block-comments';
+            var goToComment = function () {
+                // Force a real reload (assign to same path only updates the
+                // hash without re-rendering). Setting the hash first ensures
+                // the browser scrolls to the new comment after reload.
+                window.location.hash = anchor;
+                location.reload();
+            };
+            if (typeof CommonDialog !== 'undefined' && CommonDialog.dialogAlert) {
+                CommonDialog.dialogAlert({
+                    heading: Omeka.jsTranslate('Comment'),
+                    message: msg,
+                    textOk: Omeka.jsTranslate('OK'),
+                    textCancel: null,
+                }).then(goToComment, goToComment);
+            } else {
+                goToComment();
+            }
         } else if (response.data.data.status === 'deleted') {
             var commentId = response.data.data.comment['o:id'];
             // Remove from DOM: the comment div and its parent li if on browse page.

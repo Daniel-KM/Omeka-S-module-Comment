@@ -283,10 +283,15 @@ abstract class AbstractCommentController extends AbstractActionController
             }
         }
 
-        if ($data['o:approved']) {
-            $this->messenger()->addSuccess('Your comment is online.'); // @translate
-        } else {
-            $this->messenger()->addSuccess('Your comment is awaiting moderation'); // @translate
+        // Skip flash on AJAX: the client displays the success message in a
+        // dialog and navigates to the comment anchor, so the messenger would
+        // appear duplicated at the top of the page after reload.
+        if (!$this->getRequest()->isXmlHttpRequest()) {
+            if ($data['o:approved']) {
+                $this->messenger()->addSuccess('Your comment is online.'); // @translate
+            } else {
+                $this->messenger()->addSuccess('Your comment is awaiting moderation'); // @translate
+            }
         }
 
         if ($this->settings()->get('comment_public_notify_post')) {
