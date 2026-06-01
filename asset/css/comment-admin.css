@@ -7,6 +7,12 @@
     .comments .no-resources::before {
         content: ""; /* fas fa-comment-alt */
     }
+
+    .section-nav {
+        height: initial;
+        min-height: 42px;
+    }
+
     #comments .property {
         display: inherit;
     }
