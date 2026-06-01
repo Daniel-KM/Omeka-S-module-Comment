@@ -95,6 +95,18 @@
         });
 
         /**
+         * Close the reply dialog after a successful jSend send.
+         *
+         * Opening is handled by common-dialog.js (button-dialog-common).
+         */
+        document.addEventListener('o:jsend-success', function() {
+            var dialog = document.querySelector('dialog.dialog-send-message.dialog-comment');
+            if (dialog && dialog.open) {
+                dialog.close();
+            }
+        });
+
+        /**
          * Approve or reject a list of comments in batch.
          */
         $('#content').on('click', '.batch-property', function(e) {

@@ -110,6 +110,33 @@ class SettingsFieldset extends Fieldset
                     'required' => false,
                 ],
             ])
+            ->add([
+                'name' => 'comment_reply_subject',
+                'type' => Element\Text::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Default subject when answering a comment', // @translate
+                    'info' => 'Placeholders: {name}, {email}, {comment}, {resource_title}, {resource_url}, {main_title}, {main_url}.', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'comment_reply_subject',
+                    'required' => false,
+                ],
+            ])
+            ->add([
+                'name' => 'comment_reply_body',
+                'type' => Element\Textarea::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Default message when answering a comment', // @translate
+                    'info' => 'Placeholders: {name}, {email}, {comment}, {resource_title}, {resource_url}, {main_title}, {main_url}.', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'comment_reply_body',
+                    'required' => false,
+                    'rows' => 5,
+                ],
+            ])
 
             // Email templates for subscriber notifications.
             ->add([

@@ -137,12 +137,6 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
                 <?php $editRightComment = $comment->userIsAllowed('update'); ?>
                     <?php if ($editRightComment): ?>
                     <li><button type="button"
-                        class="toggle-property approved unapproved o-icon-<?= $comment->isApproved() ? 'approved' : 'unapproved' ?>"
-                        data-url="<?= $escapeAttr($comment->url('toggle-approved')) ?>"
-                        data-status="<?= $comment->isApproved() ? 'approved' : 'unapproved' ?>"
-                        aria-label="<?= $v = $escape($translate('Toggle approbation')) ?>"
-                        title="<?= $v ?>"></button></li>
-                    <li><button type="button"
                         class="toggle-property flagged unflagged o-icon-<?= $comment->isFlagged() ? 'flagged' : 'unflagged' ?>"
                         data-url="<?= $escapeAttr($comment->url('toggle-flagged')) ?>"
                         data-status="<?= $comment->isFlagged() ? 'flagged' : 'unflagged' ?>"
@@ -154,6 +148,20 @@ $editRight = $userIsAllowed(CommentAdapter::class, 'update')
                         data-status="<?= $comment->isSpam() ? 'spam' : 'not-spam' ?>"
                         aria-label="<?= $v = $escape($translate('Toggle spam')) ?>"
                         title="<?= $v ?>"></button></li>
+                    <li><button type="button"
+                        class="toggle-property approved unapproved o-icon-<?= $comment->isApproved() ? 'approved' : 'unapproved' ?>"
+                        data-url="<?= $escapeAttr($comment->url('toggle-approved')) ?>"
+                        data-status="<?= $comment->isApproved() ? 'approved' : 'unapproved' ?>"
+                        aria-label="<?= $v = $escape($translate('Toggle approbation')) ?>"
+                        title="<?= $v ?>"></button></li>
+                    <?php if ($comment->email() || ($comment->owner() && $comment->owner()->email())): ?>
+                    <li><button type="button"
+                        class="button-dialog-common reply-message fas fa-envelope"
+                        data-dialog-selector="dialog.dialog-send-message.dialog-comment"
+                        data-url="<?= $escapeAttr($comment->url('send-message')) ?>"
+                        aria-label="<?= $v = $escapeAttr($translate('Reply to the commenter')) ?>"
+                        title="<?= $v ?>"></button></li>
+                    <?php endif; ?>
                     <?php endif; ?>
                     <?php if ($comment->userIsAllowed('edit')): ?>
                     <li><button type="button"
@@ -260,4 +268,8 @@ $('.sidebar').on('submit', '#batch-delete-confirm', function(e) {
 <?= $this->partial('common/quick-search-sidebar', [
     'formSearch' => $formSearch,
     'title' => $translate('Filter comments'),
+]) ?>
+
+<?= $this->partial('common/dialog/comment-send-message', [
+    'form' => $formSendMessage,
 ]) ?>

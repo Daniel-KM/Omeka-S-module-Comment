@@ -5,6 +5,7 @@ namespace Comment\Controller\Admin;
 use Comment\Api\Representation\CommentRepresentation;
 use Comment\Controller\AbstractCommentController;
 use Comment\Form\QuickSearchForm;
+use Comment\Form\SendMessageForm;
 use Common\Stdlib\PsrMessage;
 use Laminas\View\Model\ViewModel;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
@@ -41,12 +42,137 @@ class CommentController extends AbstractCommentController
 
         $comments = $response->getContent();
 
+        $settings = $this->settings();
+        $formSendMessage = $this->getForm(SendMessageForm::class);
+        $formSendMessage->get('subject')->setValue((string) $settings->get('comment_reply_subject'));
+        $formSendMessage->get('body')->setValue((string) $settings->get('comment_reply_body'));
+        // When a support reply-to is set, the answering admin is no longer the
+        // reply-to, so default to a discreet copy (bcc); else the admin is the
+        // reply-to and needs no copy.
+        $formSendMessage->get('myself')->setValue($settings->get('comment_reply_to_email') ? 'bcc' : '');
+
         return new ViewModel([
             'comments' => $comments,
             'formDeleteSelected' => $formDeleteSelected,
             'formDeleteAll' => $formDeleteAll,
             'formSearch' => $formSearch,
+            'formSendMessage' => $formSendMessage,
         ]);
+    }
+
+    public function sendMessageAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            throw new \Omeka\Mvc\Exception\NotFoundException;
+        }
+
+        $id = $this->params('id');
+        /** @var \Comment\Api\Representation\CommentRepresentation $comment */
+        $comment = $this->api()->read('comments', $id)->getContent();
+
+        $owner = $comment->owner();
+        $toEmail = $comment->email() ?: ($owner ? $owner->email() : null);
+        if (!$toEmail) {
+            return $this->jSend()->fail(null, $this->translate(
+                'No email defined for this comment.' // @translate
+            ));
+        }
+
+        $params = $this->params();
+
+        $body = trim((string) $params->fromPost('body'));
+        if (!strlen($body)) {
+            return $this->jSend()->fail(null, $this->translate('Empty message.')); // @translate
+        }
+        if (mb_strlen($body) > 10000) {
+            return $this->jSend()->fail(null, $this->translate('Too long message.')); // @translate
+        }
+
+        $settings = $this->settings();
+
+        $subject = trim((string) $params->fromPost('subject'));
+        if (!strlen($subject)) {
+            $subject = $settings->get('comment_reply_subject')
+                ?: $this->translate('Reply to your comment'); // @translate
+        }
+
+        $subject = $this->fillMessage($subject, $comment);
+        $body = $this->fillMessage($body, $comment);
+
+        if (mb_strlen($subject) > 190) {
+            return $this->jSend()->fail(null, $this->translate('Too long subject.')); // @translate
+        }
+
+        $to = [$toEmail => $comment->name() ?: ($owner ? $owner->name() : '')];
+        $replyTo = $this->replyToAddress();
+
+        // The from stays the unique installation sender; copies to the
+        // answering admin are optional, exclusive (cc or bcc), via the form
+        // radio.
+        $cc = null;
+        $bcc = null;
+        $myself = $params->fromPost('myself');
+        $user = $this->identity();
+        if ($user && $myself === 'cc') {
+            $cc = [$user->getEmail() => (string) $user->getName()];
+        } elseif ($user && $myself === 'bcc') {
+            $bcc = [$user->getEmail() => (string) $user->getName()];
+        }
+
+        /** @see \Common\Mvc\Controller\Plugin\SendEmail */
+        $result = $this->sendEmail($body, $subject, $to, null, $cc, $bcc, $replyTo);
+        if (!$result) {
+            return $this->jSend()->error(null, $this->translate(
+                'Sorry, the message cannot be sent. Contact the administrator.' // @translate
+            ));
+        }
+
+        $message = new PsrMessage(
+            'Message successfully sent to {email}.', // @translate
+            ['email' => $toEmail]
+        );
+        return $this->jSend()->success([
+            'comment' => $id,
+        ], $message->setTranslator($this->translator()));
+    }
+
+    /**
+     * Resolve the reply-to address: the configured support address, else the
+     * connected admin. The sender (from) is the unique installation address.
+     */
+    protected function replyToAddress(): ?array
+    {
+        $email = $this->settings()->get('comment_reply_to_email');
+        if ($email) {
+            return [$email => ''];
+        }
+        $user = $this->identity();
+        if ($user) {
+            return [$user->getEmail() => (string) $user->getName()];
+        }
+        return null;
+    }
+
+    /**
+     * Fill a message with placeholders (moustache style).
+     */
+    protected function fillMessage(string $message, CommentRepresentation $comment): string
+    {
+        if (!strlen($message) || mb_strpos($message, '{') === false) {
+            return $message;
+        }
+        $settings = $this->settings();
+        $resource = $comment->resource();
+        $placeholders = [
+            '{main_title}' => $settings->get('installation_title', 'Omeka S'),
+            '{main_url}' => $this->url()->fromRoute('top', [], ['force_canonical' => true]),
+            '{name}' => (string) $comment->name(),
+            '{email}' => (string) $comment->email(),
+            '{comment}' => (string) $comment->body(),
+            '{resource_title}' => $resource ? (string) $resource->displayTitle() : '',
+            '{resource_url}' => $resource ? $resource->siteUrl(null, true) : '',
+        ];
+        return strtr($message, $placeholders);
     }
 
     public function showDetailsAction()

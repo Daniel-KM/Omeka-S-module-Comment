@@ -45,6 +45,7 @@ return [
             Form\CommentsBrowseFieldset::class => Form\CommentsBrowseFieldset::class,
             Form\CommentsSearchForm::class => Form\CommentsSearchForm::class,
             Form\QuickSearchForm::class => Form\QuickSearchForm::class,
+            Form\SendMessageForm::class => Form\SendMessageForm::class,
             Form\SettingsFieldset::class => Form\SettingsFieldset::class,
             Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],
@@ -265,6 +266,23 @@ return [
             'comment_public_require_moderation' => true,
             'comment_public_notify_post' => [],
             'comment_reply_to_email' => '',
+            'comment_reply_subject' => 'Reply to your comment on {main_title}', // @translate
+            'comment_reply_body' => <<<'MAIL'
+                Hi {name},
+
+
+
+                Sincerely,
+
+                {main_title}
+                {main_url}
+
+                --
+
+                Your comment on {resource_title}:
+
+                {comment}
+                MAIL, // @translate
             // Email templates with placeholders.
             'comment_email_subscriber_subject' => '[{site_name}] New comment', // @translate
             'comment_email_subscriber_body' => <<<'TXT'
