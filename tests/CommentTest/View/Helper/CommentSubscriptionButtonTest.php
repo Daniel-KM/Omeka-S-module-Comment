@@ -43,7 +43,8 @@ class CommentSubscriptionButtonTest extends AbstractHttpControllerTestCase
     {
         $services = $this->getApplication()->getServiceManager();
         $config = $services->get('Config');
-        $default = $config['comment']['settings']['comment_subscribe_button'] ?? null;
+        // comment_subscribe_button is a site setting, read via siteSetting().
+        $default = $config['comment']['site_settings']['comment_subscribe_button'] ?? null;
         $this->assertEquals('0', $default, 'The default value for comment_subscribe_button should be "0" (disabled).');
     }
 

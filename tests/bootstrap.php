@@ -12,6 +12,9 @@ require dirname(__DIR__, 3) . '/modules/Common/tests/Bootstrap.php';
     [
         'Common',
         'Comment',
+        // Optional: registered globally via STI on resource, so its table must
+        // exist for resource value queries (linked resources).
+        '?DigitalObject',
     ],
     'CommentTest',
     __DIR__ . '/CommentTest'

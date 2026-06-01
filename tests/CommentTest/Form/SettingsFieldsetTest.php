@@ -69,7 +69,7 @@ class SettingsFieldsetTest extends AbstractHttpControllerTestCase
     {
         $this->assertTrue($this->fieldset->has('comment_user_allow_edit'));
         $element = $this->fieldset->get('comment_user_allow_edit');
-        $this->assertEquals('Allow non-admin users to edit their own comment', $element->getLabel());
+        $this->assertEquals('Allow non-admin users to edit or delete their own comment', $element->getLabel());
     }
 
     public function testFieldsetHasAntispamElement(): void

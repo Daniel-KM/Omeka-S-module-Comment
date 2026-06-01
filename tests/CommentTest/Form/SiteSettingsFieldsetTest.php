@@ -128,21 +128,23 @@ class SiteSettingsFieldsetTest extends AbstractHttpControllerTestCase
 
     public function testFieldsetElementsHaveCorrectElementGroup(): void
     {
-        $elements = [
-            'comment_placement_subscription',
-            'comment_placement_list',
-            'comment_placement_form',
-            'comment_label',
-            'comment_structure',
-            'comment_closed_on_load',
-            'comment_max_length',
-            'comment_skip_gravatar',
-            'comment_subscribe_button',
+        // Placement elements target old themes (deprecated), the rest the
+        // standard comment group.
+        $elementGroups = [
+            'comment_placement_subscription' => 'themes_old',
+            'comment_placement_list' => 'themes_old',
+            'comment_placement_form' => 'themes_old',
+            'comment_label' => 'comment',
+            'comment_structure' => 'comment',
+            'comment_closed_on_load' => 'comment',
+            'comment_max_length' => 'comment',
+            'comment_skip_gravatar' => 'comment',
+            'comment_subscribe_button' => 'comment',
         ];
 
-        foreach ($elements as $name) {
+        foreach ($elementGroups as $name => $group) {
             $element = $this->fieldset->get($name);
-            $this->assertEquals('comment', $element->getOption('element_group'), "Element $name should have 'comment' as element_group");
+            $this->assertEquals($group, $element->getOption('element_group'), "Element $name should have '$group' as element_group");
         }
     }
 }
