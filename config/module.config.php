@@ -68,6 +68,7 @@ return [
     'navigation_links' => [
         'invokables' => [
             'comments' => Site\Navigation\Link\Comments::class,
+            'commentSubscriptions' => Site\Navigation\Link\CommentSubscriptions::class,
         ],
     ],
     'controllers' => [
