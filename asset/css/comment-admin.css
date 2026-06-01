@@ -112,31 +112,31 @@
         content: "";
     }
     .comment .o-icon-approved::before {
-        color: #00FF00;
+        color: #2A7D2A;
         content: "";
     }
     .comment .o-icon-unapproved::before {
-        color: #FF0000;
+        color: #A91919;
         content: "";
     }
     .comment .o-icon-flagged::before {
-        color: #FF0000;
+        color: #A91919;
         content: "";
     }
     .comment .o-icon-unflagged::before {
-        color: #00FF00;
+        color: #2A7D2A;
     content: "";
     }
     .comment .o-icon-spam::before {
-        color: #FF0000;
+        color: #A91919;
         content: "";
     }
     .comment .o-icon-not-spam::before {
-        color: #00FF00;
+        color: #2A7D2A;
         content: "";
     }
     .comment .o-icon-undefined::before {
-        color: #FF0000;
+        color: #A91919;
         content: "";
     }
     .comment .o-icon-none::before {

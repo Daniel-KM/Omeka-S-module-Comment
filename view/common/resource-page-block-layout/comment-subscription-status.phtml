@@ -17,7 +17,7 @@ $text = $subscribed
 ?>
 
 <div class="block resource-block block-comment-subscription-status subscription-status-<?= $class ?>">
-    <div class="icon comment-subscribe <?= $class ?>" data-id="<?= $resource->id() ?>" title="<?= $escapeAttr($text) ?>" aria-label="<?= $escapeAttr($text) ?>">
-        <span class="comment-subscription-icon"></span>
+    <div class="icon comment-subscribe <?= $class ?>" role="img" data-id="<?= $resource->id() ?>" title="<?= $escapeAttr($text) ?>" aria-label="<?= $escapeAttr($text) ?>">
+        <span class="comment-subscription-icon" aria-hidden="true"></span>
     </div>
 </div>

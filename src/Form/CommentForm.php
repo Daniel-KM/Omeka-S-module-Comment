@@ -136,6 +136,7 @@ class CommentForm extends Form
                     'label' => 'Name', // @translate
                 ],
                 'attributes' => [
+                    'id' => 'comment-form-name',
                     'placeholder' => 'My name…', // @translate
                     'required' => false,
                     'value' => '',
@@ -149,6 +150,7 @@ class CommentForm extends Form
                     'label' => 'Email', // @translate
                 ],
                 'attributes' => [
+                    'id' => 'comment-form-email',
                     'placeholder' => "My email (it won't be displayed)…", // @translate
                     'required' => true,
                     'value' => '',
@@ -163,6 +165,7 @@ class CommentForm extends Form
                         'label' => 'Website', // @translate
                     ],
                     'attributes' => [
+                        'id' => 'comment-form-website',
                         'placeholder' => 'My website…', // @translate
                     ],
                 ]);
@@ -176,6 +179,7 @@ class CommentForm extends Form
                 'label' => 'Comment', // @translate
             ],
             'attributes' => [
+                'id' => 'comment-form-body',
                 'placeholder' => 'My comment…', // @translate
                 'required' => true,
                 'rows' => 12,
@@ -213,6 +217,7 @@ class CommentForm extends Form
                         'use_hidden_element' => false,
                     ],
                     'attributes' => [
+                        'id' => 'comment-form-legal-agreement',
                         'value' => !$isAnonymous,
                         'required' => true,
                     ],
