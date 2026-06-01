@@ -310,14 +310,16 @@ return [
             'comment_legal_text' => <<<'HTML'
                 <p>I agree with <a rel="license" href="#" target="_blank">terms of use</a> and I accept to free my contribution under the license <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA</a>.</p>
                 HTML, // @translate
-            'comment_subscribe_button' => '0',
             'comment_website' => true,
             'comment_groups' => [],
+            'comment_rate_limit_count' => '',
+            'comment_rate_limit_period' => '',
         ],
         'site_settings' => [
             'comment_placement_subscription' => [],
             'comment_placement_form' => [],
             'comment_placement_list' => [],
+            'comment_resources' => [],
             'comment_label' => '',
             'comment_structure' => '',
             'comment_closed_on_load' => '',
@@ -325,6 +327,7 @@ return [
             'comment_skip_gravatar' => '',
             'comment_legal_text' => '',
             'comment_website' => '',
+            'comment_subscribe_button' => '0',
         ],
         'block_settings' => [
             'commentsBrowse' => [
