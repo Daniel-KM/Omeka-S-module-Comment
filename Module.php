@@ -346,12 +346,9 @@ class Module extends AbstractModule
             'api.update.post',
             [$this, 'handleCreateUpdateComment']
         );
-        // Notify moderators when a comment is flagged.
-        $sharedEventManager->attach(
-            \Comment\Api\Adapter\CommentAdapter::class,
-            'api.update.post',
-            [$this, 'handleFlaggedComment']
-        );
+        // Notification on flag is dispatched directly from the public flag
+        // action: it is only useful when a visitor flags a comment, not when a
+        // moderator manages comments in the admin board.
 
         // Add headers to comment views in admin.
         $sharedEventManager->attach(
@@ -672,59 +669,6 @@ class Module extends AbstractModule
         $site = $comment->getSite();
         $dispatcher->dispatch(\Comment\Job\SendNotifications::class, [
             'type' => 'subscribers',
-            'comment_id' => $comment->getId(),
-            'resource_id' => $resource->getId(),
-            'site_slug' => $site ? $site->getSlug() : null,
-        ]);
-    }
-
-    /**
-     * Notify moderators when a comment is flagged.
-     * Uses a background job for better performance.
-     */
-    public function handleFlaggedComment(Event $event): void
-    {
-        /**
-         * @var \Omeka\Api\Request $request
-         * @var \Omeka\Api\Response $response
-         * @var \Comment\Entity\Comment $comment
-         */
-        $services = $this->getServiceLocator();
-        $settings = $services->get('Omeka\Settings');
-
-        // Check if notification emails are configured.
-        $notifyEmails = $settings->get('comment_public_notify_post');
-        if (!$notifyEmails) {
-            return;
-        }
-
-        $request = $event->getParam('request');
-        $data = $request->getContent();
-
-        // Only notify if 'o:flagged' was explicitly set to true in this update.
-        if (!isset($data['o:flagged']) || !$data['o:flagged']) {
-            return;
-        }
-
-        $response = $event->getParam('response');
-        /** @var \Comment\Entity\Comment $comment */
-        $comment = $response->getContent();
-
-        // Double-check the comment is actually flagged and not deleted.
-        if (!$comment->isFlagged() || $comment->isDeleted()) {
-            return;
-        }
-
-        $resource = $comment->getResource();
-        if (!$resource) {
-            return;
-        }
-
-        // Dispatch background job for sending notifications.
-        $dispatcher = $services->get(\Omeka\Job\Dispatcher::class);
-        $site = $comment->getSite();
-        $dispatcher->dispatch(\Comment\Job\SendNotifications::class, [
-            'type' => 'flagged',
             'comment_id' => $comment->getId(),
             'resource_id' => $resource->getId(),
             'site_slug' => $site ? $site->getSlug() : null,

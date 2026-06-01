@@ -552,8 +552,27 @@ abstract class AbstractCommentController extends AbstractActionController
             ));
         }
 
-        $api
-            ->update('comments', $commentId, ['o:flagged' => $flagUnflag], [], ['isPartial' => true]);
+        $comment = $api
+            ->update('comments', $commentId, ['o:flagged' => $flagUnflag], [], ['isPartial' => true])
+            ->getContent();
+
+        // Notify moderators only when a visitor flags a comment from a site.
+        // Moderation done from the admin board must not send a notification.
+        $resource = $comment->resource();
+        if ($flagUnflag
+            && $resource
+            && !$comment->isDeleted()
+            && !$this->status()->isAdminRequest()
+            && $this->settings()->get('comment_public_notify_post')
+        ) {
+            $site = $comment->site();
+            $this->jobDispatcher()->dispatch(\Comment\Job\SendNotifications::class, [
+                'type' => 'flagged',
+                'comment_id' => $commentId,
+                'resource_id' => $resource->id(),
+                'site_slug' => $site ? $site->slug() : null,
+            ]);
+        }
 
         return $this->jSend()->success([
             'comment' => ['o:id' => $commentId],
