@@ -228,14 +228,10 @@ abstract class AbstractCommentController extends AbstractActionController
         $form->init();
         $form->setData($data);
         if (!$form->isValid()) {
-            $message = new PsrMessage(
-                'There is issue in your comment.' // @translate
+            return $this->jSend()->fail(
+                $this->jSend()->flattenFormMessages($form),
+                new PsrMessage('There is issue in your comment.') // @translate
             );
-            $messages = $form->getMessages();
-            if ($messages) {
-                $message .= "\n" . implode("\n", $messages);
-            }
-            return $this->jSend()->fail(null, $message);
         }
 
         $data['o:flagged'] = false;
@@ -251,14 +247,10 @@ abstract class AbstractCommentController extends AbstractActionController
             $response = null;
         }
         if (!$response) {
-            $message = $this->translate(
-                'There is issue in your comment.' // @translate
+            return $this->jSend()->fail(
+                $this->jSend()->flattenFormMessages($form),
+                $this->translate('There is issue in your comment.') // @translate
             );
-            $messages = $form->getMessages();
-            if ($messages) {
-                $message .= "\n" . implode("\n", $messages);
-            }
-            return $this->jSend()->fail(null, $message);
         }
 
         /** @var \Comment\Api\Representation\CommentRepresentation $comment */
