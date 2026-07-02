@@ -52,15 +52,17 @@ $commentForm->prepare();
             <?= $formText($element) ?>
         </div>
     </div>
-    <?php $element = $commentForm->get('o:website'); ?>
-    <div class="field">
-        <div class="field-meta">
-            <?= $formLabel($element) ?>
+    <?php if ($commentForm->has('o:website')): ?>
+        <?php $element = $commentForm->get('o:website'); ?>
+        <div class="field">
+            <div class="field-meta">
+                <?= $formLabel($element) ?>
+            </div>
+            <div class="inputs">
+                <?= $formText($element) ?>
+            </div>
         </div>
-        <div class="inputs">
-            <?= $formText($element) ?>
-        </div>
-    </div>
+    <?php endif; ?>
 <?php elseif ($commentForm->has('comment_identity_mode')): ?>
     <?php // Identity mode (alias/anonymous) for logged-in users. ?>
     <?php $element = $commentForm->get('comment_identity_mode'); ?>
