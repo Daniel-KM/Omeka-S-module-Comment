@@ -363,6 +363,15 @@ class CommentAdapter extends AbstractEntityAdapter
                 }
             }
         }
+
+        // Full text "contains" search on the body. Not handled by the common
+        // query fields, which only support exact match.
+        if (array_key_exists('body', $query) && !in_array($query['body'], [null, '', []], true)) {
+            $bodyAlias = $this->createAlias();
+            $qb
+                ->andWhere($expr->like('omeka_root.body', ':' . $bodyAlias))
+                ->setParameter($bodyAlias, '%' . addcslashes((string) $query['body'], '\\%_') . '%', ParameterType::STRING);
+        }
     }
 
     public function sortQuery(QueryBuilder $qb, array $query)
