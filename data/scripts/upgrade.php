@@ -285,3 +285,21 @@ if (version_compare($oldVersion, '3.4.17', '<')) {
     );
     $messenger->addSuccess($message);
 }
+
+if (version_compare($oldVersion, '3.4.19', '<')) {
+    $sql = <<<'SQL'
+        ALTER TABLE `comment`
+        MODIFY `deleted` TINYINT(1) DEFAULT 0 NOT NULL AFTER `approved`;
+        SQL;
+    try {
+        $connection->executeStatement($sql);
+    } catch (\Throwable $e) {
+        // Already reordered.
+    }
+
+    // New anti-spam settings: proof-of-work (on by default for anonymous
+    // visitors) and optional mx check. The spam checks now delegate to the
+    // SpamGuard module when it is active, with a local fallback otherwise.
+    $settings->set('comment_pow_skip', false);
+    $settings->set('comment_check_dns_mx', false);
+}
