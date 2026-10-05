@@ -5,6 +5,7 @@ namespace Comment\Controller;
 use Comment\Api\Representation\CommentRepresentation;
 use Comment\Entity\Comment;
 use Comment\Form\CommentForm;
+use Comment\Spam\SpamCheckerInterface;
 use Common\Stdlib\PsrMessage;
 use Laminas\Http\PhpEnvironment\RemoteAddress;
 use Laminas\Http\Response;
@@ -19,6 +20,16 @@ abstract class AbstractCommentController extends AbstractActionController
         \Omeka\Permissions\Acl::ROLE_EDITOR,
         \Omeka\Permissions\Acl::ROLE_REVIEWER,
     ];
+
+    /**
+     * @var \Comment\Spam\SpamCheckerInterface
+     */
+    protected $spamChecker;
+
+    public function __construct(SpamCheckerInterface $spamChecker)
+    {
+        $this->spamChecker = $spamChecker;
+    }
 
     public function addAction()
     {
@@ -712,6 +723,48 @@ abstract class AbstractCommentController extends AbstractActionController
         // Check if honey pot is filled.
         if (!empty($data['o:check'])) {
             return true;
+        }
+
+        // Logged-in users are trusted: they are not the spam surface, so the
+        // client and server spam checks apply to anonymous submissions only.
+        if (empty($this->identity())) {
+            $settings = $this->settings();
+            $session = new \Laminas\Session\Container('Comment');
+            $currentIp = $this->getClientIp();
+
+            // Snapshot the session issued when the form was rendered, so the
+            // checks see the values sent with the form.
+            $context = [
+                'ip' => $currentIp,
+                'userAgent' => $this->getUserAgent(),
+                'email' => (string) ($data['o:email'] ?? ''),
+                'body' => (string) ($data['o:body'] ?? ''),
+                'honeypot' => (string) ($data['o:check'] ?? ''),
+                'formLoadedAt' => (int) ($session->form_loaded_at ?? 0),
+                'powSalt' => (string) ($session->pow_salt ?? ''),
+                'powNonce' => (string) ($data['pow_nonce'] ?? ''),
+                'powIssuedAt' => (int) ($session->pow_issued_at ?? 0),
+                'prevSubmitAt' => (int) ($session->last_submit_at ?? 0),
+                'prevSubmitIp' => (string) ($session->last_submit_ip ?? ''),
+                'checkDnsMx' => (bool) $settings->get('comment_check_dns_mx'),
+                'powSkip' => (bool) $settings->get('comment_pow_skip'),
+                // Thresholds aligned with SpamGuard, so the local fallback
+                // behaves like the engine when it is not active.
+                'minDelay' => (int) ($settings->get('spamguard_min_delay') ?? 1),
+                'rateLimitSeconds' => (int) ($settings->get('spamguard_rate_limit_seconds') ?? 10),
+            ];
+            $reasons = $this->spamChecker->check($context);
+            if ($reasons) {
+                $this->logger()->warn(
+                    'A comment was detected as spam ({reasons}).', // @translate
+                    ['reasons' => implode(', ', $reasons)]
+                );
+                return true;
+            }
+
+            // Rate-limit marker for the next submission of this session.
+            $session->last_submit_at = time();
+            $session->last_submit_ip = $currentIp;
         }
 
         $wordPressAPIKey = $this->settings()->get('commenting_wpapi_key');

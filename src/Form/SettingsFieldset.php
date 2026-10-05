@@ -296,6 +296,32 @@ class SettingsFieldset extends Fieldset
             ])
 
             ->add([
+                'name' => 'comment_pow_skip',
+                'type' => CommonElement\OptionalCheckbox::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Skip the client-side proof-of-work', // @translate
+                    'info' => 'By default, an anonymous visitor\'s browser must compute a small SHA-256 hashcash challenge before the comment can be submitted. This blocks bots that do not run JavaScript. Invisible for real users (about one second). Check to disable.', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'comment_pow_skip',
+                    'required' => false,
+                ],
+            ])
+            ->add([
+                'name' => 'comment_check_dns_mx',
+                'type' => CommonElement\OptionalCheckbox::class,
+                'options' => [
+                    'element_group' => 'comment',
+                    'label' => 'Check mx records of the email domain', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'comment_check_dns_mx',
+                    'required' => false,
+                ],
+            ])
+
+            ->add([
                 'name' => 'comment_rate_limit_count',
                 'type' => CommonElement\OptionalNumber::class,
                 'options' => [

@@ -39,6 +39,7 @@ class CommentForm extends Form
         'resource_id' => null,
         'user' => null,
         'path' => null,
+        'pow_salt' => null,
     ];
 
     public function init(): void
@@ -298,6 +299,28 @@ class CommentForm extends Form
                         ]],
                     ],
                 ]);
+
+                // Proof-of-work: the browser must solve a sha-256 hashcash
+                // challenge (data attributes read by comment.js) and write the
+                // nonce here. Checked server-side by the spam checker.
+                $powSalt = (string) $this->getOption('pow_salt', '');
+                if ($powSalt !== '') {
+                    $this
+                        ->setAttribute('data-pow-salt', $powSalt)
+                        ->setAttribute('data-pow-difficulty', '4')
+                        ->add([
+                            'type' => Element\Hidden::class,
+                            'name' => 'pow_nonce',
+                            'attributes' => [
+                                'id' => 'comment-pow-nonce',
+                                'value' => '',
+                            ],
+                        ]);
+                    $this->getInputFilter()->add([
+                        'name' => 'pow_nonce',
+                        'required' => false,
+                    ]);
+                }
             }
         }
 

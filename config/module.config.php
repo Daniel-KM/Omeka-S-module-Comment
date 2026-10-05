@@ -74,9 +74,14 @@ return [
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            Controller\Admin\CommentController::class => Controller\Admin\CommentController::class,
-            Controller\Site\CommentController::class => Controller\Site\CommentController::class,
+        'factories' => [
+            Controller\Admin\CommentController::class => Service\Controller\CommentControllerFactory::class,
+            Controller\Site\CommentController::class => Service\Controller\CommentControllerFactory::class,
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            'Comment\SpamChecker' => Service\SpamCheckerFactory::class,
         ],
     ],
     'navigation' => [
@@ -323,6 +328,8 @@ return [
             'comment_user_allow_anonymous' => false,
             'comment_wpapi_key' => '',
             'comment_antispam' => true,
+            'comment_pow_skip' => false,
+            'comment_check_dns_mx' => false,
             'comment_label' => 'Comments', // @translate
             'comment_structure' => 'flat',
             'comment_closed_on_load' => '0',

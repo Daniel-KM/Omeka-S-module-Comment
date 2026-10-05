@@ -37,6 +37,20 @@ class CommentForm extends AbstractHelper
         $path = $view->serverUrl(true);
         $siteSlug = $view->params()->fromRoute('site-slug');
 
+        // Stamp the session when the form is rendered for an anonymous visitor:
+        // the load time (too fast) and the proof-of-work salt are checked on
+        // submit. Logged-in users are trusted and skip the spam check.
+        $powSalt = '';
+        if (empty($user)) {
+            $session = new \Laminas\Session\Container('Comment');
+            $session->form_loaded_at = time();
+            if (!$plugins->get('setting')->__invoke('comment_pow_skip')) {
+                $powSalt = bin2hex(random_bytes(16));
+                $session->pow_salt = $powSalt;
+                $session->pow_issued_at = time();
+            }
+        }
+
         /** @var \Comment\Form\CommentForm $form */
         $form = $this->formElementManager->get(\Comment\Form\CommentForm::class);
         $form
@@ -45,6 +59,7 @@ class CommentForm extends AbstractHelper
                 'resource_id' => $resource->id(),
                 'user' => $user,
                 'path' => $path,
+                'pow_salt' => $powSalt,
             ])
             ->init();
 
