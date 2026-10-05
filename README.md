@@ -83,6 +83,67 @@ pages and in the show pages of each resource. They can be filtered and managed
 in the main comment page.
 
 
+Query filters
+-------------
+
+The `comments` api resource and the "Comment: Browse" block accept the standard
+Omeka arguments plus the following filters. All can be combined; array notation
+(`owner_id[]=…`) is supported.
+
+### Id filters (`owner_id`, `resource_id`, `item_set_id`, `item_id`, `media_id`, `digital_object_id`, `site_id`, `id`)
+
+All id filters share the same convention, provided by module Common:
+
+- `<N>` — include the id `N`. Repeatable.
+- `-<N>` — **exclude** the id `N`. Ids are always positive in Omeka, so the
+  sign is unambiguous. Rows with no linked entity are preserved when excluding.
+- `0` — rows without linked entity (`IS NULL`).
+- Mixing is allowed: `owner_id[]=5&owner_id[]=0&owner_id[]=-10` means "owned
+  by user 5 OR anonymous, and never owned by user 10".
+
+`digital_object_id` requires the module [DigitalObject]; it is silently ignored
+when the module is not installed.
+
+Typical use for the "Comment: Browse" block on a public "contribute" page:
+hide administrator replies by filling the block's *Search pool query* with
+
+    owner_id[]=-<admin_id_1>&owner_id[]=-<admin_id_2>
+
+### Resource type (`resource_type`)
+
+Restrict to a resource kind: `resources` (any linked resource), `item_sets`,
+`items`, `media`, or `digital_objects` (with [DigitalObject]).
+
+### Body (`body`)
+
+Case-insensitive "contains" search on the comment body:
+
+    body=complétons
+
+SQL wildcards (`%`, `_`) in the user-provided value are escaped, so a raw `%`
+matches a literal `%`.
+
+### Moderation flags (`approved`, `deleted`, `flagged`, `spam`)
+
+Each accepts a boolean-like value. An empty string means `true` (to support
+GET/POST). Examples:
+
+    approved=1        — only approved comments
+    approved=0        — only pending comments
+    deleted=          — only soft-deleted comments (empty value = true)
+    spam=false        — exclude spam
+
+### Presence of a resource (`has_resource`)
+
+`has_resource=1` (or empty string) keeps only comments linked to a resource;
+`has_resource=0` keeps only comments whose resource has been removed.
+
+### Groups and collections (`group`, `collection_id`)
+
+Filter by administrative groups defined in module settings, or by item set id
+(collection). See the "Groups" section below.
+
+
 Email Notifications
 -------------------
 
