@@ -38,7 +38,12 @@ class SiteSettingsFieldset extends Fieldset
                         'after/items' => 'Item: Bottom', // @translate
                         'after/media' => 'Media: Bottom', // @translate
                         'after/item_sets' => 'Item set: Bottom', // @translate
-                    ],
+                    ] + (class_exists(\DigitalObject\Entity\DigitalObject::class)
+                        ? [
+                            'before/digital_objects' => 'Digital object: Top', // @translate
+                            'after/digital_objects' => 'Digital object: Bottom', // @translate
+                        ]
+                        : []),
                 ],
                 'attributes' => [
                     'id' => 'comment_placement_subscription',
@@ -58,7 +63,12 @@ class SiteSettingsFieldset extends Fieldset
                         'after/items' => 'Item: Bottom', // @translate
                         'after/media' => 'Media: Bottom', // @translate
                         'after/item_sets' => 'Item set: Bottom', // @translate
-                    ],
+                    ] + (class_exists(\DigitalObject\Entity\DigitalObject::class)
+                        ? [
+                            'before/digital_objects' => 'Digital object: Top', // @translate
+                            'after/digital_objects' => 'Digital object: Bottom', // @translate
+                        ]
+                        : []),
                 ],
                 'attributes' => [
                     'id' => 'comment_placement_list',
@@ -78,7 +88,12 @@ class SiteSettingsFieldset extends Fieldset
                         'after/items' => 'Item: Bottom', // @translate
                         'after/media' => 'Media: Bottom', // @translate
                         'after/item_sets' => 'Item set: Bottom', // @translate
-                    ],
+                    ] + (class_exists(\DigitalObject\Entity\DigitalObject::class)
+                        ? [
+                            'before/digital_objects' => 'Digital object: Top', // @translate
+                            'after/digital_objects' => 'Digital object: Bottom', // @translate
+                        ]
+                        : []),
                 ],
                 'attributes' => [
                     'id' => 'comment_placement_form',

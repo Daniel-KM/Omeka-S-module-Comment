@@ -444,6 +444,9 @@ class Module extends AbstractModule
             'items' => 'Omeka\Controller\Site\Item',
             'media' => 'Omeka\Controller\Site\Media',
         ];
+        if (class_exists(\DigitalObject\Controller\Site\DigitalObjectController::class)) {
+            $controllers['digital_objects'] = \DigitalObject\Controller\Site\DigitalObjectController::class;
+        }
         $controllers = array_intersect_key($controllers, $commentsForResources);
         foreach ($controllers as $controller) {
             // Add the comment field to the public advanced search page.
