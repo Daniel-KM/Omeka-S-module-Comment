@@ -321,7 +321,7 @@ class CommentAdapter extends AbstractEntityAdapter
                 'items' => Item::class,
                 'media' => Media::class,
             ];
-            if (class_exists(\DigitalObject\Entity\DigitalObject::class)) {
+            if (class_exists('DigitalObject\Module', false)) {
                 $mapResourceTypes['digital_objects'] = \DigitalObject\Entity\DigitalObject::class;
             }
             if ($query['resource_type'] === 'resources') {

@@ -34,7 +34,7 @@ class SettingsFieldset extends Fieldset
                         'items' => 'Items', // @translate
                         'item_sets' => 'Item sets', // @translate
                         'media' => 'Media', // @translate
-                    ] + (class_exists(\DigitalObject\Entity\DigitalObject::class)
+                    ] + (class_exists('DigitalObject\Module', false)
                         ? ['digital_objects' => 'Digital objects'] // @translate
                         : []),
                 ],

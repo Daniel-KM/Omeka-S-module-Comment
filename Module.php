@@ -303,7 +303,7 @@ class Module extends AbstractModule
             'items' => ItemRepresentation::class,
             'media' => MediaRepresentation::class,
         ];
-        if (class_exists(\DigitalObject\Api\Representation\DigitalObjectRepresentation::class)) {
+        if (class_exists('DigitalObject\Module', false)) {
             $representations['digital_objects'] = \DigitalObject\Api\Representation\DigitalObjectRepresentation::class;
         }
         $representations = array_intersect_key($representations, $commentsForResources);
@@ -321,7 +321,7 @@ class Module extends AbstractModule
             'items' => \Omeka\Api\Adapter\ItemAdapter::class,
             'media' => \Omeka\Api\Adapter\MediaAdapter::class,
         ];
-        if (class_exists(\DigitalObject\Api\Adapter\DigitalObjectAdapter::class)) {
+        if (class_exists('DigitalObject\Module', false)) {
             $adapters['digital_objects'] = \DigitalObject\Api\Adapter\DigitalObjectAdapter::class;
         }
         $adapters = array_intersect_key($adapters, $commentsForResources);
