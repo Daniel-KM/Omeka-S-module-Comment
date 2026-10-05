@@ -272,13 +272,6 @@ class Module extends AbstractModule
         $commentResources[] = 'user';
         $commentsForResources = array_flip($commentResources);
 
-        // Add the Comment term definition.
-        $sharedEventManager->attach(
-            '*',
-            'api.context',
-            [$this, 'handleApiContext']
-        );
-
         // Add the visibility filters.
         $sharedEventManager->attach(
             '*',
@@ -494,13 +487,6 @@ class Module extends AbstractModule
             'guest.widgets',
             [$this, 'handleGuestWidgets']
         );
-    }
-
-    public function handleApiContext(Event $event): void
-    {
-        $context = $event->getParam('context');
-        $context['o-module-comment'] = 'http://omeka.org/s/vocabs/module/comment#';
-        $event->setParam('context', $context);
     }
 
     public function handleSqlResourceVisibility(Event $event): void
