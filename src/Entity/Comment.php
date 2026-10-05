@@ -98,6 +98,19 @@ class Comment extends AbstractEntity
      *     }
      * )
      */
+    protected $deleted = false;
+
+    /**
+     * @var bool
+     *
+     * @Column(
+     *     type="boolean",
+     *     nullable=false,
+     *     options={
+     *         "default":0
+     *     }
+     * )
+     */
     protected $flagged = false;
 
     /**
@@ -112,19 +125,6 @@ class Comment extends AbstractEntity
      * )
      */
     protected $spam = false;
-
-    /**
-     * @var bool
-     *
-     * @Column(
-     *     type="boolean",
-     *     nullable=false,
-     *     options={
-     *         "default":0
-     *     }
-     * )
-     */
-    protected $deleted = false;
 
     /**
      * @var string
@@ -314,6 +314,17 @@ class Comment extends AbstractEntity
         return $this->approved;
     }
 
+    public function setDeleted($deleted): self
+    {
+        $this->deleted = (bool) $deleted;
+        return $this;
+    }
+
+    public function isDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
     public function setFlagged($flagged): self
     {
         $this->flagged = (bool) $flagged;
@@ -334,17 +345,6 @@ class Comment extends AbstractEntity
     public function isSpam(): ?bool
     {
         return $this->spam;
-    }
-
-    public function setDeleted($deleted): self
-    {
-        $this->deleted = (bool) $deleted;
-        return $this;
-    }
-
-    public function isDeleted(): bool
-    {
-        return $this->deleted;
     }
 
     public function setPath(string $path): self

@@ -34,9 +34,9 @@ class CommentAdapter extends AbstractEntityAdapter
         'digital_object_id' => 'resource',
         'site_id' => 'site',
         'approved' => 'approved',
+        'deleted' => 'deleted',
         'flagged' => 'flagged',
         'spam' => 'spam',
-        'deleted' => 'deleted',
         'path' => 'path',
         'email' => 'email',
         'website' => 'website',
@@ -60,9 +60,9 @@ class CommentAdapter extends AbstractEntityAdapter
         'digital_object' => 'resource',
         'site' => 'site',
         'approved' => 'approved',
+        'deleted' => 'deleted',
         'flagged' => 'flagged',
         'spam' => 'spam',
-        'deleted' => 'deleted',
         'path' => 'path',
         'email' => 'email',
         'website' => 'website',
@@ -348,9 +348,9 @@ class CommentAdapter extends AbstractEntityAdapter
         // Boolean fields with special empty string handling (empty string = true).
         foreach ([
             'approved' => 'approved',
+            'deleted' => 'deleted',
             'flagged' => 'flagged',
             'spam' => 'spam',
-            'deleted' => 'deleted',
         ] as $queryKey => $column) {
             if (array_key_exists($queryKey, $query)) {
                 // An empty string means true in order to manage get/post query.
@@ -498,6 +498,9 @@ class CommentAdapter extends AbstractEntityAdapter
             }
             $entity->setApproved($newApproved);
         }
+        if ($this->shouldHydrate($request, 'o:deleted')) {
+            $entity->setDeleted($request->getValue('o:deleted', false));
+        }
         if ($this->shouldHydrate($request, 'o:flagged')) {
             $newFlagged = (bool) $request->getValue('o:flagged', false);
             $oldFlagged = $entity->isFlagged();
@@ -574,6 +577,7 @@ class CommentAdapter extends AbstractEntityAdapter
     {
         $updatables = [
             'o:approved' => true,
+            'o:deleted' => true,
             'o:flagged' => true,
             'o:spam' => true,
             'o:deleted' => true,

@@ -65,6 +65,7 @@ class CommentRepresentation extends AbstractEntityRepresentation
             'o:resource' => $resource ? $resource->getReference()->jsonSerialize() : null,
             'o:site' => $site ? $site->getReference()->jsonSerialize() : null,
             'o:approved' => $this->isApproved(),
+            'o:deleted' => $this->isDeleted(),
             'o:flagged' => $this->isFlagged(),
             'o:spam' => $this->isSpam(),
             'o:deleted' => $this->isDeleted(),
@@ -127,6 +128,11 @@ class CommentRepresentation extends AbstractEntityRepresentation
         return $this->resource->isApproved();
     }
 
+    public function isDeleted(): bool
+    {
+        return $this->resource->isDeleted();
+    }
+
     public function isFlagged(): bool
     {
         return $this->resource->isFlagged();
@@ -135,11 +141,6 @@ class CommentRepresentation extends AbstractEntityRepresentation
     public function isSpam(): bool
     {
         return $this->resource->isSpam();
-    }
-
-    public function isDeleted(): bool
-    {
-        return $this->resource->isDeleted();
     }
 
     public function path(): string
