@@ -364,24 +364,6 @@ class CommentAdapter extends AbstractEntityAdapter
             }
         }
 
-        // Exclude comments owned by the given user ids. Accepts int or array.
-        // The common query field type "id" only supports inclusion.
-        if (array_key_exists('not_owner_id', $query) && !in_array($query['not_owner_id'], [null, '', []], true)) {
-            $excluded = is_array($query['not_owner_id'])
-                ? array_values(array_unique(array_map('intval', $query['not_owner_id'])))
-                : [(int) $query['not_owner_id']];
-            $excluded = array_filter($excluded);
-            if ($excluded) {
-                $paramAlias = $this->createAlias();
-                $qb
-                    ->andWhere($expr->orX(
-                        $expr->isNull('omeka_root.owner'),
-                        $expr->notIn('omeka_root.owner', ':' . $paramAlias)
-                    ))
-                    ->setParameter($paramAlias, $excluded, Connection::PARAM_INT_ARRAY);
-            }
-        }
-
         // Full text "contains" search on the body. Not handled by the common
         // query fields, which only support exact match.
         if (array_key_exists('body', $query) && !in_array($query['body'], [null, '', []], true)) {
